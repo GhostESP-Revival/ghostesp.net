@@ -480,6 +480,28 @@ body::before {
     opacity: 0.7;
 }
 
+.board-card a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.board-card a:hover {
+    color: var(--accent-color);
+}
+
+/* Update for Christmas theme */
+.christmas-theme .board-card a {
+    color: var(--christmas-primary);
+}
+
+.christmas-theme .board-card a:hover {
+    color: var(--christmas-gold);
+}
+
 /* Getting Started Section */
 .getting-started {
     padding: 6rem 2rem;
