@@ -1256,3 +1256,165 @@ body.christmas-theme::before {
     display: block;
 }
 
+/* Add these styles for the Flipper Zero app section */
+.flipper-app {
+    padding: 6rem 2rem;
+    background: var(--surface-color);
+    position: relative;
+    overflow: hidden;
+}
+
+.flipper-app::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 70% 30%, rgba(156, 39, 176, 0.1), transparent 60%);
+    pointer-events: none;
+}
+
+.flipper-app h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+    background: var(--gradient-2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.flipper-content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.flipper-card {
+    background: var(--card-bg);
+    border-radius: 20px;
+    padding: 3rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    text-align: center;
+}
+
+.flipper-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 2rem;
+    background: var(--gradient-1);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: rotate(-10deg);
+}
+
+.flipper-icon i {
+    width: 40px;
+    height: 40px;
+    color: white;
+}
+
+.flipper-card h3 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+}
+
+.flipper-card p {
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+}
+
+.download-options {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.download-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 2rem;
+}
+
+.download-btn i {
+    width: 18px;
+    height: 18px;
+}
+
+.app-features {
+    text-align: left;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 2rem;
+}
+
+.app-features h4 {
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+.app-features ul {
+    list-style: none;
+    padding: 0;
+}
+
+.app-features li {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: var(--text-secondary);
+    padding: 0.8rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.app-features li:last-child {
+    border-bottom: none;
+}
+
+.app-features li i {
+    color: var(--primary-color);
+    width: 18px;
+    height: 18px;
+}
+
+/* Christmas theme modifications */
+.christmas-theme .flipper-icon {
+    background: linear-gradient(135deg, var(--christmas-primary), var(--christmas-secondary));
+}
+
+.christmas-theme .app-features li i {
+    color: var(--christmas-primary);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .flipper-app {
+        padding: 4rem 1rem;
+    }
+
+    .flipper-card {
+        padding: 2rem 1.5rem;
+    }
+
+    .download-options {
+        flex-direction: column;
+    }
+
+    .download-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .app-features {
+        padding: 1.5rem;
+    }
+}
+
