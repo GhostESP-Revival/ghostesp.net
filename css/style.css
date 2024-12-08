@@ -1222,23 +1222,14 @@ body.christmas-theme::before {
 }
 
 .christmas-theme {
-    /* Multiple cursor options - choose the one you prefer! */
-    
-    /* Option 1: Candy Cane */
-    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M17 3L7 21" stroke="%23ff1a1a" stroke-width="4" stroke-linecap="round"/><path d="M17 3L7 21" stroke="%23ffffff" stroke-width="2" stroke-linecap="round" stroke-dasharray="4 4"/></svg>') 0 24, auto;
-    
-    /* Option 2: Christmas Tree */
-    /*cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 2L3 19H21L12 2Z" fill="%2300cc00"/><rect x="11" y="19" width="2" height="3" fill="%23964B00"/></svg>') 12 12, auto;*/
-    
-    /* Option 3: Holly Leaf */
-    /*cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 2C15 5 16 8 14 12C18 10 21 11 24 14C21 16 18 16 14 14C16 18 15 21 12 24C9 21 8 18 10 14C6 16 3 15 0 12C3 10 6 10 10 12C8 8 9 5 12 2Z" fill="%2300cc00"/><circle cx="12" cy="12" r="2" fill="%23ff1a1a"/></svg>') 12 12, auto;*/
+    /* Change from candy cane to Christmas tree with pointer at top */
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="32" viewBox="0 0 24 32"><path d="M12 0L12 2L8 8L16 8L12 2M12 2L3 19L21 19L12 2Z" fill="%2300cc00"/><rect x="11" y="19" width="2" height="3" fill="%23964B00"/></svg>') 12 0, auto;
 }
 
-/* Add hover cursor variant */
+/* Update hover cursor variant to match */
 .christmas-theme a:hover,
 .christmas-theme button:hover {
-    /* Option 1: Sparkle */
-    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 0L13.8 9.2L22 12L13.8 14.8L12 24L10.2 14.8L2 12L10.2 9.2L12 0Z" fill="%23ffd700"/></svg>') 12 12, pointer;
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="32" viewBox="0 0 24 32"><path d="M12 0L12 2L8 8L16 8L12 2M12 2L3 19L21 19L12 2Z" fill="%23ffd700"/><rect x="11" y="19" width="2" height="3" fill="%23964B00"/></svg>') 12 0, pointer;
 }
 
 .christmas-countdown {
