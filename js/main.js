@@ -325,3 +325,135 @@ function enhanceSnowfall() {
         });
     });
 } 
+
+// Single Christmas theme management
+document.addEventListener('DOMContentLoaded', () => {
+    const themeToggle = document.getElementById('theme-toggle');
+    let presentInterval;
+    let snowfallElement;
+
+    const createSnowfall = () => {
+        // Remove existing snowfall if any
+        const existingSnowfall = document.querySelector('.snowfall');
+        if (existingSnowfall) {
+            existingSnowfall.remove();
+        }
+        
+        // Create new snowfall container
+        snowfallElement = document.createElement('div');
+        snowfallElement.className = 'snowfall';
+        document.body.appendChild(snowfallElement);
+
+        const snowflakes = ['❄', '❅', '❆', '✧', '✦'];
+        const numberOfSnowflakes = 50;
+
+        for (let i = 0; i < numberOfSnowflakes; i++) {
+            const snowflake = document.createElement('div');
+            snowflake.className = 'snowflake';
+            
+            // Set random horizontal position
+            snowflake.style.left = `${Math.random() * 100}%`;
+            
+            // Set random animation duration
+            const duration = 5 + Math.random() * 10;
+            snowflake.style.animationDuration = `${duration}s`;
+            
+            // Set random delay
+            snowflake.style.animationDelay = `${Math.random() * duration}s`;
+            
+            snowflake.innerHTML = snowflakes[Math.floor(Math.random() * snowflakes.length)];
+            
+            snowfallElement.appendChild(snowflake);
+        }
+    };
+
+    const dropPresent = () => {
+        const hero = document.querySelector('.hero');
+        if (!hero) return;
+
+        // Get Santa's current position by calculating animation progress
+        const santaWidth = 150; // Approximate width of Santa emoji string
+        const heroWidth = hero.offsetWidth;
+        const totalDistance = heroWidth + (santaWidth * 2); // Total distance Santa travels
+        
+        // Calculate Santa's current position based on animation progress
+        const animationDuration = 8000; // 8s from santaFlight animation
+        const progress = (Date.now() % animationDuration) / animationDuration;
+        const santaX = -santaWidth + (totalDistance * progress);
+        
+        // Create and position present
+        const present = document.createElement('div');
+        present.className = 'present';
+        
+        // Set initial position to Santa's current X position
+        present.style.left = `${santaX}px`;
+        // Start from Santa's Y position (around 40% from top as per santaFlight animation)
+        present.style.top = '40%';
+        
+        hero.appendChild(present);
+        present.addEventListener('animationend', () => present.remove());
+    };
+
+    const startPresentDropping = () => {
+        if (presentInterval) {
+            clearInterval(presentInterval);
+        }
+        // Drop presents more frequently (every 300ms)
+        return setInterval(() => {
+            // 40% chance to drop a present
+            if (Math.random() > 0.6) {
+                dropPresent();
+            }
+        }, 300);
+    };
+
+    const cleanupChristmasEffects = () => {
+        // Clear present dropping interval
+        if (presentInterval) {
+            clearInterval(presentInterval);
+            presentInterval = null;
+        }
+        
+        // Remove snowfall
+        if (snowfallElement) {
+            snowfallElement.remove();
+            snowfallElement = null;
+        }
+        
+        // Backup cleanup - remove any snowfall containers
+        const existingSnowfall = document.querySelector('.snowfall');
+        if (existingSnowfall) {
+            existingSnowfall.remove();
+        }
+        
+        // Remove any remaining presents
+        document.querySelectorAll('.present').forEach(p => p.remove());
+    };
+
+    const toggleChristmasTheme = (e) => {
+        if (e) {
+            e.preventDefault();
+        }
+
+        const isCurrentlyChristmas = document.body.classList.contains('christmas-theme');
+        
+        if (isCurrentlyChristmas) {
+            document.body.classList.remove('christmas-theme');
+            cleanupChristmasEffects();
+        } else {
+            document.body.classList.add('christmas-theme');
+            createSnowfall();
+            presentInterval = startPresentDropping();
+        }
+    };
+
+    // Initialize theme toggle
+    if (themeToggle) {
+        // Remove any existing listeners
+        themeToggle.replaceWith(themeToggle.cloneNode(true));
+        const newThemeToggle = document.getElementById('theme-toggle');
+        
+        // Add new listener
+        newThemeToggle.addEventListener('click', toggleChristmasTheme);
+    }
+}); 
