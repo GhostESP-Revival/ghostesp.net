@@ -1866,4 +1866,71 @@ body.menu-open {
     gap: 0.5rem;
 }
 
+.release-info p {
+    margin-bottom: 1rem;
+}
+
+.markdown-content {
+    max-height: 200px;
+    overflow-y: auto;
+    padding-right: 1rem;
+    margin-bottom: 1rem;
+    color: var(--text-secondary);
+}
+
+.markdown-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.markdown-content::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+}
+
+.markdown-content::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 4px;
+}
+
+.markdown-content h1,
+.markdown-content h2,
+.markdown-content h3 {
+    color: var(--text-primary);
+    margin: 1rem 0 0.5rem;
+    font-size: 1.1rem;
+}
+
+.markdown-content ul,
+.markdown-content ol {
+    padding-left: 1.5rem;
+    margin: 0.5rem 0;
+}
+
+.markdown-content li {
+    margin: 0.25rem 0;
+}
+
+.markdown-content code {
+    background: rgba(255, 107, 0, 0.1);
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+}
+
+.markdown-content pre code {
+    display: block;
+    padding: 1rem;
+    overflow-x: auto;
+}
+
+.markdown-content a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.markdown-content a:hover {
+    text-decoration: underline;
+}
+
 

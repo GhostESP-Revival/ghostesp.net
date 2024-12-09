@@ -676,7 +676,7 @@ async function fetchLatestRelease() {
                         <span><i data-feather="calendar"></i>${dateString}</span>
                         <span><i data-feather="download"></i>${release.assets.reduce((acc, asset) => acc + asset.download_count, 0)} downloads</span>
                     </div>
-                    <p>${release.body.split('\n').slice(0, 3).join('\n')}</p>
+                    <div class="release-body markdown-content">${marked.parse(release.body)}</div>
                     <a href="${release.html_url}" class="primary-btn" target="_blank">
                         <i data-feather="github"></i>
                         View Release
