@@ -296,6 +296,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     initMobileMenu();
+    fetchLatestRelease();
 }); 
 
 function updateChristmasCountdown() {
@@ -555,3 +556,192 @@ function initMobileMenu() {
         }
     });
 } 
+
+// Link preloading functionality
+const linkPreloader = {
+    // Track which URLs have been preloaded
+    preloadedUrls: new Set(),
+    
+    // Distance threshold for preloading (in pixels)
+    hoverThreshold: 50,
+    
+    // Initialize preloading behavior
+    init() {
+        // Handle mouse movement for proximity preloading
+        document.addEventListener('mousemove', (e) => this.handleMouseMove(e));
+        
+        // Handle direct link hovers
+        document.querySelectorAll('a[href]').forEach(link => {
+            link.addEventListener('mouseenter', () => this.preloadUrl(link.href));
+        });
+    },
+    
+    // Handle mouse movement to check proximity to links
+    handleMouseMove(e) {
+        const mouseX = e.clientX;
+        const mouseY = e.clientY;
+        
+        // Get all links that haven't been preloaded yet
+        document.querySelectorAll('a[href]').forEach(link => {
+            if (this.preloadedUrls.has(link.href)) return;
+            
+            const rect = link.getBoundingClientRect();
+            const distance = this.getDistance(
+                mouseX,
+                mouseY,
+                rect.left + rect.width / 2,
+                rect.top + rect.height / 2
+            );
+            
+            if (distance < this.hoverThreshold) {
+                this.preloadUrl(link.href);
+            }
+        });
+    },
+    
+    // Calculate distance between two points
+    getDistance(x1, y1, x2, y2) {
+        return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+    },
+    
+    // Preload a URL if it's valid and hasn't been preloaded
+    preloadUrl(url) {
+        // Skip if already preloaded or same origin
+        if (this.preloadedUrls.has(url) || url.startsWith('#')) return;
+        
+        try {
+            const urlObj = new URL(url, window.location.origin);
+            
+            // Only preload if it's our domain or specific allowed domains
+            if (urlObj.hostname === window.location.hostname ||
+                urlObj.hostname === 'cdn.spookytools.com' ||
+                urlObj.hostname === 'github.com') {
+                
+                const link = document.createElement('link');
+                link.rel = 'prefetch';
+                link.href = url;
+                document.head.appendChild(link);
+                
+                this.preloadedUrls.add(url);
+                console.log('Preloaded:', url);
+            }
+        } catch (e) {
+            console.warn('Invalid URL:', url);
+        }
+    }
+};
+
+// Initialize link preloader when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+    linkPreloader.init();
+}); 
+
+async function fetchLatestRelease() {
+    const repoOwner = 'Spooks4576';
+    const repoName = 'Ghost_ESP';
+    const featuresGrid = document.querySelector('.features-grid');
+    
+    if (!featuresGrid) return;
+ 
+    // Create release card container
+    const releaseCard = document.createElement('div');
+    releaseCard.className = 'latest-release-card';
+    releaseCard.innerHTML = '<div class="release-loading">Loading latest release...</div>';
+    featuresGrid.appendChild(releaseCard);
+ 
+    try {
+        const response = await fetch(`https://api.github.com/repos/${repoOwner}/${repoName}/releases/latest`);
+        if (!response.ok) throw new Error('Failed to fetch release data');
+        
+        const release = await response.json();
+        
+        // Format date
+        const releaseDate = new Date(release.published_at);
+        const dateString = releaseDate.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+ 
+        // Create release card content
+        releaseCard.innerHTML = `
+            <div class="latest-release-header">
+                <i data-feather="package"></i>
+                <h3>Latest Release: ${release.tag_name}</h3>
+            </div>
+            <div class="release-content">
+                <div class="release-info">
+                    <h4>${release.name}</h4>
+                    <div class="release-meta">
+                        <span><i data-feather="calendar"></i>${dateString}</span>
+                        <span><i data-feather="download"></i>${release.assets.reduce((acc, asset) => acc + asset.download_count, 0)} downloads</span>
+                    </div>
+                    <p>${release.body.split('\n').slice(0, 3).join('\n')}</p>
+                    <a href="${release.html_url}" class="primary-btn" target="_blank">
+                        <i data-feather="github"></i>
+                        View Release
+                    </a>
+                </div>
+                <div class="release-assets">
+                    <h4>Downloads</h4>
+                    <div class="asset-list">
+                        ${release.assets.slice(0, 3).map(asset => `
+                            <a href="${asset.browser_download_url}" class="asset-link" target="_blank">
+                                <i data-feather="download-cloud"></i>
+                                ${asset.name}
+                            </a>
+                        `).join('')}
+                        <div class="hidden-assets" style="display: none;">
+                            ${release.assets.slice(3).map(asset => `
+                                <a href="${asset.browser_download_url}" class="asset-link" target="_blank">
+                                    <i data-feather="download-cloud"></i>
+                                    ${asset.name}
+                                </a>
+                            `).join('')}
+                        </div>
+                    </div>
+                    ${release.assets.length > 3 ? `
+                        <button class="show-more-btn">
+                            <span class="show-more-text">Show More</span>
+                            <i data-feather="chevron-down"></i>
+                        </button>
+                    ` : ''}
+                </div>
+            </div>
+        `;
+ 
+        // Re-initialize Feather icons
+        feather.replace();
+        
+        // Add show more functionality
+        const showMoreBtn = releaseCard.querySelector('.show-more-btn');
+        if (showMoreBtn) {
+            showMoreBtn.addEventListener('click', () => {
+                const hiddenAssets = releaseCard.querySelector('.hidden-assets');
+                const btnText = showMoreBtn.querySelector('.show-more-text');
+                const btnIcon = showMoreBtn.querySelector('i');
+                
+                if (hiddenAssets.style.display === 'none') {
+                    hiddenAssets.style.display = 'block';
+                    btnText.textContent = 'Show Less';
+                    btnIcon.setAttribute('data-feather', 'chevron-up');
+                } else {
+                    hiddenAssets.style.display = 'none';
+                    btnText.textContent = 'Show More';
+                    btnIcon.setAttribute('data-feather', 'chevron-down');
+                }
+                feather.replace();
+            });
+        }
+        
+    } catch (error) {
+        console.error('Error fetching release:', error);
+        releaseCard.innerHTML = `
+            <div class="release-error">
+                <i data-feather="alert-circle"></i>
+                <p>Failed to load latest release data. Please try again later.</p>
+            </div>
+        `;
+        feather.replace();
+    }
+}
