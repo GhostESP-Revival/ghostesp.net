@@ -181,6 +181,36 @@
         }]
     }
     </script>
+
+    <!-- Preload critical fonts -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Share+Tech+Mono&family=Chakra+Petch:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Share+Tech+Mono&family=Chakra+Petch:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    </noscript>
+
+    <!-- Inline critical CSS -->
+    <style>
+      /* Add critical CSS here - styles needed for above-the-fold content */
+      .navbar {
+        background: rgba(18, 18, 18, 0.8);
+        position: fixed;
+        width: 100%;
+        z-index: 1000;
+      }
+      .hero {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      /* Add other critical styles... */
+    </style>
+
+    <!-- Defer non-critical CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" media="print" onload="this.media='all'">
+
+    <!-- Load AOS CSS asynchronously -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" media="print" onload="this.media='all'">
 </head>
 <body>
     <nav class="navbar" role="navigation" aria-label="Main navigation">

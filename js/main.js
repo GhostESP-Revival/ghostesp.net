@@ -1,3 +1,108 @@
+// Add this at the top of main.js
+const scriptLoader = {
+    loaded: new Set(),
+    
+    async load(src) {
+        if (this.loaded.has(src)) return;
+        
+        return new Promise((resolve, reject) => {
+            const script = document.createElement('script');
+            script.src = src;
+            script.async = true;
+            
+            script.onload = () => {
+                this.loaded.add(src);
+                resolve();
+            };
+            
+            script.onerror = reject;
+            document.head.appendChild(script);
+        });
+    }
+};
+
+// Create a lightweight initialization function for critical features
+function initCriticalFeatures() {
+    // Initialize navbar
+    const navbar = document.querySelector('.navbar');
+    window.addEventListener('scroll', () => {
+        requestAnimationFrame(() => {
+            navbar.style.background = window.scrollY > 50 ? 
+                'rgba(18, 18, 18, 0.95)' : 
+                'rgba(18, 18, 18, 0.8)';
+        });
+    });
+
+    // Initialize smooth scroll (critical for navigation)
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href'))
+                .scrollIntoView({ behavior: 'smooth' });
+        });
+    });
+}
+
+// Defer non-critical initializations
+function initNonCriticalFeatures() {
+    // Initialize AOS with reduced motion preference check
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        AOS.init({
+            duration: 800,
+            once: true,
+            startEvent: 'load'
+        });
+    }
+
+    // Initialize Feather icons
+    feather.replace({
+        'stroke-width': 2.5,
+        'width': 16,
+        'height': 16,
+        'class': 'feather-icon'
+    });
+
+    // Initialize other features...
+    initVideoLazyLoading();
+    initChristmasTheme();
+    initMobileMenu();
+    fetchLatestRelease();
+}
+
+// Split video lazy loading into its own function
+function initVideoLazyLoading() {
+    const videoObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const iframe = entry.target;
+                if (iframe.dataset.src) {
+                    iframe.src = iframe.dataset.src;
+                    iframe.removeAttribute('data-src');
+                    videoObserver.unobserve(iframe);
+                }
+            }
+        });
+    }, {
+        rootMargin: '50px 0px',
+        threshold: 0.1
+    });
+
+    document.querySelectorAll('.video-wrapper iframe[data-src]')
+        .forEach(iframe => videoObserver.observe(iframe));
+}
+
+// Initialize critical features immediately
+document.addEventListener('DOMContentLoaded', initCriticalFeatures);
+
+// Defer non-critical initializations
+if (window.requestIdleCallback) {
+    requestIdleCallback(() => {
+        initNonCriticalFeatures();
+    });
+} else {
+    setTimeout(initNonCriticalFeatures, 1);
+}
+
 // Initialize AOS
 AOS.init({
     duration: 800,
