@@ -401,7 +401,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     initMobileMenu();
-    fetchLatestRelease();
 }); 
 
 function updateChristmasCountdown() {
