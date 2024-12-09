@@ -1638,7 +1638,6 @@ body.christmas-theme::before {
         align-items: center;
         gap: 10px;
         width: 100%;
-        padding: 0.5rem 0;
     }
 
     /* Update icon buttons in mobile menu */
