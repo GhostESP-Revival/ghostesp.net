@@ -1118,21 +1118,9 @@ body::before {
     }
 }
 
-/* Add touch-friendly tap targets */
-@media (max-width: 768px) {
-    .nav-links a,
-    .scroll-button,
-    .feature-card,
-    .board-card,
-    .step {
-        min-height: 44px; /* Minimum touch target size */
-    }
 
-    /* Add more space between interactive elements */
-    .nav-links {
-        gap: 1.5rem;
-    }
-}
+
+
 
 /* Christmas Theme Styles */
 body.christmas-theme {
