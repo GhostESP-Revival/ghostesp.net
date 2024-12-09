@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#121212">
     
     <!-- Enhanced SEO Meta Tags -->
     <meta name="description" content="Ghost ESP - Transform your ESP32 into a powerful wireless testing platform. Features WiFi analysis, BLE scanning, deauth detection, and more. Open-source firmware for security research." />
@@ -31,20 +32,35 @@
     <!-- Canonical URL -->
     <link rel="canonical" href="https://ghostesp.net">
     
+    <!-- Preconnect to CDNs -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://unpkg.com">
+    
+    <!-- DNS prefetch -->
+    <link rel="dns-prefetch" href="https://cdn.spookytools.com">
+    <link rel="dns-prefetch" href="https://github.com">
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="css/style.css" as="style">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" as="style">
+    <link rel="preload" href="https://unpkg.com/aos@2.3.1/dist/aos.css" as="style">
+    
     <title>Ghost ESP - Advanced Wireless Testing Firmware | WiFi & BLE Security Testing</title>
     
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Share+Tech+Mono&family=Chakra+Petch:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Share+Tech+Mono&family=Chakra+Petch:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&display=swap&display=swap" rel="stylesheet">
     
     <!-- AOS CSS animations library -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     
     <!-- Custom styles -->
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css" fetchpriority="high">
     <link rel="stylesheet" href="css/animations.css">
     
     <!-- Feather icons -->
-    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="https://unpkg.com/feather-icons" defer></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     
     <!-- Enhanced Structured Data -->
@@ -265,6 +281,7 @@
                                     data-src="https://www.youtube.com/embed/6RjM7aI4k4k?rel=0" 
                                     title="GhostESP: The Next Generation WiFi Hacking Tool" 
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                    loading="lazy"
                                     allowfullscreen
                                 ></iframe>
                             </div>
@@ -531,9 +548,9 @@
     </footer>
 
     <!-- AOS JS -->
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js" defer></script>
     <!-- Custom JS -->
-    <script src="js/main.js"></script>
+    <script src="js/main.js" defer></script>
     <script>
         // Initialize scroll buttons
         document.addEventListener('DOMContentLoaded', function() {
