@@ -960,6 +960,14 @@ body::before {
     border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+.footer-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
 .credit-link {
     font-family: var(--font-mono);
     color: var(--text-secondary);
@@ -979,6 +987,53 @@ body::before {
     color: #ff3366;
     font-size: 0.8rem;
     animation: heartbeat 1.5s ease infinite;
+}
+
+.support-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1.5rem;
+    background: var(--gradient-1);
+    border-radius: 8px;
+    color: var(--text-primary);
+    text-decoration: none;
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(255, 107, 0, 0.3);
+}
+
+.support-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 107, 0, 0.4);
+}
+
+.support-btn i {
+    font-size: 1rem;
+}
+
+/* Christmas theme modifications */
+.christmas-theme .support-btn {
+    background: linear-gradient(135deg, var(--christmas-primary), var(--christmas-secondary));
+    box-shadow: 0 4px 15px rgba(255, 26, 26, 0.3);
+}
+
+.christmas-theme .support-btn:hover {
+    box-shadow: 0 6px 20px rgba(255, 26, 26, 0.4);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .footer-content {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .support-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.8rem;
+    }
 }
 
 @keyframes heartbeat {
