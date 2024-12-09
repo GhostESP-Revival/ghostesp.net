@@ -745,3 +745,11 @@ async function fetchLatestRelease() {
         feather.replace();
     }
 }
+
+// Add click handler for logo text
+document.querySelector('.logo').addEventListener('click', () => {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+});

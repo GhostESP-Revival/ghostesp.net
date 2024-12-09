@@ -83,10 +83,17 @@ body::before {
     display: flex;
     align-items: center;
     gap: 4px;
+    cursor: pointer;
+    user-select: none;
 }
 
 .logo .ghost, .logo .esp {
     color: var(--text-primary);
+}
+
+.logo:hover .ghost,
+.logo:hover .esp {
+    opacity: 0.8;
 }
 
 .nav-links {

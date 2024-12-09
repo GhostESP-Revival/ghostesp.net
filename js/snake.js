@@ -45,30 +45,6 @@ const sounds = {
     })
 };
 
-// Particle effects configuration
-const particlesConfig = {
-    particles: {
-        number: { value: 50 },
-        color: { value: '#ff6b00' },
-        shape: { type: 'circle' },
-        opacity: {
-            value: 0.5,
-            random: true
-        },
-        size: {
-            value: 3,
-            random: true
-        },
-        move: {
-            enable: true,
-            speed: 2,
-            direction: 'none',
-            random: true,
-            out_mode: 'out'
-        }
-    }
-};
-
 // Add these sprite definitions at the top with other constants
 const sprites = {
     head: {
@@ -134,8 +110,6 @@ function initGame() {
 
     // Draw initial state
     draw();
-
-    setupParticles();
 }
 
 function resizeCanvas() {
@@ -387,11 +361,13 @@ function draw() {
 
     // Draw score and level
     ctx.fillStyle = colors.text;
+    ctx.globalAlpha = 0.5;
     ctx.font = '20px "Press Start 2P"';
     ctx.textAlign = 'left';
     ctx.fillText(`Score: ${score}`, 10, 30);
     ctx.fillText(`Level: ${level}`, 10, 60);
     ctx.fillText(`High Score: ${highScore}`, 10, 90);
+    ctx.globalAlpha = 1.0;
 }
 
 function drawGrid() {
@@ -480,28 +456,6 @@ function preventScroll(e) {
     if (gameStarted && !gamePaused) {
         e.preventDefault();
     }
-}
-
-// Initialize particles
-function initParticles() {
-    particlesJS('particles-js', particlesConfig);
-}
-
-// Add particle container to game
-function setupParticles() {
-    const container = document.createElement('div');
-    container.id = 'particles-js';
-    container.style.cssText = `
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        pointer-events: none;
-        z-index: 1;
-    `;
-    document.querySelector('.game-container').appendChild(container);
-    initParticles();
 }
 
 // Initialize game when DOM is loaded
