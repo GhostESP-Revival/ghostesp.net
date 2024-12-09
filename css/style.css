@@ -1865,11 +1865,14 @@ body.menu-open {
 }
 
 .markdown-content {
-    max-height: 200px;
+    max-height: 300px;
     overflow-y: auto;
-    padding-right: 1rem;
-    margin-bottom: 1rem;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
     color: var(--text-secondary);
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .markdown-content::-webkit-scrollbar {
@@ -1877,7 +1880,7 @@ body.menu-open {
 }
 
 .markdown-content::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.05);
     border-radius: 4px;
 }
 
@@ -1886,22 +1889,36 @@ body.menu-open {
     border-radius: 4px;
 }
 
+.markdown-content::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-color);
+}
+
 .markdown-content h1,
 .markdown-content h2,
 .markdown-content h3 {
     color: var(--text-primary);
-    margin: 1rem 0 0.5rem;
-    font-size: 1.1rem;
+    margin: 1.5rem 0 1rem;
+    font-family: var(--font-mono);
+    font-size: 1.2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 0.5rem;
+}
+
+.markdown-content h1:first-child,
+.markdown-content h2:first-child,
+.markdown-content h3:first-child {
+    margin-top: 0;
 }
 
 .markdown-content ul,
 .markdown-content ol {
     padding-left: 1.5rem;
-    margin: 0.5rem 0;
+    margin: 1rem 0;
 }
 
 .markdown-content li {
-    margin: 0.25rem 0;
+    margin: 0.5rem 0;
+    line-height: 1.6;
 }
 
 .markdown-content code {
@@ -1910,21 +1927,137 @@ body.menu-open {
     border-radius: 4px;
     font-family: var(--font-mono);
     font-size: 0.9em;
+    color: var(--primary-color);
+}
+
+.markdown-content pre {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 1rem;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin: 1rem 0;
 }
 
 .markdown-content pre code {
-    display: block;
-    padding: 1rem;
-    overflow-x: auto;
+    background: none;
+    padding: 0;
+    color: var(--text-secondary);
 }
 
 .markdown-content a {
     color: var(--primary-color);
     text-decoration: none;
+    border-bottom: 1px dashed rgba(255, 107, 0, 0.3);
+    transition: all 0.3s ease;
 }
 
 .markdown-content a:hover {
-    text-decoration: underline;
+    color: var(--accent-color);
+    border-bottom-color: var(--accent-color);
+}
+
+/* Tables */
+.markdown-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+}
+
+.markdown-content th,
+.markdown-content td {
+    padding: 0.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: left;
+}
+
+.markdown-content th {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-primary);
+}
+
+/* Blockquotes */
+.markdown-content blockquote {
+    border-left: 3px solid var(--primary-color);
+    margin: 1rem 0;
+    padding: 0.5rem 0 0.5rem 1rem;
+    color: var(--text-secondary);
+    font-style: italic;
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+    .markdown-content {
+        max-height: 250px;
+        padding: 0.75rem;
+        font-size: 0.9rem;
+    }
+
+    .markdown-content h1,
+    .markdown-content h2,
+    .markdown-content h3 {
+        font-size: 1.1rem;
+        margin: 1rem 0 0.75rem;
+    }
+
+    .markdown-content ul,
+    .markdown-content ol {
+        padding-left: 1.25rem;
+    }
+
+    .markdown-content pre {
+        padding: 0.75rem;
+    }
+
+    .markdown-content table {
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .markdown-content th,
+    .markdown-content td {
+        padding: 0.5rem;
+        font-size: 0.9rem;
+    }
+}
+
+/* Custom scrollbar for markdown content */
+.markdown-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.markdown-content::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+}
+
+.markdown-content::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 4px;
+}
+
+.markdown-content::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-color);
+}
+
+/* Christmas theme modifications */
+.christmas-theme .markdown-content code {
+    color: var(--christmas-primary);
+    background: rgba(255, 26, 26, 0.1);
+}
+
+.christmas-theme .markdown-content a {
+    color: var(--christmas-primary);
+    border-bottom-color: rgba(255, 26, 26, 0.3);
+}
+
+.christmas-theme .markdown-content a:hover {
+    color: var(--christmas-gold);
+    border-bottom-color: var(--christmas-gold);
+}
+
+.christmas-theme .markdown-content blockquote {
+    border-left-color: var(--christmas-primary);
 }
 
 /* Custom Scrollbars */
@@ -1958,18 +2091,6 @@ body.menu-open {
     scrollbar-color: var(--primary-color) rgba(255, 255, 255, 0.05);
 }
 
-/* Horizontal Scrollbars (like in code blocks) */
-pre {
-    overflow-x: auto;
-    margin: 0;
-    padding: 1rem;
-}
-
-.video-scroll-wrapper {
-    scrollbar-width: thin;
-    scrollbar-color: var(--primary-color) rgba(255, 255, 255, 0.05);
-}
-
 /* Custom text selection colors */
 ::selection {
     background: rgba(255, 107, 0, 0.3);
@@ -1994,72 +2115,35 @@ pre {
     color: var(--christmas-accent);
 }
 
-/* Add these styles for the menu overlay */
-.menu-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(4px);
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s ease;
-    z-index: 90;
+/* Horizontal Scrollbars (like in code blocks) */
+pre {
+    overflow-x: auto;
+    margin: 0;
+    padding: 1rem;
 }
 
-.menu-overlay.active {
-    opacity: 1;
-    visibility: visible;
+.video-scroll-wrapper {
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary-color) rgba(255, 255, 255, 0.05);
 }
 
-/* Update mobile menu button styles */
-.mobile-menu-btn {
-    display: none;
-    background: none;
-    border: none;
-    color: var(--text-primary);
-    cursor: pointer;
-    padding: 8px;
-    z-index: 1000;
+/* Keep the specific markdown scrollbar styles as they are */
+.markdown-content::-webkit-scrollbar {
+    width: 8px;
 }
 
-/* Update mobile styles */
-@media (max-width: 768px) {
-    .mobile-menu-btn {
-        display: block;
-        position: relative;
-        z-index: 100;
-    }
+.markdown-content::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+}
 
-    .nav-links {
-        position: fixed;
-        top: 0;
-        right: -100%;
-        height: 100vh;
-        width: 75%;
-        max-width: 300px;
-        background: var(--surface-color);
-        flex-direction: column;
-        padding: 80px 2rem 2rem;
-        transition: right 0.3s ease;
-        backdrop-filter: blur(10px);
-        border-left: 1px solid rgba(255, 255, 255, 0.1);
-        z-index: 95;
-        display: flex;
-    }
+.markdown-content::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 4px;
+}
 
-    .nav-links.active {
-        right: 0;
-    }
-
-    /* Show all nav links in mobile menu */
-    .nav-links a {
-        display: flex !important;
-        opacity: 1 !important;
-        visibility: visible !important;
-    }
+.markdown-content::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-color);
 }
 
 
