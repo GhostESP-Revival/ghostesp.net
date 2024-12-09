@@ -788,7 +788,7 @@ body::before {
     position: relative;
     padding: 2rem 1rem;
     -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
+    scrollbar-width: thin;
     scroll-snap-type: x mandatory;
 }
 
@@ -1981,6 +1981,30 @@ pre {
 .video-scroll-wrapper {
     scrollbar-width: thin;
     scrollbar-color: var(--primary-color) rgba(255, 255, 255, 0.05);
+}
+
+/* Custom text selection colors */
+::selection {
+    background: rgba(255, 107, 0, 0.3);
+    color: var(--text-primary);
+    text-shadow: none;
+}
+
+::-moz-selection {
+    background: rgba(255, 107, 0, 0.3);
+    color: var(--text-primary);
+    text-shadow: none;
+}
+
+/* Christmas theme selection colors */
+.christmas-theme ::selection {
+    background: rgba(255, 26, 26, 0.3);
+    color: var(--christmas-accent);
+}
+
+.christmas-theme ::-moz-selection {
+    background: rgba(255, 26, 26, 0.3);
+    color: var(--christmas-accent);
 }
 
 
