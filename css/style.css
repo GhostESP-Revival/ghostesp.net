@@ -1445,39 +1445,48 @@ body.christmas-theme::before {
     content: '🦌🦌🦌🦌🛷🎅';
     position: absolute;
     font-size: 1.8rem;
-    animation: santaFlight 8s linear infinite;
-    z-index: 0;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-    transform-origin: center;
     white-space: nowrap;
     filter: brightness(0.9);
     letter-spacing: -0.3rem;
+    z-index: 1;
+    top: 40%;
+    animation: 
+        santaFlight 8s linear infinite,
+        santaBob 2s ease-in-out infinite;
+    transform-origin: center;
 }
 
-/* Improve present visibility and animation */
-@keyframes presentDrop {
+@keyframes santaFlight {
     0% {
-        opacity: 1;
-        transform: translateY(0) rotate(0deg);
+        left: 100%;
+        transform: rotate(-2deg);
     }
     50% {
-        opacity: 1;
-        transform: translateY(30vh) rotate(180deg);
+        transform: rotate(2deg);
     }
     100% {
-        opacity: 0;
-        transform: translateY(60vh) rotate(360deg);
+        left: -50%;
+        transform: rotate(-2deg);
     }
 }
 
+@keyframes santaBob {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+/* Update present styles */
 .present {
     position: absolute;
     font-size: 1.5rem;
     pointer-events: none;
-    opacity: 0.5;
-    z-index: 20;
-    animation: presentDrop 1.5s ease-in forwards;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    z-index: 3;
+    filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.5));
+    transform-origin: center;
 }
 
 .present::after {
@@ -1485,84 +1494,9 @@ body.christmas-theme::before {
     display: block;
 }
 
-.present:nth-child(2n)::after {
-    content: '🎀';
-}
-
-.present:nth-child(3n)::after {
-    content: '🧸';
-}
-
-.present:nth-child(4n)::after {
-    content: '🎮';
-}
-
-/* Fix Santa's rotation direction */
-@keyframes santaFlight {
-    0% {
-        top: 40%;
-        right: -200px;
-        transform: translateY(0) translateX(0) rotate(-10deg);
-    }
-    25% {
-        top: 35%;
-        transform: translateY(-20px) translateX(20px) rotate(5deg);
-    }
-    50% {
-        top: 40%;
-        transform: translateY(0) translateX(-10px) rotate(-5deg);
-    }
-    75% {
-        top: 45%;
-        transform: translateY(20px) translateX(10px) rotate(5deg);
-    }
-    100% {
-        top: 40%;
-        right: calc(100% + 200px);
-        transform: translateY(0) translateX(0) rotate(-10deg);
-    }
-}
-
-/* Simplify bobbing animation */
-.christmas-theme .hero::after {
-    animation: santaFlight 8s linear infinite, bobbing 2s ease-in-out infinite;
-}
-
-@keyframes bobbing {
-    0%, 100% {
-        margin-top: 0;
-    }
-    50% {
-        margin-top: -10px;
-    }
-}
-
-/* Update sparkle trail to look more like snow */
-.christmas-theme .hero::before {
-    content: '❄️';
-    position: absolute;
-    font-size: 0.8rem;
-    opacity: 0.5;
-    z-index: 0;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    pointer-events: none;
-    animation: heroSnowSparkle 3s linear infinite; /* Renamed from snowfall */
-}
-
-
-
-/* Keep the main snowfall animation for actual snowflakes */
-@keyframes snowfall {
-    0% {
-        transform: translate3d(0, -5vh, 0);
-    }
-    100% {
-        transform: translate3d(0, 105vh, 0);
-    }
-}
+.present:nth-child(2n)::after { content: '🎀'; }
+.present:nth-child(3n)::after { content: '🧸'; }
+.present:nth-child(4n)::after { content: '🎮'; }
 
 /* Ensure hero content stays on top */
 .hero-content {
@@ -1635,6 +1569,138 @@ body.christmas-theme::before {
     }
     100% {
         transform: translate3d(0, 105vh, 0);
+    }
+}
+
+/* Mobile menu button */
+.mobile-menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    cursor: pointer;
+    padding: 8px;
+    z-index: 1000;
+}
+
+.mobile-menu-btn i {
+    width: 24px;
+    height: 24px;
+}
+
+/* Update mobile styles */
+@media (max-width: 768px) {
+    .mobile-menu-btn {
+        display: block;
+    }
+
+    .nav-content {
+        padding: 0.5rem 1rem;
+        position: relative;
+    }
+
+    .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        height: 100vh;
+        width: 75%;
+        max-width: 300px;
+        background: var(--surface-color);
+        flex-direction: column;
+        padding: 80px 2rem 2rem;
+        transition: right 0.3s ease;
+        backdrop-filter: blur(10px);
+        border-left: 1px solid rgba(255, 255, 255, 0.1);
+        z-index: 95;
+        display: flex;
+    }
+
+    .nav-links.active {
+        right: 0;
+    }
+
+    .nav-links li {
+        margin: 1rem 0;
+        width: 100%;
+    }
+
+    .nav-links a {
+        font-size: 1.1rem;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+        padding: 0.5rem 0;
+    }
+
+    /* Update icon buttons in mobile menu */
+    .github-btn, .discord-btn, .theme-btn {
+        width: 100%;
+        height: auto;
+        background: none;
+        padding: 0.5rem 0;
+        justify-content: flex-start;
+    }
+
+    .github-btn i, .discord-btn i, .theme-btn i {
+        width: 20px;
+        height: 20px;
+    }
+
+    /* Ensure menu button stays on top */
+    .mobile-menu-btn {
+        position: relative;
+        z-index: 100;
+    }
+
+    /* Remove or update any conflicting display:none styles */
+    .nav-links a:not(.github-btn):not(.discord-btn) {
+        display: flex !important;
+    }
+}
+
+/* Prevent body scroll when menu is open */
+body.menu-open {
+    overflow: hidden;
+}
+
+/* Add this to your existing styles */
+.menu-label {
+    display: none;
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+}
+
+/* Update the mobile styles */
+@media (max-width: 768px) {
+    /* ... other mobile styles ... */
+
+    /* Show labels in mobile menu */
+    .menu-label {
+        display: block;
+        margin-left: 10px;
+    }
+
+    /* Update icon buttons in mobile menu */
+    .github-btn, .discord-btn, .theme-btn {
+        width: 100%;
+        height: auto;
+        background: none;
+        padding: 0.5rem 0;
+        justify-content: flex-start;
+        color: var(--text-secondary);
+        transition: color 0.3s ease;
+    }
+
+    .github-btn:hover, .discord-btn:hover, .theme-btn:hover {
+        color: var(--text-primary);
+    }
+
+    .github-btn i, .discord-btn i, .theme-btn i {
+        width: 20px;
+        height: 20px;
+        flex-shrink: 0; /* Prevent icon from shrinking */
     }
 }
 

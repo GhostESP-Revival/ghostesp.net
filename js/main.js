@@ -294,6 +294,8 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+
+    initMobileMenu();
 }); 
 
 function updateChristmasCountdown() {
@@ -331,6 +333,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const themeToggle = document.getElementById('theme-toggle');
     let presentInterval;
     let snowfallElement;
+
+    // Add auto-initialization for Christmas season
+    const initChristmasIfNeeded = () => {
+        const today = new Date();
+        if (today.getMonth() === 11) { // December
+            document.body.classList.add('christmas-theme');
+            createSnowfall();
+            window.presentInterval = startPresentDropping();
+            setTimeout(dropPresent, 100); // Drop first present after slight delay
+        }
+    };
 
     const createSnowfall = () => {
         // Remove existing snowfall if any
@@ -371,63 +384,92 @@ document.addEventListener('DOMContentLoaded', () => {
         const hero = document.querySelector('.hero');
         if (!hero) return;
 
-        // Get Santa's current position by calculating animation progress
-        const santaWidth = 150; // Approximate width of Santa emoji string
         const heroWidth = hero.offsetWidth;
-        const totalDistance = heroWidth + (santaWidth * 2); // Total distance Santa travels
         
-        // Calculate Santa's current position based on animation progress
-        const animationDuration = 8000; // 8s from santaFlight animation
-        const progress = (Date.now() % animationDuration) / animationDuration;
-        const santaX = -santaWidth + (totalDistance * progress);
+        // Adjustable offsets for fine-tuning
+        const TIMING_OFFSET = +0; // Adjust this value between -1 and 1 to shift timing
+        const X_OFFSET = +20; // Adjust this value to shift presents left/right
+        const Y_OFFSET = -10; // Adjust this value to shift presents up/down
         
-        // Create and position present
+        const flightDuration = 8000;
+        const elapsed = Date.now() % flightDuration;
+        let progress = (elapsed / flightDuration) + TIMING_OFFSET;
+        
+        // Ensure progress stays between 0 and 1
+        progress = (progress + 1) % 1;
+        
+        // Calculate position with adjustable offsets
+        const totalDistance = heroWidth * 1.5;
+        const santaX = (heroWidth - (progress * totalDistance)) + X_OFFSET;
+        
+        const baseY = hero.offsetHeight * 0.4;
+        const bobAmount = 20;
+        const bobProgress = (Date.now() % 2000) / 2000;
+        const bobOffset = Math.sin(bobProgress * Math.PI * 2) * bobAmount;
+        const santaY = baseY + bobOffset + Y_OFFSET;
+
         const present = document.createElement('div');
         present.className = 'present';
         
-        // Set initial position to Santa's current X position
-        present.style.left = `${santaX}px`;
-        // Start from Santa's Y position (around 40% from top as per santaFlight animation)
-        present.style.top = '40%';
+        present.style.cssText = `
+            position: absolute;
+            left: ${santaX}px;
+            top: ${santaY}px;
+            transform-origin: center;
+            z-index: 3;
+            font-size: 1.5rem;
+        `;
         
         hero.appendChild(present);
-        present.addEventListener('animationend', () => present.remove());
+
+        const animation = present.animate([
+            {
+                top: `${santaY}px`,
+                left: `${santaX}px`,
+                transform: 'rotate(0deg) scale(1)',
+                opacity: 1
+            },
+            {
+                top: `${hero.offsetHeight + 50}px`,
+                left: `${santaX + (Math.random() * 40 - 20)}px`,
+                transform: 'rotate(720deg) scale(0.5)',
+                opacity: 0
+            }
+        ], {
+            duration: 2000,
+            easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+        });
+
+        animation.onfinish = () => present.remove();
     };
 
     const startPresentDropping = () => {
-        if (presentInterval) {
-            clearInterval(presentInterval);
+        if (window.presentInterval) {
+            clearInterval(window.presentInterval);
         }
-        // Drop presents more frequently (every 300ms)
+        
+        // Drop presents more consistently (every 150ms with 25% chance)
         return setInterval(() => {
-            // 40% chance to drop a present
-            if (Math.random() > 0.6) {
+            if (Math.random() > 0.75) {
                 dropPresent();
             }
-        }, 300);
+        }, 150);
     };
 
     const cleanupChristmasEffects = () => {
-        // Clear present dropping interval
-        if (presentInterval) {
-            clearInterval(presentInterval);
-            presentInterval = null;
+        if (window.presentInterval) {
+            clearInterval(window.presentInterval);
+            window.presentInterval = null;
         }
+        
+        // Remove all presents
+        document.querySelectorAll('.present').forEach(p => p.remove());
         
         // Remove snowfall
-        if (snowfallElement) {
-            snowfallElement.remove();
-            snowfallElement = null;
+        const snowfall = document.querySelector('.snowfall');
+        if (snowfall) {
+            snowfall.remove();
         }
-        
-        // Backup cleanup - remove any snowfall containers
-        const existingSnowfall = document.querySelector('.snowfall');
-        if (existingSnowfall) {
-            existingSnowfall.remove();
-        }
-        
-        // Remove any remaining presents
-        document.querySelectorAll('.present').forEach(p => p.remove());
     };
 
     const toggleChristmasTheme = (e) => {
@@ -443,17 +485,73 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             document.body.classList.add('christmas-theme');
             createSnowfall();
-            presentInterval = startPresentDropping();
+            window.presentInterval = startPresentDropping();
+            setTimeout(dropPresent, 100);
         }
     };
 
     // Initialize theme toggle
     if (themeToggle) {
-        // Remove any existing listeners
         themeToggle.replaceWith(themeToggle.cloneNode(true));
         const newThemeToggle = document.getElementById('theme-toggle');
-        
-        // Add new listener
         newThemeToggle.addEventListener('click', toggleChristmasTheme);
     }
+
+    // Call initialization function
+    initChristmasIfNeeded();
 }); 
+
+function initMobileMenu() {
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    const navLinks = document.querySelector('.nav-links');
+    const body = document.body;
+    
+    // Create overlay
+    const overlay = document.createElement('div');
+    overlay.className = 'menu-overlay';
+    document.body.appendChild(overlay);
+
+    function toggleMenu() {
+        navLinks.classList.toggle('active');
+        overlay.classList.toggle('active');
+        body.classList.toggle('menu-open');
+        
+        // Update menu icon
+        const menuIcon = mobileMenuBtn.querySelector('i');
+        if (navLinks.classList.contains('active')) {
+            menuIcon.setAttribute('data-feather', 'x');
+        } else {
+            menuIcon.setAttribute('data-feather', 'menu');
+        }
+        feather.replace();
+    }
+
+    // Toggle menu on button click
+    mobileMenuBtn.addEventListener('click', toggleMenu);
+
+    // Close menu when clicking overlay
+    overlay.addEventListener('click', toggleMenu);
+
+    // Close menu when clicking a link
+    navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            if (navLinks.classList.contains('active')) {
+                toggleMenu();
+            }
+        });
+    });
+
+    // Close menu on escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && navLinks.classList.contains('active')) {
+            toggleMenu();
+        }
+    });
+
+    // Prevent menu from staying open on window resize
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 768 && navLinks.classList.contains('active')) {
+            toggleMenu();
+        }
+    });
+} 
