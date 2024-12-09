@@ -611,10 +611,13 @@ function initMobileMenu() {
     const navLinks = document.querySelector('.nav-links');
     const body = document.body;
     
-    // Create overlay
-    const overlay = document.createElement('div');
-    overlay.className = 'menu-overlay';
-    document.body.appendChild(overlay);
+    // Create overlay if it doesn't exist
+    let overlay = document.querySelector('.menu-overlay');
+    if (!overlay) {
+        overlay = document.createElement('div');
+        overlay.className = 'menu-overlay';
+        document.body.appendChild(overlay);
+    }
 
     function toggleMenu() {
         navLinks.classList.toggle('active');
@@ -632,7 +635,10 @@ function initMobileMenu() {
     }
 
     // Toggle menu on button click
-    mobileMenuBtn.addEventListener('click', toggleMenu);
+    mobileMenuBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleMenu();
+    });
 
     // Close menu when clicking overlay
     overlay.addEventListener('click', toggleMenu);
@@ -659,7 +665,12 @@ function initMobileMenu() {
             toggleMenu();
         }
     });
-} 
+}
+
+// Make sure to call initMobileMenu after DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    initMobileMenu();
+});
 
 // Link preloading functionality
 const linkPreloader = {
