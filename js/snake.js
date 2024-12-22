@@ -93,6 +93,9 @@ function initGame() {
         { x: 1, y: 1 }
     ];
 
+    // Update initial score display
+    updateScoreDisplay();
+
     // Generate initial food
     generateFood();
 
@@ -164,6 +167,7 @@ function resetGame() {
     gamePaused = false;
     document.getElementById('pauseBtn').textContent = 'Pause';
     
+    updateScoreDisplay();
     generateFood();
     generateBombs();
     
@@ -235,6 +239,7 @@ function update() {
             highScore = score;
             localStorage.setItem('ghostSnakeHighScore', highScore);
         }
+        updateScoreDisplay();
         generateFood();
         generateBombs(); // Regenerate bombs when food is eaten
     } else {
@@ -298,9 +303,6 @@ function gameOver() {
         duration: 0.5,
         onComplete: () => {
             ctx.fillText('GAME OVER', canvas.width / 2, canvas.height / 2);
-            ctx.font = '20px "Press Start 2P"';
-            ctx.fillText(`Score: ${score}`, canvas.width / 2, canvas.height / 2 + 40);
-            ctx.fillText(`High Score: ${highScore}`, canvas.width / 2, canvas.height / 2 + 80);
         }
     });
 }
@@ -358,16 +360,6 @@ function draw() {
         food.y * gridSize + gridSize / 2
     );
     ctx.restore();
-
-    // Draw score and level
-    ctx.fillStyle = colors.text;
-    ctx.globalAlpha = 0.5;
-    ctx.font = '20px "Press Start 2P"';
-    ctx.textAlign = 'left';
-    ctx.fillText(`Score: ${score}`, 10, 30);
-    ctx.fillText(`Level: ${level}`, 10, 60);
-    ctx.fillText(`High Score: ${highScore}`, 10, 90);
-    ctx.globalAlpha = 1.0;
 }
 
 function drawGrid() {
@@ -478,6 +470,8 @@ function levelUp() {
     clearInterval(gameLoop);
     gameLoop = setInterval(update, speed);
     
+    updateScoreDisplay();
+    
     // Show level up message
     const levelUpText = `Level ${level}!`;
     ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
@@ -503,4 +497,10 @@ function levelUp() {
             }
         });
     });
+}
+
+function updateScoreDisplay() {
+    document.getElementById('currentScore').textContent = score;
+    document.getElementById('currentLevel').textContent = level;
+    document.getElementById('highScoreDisplay').textContent = highScore;
 } 

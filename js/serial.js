@@ -25,8 +25,6 @@ class SerialConsole {
         this.connectionDot = document.getElementById('connectionDot');
         this.browserDialog = document.getElementById('browserDialog');
         this.permissionDialog = document.getElementById('permissionDialog');
-        
-        // Initialize baud rate display
         this.updateBaudRateDisplay();
     }
 
@@ -274,8 +272,9 @@ class SerialConsole {
             if (!line.trim()) return '';
             
             let formattedLine = line;
-            
-            // AP scan result formatting
+            let matched = false;
+
+            // GhostESP-specific formatting (preserved)
             if (formattedLine.match(/^\[\d+\]\s*SSID:/)) {
                 return `<span class="ap-entry">${formattedLine}</span>`;
             }
@@ -283,59 +282,69 @@ class SerialConsole {
                 return `<span class="ap-detail">${formattedLine}</span>`;
             }
             
-            // WiFi status messages
-            if (formattedLine.match(/WiFi|scanning|AP count|Found \d+ access points/i)) {
+            // Generic firmware patterns (enhanced)
+            
+            // WiFi related messages (broadened)
+            if (formattedLine.match(/\b(WiFi|scanning|AP|access point|SSID|connected to|network|connection)\b/i)) {
                 return `<span class="wifi-status">${formattedLine}</span>`;
             }
             
-            // IP Address
-            if (formattedLine.match(/\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/)) {
+            // IP/MAC Addresses and network info
+            if (formattedLine.match(/\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b/) || // IPv4
+                formattedLine.match(/\b([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})\b/) || // MAC address
+                formattedLine.match(/\b([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}\b/)) { // IPv6
                 return `<span class="ip-address">${formattedLine}</span>`;
             }
             
-            // Command input (starts with '>')
-            if (formattedLine.startsWith('>')) {
+            // Command input (starts with '>' or '$' for different shells)
+            if (formattedLine.match(/^[>$]\s/)) {
                 return `<span class="command">${formattedLine}</span>`;
             }
             
-            // Help text formatting
-            if (formattedLine.match(/^(Description|Usage|Arguments):/)) {
+            // Help/Documentation text (broadened)
+            if (formattedLine.match(/^(Description|Usage|Arguments|Example|Options|Commands|Help):/i)) {
                 return `<span class="help-header">${formattedLine}</span>`;
             }
             
-            // Command name formatting
-            if (formattedLine.match(/^[a-z]+$/)) {
+            // Command names (more flexible pattern)
+            if (formattedLine.match(/^[a-zA-Z_][a-zA-Z0-9_]*$/)) {
                 return `<span class="command-name">${formattedLine}</span>`;
             }
             
-            // Error messages
-            if (formattedLine.match(/\b(error|fail(ed)?|exception)\b/i) || 
-                formattedLine.includes('ERR') || 
-                formattedLine.startsWith('E:')) {
+            // Error messages (enhanced patterns)
+            if (formattedLine.match(/\b(error|fail(ed|ure)?|exception|invalid|timeout|denied)\b/i) || 
+                formattedLine.match(/\b(ERR|ERROR|E:)/i) ||
+                formattedLine.match(/^!\s/)) {
                 return `<span class="error">${formattedLine}</span>`;
             }
             
-            // Success messages
-            if (formattedLine.match(/\b(success|ok|done|ready|started)\b/i) || 
-                formattedLine.startsWith('S:')) {
+            // Success messages (enhanced patterns)
+            if (formattedLine.match(/\b(success|ok|done|ready|started|complete|finished|connected)\b/i) || 
+                formattedLine.match(/\b(OK|SUCCESS|S:)/i)) {
                 return `<span class="success">${formattedLine}</span>`;
             }
             
-            // Warning messages
-            if (formattedLine.match(/\b(warning|warn)\b/i) || 
-                formattedLine.startsWith('W:')) {
+            // Warning messages (enhanced patterns)
+            if (formattedLine.match(/\b(warning|warn|caution|attention)\b/i) || 
+                formattedLine.match(/\b(WARN|WARNING|W:)/i)) {
                 return `<span class="warning">${formattedLine}</span>`;
             }
             
-            // Info messages
-            if (formattedLine.match(/\b(info|note)\b/i) || 
-                formattedLine.startsWith('I:')) {
+            // Info/Debug/Log messages (enhanced patterns)
+            if (formattedLine.match(/\b(info|note|debug|log)\b/i) || 
+                formattedLine.match(/\b(INFO|DEBUG|LOG|I:|D:)/i)) {
                 return `<span class="info">${formattedLine}</span>`;
             }
             
-            // Arguments formatting
-            if (formattedLine.trim().startsWith('-')) {
+            // Arguments and parameters (enhanced)
+            if (formattedLine.trim().match(/^(-{1,2}|\/)[a-zA-Z]/) || // Command line args
+                formattedLine.match(/^[a-zA-Z_][a-zA-Z0-9_]*=/)) {    // Key=value pairs
                 return `<span class="argument">${formattedLine}</span>`;
+            }
+            
+            // Memory addresses and hex values
+            if (formattedLine.match(/\b(0x[0-9a-fA-F]+)\b/)) {
+                return `<span class="memory-address">${formattedLine}</span>`;
             }
             
             return formattedLine;

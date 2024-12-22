@@ -868,3 +868,66 @@ document.querySelector('.logo').addEventListener('click', () => {
         behavior: 'smooth'
     });
 });
+
+// Add Konami code easter egg
+const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+let konamiIndex = 0;
+
+document.addEventListener('keydown', function(e) {
+    // Check if the key pressed matches the next key in the Konami code
+    if (e.key === konamiCode[konamiIndex]) {
+        konamiIndex++;
+        
+        // If the full code is entered
+        if (konamiIndex === konamiCode.length) {
+            // Reset the index
+            konamiIndex = 0;
+            
+            // Add a fun animation effect
+            const logo = document.querySelector('.logo');
+            logo.style.transition = 'transform 0.5s ease';
+            logo.style.transform = 'rotate(360deg)';
+            
+            // After animation, redirect to snake game
+            setTimeout(() => {
+                window.location.href = 'snake.html';
+            }, 500);
+        }
+    } else {
+        // Reset if wrong key is pressed
+        konamiIndex = 0;
+    }
+});
+
+// Add logo click counter for alternative easter egg
+let logoClickCount = 0;
+let logoClickTimer;
+
+document.querySelector('.logo').addEventListener('click', function(e) {
+    e.preventDefault();
+    
+    logoClickCount++;
+    
+    // Clear existing timer
+    clearTimeout(logoClickTimer);
+    
+    // Set new timer to reset count after 2 seconds
+    logoClickTimer = setTimeout(() => {
+        logoClickCount = 0;
+    }, 2000);
+    
+    // If logo is clicked 5 times rapidly
+    if (logoClickCount === 5) {
+        logoClickCount = 0;
+        clearTimeout(logoClickTimer);
+        
+        // Add a fun effect
+        this.style.transition = 'transform 0.5s ease';
+        this.style.transform = 'rotate(360deg)';
+        
+        // After animation, redirect to snake game
+        setTimeout(() => {
+            window.location.href = 'snake.html';
+        }, 500);
+    }
+});
