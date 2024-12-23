@@ -90,9 +90,9 @@ body::before {
 }
 
 .logo img {
-    width: 170px;
+    width: 70px;
     height: auto;
-    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
+    margin-left: 100px;
     transition: transform 0.3s ease;
 }
 
