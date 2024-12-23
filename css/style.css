@@ -2323,7 +2323,7 @@ pre {
     display: block;
     margin: 0 auto;
     margin-bottom: -50px;
-    filter: drop-shadow(0 0 30px rgba(255, 255, 255, 0.1));
+    filter: drop-shadow(0 0 30px rgba(0, 0, 0, 0.3));
     transition: transform 0.3s ease;
     position: relative;
     z-index: 1;
@@ -2358,7 +2358,7 @@ pre {
 
 /* Christmas theme modification */
 .christmas-theme .responsive-logo {
-    filter: drop-shadow(0 0 30px rgba(255, 255, 255, 0.2));
+    filter: drop-shadow(0 0 30px rgba(0, 0, 0, 0.4));
 }
 
 /* Christmas theme modifications */
