@@ -385,6 +385,13 @@ body::before {
     gap: 1rem;
     justify-content: center;
     margin-top: 2rem;
+    flex-wrap: wrap;
+}
+
+.cta-buttons .primary-btn,
+.cta-buttons .secondary-btn {
+    min-width: 160px;
+    text-align: center;
 }
 
 .primary-btn, .secondary-btn {
@@ -1778,6 +1785,7 @@ body.menu-open {
     position: relative;
     overflow: hidden;
     margin-top: 2rem;
+    scroll-margin-top: 100px; /* Add space for fixed navbar */
 }
 
 .latest-release-card::before {
@@ -2294,6 +2302,70 @@ pre {
 /* Christmas theme modification */
 .christmas-theme .responsive-logo {
     filter: drop-shadow(0 0 30px rgba(255, 255, 255, 0.2));
+}
+
+/* Christmas theme modifications */
+.christmas-theme .latest-release-card {
+    background: rgba(10, 15, 26, 0.6);
+    border-color: rgba(255, 215, 0, 0.1);
+}
+
+.christmas-theme .latest-release-card::before {
+    background: linear-gradient(45deg, transparent, rgba(255, 26, 26, 0.1), transparent);
+}
+
+.christmas-theme .latest-release-header i {
+    color: var(--christmas-primary);
+}
+
+.christmas-theme .release-meta span i {
+    color: var(--christmas-primary);
+}
+
+.christmas-theme .asset-link {
+    background: rgba(255, 26, 26, 0.08);
+    border-color: rgba(255, 26, 26, 0.1);
+}
+
+.christmas-theme .asset-link:hover {
+    background: rgba(255, 26, 26, 0.15);
+    border-color: rgba(255, 26, 26, 0.2);
+}
+
+.christmas-theme .show-more-btn {
+    color: var(--christmas-primary);
+}
+
+.christmas-theme .show-more-btn:hover {
+    color: var(--christmas-primary);
+}
+
+.christmas-theme .markdown-content {
+    background: rgba(10, 15, 26, 0.4);
+    border-color: rgba(255, 26, 26, 0.1);
+}
+
+.christmas-theme .markdown-content code {
+    background: rgba(255, 26, 26, 0.1);
+    color: var(--christmas-primary);
+}
+
+.christmas-theme .markdown-content::-webkit-scrollbar-thumb {
+    background: var(--christmas-primary);
+}
+
+.christmas-theme .markdown-content::-webkit-scrollbar-thumb:hover {
+    background: var(--christmas-gold);
+}
+
+.christmas-theme .markdown-content h1,
+.christmas-theme .markdown-content h2,
+.christmas-theme .markdown-content h3 {
+    border-bottom-color: rgba(255, 26, 26, 0.1);
+}
+
+html {
+    scroll-behavior: smooth;
 }
 
 

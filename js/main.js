@@ -761,6 +761,7 @@ async function fetchLatestRelease() {
     // Create release card container
     const releaseCard = document.createElement('div');
     releaseCard.className = 'latest-release-card';
+    releaseCard.id = 'latest-release';
     releaseCard.innerHTML = '<div class="release-loading">Loading latest release...</div>';
     featuresGrid.appendChild(releaseCard);
  
