@@ -174,7 +174,7 @@ body::before {
 /* Mobile Navigation */
 @media (max-width: 768px) {
     .nav-content {
-        padding: 0 1.5rem;
+        padding: 0 1rem;
     }
 
     .logo {
@@ -182,31 +182,88 @@ body::before {
     }
 
     .nav-links {
-        gap: 1.5rem;
+        position: fixed;
+        top: 0;
+        right: -100%;
+        height: 100vh;
+        width: 75%;
+        max-width: 300px;
+        background: var(--surface-color);
+        flex-direction: column;
+        padding: 80px 2rem 2rem;
+        transition: right 0.3s ease;
+        backdrop-filter: blur(10px);
+        border-left: 1px solid rgba(255, 255, 255, 0.1);
+        z-index: 95;
+        gap: 1rem;
+    }
+
+    .nav-links.active {
+        right: 0;
     }
 
     .nav-links a {
-        font-size: 0.8rem;
+        font-size: 0.9rem;
+        width: 100%;
+        padding: 0.75rem 0;
     }
 
     .github-btn, .discord-btn, .theme-btn {
-        width: 32px;
-        height: 32px;
+        width: 100%;
+        height: auto;
+        background: none;
+        padding: 0.75rem 0;
+        justify-content: flex-start;
     }
 
     .github-btn i, .discord-btn i, .theme-btn i {
-        width: 16px;
-        height: 16px;
+        width: 18px;
+        height: 18px;
+    }
+
+    .mobile-menu-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        background: none;
+        border: none;
+        color: var(--text-primary);
+        cursor: pointer;
+        z-index: 100;
+        margin-left: auto;
+    }
+
+    .mobile-menu-btn i {
+        width: 24px;
+        height: 24px;
+    }
+
+    .logo img {
+        margin-left: 0;
+        width: 50px;
     }
 }
 
-@media (max-width: 600px) {
-    .nav-links a:not(.github-btn):not(.discord-btn) {
-        display: none;
+@media (max-width: 480px) {
+    .nav-content {
+        padding: 0 0.75rem;
     }
 
     .nav-links {
-        gap: 1rem;
+        width: 85%;
+        padding: 80px 1.5rem 2rem;
+    }
+
+    .mobile-menu-btn {
+        width: 36px;
+        height: 36px;
+    }
+
+    .mobile-menu-btn i {
+        width: 22px;
+        height: 22px;
     }
 }
 
