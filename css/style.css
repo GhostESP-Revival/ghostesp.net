@@ -1849,36 +1849,51 @@ body.menu-open {
     gap: 1rem;
     flex-wrap: wrap;
     font-size: 0.9rem;
-
+    margin-bottom: 1rem;
+    padding: 0.5rem 0;
+    color: rgba(255, 255, 255, 0.7);
 }
 
 .release-meta span {
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    padding: 0.25rem 0;
+}
+
+.release-meta span i {
+    color: var(--primary-color);
+    opacity: 0.8;
+}
+
+.release-meta span:hover i {
+    opacity: 1;
 }
 
 .release-assets {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 1rem;
 }
 
 .asset-link {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.5rem 1rem;
-    background: rgba(255, 107, 0, 0.1);
+    gap: .5rem;
+    padding: 0.75rem 1rem;
+    background: rgba(255, 107, 0, 0.08);
     border-radius: 8px;
     color: var(--text-primary);
     text-decoration: none;
     transition: all 0.3s ease;
+    margin-bottom: 0.1rem;
+    border: 1px solid rgba(255, 107, 0, 0.1);
 }
 
 .asset-link:hover {
-    background: rgba(255, 107, 0, 0.2);
+    background: rgba(255, 107, 0, 0.15);
     transform: translateX(5px);
+    border-color: rgba(255, 107, 0, 0.2);
 }
 
 .asset-link i {
@@ -1900,7 +1915,7 @@ body.menu-open {
 .show-more-btn {
     background: none;
     border: none;
-    color: var(--text-secondary);
+    color: var(--primary-color);
     font-family: var(--font-mono);
     font-size: 0.9rem;
     padding: 0.5rem;
@@ -1912,20 +1927,33 @@ body.menu-open {
     transition: all 0.3s ease;
     width: 100%;
     justify-content: center;
+    opacity: 0.8;
 }
 
 .show-more-btn:hover {
-    color: var(--text-primary);
+    color: var(--primary-color);
+    opacity: 1;
 }
 
 .hidden-assets {
     transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.hidden-assets .asset-link {
+    margin-bottom: 0.75rem;
+}
+
+.hidden-assets .asset-link:last-child {
+    margin-bottom: 0;
 }
 
 .asset-list {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.75rem;
 }
 
 .release-info p {
@@ -1939,8 +1967,8 @@ body.menu-open {
     margin-bottom: 1.5rem;
     color: var(--text-secondary);
     border-radius: 8px;
-    background: rgba(0, 0, 0, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(255, 107, 0, 0.1);
 }
 
 .markdown-content::-webkit-scrollbar {
