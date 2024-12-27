@@ -12,11 +12,21 @@
     --font-display: 'Press Start 2P', cursive;
     --font-mono: 'Share Tech Mono', monospace;
     --font-body: 'Chakra Petch', sans-serif;
-    --christmas-primary: #ff1a1a;
-    --christmas-secondary: #00cc00;
-    --christmas-accent: #ffffff;
-    --christmas-gold: #ffd700;
-    --christmas-bg: #0a0f1a;
+    --spooky-primary: #b30000;  /* Blood red */
+    --spooky-secondary: #0a0008;  /* Almost black purple */
+    --spooky-accent: #ff3333;  /* Bright blood red for accents */
+    --spooky-bg: #000000;  /* Pure black */
+    --spooky-surface: #000000;  /* Pure black */
+    --spooky-card-bg: rgba(5, 0, 6, 0.98);  /* Nearly black purple with high opacity */
+    --spooky-text-primary: #ffffff;  /* Pure white */
+    --spooky-text-secondary: rgba(255, 255, 255, 0.85);  /* Slightly transparent white */
+    --spooky-border: rgba(179, 0, 0, 0.2);  /* Subtle blood red border */
+    --spooky-shadow: 0 4px 15px rgba(179, 0, 0, 0.15);  /* Subtle red glow */
+    --spooky-hover-shadow: 0 8px 25px rgba(179, 0, 0, 0.25);  /* Stronger red glow on hover */
+    --spooky-gradient-1: linear-gradient(135deg, #b30000, #0a0008);  /* Blood red to nearly black purple */
+    --spooky-gradient-2: linear-gradient(45deg, #0a0008, #b30000);  /* Nearly black purple to blood red */
+    --spooky-glow: rgba(179, 0, 0, 0.5);  /* Blood red glow */
+    --spooky-overlay: rgba(5, 0, 6, 0.98);  /* Nearly black purple overlay */
 }
 
 * {
@@ -1569,7 +1579,7 @@ body.christmas-theme::before {
 
 /* Update Santa animation styles */
 .christmas-theme .hero::after {
-    content: '🦌🦌🦌🦌🛷🎅';
+    content: '🦌🦌🦌🦌🛷����';
     position: absolute;
     font-size: 1.8rem;
     white-space: nowrap;
@@ -2424,5 +2434,318 @@ pre {
 html {
     scroll-behavior: smooth;
 }
+
+/* Update spooky theme styles */
+.spooky-theme {
+    background-color: #000000;
+    color: var(--spooky-text-primary);
+}
+
+.spooky-theme body::before {
+    background: 
+        radial-gradient(circle at 20% 20%, rgba(179, 0, 0, 0.05), transparent 40%),
+        radial-gradient(circle at 80% 80%, rgba(5, 0, 6, 0.05), transparent 40%),
+        radial-gradient(circle at 50% 50%, rgba(255, 51, 51, 0.03), transparent 60%);
+    opacity: 0.5;
+}
+
+/* Navbar styles */
+.spooky-theme .navbar {
+    background: rgba(0, 0, 0, 0.98) !important;
+    backdrop-filter: blur(10px);
+}
+
+/* Card styles */
+.spooky-theme .feature-card,
+.spooky-theme .board-card,
+.spooky-theme .step,
+.spooky-theme .video-card,
+.spooky-theme .latest-release-card,
+.spooky-theme .flipper-card {
+    background: #000000;
+    border: 1px solid var(--spooky-border);
+    box-shadow: var(--spooky-shadow);
+}
+
+/* Ensure all backgrounds are pure black */
+.spooky-theme .hero,
+.spooky-theme .features,
+.spooky-theme .compatibility,
+.spooky-theme .getting-started,
+.spooky-theme .video-showcase,
+.spooky-theme .flipper-app,
+.spooky-theme .credits,
+.spooky-theme footer,
+.spooky-theme .surface-color,
+.spooky-theme .nav-links,
+.spooky-theme section,
+.spooky-theme main,
+.spooky-theme body,
+.spooky-theme .markdown-content,
+.spooky-theme .video-showcase::before,
+.spooky-theme .getting-started::before,
+.spooky-theme .flipper-app::before {
+    background: #000000 !important;
+}
+
+.spooky-theme .feature-card:hover,
+.spooky-theme .board-card:hover,
+.spooky-theme .step:hover,
+.spooky-theme .video-card:hover,
+.spooky-theme .latest-release-card:hover,
+.spooky-theme .flipper-card:hover {
+    box-shadow: var(--spooky-hover-shadow);
+    border-color: rgba(179, 0, 0, 0.3);
+    transform: translateY(-5px);
+}
+
+/* Icon styles */
+.spooky-theme .feature-card i,
+.spooky-theme .board-card i,
+.spooky-theme .step i,
+.spooky-theme .app-features i {
+    color: var(--spooky-accent);
+    filter: drop-shadow(0 0 5px rgba(255, 51, 51, 0.3));
+}
+
+/* Button styles */
+.spooky-theme .primary-btn {
+    background: var(--spooky-gradient-1);
+    box-shadow: var(--spooky-shadow);
+    color: var(--spooky-text-primary);
+}
+
+.spooky-theme .primary-btn:hover {
+    box-shadow: var(--spooky-hover-shadow);
+    transform: translateY(-2px);
+}
+
+.spooky-theme .secondary-btn {
+    background: transparent;
+    border: 1px solid var(--spooky-border);
+    color: var(--spooky-text-primary);
+}
+
+.spooky-theme .secondary-btn:hover {
+    background: rgba(179, 0, 0, 0.1);
+    border-color: rgba(179, 0, 0, 0.3);
+}
+
+
+
+.spooky-theme .nav-links a {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.spooky-theme .nav-links a:hover {
+    color: #ffffff;
+}
+
+.spooky-theme .nav-links a::after {
+    background: linear-gradient(135deg, #ffffff, rgba(255, 255, 255, 0.7));
+}
+
+/* Text styles */
+.spooky-theme h1, 
+.spooky-theme h2, 
+.spooky-theme h3,
+.spooky-theme h4 {
+    color: var(--spooky-text-primary);
+}
+
+.spooky-theme p,
+.spooky-theme li {
+    color: var(--spooky-text-secondary);
+}
+
+/* Hero section */
+.spooky-theme .hero::before {
+    background: 
+        radial-gradient(circle at 20% 20%, rgba(179, 0, 0, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(56, 0, 64, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(255, 51, 51, 0.05) 0%, transparent 70%);
+}
+
+.spooky-theme .hero-grid {
+    opacity: 0.3;
+}
+
+/* Ghost follower */
+.spooky-theme #ghost .ghost__body {
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+.spooky-theme #ghost .ghost__eyes::before,
+.spooky-theme #ghost .ghost__eyes::after {
+    background: #000000;
+    box-shadow: none;
+}
+
+.spooky-theme #ghost .ghost__mouth {
+    background: #000000;
+    box-shadow: none;
+}
+
+/* Scrollbar */
+.spooky-theme ::-webkit-scrollbar-track {
+    background: var(--spooky-surface);
+}
+
+.spooky-theme ::-webkit-scrollbar-thumb {
+    background: var(--spooky-gradient-1);
+    border: 2px solid var(--spooky-surface);
+}
+
+.spooky-theme ::-webkit-scrollbar-thumb:hover {
+    background: var(--spooky-gradient-2);
+}
+
+/* Selection */
+.spooky-theme ::selection {
+    background: rgba(179, 0, 0, 0.2);
+    color: var(--spooky-text-primary);
+}
+
+/* Code blocks */
+.spooky-theme code {
+    background: rgba(179, 0, 0, 0.1);
+    color: var(--spooky-accent);
+    border: 1px solid var(--spooky-border);
+}
+
+/* Form elements */
+.spooky-theme input,
+.spooky-theme textarea,
+.spooky-theme select {
+    background: var(--spooky-card-bg);
+    border: 1px solid var(--spooky-border);
+    color: var(--spooky-text-primary);
+}
+
+.spooky-theme input:focus,
+.spooky-theme textarea:focus,
+.spooky-theme select:focus {
+    border-color: var(--spooky-accent);
+    box-shadow: 0 0 0 2px rgba(179, 0, 0, 0.2);
+}
+
+/* Tables */
+.spooky-theme table {
+    border-color: var(--spooky-border);
+}
+
+.spooky-theme th {
+    background: var(--spooky-surface);
+}
+
+.spooky-theme td {
+    border-color: var(--spooky-border);
+}
+
+/* Links */
+.spooky-theme a {
+    color: var(--spooky-accent);
+}
+
+.spooky-theme a:hover {
+    color: var(--spooky-primary);
+}
+
+/* Mobile menu */
+.spooky-theme .mobile-menu-btn {
+    color: var(--spooky-text-primary);
+}
+
+/* Footer */
+.spooky-theme .credits {
+    background: var(--spooky-surface);
+    border-top: 1px solid var(--spooky-border);
+}
+
+/* Animations */
+@keyframes spookyPulse {
+    0% { opacity: 0.8; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.05); }
+    100% { opacity: 0.8; transform: scale(1); }
+}
+
+.spooky-theme .feature-card i {
+    animation: spookyPulse 3s infinite ease-in-out;
+}
+
+/* Hover transitions */
+.spooky-theme .feature-card,
+.spooky-theme .board-card,
+.spooky-theme .step,
+.spooky-theme .video-card,
+.spooky-theme .latest-release-card,
+.spooky-theme .primary-btn,
+.spooky-theme .secondary-btn {
+    transition: all 0.3s ease-in-out;
+}
+
+/* Markdown content */
+.spooky-theme .markdown-content {
+    background: var(--spooky-card-bg);
+    border: 1px solid var(--spooky-border);
+}
+
+.spooky-theme .markdown-content pre {
+    background: var(--spooky-surface);
+    border: 1px solid var(--spooky-border);
+}
+
+/* Asset links */
+.spooky-theme .asset-link {
+    background: rgba(179, 0, 0, 0.1);
+    border: 1px solid var(--spooky-border);
+}
+
+.spooky-theme .asset-link:hover {
+    background: rgba(179, 0, 0, 0.15);
+    border-color: rgba(179, 0, 0, 0.3);
+}
+
+/* Video section */
+.spooky-theme .video-wrapper {
+    border: 1px solid var(--spooky-border);
+    box-shadow: var(--spooky-shadow);
+}
+
+/* Ensure proper contrast */
+.spooky-theme .text-secondary {
+    color: var(--spooky-text-secondary) !important;
+}
+
+.spooky-theme .text-primary {
+    color: var(--spooky-text-primary) !important;
+}
+
+.spooky-theme body,
+.spooky-theme .hero,
+.spooky-theme .features,
+.spooky-theme .compatibility,
+.spooky-theme .getting-started,
+.spooky-theme .video-showcase,
+.spooky-theme .flipper-app,
+.spooky-theme .credits,
+.spooky-theme footer,
+.spooky-theme .surface-color,
+.spooky-theme .nav-links,
+.spooky-theme section,
+.spooky-theme main,
+.spooky-theme .video-showcase::before,
+.spooky-theme .getting-started::before,
+.spooky-theme .flipper-app::before {
+    background: #000000 !important;
+}
+
+.spooky-theme .navbar {
+    background: rgba(0, 0, 0, 0.95) !important;
+}
+
+/* Card styles */
+// ... existing code ...
 
 

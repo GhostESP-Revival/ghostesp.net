@@ -64,7 +64,7 @@ function initNonCriticalFeatures() {
 
     // Initialize other features...
     initVideoLazyLoading();
-    initChristmasTheme();
+    initSpookyTheme();
     initMobileMenu();
     fetchLatestRelease();
 }
@@ -306,64 +306,563 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 }); 
 
-function initChristmasTheme() {
-    // Check if we're in the Christmas season (December)
-    const today = new Date();
-    const isChristmasSeason = today.getMonth() === 11; // December
+// Add spooky theme colors
+const spookyThemes = {
+    ghost: {
+        primary: '#ff6b00',
+        secondary: '#9c27b0',
+        accent: '#4a0404',
+        glow: 'rgba(255, 107, 0, 0.5)'
+    },
+    vampire: {
+        primary: '#8b0000',
+        secondary: '#4a0404',
+        accent: '#ff0000',
+        glow: 'rgba(139, 0, 0, 0.5)'
+    },
+    witch: {
+        primary: '#6a1b9a',
+        secondary: '#4a148c',
+        accent: '#9c27b0',
+        glow: 'rgba(106, 27, 154, 0.5)'
+    }
+};
 
-    if (isChristmasSeason) {
-        // Add Christmas theme class
-        document.body.classList.add('christmas-theme');
+// Add ghost follower code
+let mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+let ghostEnabled = true;
+
+class GhostFollow {
+    constructor() {
+        // Create ghost element
+        this.el = document.createElement('div');
+        this.el.id = 'ghost';
+        this.el.innerHTML = `
+            <div class="ghost__body">
+                <div class="ghost__eyes"></div>
+                <div class="ghost__mouth"></div>
+            </div>
+        `;
+        document.body.appendChild(this.el);
+
+        this.mouth = this.el.querySelector('.ghost__mouth');
+        this.eyes = this.el.querySelector('.ghost__eyes');
+        this.width = 90;
+        this.height = 90;
         
-        // Create snowfall container
-        const snowfall = document.createElement('div');
-        snowfall.className = 'snowfall';
-        document.body.appendChild(snowfall);
+        this.pos = { 
+            x: window.innerWidth / 2 - this.width / 2,
+            y: window.innerHeight / 2 - this.height / 2
+        };
 
-        // Create snowflakes
-        const snowflakes = ['❄', '❅', '❆', '✧', '✦'];
-        const numberOfSnowflakes = 50;
+        // Set initial position
+        this.el.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            transform: translate(${this.pos.x}px, ${this.pos.y}px) scale(0.8);
+            z-index: 9998;
+            pointer-events: none;
+        `;
 
-        for (let i = 0; i < numberOfSnowflakes; i++) {
-            const snowflake = document.createElement('div');
-            snowflake.className = 'snowflake';
-            snowflake.style.left = `${Math.random() * 100}%`;
-            snowflake.style.opacity = Math.random();
-            snowflake.style.animation = `snowfall ${5 + Math.random() * 10}s linear infinite`;
-            snowflake.style.animationDelay = `${Math.random() * 5}s`;
-            snowflake.innerHTML = snowflakes[Math.floor(Math.random() * snowflakes.length)];
-            snowfall.appendChild(snowflake);
+        // Movement properties
+        this.velocity = { x: 0, y: 0 };
+        this.wanderAngle = Math.random() * Math.PI * 2;
+        this.wanderRadius = 2;
+        this.maxSpeed = 5;
+        this.fleeDistance = 200;
+        this.fleeFactor = 4;
+        this.restThreshold = 500;
+        this.isResting = false;
+        this.restTimer = 0;
+        this.maxRestTime = 100;
+        this.chillSpeed = 0.5;
+
+        // Add ghost styles
+        const ghostStyle = document.createElement('style');
+        ghostStyle.textContent = `
+            #ghost {
+                transition: transform 0.05s linear;
+            }
+            .ghost__body {
+                width: 60px;
+                height: 60px;
+                border-radius: 50% 50% 0 0;
+                position: relative;
+                box-shadow:                     inset 0 0 15px rgba(255, 107, 0, 0.1);
+                overflow: visible;
+            }
+            .ghost__body::after {
+                content: '';
+                position: absolute;
+                bottom: -10px;
+                left: 0;
+                width: 100%;
+                height: 20px;
+                background: inherit;
+                filter: blur(10px);
+                opacity: 0.3;
+            }
+            .ghost__eyes {
+                position: absolute;
+                top: 30%;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 32px;
+                height: 8px;
+                display: flex;
+                justify-content: space-between;
+                filter: drop-shadow(0 0 5px rgba(255, 107, 0, 0.5));
+            }
+            .ghost__eyes:before,
+            .ghost__eyes:after {
+                content: '';
+                width: 8px;
+                height: 8px;
+                background: #000;
+                border-radius: 50%;
+                position: absolute;
+                box-shadow: 
+                    inset 0 0 4px rgba(255, 107, 0, 0.5),
+                    0 0 8px rgba(0, 0, 0, 0.2);
+            }
+            .ghost__eyes:before { left: 0; }
+            .ghost__eyes:after { right: 0; }
+            .ghost__mouth {
+                position: absolute;
+                bottom: 25%;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 16px;
+                height: 8px;
+                background: #000;
+                border-radius: 50%;
+                transition: transform 0.2s ease;
+                box-shadow: 
+                    inset 0 0 4px rgba(255, 107, 0, 0.5),
+                    0 0 8px rgba(0, 0, 0, 0.2);
+            }
+            .spooky-theme #ghost .ghost__body {
+                background: rgba(255, 255, 255, 0.98);
+            }
+        `;
+        document.head.appendChild(ghostStyle);
+    }
+
+    wander() {
+        this.wanderAngle += (Math.random() - 0.5) * (this.isResting ? 0.2 : 0.5);
+        const wanderForce = this.isResting ? this.wanderRadius * 0.3 : this.wanderRadius;
+        return {
+            x: Math.cos(this.wanderAngle) * wanderForce,
+            y: Math.sin(this.wanderAngle) * wanderForce
+        };
+    }
+
+    follow() {
+        if (!ghostEnabled || !document.body.classList.contains('spooky-theme')) return;
+
+        const dist = Math.hypot(
+            mouse.x - this.pos.x,
+            mouse.y - this.pos.y
+        );
+
+        if (dist > this.restThreshold) {
+            this.restTimer++;
+            if (this.restTimer > this.maxRestTime) this.isResting = true;
+        } else {
+            this.restTimer = 0;
+            this.isResting = false;
         }
 
-        // Add festive icons to feature cards
-        const featureIcons = document.querySelectorAll('.feature-card i');
-        const christmasIcons = [
-            'gift', 'star', 'bell', 'tree', 'candy', 
-            'snowflake', 'heart', 'moon', 'sun', 'cloud-snow'
-        ];
+        const wanderForce = this.wander();
+        let forceX = wanderForce.x;
+        let forceY = wanderForce.y;
+
+        if (dist < this.fleeDistance) {
+            this.isResting = false;
+            const fleeX = this.pos.x - mouse.x;
+            const fleeY = this.pos.y - mouse.y;
+            
+            const fleeMagnitude = Math.hypot(fleeX, fleeY);
+            const fleeStrength = (this.fleeDistance - dist) / this.fleeDistance;
+            
+            forceX += (fleeX / fleeMagnitude) * this.fleeFactor * fleeStrength;
+            forceY += (fleeY / fleeMagnitude) * this.fleeFactor * fleeStrength;
+        }
+
+        const forceFactor = this.isResting ? 0.05 : 0.1;
+        this.velocity.x += forceX * forceFactor;
+        this.velocity.y += forceY * forceFactor;
+
+        const drag = this.isResting ? 0.92 : 0.95;
+        this.velocity.x *= drag;
+        this.velocity.y *= drag;
+
+        const currentMaxSpeed = this.isResting ? this.chillSpeed : this.maxSpeed;
+        const speed = Math.hypot(this.velocity.x, this.velocity.y);
+        if (speed > currentMaxSpeed) {
+            this.velocity.x = (this.velocity.x / speed) * currentMaxSpeed;
+            this.velocity.y = (this.velocity.y / speed) * currentMaxSpeed;
+        }
+
+        this.pos.x += this.velocity.x;
+        this.pos.y += this.velocity.y;
+
+        const padding = 20;
+        const maxX = window.innerWidth - this.width - padding;
+        const maxY = window.innerHeight - this.height - padding;
         
-        featureIcons.forEach((icon, index) => {
-            if (christmasIcons[index]) {
-                icon.setAttribute('data-feather', christmasIcons[index]);
-            }
-        });
+        if (this.pos.x <= padding || this.pos.x >= maxX) {
+            this.velocity.x *= -0.5;
+            this.pos.x = Math.max(padding, Math.min(maxX, this.pos.x));
+            this.wanderAngle = Math.PI - this.wanderAngle;
+        }
         
-        // Re-run Feather icons with explicit parameters
-        feather.replace({
-            'stroke-width': 2.5,
-            'width': 16,
-            'height': 16,
-            'class': 'feather-icon'
-        });
+        if (this.pos.y <= padding || this.pos.y >= maxY) {
+            this.velocity.y *= -0.5;
+            this.pos.y = Math.max(padding, Math.min(maxY, this.pos.y));
+            this.wanderAngle = -this.wanderAngle;
+        }
+
+        const velX = this.velocity.x;
+        const velY = this.velocity.y;
+        
+        const skewX = map(velX, -this.maxSpeed, this.maxSpeed, -30, 30);
+        const rotate = map(velX, -this.maxSpeed, this.maxSpeed, -15, 15);
+        const scaleY = map(velY, -this.maxSpeed, this.maxSpeed, 0.9, 1.1);
+        const scaleEyeX = map(Math.abs(velX), 0, this.maxSpeed, 1, 1.3);
+        const scaleEyeY = map(Math.abs(velX), 0, this.maxSpeed, 1, 0.8);
+        const scaleMouth = Math.min(
+            Math.max(
+                map(Math.abs(velX * 1.5), 0, this.maxSpeed, 0.5, 2),
+                map(Math.abs(velY * 1.2), 0, this.maxSpeed, 0.5, 1.5)
+            ),
+            2
+        );
+
+        if (dist < this.fleeDistance) {
+            const scareIntensity = (this.fleeDistance - dist) / this.fleeDistance;
+            this.mouth.style.transform = `translate(${(-skewX * 0.5 - 10)}px) scale(${-scaleMouth * (1 + scareIntensity)})`;
+        } else {
+            this.mouth.style.transform = `translate(${(-skewX * 0.5 - 10)}px) scale(${scaleMouth})`;
+        }
+
+        this.el.style.transform = 
+            `translate(${this.pos.x}px, ${this.pos.y}px) 
+             scale(0.8) skew(${skewX}deg) rotate(${rotate}deg) scaleY(${scaleY})`;
+
+        this.eyes.style.transform = 
+            `translateX(-50%) scale(${scaleEyeX}, ${scaleEyeY})`;
     }
 }
 
+function map(num, in_min, in_max, out_min, out_max) {
+    return (num - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+}
+
+// Track mouse position
+['mousemove', 'touchstart', 'touchmove'].forEach((event) => {
+    window.addEventListener(event, (e) => {
+        mouse.x = e.clientX || (e.touches ? e.touches[0].pageX : 0);
+        mouse.y = e.clientY || (e.touches ? e.touches[0].pageY : 0);
+    });
+});
+
+// Initialize ghost follower in initSpookyTheme
+function initSpookyTheme() {
+    // Check if ghost follower already exists and remove it
+    const existingGhost = document.getElementById('ghost');
+    if (existingGhost) {
+        existingGhost.remove();
+    }
+
+    // Add spooky theme class if not already present
+    if (!document.body.classList.contains('spooky-theme')) {
+        document.body.classList.add('spooky-theme');
+    }
+    
+    // Get hero section for confined particles
+    const hero = document.querySelector('.hero');
+    if (!hero) return;
+    
+    // Create particles container
+    const particles = document.createElement('div');
+    particles.className = 'spooky-particles';
+    hero.appendChild(particles);
+
+    // Create ghost particles with more variety
+    const numberOfParticles = 15;
+    const spookyEmojis = ['👻', '🦇', '🕷️', '🎃', '💀'];
+    const particleElements = [];
+
+    // Create particle elements with physics properties
+    for (let i = 0; i < numberOfParticles; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'spooky-particle';
+        
+        // Initial position within hero section
+        const x = Math.random() * (hero.offsetWidth - 30); // 30px for particle size
+        const y = Math.random() * (hero.offsetHeight - 30);
+        
+        // Random velocity
+        const vx = (Math.random() - 0.5) * 2;
+        const vy = (Math.random() - 0.5) * 2;
+        
+        // Random size and rotation
+        const size = 0.7 + Math.random() * 0.6;
+        const rotation = Math.random() * 360;
+        
+        particle.style.cssText = `
+            position: absolute;
+            left: ${x}px;
+            top: ${y}px;
+            transform: scale(${size}) rotate(${rotation}deg);
+            transition: transform 0.3s ease;
+        `;
+        
+        // Randomly choose emoji
+        particle.innerHTML = spookyEmojis[Math.floor(Math.random() * spookyEmojis.length)];
+        
+        // Store physics properties
+        particleElements.push({
+            element: particle,
+            x,
+            y,
+            vx,
+            vy,
+            size,
+            rotation
+        });
+        
+        particles.appendChild(particle);
+    }
+
+    // Animate particles with physics
+    let lastTime = performance.now();
+    function animateParticles(currentTime) {
+        const deltaTime = (currentTime - lastTime) / 16; // Normalize to ~60fps
+        lastTime = currentTime;
+
+        const bounds = hero.getBoundingClientRect();
+
+        particleElements.forEach(particle => {
+            // Update position
+            particle.x += particle.vx * deltaTime;
+            particle.y += particle.vy * deltaTime;
+
+            // Bounce off edges
+            if (particle.x <= 0 || particle.x >= bounds.width - 30) {
+                particle.vx *= -1;
+                particle.rotation += 180;
+            }
+            if (particle.y <= 0 || particle.y >= bounds.height - 30) {
+                particle.vy *= -1;
+                particle.rotation += 180;
+            }
+
+            // Apply position and rotation
+            particle.element.style.transform = `translate(${particle.x}px, ${particle.y}px) scale(${particle.size}) rotate(${particle.rotation}deg)`;
+        });
+
+        if (document.body.classList.contains('spooky-theme')) {
+            window.spookyAnimationFrame = requestAnimationFrame(animateParticles);
+        }
+    }
+
+    requestAnimationFrame(animateParticles);
+
+    // Optimize cursor trail with smooth animation
+    const trail = document.createElement('div');
+    trail.className = 'cursor-trail';
+    document.body.appendChild(trail);
+
+    let cursorTimeout;
+    let lastX = 0;
+    let lastY = 0;
+    let currentTheme = spookyThemes.ghost;
+    const trailPoints = [];
+    const maxPoints = 15;
+    const trailLifetime = 500; // milliseconds
+
+    function lerp(start, end, t) {
+        return start * (1 - t) + end * t;
+    }
+
+    function updateTrail(timestamp) {
+        if (!document.body.classList.contains('spooky-theme')) {
+            trail.style.opacity = '0';
+            return;
+        }
+
+        trail.style.opacity = '1';
+        const currentTime = timestamp || performance.now();
+
+        // Update points
+        for (let i = trailPoints.length - 1; i >= 0; i--) {
+            const point = trailPoints[i];
+            const age = currentTime - point.timestamp;
+            
+            if (age > trailLifetime) {
+                trailPoints.splice(i, 1);
+                continue;
+            }
+
+            // Smooth out the trail
+            if (i > 0) {
+                const nextPoint = trailPoints[i - 1];
+                const t = 0.2;
+                point.x = lerp(point.x, nextPoint.x, t);
+                point.y = lerp(point.y, nextPoint.y, t);
+            }
+
+            // Add slight gravity effect
+            point.y += 0.1;
+        }
+
+        // Generate gradient
+        if (trailPoints.length > 1) {
+            const gradients = trailPoints.map((point, index) => {
+                const age = currentTime - point.timestamp;
+                const life = 1 - (age / trailLifetime);
+                const size = Math.max(4, 12 * life);
+                const alpha = life * 0.5;
+                const color = currentTheme.glow.replace('0.5', alpha);
+                return `radial-gradient(circle ${size}px at ${point.x}px ${point.y}px, ${color}, transparent)`;
+            });
+
+            trail.style.background = gradients.join(', ');
+        }
+
+        requestAnimationFrame(updateTrail);
+    }
+
+    document.addEventListener('mousemove', (e) => {
+        if (!document.body.classList.contains('spooky-theme')) return;
+
+        const currentTime = performance.now();
+        const velocity = Math.hypot(e.clientX - lastX, e.clientY - lastY);
+        
+        // Add points based on mouse velocity
+        if (velocity > 1) {
+            trailPoints.unshift({
+                x: e.clientX,
+                y: e.clientY,
+                timestamp: currentTime
+            });
+
+            // Limit number of points
+            if (trailPoints.length > maxPoints) {
+                trailPoints.pop();
+            }
+        }
+
+        lastX = e.clientX;
+        lastY = e.clientY;
+
+        // Clear hide timeout
+        clearTimeout(cursorTimeout);
+        trail.style.opacity = '1';
+
+        // Set new hide timeout
+        cursorTimeout = setTimeout(() => {
+            trail.style.opacity = '0';
+        }, 150);
+    });
+
+    // Start animation loop
+    requestAnimationFrame(updateTrail);
+
+    // Add CSS for improved cursor trail
+    const cursorStyle = document.createElement('style');
+    cursorStyle.textContent = `
+        .cursor-trail {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: screen;
+            transition: opacity 0.15s ease;
+        }
+
+        .spooky-theme {
+            cursor: none;
+        }
+
+        .spooky-theme a,
+        .spooky-theme button,
+        .spooky-theme [role="button"],
+        .spooky-theme .clickable {
+            cursor: none;
+        }
+    `;
+    document.head.appendChild(cursorStyle);
+
+    // Remove old cursor trail elements if they exist
+    document.querySelectorAll('.cursor-trail').forEach((el, index) => {
+        if (index > 0) el.remove();
+    });
+
+    // Initialize ghost follower
+    const ghost = new GhostFollow();
+    
+    function render() {
+        if (document.body.classList.contains('spooky-theme')) {
+            requestAnimationFrame(render);
+            ghost.follow();
+        }
+    }
+    
+    render();
+    
+    // Return cleanup function
+    const originalCleanup = initSpookyTheme.cleanup || (() => {});
+    return () => {
+        originalCleanup();
+        ghost.el.remove();
+        ghostEnabled = false;
+    };
+}
+
+// Add CSS for optimized cursor trail
+const style = document.createElement('style');
+style.textContent = `
+    .cursor-trail {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 9999;
+    }
+
+    .spooky-particle {
+        position: absolute;
+        pointer-events: auto;
+        z-index: 1000;
+        transition: transform 0.3s ease;
+        cursor: pointer;
+        filter: drop-shadow(0 0 5px rgba(255, 107, 0, 0.5));
+        user-select: none;
+    }
+
+    .spooky-particles {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        overflow: hidden;
+    }
+`;
+document.head.appendChild(style);
+
 // Add this to your DOMContentLoaded event
 document.addEventListener('DOMContentLoaded', function() {
-    // ... existing DOMContentLoaded code ...
-    
-    initChristmasTheme();
-    
     // Initialize Feather icons
     feather.replace({
         'stroke-width': 2.5,
@@ -375,33 +874,60 @@ document.addEventListener('DOMContentLoaded', function() {
     // Theme toggle functionality
     const themeToggle = document.getElementById('theme-toggle');
     if (themeToggle) {
-        // Make sure the icon is set
+        // Set ghost icon for theme toggle
         const icon = themeToggle.querySelector('i');
         if (!icon) {
             const newIcon = document.createElement('i');
-            newIcon.setAttribute('data-feather', 'snowflake');
+            newIcon.setAttribute('data-feather', 'ghost');
             themeToggle.appendChild(newIcon);
         }
         
-        // Re-run feather icons to ensure the new icon is rendered
+        // Re-run feather icons
         feather.replace();
         
         themeToggle.addEventListener('click', function(e) {
             e.preventDefault();
-            document.body.classList.toggle('christmas-theme');
+            document.body.classList.toggle('spooky-theme');
             
-            // Toggle snowfall
-            const snowfall = document.querySelector('.snowfall');
-            if (snowfall) {
-                snowfall.remove();
+            // Toggle particles and ghost
+            const particles = document.querySelector('.spooky-particles');
+            const ghost = document.getElementById('ghost');
+            const cursorTrail = document.querySelector('.cursor-trail');
+            const spookyParticles = document.querySelectorAll('.spooky-particle');
+            
+            if (document.body.classList.contains('spooky-theme')) {
+                ghostEnabled = true;
+                initSpookyTheme();
             } else {
-                initChristmasTheme();
+                // Clean up all spooky elements
+                if (particles) particles.remove();
+                if (ghost) ghost.remove();
+                if (cursorTrail) cursorTrail.remove();
+                spookyParticles.forEach(particle => particle.remove());
+                
+                // Reset cursor style
+                document.body.style.cursor = '';
+                document.querySelectorAll('a, button, [role="button"], .clickable').forEach(el => {
+                    el.style.cursor = '';
+                });
+                
+                // Reset ghost state
+                ghostEnabled = false;
+                
+                // Stop any ongoing animations
+                if (window.spookyAnimationFrame) {
+                    cancelAnimationFrame(window.spookyAnimationFrame);
+                }
             }
         });
     }
 
-    initMobileMenu();
-}); 
+    // Initialize spooky theme by default
+    initSpookyTheme();
+    
+    // Add enhanced spooky elements
+    enhanceSpookyElements();
+});
 
 function updateChristmasCountdown() {
     const now = new Date();
@@ -432,179 +958,6 @@ function enhanceSnowfall() {
         });
     });
 } 
-
-// Single Christmas theme management
-document.addEventListener('DOMContentLoaded', () => {
-    const themeToggle = document.getElementById('theme-toggle');
-    let presentInterval;
-    let snowfallElement;
-
-    // Add auto-initialization for Christmas season
-    const initChristmasIfNeeded = () => {
-        const today = new Date();
-        if (today.getMonth() === 11) { // December
-            document.body.classList.add('christmas-theme');
-            createSnowfall();
-            window.presentInterval = startPresentDropping();
-            setTimeout(dropPresent, 100); // Drop first present after slight delay
-        }
-    };
-
-    const createSnowfall = () => {
-        // Remove existing snowfall if any
-        const existingSnowfall = document.querySelector('.snowfall');
-        if (existingSnowfall) {
-            existingSnowfall.remove();
-        }
-        
-        // Create new snowfall container
-        snowfallElement = document.createElement('div');
-        snowfallElement.className = 'snowfall';
-        document.body.appendChild(snowfallElement);
-
-        const snowflakes = ['❄', '❅', '❆', '✧', '✦'];
-        const numberOfSnowflakes = 50;
-
-        for (let i = 0; i < numberOfSnowflakes; i++) {
-            const snowflake = document.createElement('div');
-            snowflake.className = 'snowflake';
-            
-            // Set random horizontal position
-            snowflake.style.left = `${Math.random() * 100}%`;
-            
-            // Set random animation duration
-            const duration = 5 + Math.random() * 10;
-            snowflake.style.animationDuration = `${duration}s`;
-            
-            // Set random delay
-            snowflake.style.animationDelay = `${Math.random() * duration}s`;
-            
-            snowflake.innerHTML = snowflakes[Math.floor(Math.random() * snowflakes.length)];
-            
-            snowfallElement.appendChild(snowflake);
-        }
-    };
-
-    const dropPresent = () => {
-        const hero = document.querySelector('.hero');
-        if (!hero) return;
-
-        const heroWidth = hero.offsetWidth;
-        
-        // Adjustable offsets for fine-tuning
-        const TIMING_OFFSET = +0; // Adjust this value between -1 and 1 to shift timing
-        const X_OFFSET = +20; // Adjust this value to shift presents left/right
-        const Y_OFFSET = -10; // Adjust this value to shift presents up/down
-        
-        const flightDuration = 8000;
-        const elapsed = Date.now() % flightDuration;
-        let progress = (elapsed / flightDuration) + TIMING_OFFSET;
-        
-        // Ensure progress stays between 0 and 1
-        progress = (progress + 1) % 1;
-        
-        // Calculate position with adjustable offsets
-        const totalDistance = heroWidth * 1.5;
-        const santaX = (heroWidth - (progress * totalDistance)) + X_OFFSET;
-        
-        const baseY = hero.offsetHeight * 0.4;
-        const bobAmount = 20;
-        const bobProgress = (Date.now() % 2000) / 2000;
-        const bobOffset = Math.sin(bobProgress * Math.PI * 2) * bobAmount;
-        const santaY = baseY + bobOffset + Y_OFFSET;
-
-        const present = document.createElement('div');
-        present.className = 'present';
-        
-        present.style.cssText = `
-            position: absolute;
-            left: ${santaX}px;
-            top: ${santaY}px;
-            transform-origin: center;
-            z-index: 3;
-            font-size: 1.5rem;
-        `;
-        
-        hero.appendChild(present);
-
-        const animation = present.animate([
-            {
-                top: `${santaY}px`,
-                left: `${santaX}px`,
-                transform: 'rotate(0deg) scale(1)',
-                opacity: 1
-            },
-            {
-                top: `${hero.offsetHeight + 50}px`,
-                left: `${santaX + (Math.random() * 40 - 20)}px`,
-                transform: 'rotate(720deg) scale(0.5)',
-                opacity: 0
-            }
-        ], {
-            duration: 2000,
-            easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
-        });
-
-        animation.onfinish = () => present.remove();
-    };
-
-    const startPresentDropping = () => {
-        if (window.presentInterval) {
-            clearInterval(window.presentInterval);
-        }
-        
-        // Drop presents more consistently (every 150ms with 25% chance)
-        return setInterval(() => {
-            if (Math.random() > 0.75) {
-                dropPresent();
-            }
-        }, 150);
-    };
-
-    const cleanupChristmasEffects = () => {
-        if (window.presentInterval) {
-            clearInterval(window.presentInterval);
-            window.presentInterval = null;
-        }
-        
-        // Remove all presents
-        document.querySelectorAll('.present').forEach(p => p.remove());
-        
-        // Remove snowfall
-        const snowfall = document.querySelector('.snowfall');
-        if (snowfall) {
-            snowfall.remove();
-        }
-    };
-
-    const toggleChristmasTheme = (e) => {
-        if (e) {
-            e.preventDefault();
-        }
-
-        const isCurrentlyChristmas = document.body.classList.contains('christmas-theme');
-        
-        if (isCurrentlyChristmas) {
-            document.body.classList.remove('christmas-theme');
-            cleanupChristmasEffects();
-        } else {
-            document.body.classList.add('christmas-theme');
-            createSnowfall();
-            window.presentInterval = startPresentDropping();
-            setTimeout(dropPresent, 100);
-        }
-    };
-
-    // Initialize theme toggle
-    if (themeToggle) {
-        themeToggle.replaceWith(themeToggle.cloneNode(true));
-        const newThemeToggle = document.getElementById('theme-toggle');
-        newThemeToggle.addEventListener('click', toggleChristmasTheme);
-    }
-
-    // Call initialization function
-    initChristmasIfNeeded();
-}); 
 
 function initMobileMenu() {
     const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
@@ -932,3 +1285,45 @@ document.querySelector('.logo').addEventListener('click', function(e) {
         }, 500);
     }
 });
+
+// Add this after initSpookyTheme function
+function enhanceSpookyElements() {
+    // Add spooky glow to feature cards
+    const featureCards = document.querySelectorAll('.feature-card');
+    featureCards.forEach(card => {
+        card.addEventListener('mouseover', () => {
+            card.style.boxShadow = '0 0 20px rgba(255, 107, 0, 0.3)';
+            card.style.transform = 'translateY(-10px) scale(1.02)';
+            
+            // Add spooky icon glow
+            const icon = card.querySelector('i');
+            if (icon) {
+                icon.style.filter = 'drop-shadow(0 0 10px rgba(255, 107, 0, 0.7))';
+            }
+        });
+
+        card.addEventListener('mouseout', () => {
+            card.style.boxShadow = '';
+            card.style.transform = '';
+            
+            const icon = card.querySelector('i');
+            if (icon) {
+                icon.style.filter = '';
+            }
+        });
+    });
+
+    // Add spooky hover effect to buttons
+    const buttons = document.querySelectorAll('.primary-btn, .secondary-btn');
+    buttons.forEach(button => {
+        button.addEventListener('mouseover', () => {
+            button.style.transform = 'translateY(-3px) scale(1.05)';
+            button.style.boxShadow = '0 10px 20px rgba(255, 107, 0, 0.3)';
+        });
+
+        button.addEventListener('mouseout', () => {
+            button.style.transform = '';
+            button.style.boxShadow = '';
+        });
+    });
+}

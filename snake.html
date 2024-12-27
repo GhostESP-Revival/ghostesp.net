@@ -41,11 +41,6 @@
             margin-left: 5px;
         }
 
-        /* Christmas theme modifications for score display */
-        .christmas-theme .score-item span {
-            color: var(--christmas-primary);
-        }
-
         #snakeCanvas {
             background: var(--background-color);
             border: 2px solid var(--primary-color);
@@ -106,20 +101,6 @@
             font-family: var(--font-mono);
             font-size: 0.9rem;
             opacity: 0.5;
-        }
-
-        /* Christmas theme modifications */
-        .christmas-theme #snakeCanvas {
-            border-color: var(--christmas-primary);
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.2);
-        }
-
-        .christmas-theme #startBtn {
-            background: linear-gradient(135deg, var(--christmas-primary), var(--christmas-secondary));
-        }
-
-        .christmas-theme #pauseBtn {
-            background: linear-gradient(135deg, var(--christmas-secondary), var(--christmas-gold));
         }
 
         @media (max-width: 768px) {
@@ -284,50 +265,6 @@
 
         .nav-links a:hover {
             color: var(--text-primary);
-        }
-
-        @media (max-width: 768px) {
-            .nav-content {
-                padding: 0.5rem 1rem;
-            }
-
-            .mobile-menu-btn {
-                display: block;
-            }
-
-            .nav-links {
-                position: fixed;
-                top: 0;
-                right: -100%;
-                height: 100vh;
-                width: 75%;
-                max-width: 300px;
-                background: var(--surface-color);
-                flex-direction: column;
-                padding: 80px 2rem 2rem;
-                transition: right 0.3s ease;
-                backdrop-filter: blur(10px);
-                border-left: 1px solid rgba(255, 255, 255, 0.1);
-                z-index: 95;
-            }
-
-            .nav-links.active {
-                right: 0;
-            }
-
-            .nav-links li {
-                width: 100%;
-            }
-
-            .nav-links a {
-                padding: 0.8rem 0;
-                font-size: 1.1rem;
-                width: 100%;
-            }
-
-            .menu-label {
-                display: block;
-            }
         }
 
         @media (min-width: 769px) {
