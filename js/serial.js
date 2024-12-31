@@ -270,93 +270,91 @@ class SerialConsole {
         
         // Process each complete line
         const formattedLines = completeLines.map(line => {
-            if (!line.trim()) return '';
+            if (!line.trim()) return '<br>';  // Convert empty lines to line breaks
             
             let formattedLine = line;
             let matched = false;
 
             // GhostESP-specific formatting (preserved)
             if (formattedLine.match(/^\[\d+\]\s*SSID:/)) {
-                return `<span class="ap-entry">${formattedLine}</span>`;
+                return `<span class="ap-entry">${formattedLine}</span><br>`;
             }
             if (formattedLine.match(/^\s*(RSSI|Company):/)) {
-                return `<span class="ap-detail">${formattedLine}</span>`;
+                return `<span class="ap-detail">${formattedLine}</span><br>`;
             }
-            
-            // Generic firmware patterns (enhanced)
             
             // WiFi related messages (broadened)
             if (formattedLine.match(/\b(WiFi|scanning|AP|access point|SSID|connected to|network|connection)\b/i)) {
-                return `<span class="wifi-status">${formattedLine}</span>`;
+                return `<span class="wifi-status">${formattedLine}</span><br>`;
             }
             
             // IP/MAC Addresses and network info
             if (formattedLine.match(/\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b/) || // IPv4
                 formattedLine.match(/\b([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})\b/) || // MAC address
                 formattedLine.match(/\b([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}\b/)) { // IPv6
-                return `<span class="ip-address">${formattedLine}</span>`;
+                return `<span class="ip-address">${formattedLine}</span><br>`;
             }
             
             // Command input (starts with '>' or '$' for different shells)
             if (formattedLine.match(/^[>$]\s/)) {
-                return `<span class="command">${formattedLine}</span>`;
+                return `<span class="command">${formattedLine}</span><br>`;
             }
             
             // Help/Documentation text (broadened)
             if (formattedLine.match(/^(Description|Usage|Arguments|Example|Options|Commands|Help):/i)) {
-                return `<span class="help-header">${formattedLine}</span>`;
+                return `<span class="help-header">${formattedLine}</span><br>`;
             }
             
             // Command names (more flexible pattern)
             if (formattedLine.match(/^[a-zA-Z_][a-zA-Z0-9_]*$/)) {
-                return `<span class="command-name">${formattedLine}</span>`;
+                return `<span class="command-name">${formattedLine}</span><br>`;
             }
             
             // Error messages (enhanced patterns)
             if (formattedLine.match(/\b(error|fail(ed|ure)?|exception|invalid|timeout|denied)\b/i) || 
                 formattedLine.match(/\b(ERR|ERROR|E:)/i) ||
                 formattedLine.match(/^!\s/)) {
-                return `<span class="error">${formattedLine}</span>`;
+                return `<span class="error">${formattedLine}</span><br>`;
             }
             
             // Success messages (enhanced patterns)
             if (formattedLine.match(/\b(success|ok|done|ready|started|complete|finished|connected)\b/i) || 
                 formattedLine.match(/\b(OK|SUCCESS|S:)/i)) {
-                return `<span class="success">${formattedLine}</span>`;
+                return `<span class="success">${formattedLine}</span><br>`;
             }
             
             // Warning messages (enhanced patterns)
             if (formattedLine.match(/\b(warning|warn|caution|attention)\b/i) || 
                 formattedLine.match(/\b(WARN|WARNING|W:)/i)) {
-                return `<span class="warning">${formattedLine}</span>`;
+                return `<span class="warning">${formattedLine}</span><br>`;
             }
             
             // Info/Debug/Log messages (enhanced patterns)
             if (formattedLine.match(/\b(info|note|debug|log)\b/i) || 
                 formattedLine.match(/\b(INFO|DEBUG|LOG|I:|D:)/i)) {
-                return `<span class="info">${formattedLine}</span>`;
+                return `<span class="info">${formattedLine}</span><br>`;
             }
             
             // Arguments and parameters (enhanced)
             if (formattedLine.trim().match(/^(-{1,2}|\/)[a-zA-Z]/) || // Command line args
                 formattedLine.match(/^[a-zA-Z_][a-zA-Z0-9_]*=/)) {    // Key=value pairs
-                return `<span class="argument">${formattedLine}</span>`;
+                return `<span class="argument">${formattedLine}</span><br>`;
             }
             
             // Memory addresses and hex values
             if (formattedLine.match(/\b(0x[0-9a-fA-F]+)\b/)) {
-                return `<span class="memory-address">${formattedLine}</span>`;
+                return `<span class="memory-address">${formattedLine}</span><br>`;
             }
             
-            return formattedLine;
+            return `${formattedLine}<br>`;  // Add line break to unformatted lines
         }).filter(line => line);
         
         // Always scroll to bottom when new content is added
         if (formattedLines.length) {
             if (this.output.innerHTML) {
-                this.output.innerHTML += formattedLines.join('\n');
+                this.output.innerHTML += formattedLines.join('');  // Remove \n since we're using <br> tags
             } else {
-                this.output.innerHTML = formattedLines.join('\n');
+                this.output.innerHTML = formattedLines.join('');
             }
             
             // Ensure scrolling happens after content is fully rendered
