@@ -1,4 +1,3 @@
-// Add this at the top of main.js
 const scriptLoader = {
     loaded: new Set(),
     

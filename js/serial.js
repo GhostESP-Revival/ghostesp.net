@@ -19,6 +19,7 @@ class SerialConsole {
         this.sendButton = document.getElementById('sendButton');
         this.serialInput = document.getElementById('serialInput');
         this.output = document.getElementById('output');
+        this.console = document.getElementById('console');
         this.baudSelect = document.getElementById('baudSelect');
         this.baudRateDisplay = document.getElementById('baudRate');
         this.connectionStatus = document.getElementById('connectionStatus');
@@ -350,17 +351,29 @@ class SerialConsole {
             return formattedLine;
         }).filter(line => line);
         
-        const wasScrolledToBottom = this.output.scrollHeight - this.output.clientHeight <= this.output.scrollTop + 1;
-        
-        // Join lines with proper spacing
-        if (this.output.innerHTML && formattedLines.length) {
-            this.output.innerHTML += formattedLines.join('\n');
-        } else {
-            this.output.innerHTML += formattedLines.join('\n');
-        }
-        
-        if (wasScrolledToBottom) {
-            this.output.scrollTop = this.output.scrollHeight;
+        // Always scroll to bottom when new content is added
+        if (formattedLines.length) {
+            if (this.output.innerHTML) {
+                this.output.innerHTML += formattedLines.join('\n');
+            } else {
+                this.output.innerHTML = formattedLines.join('\n');
+            }
+            
+            // Ensure scrolling happens after content is fully rendered
+            setTimeout(() => {
+                this.console.scrollTo({
+                    top: this.console.scrollHeight,
+                    behavior: 'smooth'
+                });
+            }, 0);
+
+            // Backup scroll in case the first attempt fails
+            requestAnimationFrame(() => {
+                this.console.scrollTo({
+                    top: this.console.scrollHeight,
+                    behavior: 'auto'
+                });
+            });
         }
     }
 }
