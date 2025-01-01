@@ -8,6 +8,9 @@ class SerialConsole {
         this.decoder = new TextDecoder();
         this.abortController = null;
         this.lineBuffer = '';
+        this.commandHistory = [];
+        this.historyIndex = -1;
+        this.currentInput = '';
         this.initializeElements();
         this.checkBrowserSupport();
         this.setupEventListeners();
@@ -42,9 +45,15 @@ class SerialConsole {
         this.connectButton.addEventListener('click', () => this.toggleConnection());
         this.clearButton.addEventListener('click', () => this.clearConsole());
         this.sendButton.addEventListener('click', () => this.sendData());
-        this.serialInput.addEventListener('keypress', (e) => {
+        this.serialInput.addEventListener('keydown', (e) => {
             if (e.key === 'Enter') {
                 this.sendData();
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                this.navigateHistory('up');
+            } else if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                this.navigateHistory('down');
             }
         });
         
@@ -177,6 +186,14 @@ class SerialConsole {
             this.writer = this.port.writable.getWriter();
             await this.writer.write(this.encoder.encode(data));
             this.log(`> ${data}`);
+            if (this.serialInput.value.trim()) {
+                this.commandHistory.unshift(this.serialInput.value);
+                if (this.commandHistory.length > 50) {
+                    this.commandHistory.pop();
+                }
+            }
+            this.historyIndex = -1;
+            this.currentInput = '';
             this.serialInput.value = '';
         } catch (error) {
             console.error('Error writing to port:', error);
@@ -373,6 +390,35 @@ class SerialConsole {
                 });
             });
         }
+    }
+
+    navigateHistory(direction) {
+        if (!this.commandHistory.length) return;
+
+        if (this.historyIndex === -1) {
+            // Save current input before navigating history
+            this.currentInput = this.serialInput.value;
+        }
+
+        if (direction === 'up') {
+            if (this.historyIndex < this.commandHistory.length - 1) {
+                this.historyIndex++;
+                this.serialInput.value = this.commandHistory[this.historyIndex];
+            }
+        } else if (direction === 'down') {
+            if (this.historyIndex > -1) {
+                this.historyIndex--;
+                this.serialInput.value = this.historyIndex === -1 
+                    ? this.currentInput 
+                    : this.commandHistory[this.historyIndex];
+            }
+        }
+
+        // Move cursor to end of input
+        setTimeout(() => {
+            this.serialInput.selectionStart = this.serialInput.value.length;
+            this.serialInput.selectionEnd = this.serialInput.value.length;
+        }, 0);
     }
 }
 
