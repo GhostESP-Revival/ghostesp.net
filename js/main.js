@@ -63,7 +63,6 @@ function initNonCriticalFeatures() {
 
     // Initialize other features...
     initVideoLazyLoading();
-    initSpookyTheme();
     initMobileMenu();
     fetchLatestRelease();
 }
@@ -897,6 +896,8 @@ document.addEventListener('DOMContentLoaded', function() {
             if (document.body.classList.contains('spooky-theme')) {
                 ghostEnabled = true;
                 initSpookyTheme();
+                // Save theme preference
+                localStorage.setItem('theme', 'spooky');
             } else {
                 // Clean up all spooky elements
                 if (particles) particles.remove();
@@ -917,12 +918,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (window.spookyAnimationFrame) {
                     cancelAnimationFrame(window.spookyAnimationFrame);
                 }
+                // Save theme preference
+                localStorage.setItem('theme', 'default');
             }
         });
     }
 
-    // Initialize spooky theme by default
-    initSpookyTheme();
+    // Check for saved theme preference
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'spooky') {
+        document.body.classList.add('spooky-theme');
+        ghostEnabled = true;
+        initSpookyTheme();
+    }
     
     // Add enhanced spooky elements
     enhanceSpookyElements();
