@@ -205,30 +205,40 @@ body::before {
         backdrop-filter: blur(10px);
         border-left: 1px solid rgba(255, 255, 255, 0.1);
         z-index: 95;
-        gap: 1rem;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        display: flex;
+        gap: 1.5rem;
     }
 
     .nav-links.active {
         right: 0;
     }
 
-    .nav-links a {
-        font-size: 0.9rem;
+    .nav-links li {
         width: 100%;
-        padding: 0.75rem 0;
+    }
+
+    .nav-links a {
+        font-size: 1.1rem;
+        padding: 0.5rem 0;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
     }
 
     .github-btn, .discord-btn, .theme-btn {
         width: 100%;
         height: auto;
         background: none;
-        padding: 0.75rem 0;
+        padding: 0.5rem 0;
         justify-content: flex-start;
     }
 
     .github-btn i, .discord-btn i, .theme-btn i {
-        width: 18px;
-        height: 18px;
+        width: 20px;
+        height: 20px;
     }
 
     .mobile-menu-btn {
@@ -248,6 +258,7 @@ body::before {
     .mobile-menu-btn i {
         width: 24px;
         height: 24px;
+        stroke-width: 1.5;
     }
 
     .logo img {
@@ -267,26 +278,63 @@ body::before {
     }
 
     .mobile-menu-btn {
-        width: 36px;
-        height: 36px;
+        width: 32px;
+        height: 32px;
     }
 
     .mobile-menu-btn i {
-        width: 22px;
-        height: 22px;
+        width: 20px;
+        height: 20px;
+        stroke-width: 1.25;
     }
 }
 
 .hero {
-    height: 90vh;
+    position: relative;
+    min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    text-align: center;
-    padding: 0 2rem;
-    position: relative;
     overflow: hidden;
-    background: var(--background-color);
+    padding: 6rem 2rem;
+    background: linear-gradient(rgba(0, 0, 0, 0.50), rgba(0, 0, 0, 0.50)), url('../images/IMG_1178.jpg') center/cover no-repeat;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 20% 20%, rgba(255, 107, 0, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(156, 39, 176, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(255, 107, 0, 0.1) 0%, transparent 70%);
+    z-index: 1;
+    animation: pulse 8s ease-in-out infinite alternate;
+}
+
+.hero-grid {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        linear-gradient(rgba(255, 107, 0, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(156, 39, 176, 0.03) 1px, transparent 1px);
+    background-size: 30px 30px;
+    animation: gridMove 20s linear infinite;
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    width: 100%;
+    text-align: center;
 }
 
 /* Update hero background animations */
@@ -1579,7 +1627,7 @@ body.christmas-theme::before {
 
 /* Update Santa animation styles */
 .christmas-theme .hero::after {
-    content: '🦌🦌🦌🦌🛷����';
+    content: '🦌🦌🦌🦌🛷';
     position: absolute;
     font-size: 1.8rem;
     white-space: nowrap;
@@ -1750,7 +1798,10 @@ body.christmas-theme::before {
         backdrop-filter: blur(10px);
         border-left: 1px solid rgba(255, 255, 255, 0.1);
         z-index: 95;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
         display: flex;
+        gap: 1.5rem;
     }
 
     .nav-links.active {
@@ -1758,19 +1809,18 @@ body.christmas-theme::before {
     }
 
     .nav-links li {
-        margin: 1rem 0;
         width: 100%;
     }
 
     .nav-links a {
         font-size: 1.1rem;
+        padding: 0.5rem 0;
+        width: 100%;
         display: flex;
         align-items: center;
-        gap: 10px;
-        width: 100%;
+        gap: 0.8rem;
     }
 
-    /* Update icon buttons in mobile menu */
     .github-btn, .discord-btn, .theme-btn {
         width: 100%;
         height: auto;
@@ -1784,15 +1834,32 @@ body.christmas-theme::before {
         height: 20px;
     }
 
-    /* Ensure menu button stays on top */
-    .mobile-menu-btn {
-        position: relative;
-        z-index: 100;
+    .menu-label {
+        display: block;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-height: 600px) {
+    .nav-links {
+        padding-top: 60px;
+        gap: 0.8rem;
     }
 
-    /* Remove or update any conflicting display:none styles */
-    .nav-links a:not(.github-btn):not(.discord-btn) {
-        display: flex !important;
+    .nav-links a {
+        padding: 0.3rem 0;
+        font-size: 1rem;
+    }
+
+    .menu-label {
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-height: 500px) {
+    .nav-links {
+        padding-top: 50px;
+        gap: 0.5rem;
     }
 }
 
@@ -2362,7 +2429,7 @@ pre {
     }
     
     .logo img {
-        width: 100px;
+        width: 50px;
     }
 }
 
@@ -2747,5 +2814,34 @@ html {
 
 /* Card styles */
 // ... existing code ...
+
+.menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    z-index: 90;
+}
+
+.menu-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Ensure the mobile menu appears above the overlay */
+.nav-links {
+    z-index: 95;
+}
+
+/* Prevent body scroll when menu is open */
+body.menu-open {
+    overflow: hidden;
+}
 
 

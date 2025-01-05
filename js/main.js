@@ -90,16 +90,23 @@ function initVideoLazyLoading() {
 }
 
 // Initialize critical features immediately
-document.addEventListener('DOMContentLoaded', initCriticalFeatures);
-
-// Defer non-critical initializations
-if (window.requestIdleCallback) {
-    requestIdleCallback(() => {
-        initNonCriticalFeatures();
-    });
-} else {
-    setTimeout(initNonCriticalFeatures, 1);
-}
+document.addEventListener('DOMContentLoaded', () => {
+    // Initialize Feather icons first
+    if (window.feather) {
+        feather.replace({
+            'stroke-width': 2.5,
+            'width': 16,
+            'height': 16,
+            'class': 'feather-icon'
+        });
+    }
+    
+    // Then initialize mobile menu
+    initMobileMenu();
+    
+    // Initialize other critical features
+    initCriticalFeatures();
+});
 
 // Initialize AOS
 AOS.init({
@@ -966,70 +973,60 @@ function enhanceSnowfall() {
     });
 } 
 
-function initMobileMenu() {
-    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-    const navLinks = document.querySelector('.nav-links');
-    const body = document.body;
-    
-    // Create overlay if it doesn't exist
-    let overlay = document.querySelector('.menu-overlay');
-    if (!overlay) {
-        overlay = document.createElement('div');
-        overlay.className = 'menu-overlay';
+// Initialize mobile menu after Feather icons are loaded
+document.addEventListener('DOMContentLoaded', () => {
+    // First load Feather icons
+    feather.replace({
+        'stroke-width': 2.5,
+        'width': 16,
+        'height': 16,
+        'class': 'feather-icon'
+    }).then(() => {
+        // Then initialize mobile menu
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+        const body = document.body;
+        const overlay = document.createElement('div');
+        overlay.classList.add('menu-overlay');
         document.body.appendChild(overlay);
-    }
 
-    function toggleMenu() {
-        navLinks.classList.toggle('active');
-        overlay.classList.toggle('active');
-        body.classList.toggle('menu-open');
-        
-        // Update menu icon
-        const menuIcon = mobileMenuBtn.querySelector('i');
-        if (navLinks.classList.contains('active')) {
-            menuIcon.setAttribute('data-feather', 'x');
-        } else {
-            menuIcon.setAttribute('data-feather', 'menu');
-        }
-        feather.replace();
-    }
-
-    // Toggle menu on button click
-    mobileMenuBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        toggleMenu();
-    });
-
-    // Close menu when clicking overlay
-    overlay.addEventListener('click', toggleMenu);
-
-    // Close menu when clicking a link
-    navLinks.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => {
-            if (navLinks.classList.contains('active')) {
-                toggleMenu();
+        function toggleMenu() {
+            navLinks.classList.toggle('active');
+            overlay.classList.toggle('active');
+            body.classList.toggle('menu-open');
+            
+            // Update menu icon
+            const menuIcon = mobileMenuBtn.querySelector('[data-feather]');
+            if (menuIcon) {
+                if (navLinks.classList.contains('active')) {
+                    menuIcon.setAttribute('data-feather', 'x');
+                } else {
+                    menuIcon.setAttribute('data-feather', 'menu');
+                }
+                if (window.feather) {
+                    feather.replace();
+                }
             }
+        }
+
+        // Toggle menu on button click
+        mobileMenuBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            toggleMenu();
+        });
+
+        // Close menu when clicking overlay
+        overlay.addEventListener('click', toggleMenu);
+
+        // Close menu when clicking a link
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (navLinks.classList.contains('active')) {
+                    toggleMenu();
+                }
+            });
         });
     });
-
-    // Close menu on escape key
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && navLinks.classList.contains('active')) {
-            toggleMenu();
-        }
-    });
-
-    // Prevent menu from staying open on window resize
-    window.addEventListener('resize', () => {
-        if (window.innerWidth > 768 && navLinks.classList.contains('active')) {
-            toggleMenu();
-        }
-    });
-}
-
-// Make sure to call initMobileMenu after DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-    initMobileMenu();
 });
 
 // Link preloading functionality
@@ -1331,6 +1328,52 @@ function enhanceSpookyElements() {
         button.addEventListener('mouseout', () => {
             button.style.transform = '';
             button.style.boxShadow = '';
+        });
+    });
+}
+
+function initMobileMenu() {
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    const navLinks = document.querySelector('.nav-links');
+    const body = document.body;
+    const overlay = document.createElement('div');
+    overlay.classList.add('menu-overlay');
+    document.body.appendChild(overlay);
+
+    function toggleMenu() {
+        navLinks.classList.toggle('active');
+        overlay.classList.toggle('active');
+        body.classList.toggle('menu-open');
+        
+        // Update menu icon
+        const menuIcon = mobileMenuBtn.querySelector('[data-feather]');
+        if (menuIcon) {
+            if (navLinks.classList.contains('active')) {
+                menuIcon.setAttribute('data-feather', 'x');
+            } else {
+                menuIcon.setAttribute('data-feather', 'menu');
+            }
+            if (window.feather) {
+                feather.replace();
+            }
+        }
+    }
+
+    // Toggle menu on button click
+    mobileMenuBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleMenu();
+    });
+
+    // Close menu when clicking overlay
+    overlay.addEventListener('click', toggleMenu);
+
+    // Close menu when clicking a link
+    navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            if (navLinks.classList.contains('active')) {
+                toggleMenu();
+            }
         });
     });
 }
