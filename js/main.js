@@ -64,7 +64,6 @@ function initNonCriticalFeatures() {
     // Initialize other features...
     initVideoLazyLoading();
     initMobileMenu();
-    fetchLatestRelease();
 }
 
 // Split video lazy loading into its own function
@@ -101,11 +100,24 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
-    // Then initialize mobile menu
+    // Initialize mobile menu
     initMobileMenu();
     
     // Initialize other critical features
     initCriticalFeatures();
+    
+    // Initialize non-critical features
+    if (window.requestIdleCallback) {
+        requestIdleCallback(() => {
+            initNonCriticalFeatures();
+            fetchLatestRelease(); // Ensure latest release is fetched
+        });
+    } else {
+        setTimeout(() => {
+            initNonCriticalFeatures();
+            fetchLatestRelease(); // Ensure latest release is fetched
+        }, 1);
+    }
 });
 
 // Initialize AOS
@@ -974,60 +986,61 @@ function enhanceSnowfall() {
 } 
 
 // Initialize mobile menu after Feather icons are loaded
-document.addEventListener('DOMContentLoaded', () => {
-    // First load Feather icons
-    feather.replace({
-        'stroke-width': 2.5,
-        'width': 16,
-        'height': 16,
-        'class': 'feather-icon'
-    }).then(() => {
-        // Then initialize mobile menu
-        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-        const navLinks = document.querySelector('.nav-links');
-        const body = document.body;
-        const overlay = document.createElement('div');
-        overlay.classList.add('menu-overlay');
-        document.body.appendChild(overlay);
-
-        function toggleMenu() {
-            navLinks.classList.toggle('active');
-            overlay.classList.toggle('active');
-            body.classList.toggle('menu-open');
-            
-            // Update menu icon
-            const menuIcon = mobileMenuBtn.querySelector('[data-feather]');
-            if (menuIcon) {
-                if (navLinks.classList.contains('active')) {
-                    menuIcon.setAttribute('data-feather', 'x');
-                } else {
-                    menuIcon.setAttribute('data-feather', 'menu');
-                }
-                if (window.feather) {
-                    feather.replace();
-                }
-            }
-        }
-
-        // Toggle menu on button click
-        mobileMenuBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            toggleMenu();
-        });
-
-        // Close menu when clicking overlay
-        overlay.addEventListener('click', toggleMenu);
-
-        // Close menu when clicking a link
-        navLinks.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                if (navLinks.classList.contains('active')) {
-                    toggleMenu();
-                }
-            });
-        });
-    });
-});
+// Remove this duplicate event listener
+// document.addEventListener('DOMContentLoaded', () => {
+//     // First load Feather icons
+//     feather.replace({
+//         'stroke-width': 2.5,
+//         'width': 16,
+//         'height': 16,
+//         'class': 'feather-icon'
+//     }).then(() => {
+//         // Then initialize mobile menu
+//         const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+//         const navLinks = document.querySelector('.nav-links');
+//         const body = document.body;
+//         const overlay = document.createElement('div');
+//         overlay.classList.add('menu-overlay');
+//         document.body.appendChild(overlay);
+// 
+//         function toggleMenu() {
+//             navLinks.classList.toggle('active');
+//             overlay.classList.toggle('active');
+//             body.classList.toggle('menu-open');
+//             
+//             // Update menu icon
+//             const menuIcon = mobileMenuBtn.querySelector('[data-feather]');
+//             if (menuIcon) {
+//                 if (navLinks.classList.contains('active')) {
+//                     menuIcon.setAttribute('data-feather', 'x');
+//                 } else {
+//                     menuIcon.setAttribute('data-feather', 'menu');
+//                 }
+//                 if (window.feather) {
+//                     feather.replace();
+//                 }
+//             }
+//         }
+// 
+//         // Toggle menu on button click
+//         mobileMenuBtn.addEventListener('click', (e) => {
+//             e.stopPropagation();
+//             toggleMenu();
+//         });
+// 
+//         // Close menu when clicking overlay
+//         overlay.addEventListener('click', toggleMenu);
+// 
+//         // Close menu when clicking a link
+//         navLinks.querySelectorAll('a').forEach(link => {
+//             link.addEventListener('click', () => {
+//                 if (navLinks.classList.contains('active')) {
+//                     toggleMenu();
+//                 }
+//             });
+//         });
+//     });
+// });
 
 // Link preloading functionality
 const linkPreloader = {

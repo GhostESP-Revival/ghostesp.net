@@ -1913,13 +1913,12 @@ body.menu-open {
     background: var(--card-bg);
     border-radius: 16px;
     padding: 2rem;
+    margin: 2rem 0;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     border: 1px solid rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
     position: relative;
     overflow: hidden;
-    margin-top: 2rem;
-    scroll-margin-top: 100px; /* Add space for fixed navbar */
 }
 
 .latest-release-card::before {
@@ -1943,75 +1942,6 @@ body.menu-open {
     transform: translateX(100%);
 }
 
-.latest-release-header {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-}
-
-.latest-release-header i {
-    font-size: 2rem;
-    color: var(--primary-color);
-}
-
-.latest-release-header h3 {
-    font-family: var(--font-mono);
-    font-size: 1.4rem;
-    color: var(--text-primary);
-    letter-spacing: 0.5px;
-    margin: 0;
-}
-
-.release-content {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
-}
-
-.release-info {
-    color: var(--text-secondary);
-}
-
-.release-info h4 {
-    color: var(--text-primary);
-    margin-bottom: 0.5rem;
-}
-
-.release-info p {
-    margin-bottom: 1rem;
-}
-
-.release-info .primary-btn i {
-    transform: translateY(-10px);
-}
-
-.release-meta {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-    font-size: 0.9rem;
-    margin-bottom: 1rem;
-    padding: 0.5rem 0;
-    color: rgba(255, 255, 255, 0.7);
-}
-
-.release-meta span {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.25rem 0;
-}
-
-.release-meta span i {
-    color: var(--primary-color);
-    opacity: 0.8;
-}
-
-.release-meta span:hover i {
-    opacity: 1;
-}
-
 .release-assets {
     display: flex;
     flex-direction: column;
@@ -2021,7 +1951,7 @@ body.menu-open {
 .asset-link {
     display: flex;
     align-items: center;
-    gap: .5rem;
+    gap: 0.5rem;
     padding: 0.75rem 1rem;
     background: rgba(255, 107, 0, 0.08);
     border-radius: 8px;
@@ -2040,18 +1970,6 @@ body.menu-open {
 
 .asset-link i {
     font-size: 1.2rem;
-}
-
-.release-loading {
-    text-align: center;
-    padding: 2rem;
-    color: var(--text-secondary);
-}
-
-.release-error {
-    text-align: center;
-    padding: 2rem;
-    color: #ff4444;
 }
 
 .show-more-btn {
@@ -2073,33 +1991,43 @@ body.menu-open {
 }
 
 .show-more-btn:hover {
-    color: var(--primary-color);
     opacity: 1;
 }
 
 .hidden-assets {
+    display: none;
     transition: all 0.3s ease;
+}
+
+.hidden-assets.show {
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
 }
 
-.hidden-assets .asset-link {
-    margin-bottom: 0.75rem;
-}
+@media (max-width: 768px) {
+    .latest-release-card {
+        padding: 1.5rem;
+        margin: 1rem 0;
+    }
 
-.hidden-assets .asset-link:last-child {
-    margin-bottom: 0;
-}
+    .release-content {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
 
-.asset-list {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-}
+    .latest-release-header {
+        flex-direction: column;
+        text-align: center;
+    }
 
-.release-info p {
-    margin-bottom: 1rem;
+    .release-meta {
+        justify-content: center;
+    }
+
+    .asset-link {
+        padding: 0.6rem 0.8rem;
+    }
 }
 
 .markdown-content {
@@ -2842,6 +2770,67 @@ html {
 /* Prevent body scroll when menu is open */
 body.menu-open {
     overflow: hidden;
+}
+
+.latest-release-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.latest-release-header i {
+    font-size: 2rem;
+    color: var(--primary-color);
+}
+
+.latest-release-header h3 {
+    font-family: var(--font-mono);
+    font-size: 1.4rem;
+    color: var(--text-primary);
+    letter-spacing: 0.5px;
+    margin: 0;
+}
+
+.release-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+.release-info {
+    color: var(--text-secondary);
+}
+
+.release-meta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    font-size: 0.9rem;
+    margin: 1rem 0;
+    color: var(--text-secondary);
+}
+
+.release-meta span {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.release-meta i {
+    color: var(--primary-color);
+}
+
+.release-loading {
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-secondary);
+}
+
+.release-error {
+    text-align: center;
+    padding: 2rem;
+    color: #ff4444;
 }
 
 
