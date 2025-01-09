@@ -211,15 +211,15 @@
 
     <!-- Load AOS CSS asynchronously -->
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" media="print" onload="this.media='all'">
+    <!-- Cronitor RUM -->
+    <script async src="https://rum.cronitor.io/script.js"></script>
+    <script>
+        window.cronitor = window.cronitor || function() { (window.cronitor.q = window.cronitor.q || []).push(arguments); };
+        cronitor('config', { clientKey: '58dd80c3f88ef7cabd4de50f71fc22f8' });
+    </script>
 
 
 </head>
-<!-- Cronitor RUM -->
-<script async src="https://rum.cronitor.io/script.js"></script>
-<script>
-    window.cronitor = window.cronitor || function() { (window.cronitor.q = window.cronitor.q || []).push(arguments); };
-    cronitor('config', { clientKey: '58dd80c3f88ef7cabd4de50f71fc22f8' });
-</script>
 
 <body>
     <nav class="navbar" role="navigation" aria-label="Main navigation">
