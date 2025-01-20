@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#121212">
-    <meta http-equiv="Content-Security-Policy" content="
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#121212" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="
         default-src 'self';
         script-src 'self' 'unsafe-inline' https://unpkg.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net;
         style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com https://cdnjs.cloudflare.com;
@@ -16,176 +18,245 @@
         base-uri 'self';
         form-action 'self';
         upgrade-insecure-requests;
-    ">
-    
+    "
+    />
+
     <!-- Enhanced SEO Meta Tags -->
-    <meta name="description" content="Ghost ESP - Transform your ESP32 into a powerful wireless testing platform. Features WiFi analysis, BLE scanning, deauth detection, and more. Open-source firmware for security research." />
-    <meta name="keywords" content="Ghost ESP, ESP32, WiFi testing, wireless security, penetration testing, BLE scanning, deauth detection, WiFi analysis, ESP32-S2, ESP32-S3, ESP32-C3, ESP32-C6, security research" />
+    <meta
+      name="description"
+      content="Ghost ESP - Transform your ESP32 into a powerful wireless testing platform. Features WiFi analysis, BLE scanning, deauth detection, and more. Open-source firmware for security research."
+    />
+    <meta
+      name="keywords"
+      content="Ghost ESP, ESP32, WiFi testing, wireless security, penetration testing, BLE scanning, deauth detection, WiFi analysis, ESP32-S2, ESP32-S3, ESP32-C3, ESP32-C6, security research"
+    />
     <meta name="author" content="Jay Candel" />
     <meta name="robots" content="index, follow" />
     <meta name="language" content="English" />
     <meta name="revisit-after" content="7 days" />
-    
+
     <!-- Enhanced Open Graph Tags -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Ghost ESP" />
-    <meta property="og:description" content="Open-source firmware transforming ESP32 devices into powerful wireless testing tools. Perfect for security research and network analysis." />
-    <meta property="og:image" content="https://ghostesp.net/images/ghost-esp-preview.jpg" />
+    <meta
+      property="og:description"
+      content="Open-source firmware transforming ESP32 devices into powerful wireless testing tools. Perfect for security research and network analysis."
+    />
+    <meta
+      property="og:image"
+      content="https://ghostesp.net/images/ghost-esp-preview.jpg"
+    />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Ghost ESP - WiFi Testing Platform Preview" />
+    <meta
+      property="og:image:alt"
+      content="Ghost ESP - WiFi Testing Platform Preview"
+    />
     <meta property="og:url" content="https://ghostesp.net" />
     <meta property="og:site_name" content="Ghost ESP" />
-    
+
     <!-- Twitter Card Tags -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@your_twitter" />
     <meta name="twitter:creator" content="@jaylikesbunda" />
-    <meta name="twitter:title" content="Ghost ESP - Advanced ESP32 Wireless Testing Platform" />
-    <meta name="twitter:description" content="Transform your ESP32 into a powerful wireless testing platform with Ghost ESP firmware." />
-    <meta name="twitter:image" content="https://ghostesp.net/images/ghost-esp-preview.jpg" />
-    
+    <meta
+      name="twitter:title"
+      content="Ghost ESP - Advanced ESP32 Wireless Testing Platform"
+    />
+    <meta
+      name="twitter:description"
+      content="Transform your ESP32 into a powerful wireless testing platform with Ghost ESP firmware."
+    />
+    <meta
+      name="twitter:image"
+      content="https://ghostesp.net/images/ghost-esp-preview.jpg"
+    />
+
     <!-- Canonical URL -->
-    <link rel="canonical" href="https://ghostesp.net">
-    
+    <link rel="canonical" href="https://ghostesp.net" />
+
     <!-- Preconnect to CDNs -->
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://unpkg.com">
-    
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://unpkg.com" />
+
     <!-- DNS prefetch -->
-    <link rel="dns-prefetch" href="https://cdn.spookytools.com">
-    <link rel="dns-prefetch" href="https://github.com">
-    
+    <link rel="dns-prefetch" href="https://cdn.spookytools.com" />
+    <link rel="dns-prefetch" href="https://github.com" />
+
     <!-- Preload critical resources -->
-    <link rel="preload" href="css/style.css" as="style">
-    <link rel="preload" href="https://unpkg.com/aos@2.3.1/dist/aos.css" as="style">
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/webfonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/webfonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin>
-    
+    <link rel="preload" href="css/style.css" as="style" />
+    <link
+      rel="preload"
+      href="https://unpkg.com/aos@2.3.1/dist/aos.css"
+      as="style"
+    />
+    <link
+      rel="preload"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/webfonts/fa-solid-900.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/webfonts/fa-regular-400.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+
     <title>Ghost ESP</title>
-    
+
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Share+Tech+Mono&family=Chakra+Petch:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&display=swap&display=swap" rel="stylesheet">
-    
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Share+Tech+Mono&family=Chakra+Petch:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&display=swap&display=swap"
+      rel="stylesheet"
+    />
+
     <!-- AOS CSS animations library -->
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+
     <!-- Custom styles -->
-    <link rel="stylesheet" href="css/style.css" fetchpriority="high">
-    <link rel="stylesheet" href="css/animations.css">
-    
+    <link rel="stylesheet" href="css/style.css" fetchpriority="high" />
+    <link rel="stylesheet" href="css/animations.css" />
+
     <!-- Feather icons -->
     <script src="https://unpkg.com/feather-icons" defer></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    
+
     <!-- Enhanced Structured Data -->
     <script type="application/ld+json">
-    {
+      {
         "@context": "https://schema.org",
         "@type": "SoftwareApplication",
         "name": "Ghost ESP",
         "applicationCategory": "SecurityApplication",
-        "operatingSystem": ["ESP32", "ESP32-S2", "ESP32-S3", "ESP32-C3", "ESP32-C6"],
+        "operatingSystem": [
+          "ESP32",
+          "ESP32-S2",
+          "ESP32-S3",
+          "ESP32-C3",
+          "ESP32-C6"
+        ],
         "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "USD"
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
         },
         "author": {
-            "@type": "Person",
-            "name": "Jay Candel",
-            "url": "https://github.com/jaylikesbunda"
+          "@type": "Person",
+          "name": "Jay Candel",
+          "url": "https://github.com/jaylikesbunda"
         },
         "description": "Advanced open-source firmware for ESP32 devices featuring WiFi analysis, BLE scanning, deauth detection, and more for wireless security testing.",
         "softwareVersion": "1.0",
         "downloadUrl": "https://github.com/Spooks4576/Ghost_ESP",
         "screenshot": {
-            "@type": "ImageObject",
-            "url": "https://ghostesp.net/images/ghost-esp-preview.jpg",
-            "width": "1200",
-            "height": "630",
-            "description": "Ghost ESP - WiFi Testing Platform Preview"
+          "@type": "ImageObject",
+          "url": "https://ghostesp.net/images/ghost-esp-preview.jpg",
+          "width": "1200",
+          "height": "630",
+          "description": "Ghost ESP - WiFi Testing Platform Preview"
         },
         "featureList": [
-            "WiFi Analysis and Scanning",
-            "Station Detection",
-            "Beacon Frame Generation",
-            "BLE Device Detection",
-            "Deauthentication Attack Detection",
-            "Packet Capture",
-            "Evil Portal Creation",
-            "RGB LED Status Indicators",
-            "DIAL & Chromecast Integration"
+          "WiFi Analysis and Scanning",
+          "Station Detection",
+          "Beacon Frame Generation",
+          "BLE Device Detection",
+          "Deauthentication Attack Detection",
+          "Packet Capture",
+          "Evil Portal Creation",
+          "RGB LED Status Indicators",
+          "DIAL & Chromecast Integration"
         ],
         "keywords": "ESP32, WiFi testing, wireless security, penetration testing, BLE scanning",
         "applicationSubCategory": "Network Security",
         "releaseNotes": "https://github.com/Spooks4576/Ghost_ESP/releases",
         "requirements": "Compatible ESP32 device",
         "softwareHelp": "https://github.com/Spooks4576/Ghost_ESP/wiki"
-    }
+      }
     </script>
 
     <!-- FAQ Structured Data -->
     <script type="application/ld+json">
-    {
+      {
         "@context": "https://schema.org",
         "@type": "FAQPage",
-        "mainEntity": [{
+        "mainEntity": [
+          {
             "@type": "Question",
             "name": "What is Ghost ESP?",
             "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Ghost ESP is an open-source firmware that transforms ESP32 devices into powerful wireless testing platforms, featuring WiFi analysis, BLE scanning, and security testing capabilities."
+              "@type": "Answer",
+              "text": "Ghost ESP is an open-source firmware that transforms ESP32 devices into powerful wireless testing platforms, featuring WiFi analysis, BLE scanning, and security testing capabilities."
             }
-        }, {
+          },
+          {
             "@type": "Question",
             "name": "Which ESP32 boards are supported?",
             "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Ghost ESP supports various ESP32 boards including ESP32-S2, ESP32-S3, ESP32-C3, ESP32-C6, and display-enabled boards like CYD, Waveshare LCD, and ESP32-S3-Cardputer."
+              "@type": "Answer",
+              "text": "Ghost ESP supports various ESP32 boards including ESP32-S2, ESP32-S3, ESP32-C3, ESP32-C6, and display-enabled boards like CYD, Waveshare LCD, and ESP32-S3-Cardputer."
             }
-        }, {
+          },
+          {
             "@type": "Question",
             "name": "How do I install Ghost ESP?",
             "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Ghost ESP can be installed using the Spooky Tools Web Flasher. Simply put your device in bootloader mode by holding the BOOT button while connecting USB, then use the web flasher to install the firmware."
+              "@type": "Answer",
+              "text": "Ghost ESP can be installed using the Spooky Tools Web Flasher. Simply put your device in bootloader mode by holding the BOOT button while connecting USB, then use the web flasher to install the firmware."
             }
-        }]
-    }
+          }
+        ]
+      }
     </script>
 
     <!-- Breadcrumb Structured Data -->
     <script type="application/ld+json">
-    {
+      {
         "@context": "https://schema.org",
         "@type": "BreadcrumbList",
-        "itemListElement": [{
+        "itemListElement": [
+          {
             "@type": "ListItem",
             "position": 1,
             "name": "Home",
             "item": "https://ghostesp.net"
-        }, {
+          },
+          {
             "@type": "ListItem",
             "position": 2,
             "name": "Features",
             "item": "https://ghostesp.net#features"
-        }, {
+          },
+          {
             "@type": "ListItem",
             "position": 3,
             "name": "Getting Started",
             "item": "https://ghostesp.net#getting-started"
-        }]
-    }
+          }
+        ]
+      }
     </script>
 
     <!-- Preload critical fonts -->
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Share+Tech+Mono&family=Chakra+Petch:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link
+      rel="preload"
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Share+Tech+Mono&family=Chakra+Petch:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&display=swap"
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'"
+    />
     <noscript>
-        <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Share+Tech+Mono&family=Chakra+Petch:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+      <link
+        href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Share+Tech+Mono&family=Chakra+Petch:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+      />
     </noscript>
 
     <!-- Inline critical CSS -->
@@ -197,408 +268,861 @@
         width: 100%;
         z-index: 1000;
       }
+
+      .nav-content {
+        max-width: 1400px;
+        width: 100%;
+        padding: 0 2rem;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 70px;
+      }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .nav-links a {
+        padding: 0.9rem 0.9rem;
+        white-space: nowrap;
+        transition: all 0.2s ease;
+      }
+
+      .nav-links a[href*="shop.ghostesp.net"] {
+        background: linear-gradient(45deg, #70056b, #920e0e);
+        border-radius: 12px;
+        padding: 0.7rem 1rem;
+        font-weight: 600;
+        color: 45deg, #8b3232, #802a2a;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        margin-right: 1rem;
+      }
+
+      .nav-links a[href*="shop.ghostesp.net"]:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      .mobile-menu-btn {
+        display: none;
+        background: none;
+        border: none;
+        color: white;
+        cursor: pointer;
+        padding: 0.5rem;
+      }
+
+      /* Mobile menu styles */
+      @media (max-width: 768px) {
+        .mobile-menu-btn {
+          display: block;
+          order: 2;
+        }
+
+        .logo {
+          order: 1;
+        }
+
+        .nav-links {
+          display: none;
+          position: absolute;
+          top: 100%;
+          left: 0;
+          right: 0;
+          background: rgba(18, 18, 18, 0.95);
+          padding: 1rem;
+          width: 100%;
+          gap: 1rem;
+          margin: 0;
+        }
+
+        .nav-links.active {
+          display: flex;
+          flex-direction: column;
+        }
+
+        .nav-content {
+          padding: 0.5rem 1rem;
+        }
+
+        .nav-links a {
+          padding: 0.5rem;
+          width: 100%;
+          text-align: center;
+        }
+      }
+
       .hero {
         min-height: 100vh;
         display: flex;
         align-items: center;
         justify-content: center;
       }
+
       /* Add other critical styles... */
+
+      /* Add these styles to your existing CSS */
+      .nav-links .social-btn {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        font-weight: 500;
+        transition: all 0.2s ease;
+      }
+
+      .nav-links .social-btn i {
+        font-size: 1.25rem;
+        text-align: center;
+      }
+
+      /* Remove the Discord logo specific styles since we're not using SVG anymore */
+      .discord-logo {
+        display: none;
+      }
+
+      @media (max-width: 768px) {
+        .nav-links .social-btn {
+          width: 100%;
+          justify-content: center;
+        }
+      }
+
+      /* Merch Section Styles */
+      .merch-section {
+        padding: 8rem 2rem;
+        background: linear-gradient(180deg, #070707 0%, #121212 100%);
+        position: relative;
+      }
+
+      .merch-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4rem;
+        align-items: center;
+        background: rgba(255, 255, 255, 0.02);
+        border-radius: 24px;
+        padding: 2rem;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+      }
+
+      .merch-image img {
+        width: 100%;
+        height: auto;
+        border-radius: 16px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s ease;
+      }
+
+      .merch-image img:hover {
+        transform: scale(1.02);
+      }
+
+      .merch-content {
+        padding: 2rem;
+      }
+
+      .merch-content h3 {
+        font-size: 2.5rem;
+        margin-bottom: 1.5rem;
+        font-family: "Chakra Petch", sans-serif;
+        color: #fff;
+        font-weight: 600;
+        letter-spacing: -0.5px;
+      }
+
+      .merch-content p {
+        font-size: 1.1rem;
+        margin-bottom: 2.5rem;
+        color: #e0e0e0;
+        line-height: 1.6;
+      }
+
+      .merch-features {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+        margin-bottom: 2.5rem;
+        padding: 1.5rem;
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: 16px;
+      }
+
+      .feature {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 0.75rem;
+      }
+
+      .feature i {
+        font-size: 1.5rem;
+        color: #70056b;
+        background: rgba(112, 5, 107, 0.1);
+        padding: 1rem;
+        border-radius: 50%;
+        aspect-ratio: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .feature span {
+        font-weight: 500;
+        color: #fff;
+      }
+
+      .store-buttons {
+        display: flex;
+        gap: 1rem;
+      }
+
+      .shop-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 1rem 2rem;
+        border-radius: 12px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        flex: 1;
+        justify-content: center;
+      }
+
+      .shop-btn.primary {
+        background: linear-gradient(45deg, #70056b, #920e0e);
+        color: white;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      }
+
+      .shop-btn.secondary {
+        background: rgba(255, 255, 255, 0.05);
+        color: #fff;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .shop-btn:hover {
+        transform: translateY(-2px);
+      }
+
+      .shop-btn.primary:hover {
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+      }
+
+      .shop-btn.secondary:hover {
+        background: rgba(255, 255, 255, 0.1);
+      }
+
+      @media (max-width: 968px) {
+        .merch-container {
+          grid-template-columns: 1fr;
+          gap: 2rem;
+          padding: 1.5rem;
+        }
+
+        .merch-content {
+          padding: 1rem;
+          text-align: center;
+        }
+
+        .merch-features {
+          grid-template-columns: repeat(3, 1fr);
+        }
+
+        .store-buttons {
+          flex-direction: column;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .merch-features {
+          grid-template-columns: 1fr;
+          padding: 1rem;
+        }
+
+        .merch-content h3 {
+          font-size: 2rem;
+        }
+
+        .merch-section {
+          padding: 4rem 1rem;
+        }
+      }
     </style>
 
     <!-- Defer non-critical CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" media="print" onload="this.media='all'">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      media="print"
+      onload="this.media='all'"
+    />
 
     <!-- Load AOS CSS asynchronously -->
-    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" media="print" onload="this.media='all'">
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/aos@2.3.1/dist/aos.css"
+      media="print"
+      onload="this.media='all'"
+    />
     <!-- Cronitor RUM -->
     <script async src="https://rum.cronitor.io/script.js"></script>
     <script>
-        window.cronitor = window.cronitor || function() { 
-            (window.cronitor.q = window.cronitor.q || []).push(arguments); 
+      window.cronitor =
+        window.cronitor ||
+        function () {
+          (window.cronitor.q = window.cronitor.q || []).push(arguments);
         };
-        cronitor('config', { clientKey: '58dd80c3f88ef7cabd4de50f71fc22f8' });
+      cronitor("config", { clientKey: "58dd80c3f88ef7cabd4de50f71fc22f8" });
     </script>
 
     <!-- Favicon and App Icons -->
-    <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
-    <link rel="manifest" href="images/site.webmanifest">
-    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="images/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="images/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="images/favicon-16x16.png"
+    />
+    <link rel="manifest" href="images/site.webmanifest" />
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico" />
+  </head>
 
-</head>
-
-<body>
+  <body>
     <nav class="navbar" role="navigation" aria-label="Main navigation">
-        <div class="nav-content">
-            <div class="logo">
-                <img src="images/Spooky_Logo_500x.png" alt="Ghost ESP Logo">
-            </div>
-            <button class="mobile-menu-btn" aria-label="Toggle menu">
-                <i data-feather="menu"></i>
-            </button>
-            <ul class="nav-links">
-                <li><a href="#features">Features</a></li>
-                <li><a href="#compatibility">Compatibility</a></li>
-                <li><a href="#getting-started">Get Started</a></li>
-                <li><a href="#flipper-app">Flipper App</a></li>
-                <li><a href="serial.html">Serial Console</a></li>
-                <li><a href="#" id="theme-toggle" class="theme-btn">
-                    <i class="fas fa-ghost"></i>
-                    <span class="menu-label">Theme</span>
-                </a></li>
-                <li><a href="https://discord.gg/PkdjxqYKe4" target="_blank" class="discord-btn">
-                    <i data-feather="message-circle"></i>
-                    <span class="menu-label">Discord</span>
-                </a></li>
-                <li><a href="https://github.com/Spooks4576/Ghost_ESP" class="github-btn" target="_blank">
-                    <i data-feather="github"></i>
-                    <span class="menu-label">GitHub</span>
-                </a></li>
-            </ul>
+      <div class="nav-content">
+        <div class="logo">
+          <img src="images/Spooky_Logo_500x.png" alt="Ghost ESP Logo" />
         </div>
+        <button class="mobile-menu-btn" aria-label="Toggle menu">
+          <i data-feather="menu"></i>
+        </button>
+        <ul class="nav-links">
+          <li><a href="#features">Features</a></li>
+          <li><a href="#compatibility">Compatibility</a></li>
+          <li><a href="#getting-started">Get Started</a></li>
+          <li><a href="#flipper-app">Flipper App</a></li>
+          <li><a href="serial.html">Serial Console</a></li>
+          <li><a href="https://shop.ghostesp.net" target="_blank">Merch</a></li>
+          <li>
+            <a href="#" id="theme-toggle" class="theme-btn">
+              <i class="fas fa-ghost"></i>
+              <span class="menu-label">Theme</span>
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://discord.gg/PkdjxqYKe4"
+              target="_blank"
+              class="social-btn discord-btn"
+            >
+              <i class="fab fa-discord"></i>
+              <span class="menu-label">Discord</span>
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://github.com/Spooks4576/Ghost_ESP"
+              class="social-btn github-btn"
+              target="_blank"
+            >
+              <i class="fab fa-github"></i>
+              <span class="menu-label">GitHub</span>
+            </a>
+          </li>
+        </ul>
+      </div>
     </nav>
 
     <header class="hero" role="banner">
-        <div class="hero-grid"></div>
-        <div class="hero-content" data-aos="fade-up">
-            <div class="hero-logo">
-                <img src="images/ghost-esp-logo.png" alt="Ghost ESP Firmware" class="responsive-logo">
-            </div>
-            <div class="cta-buttons">
-                <a href="#getting-started" class="primary-btn">Get Started</a>
-                <a href="#latest-release" class="secondary-btn">Latest Release</a>
-                <a href="https://github.com/Spooks4576/Ghost_ESP/wiki" class="secondary-btn">Documentation</a>
-            </div>
+      <div class="hero-grid"></div>
+      <div class="hero-content" data-aos="fade-up">
+        <div class="hero-logo">
+          <img
+            src="images/ghost-esp-logo.png"
+            alt="Ghost ESP Firmware"
+            class="responsive-logo"
+          />
         </div>
-        <div class="scroll-arrow">
-            <i class="fas fa-chevron-down"></i>
+        <div class="cta-buttons">
+          <a href="#getting-started" class="primary-btn">Get Started</a>
+          <a href="#latest-release" class="secondary-btn">Latest Release</a>
+          <a
+            href="https://github.com/Spooks4576/Ghost_ESP/wiki"
+            class="secondary-btn"
+            >Documentation</a
+          >
         </div>
+      </div>
+      <div class="scroll-arrow">
+        <i class="fas fa-chevron-down"></i>
+      </div>
     </header>
 
     <main role="main">
-        <section id="features" class="features" aria-labelledby="features-heading">
-            <h2 id="features-heading" data-aos="fade-up">Key Features</h2>
-            <div class="features-grid">
-                <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
-                    <i data-feather="wifi"></i>
-                    <h3>WiFi Analysis</h3>
-                    <p>Advanced scanning of access points and stations with OUI matching and real-time monitoring</p>
-                </div>
+      <section
+        id="features"
+        class="features"
+        aria-labelledby="features-heading"
+      >
+        <h2 id="features-heading" data-aos="fade-up">Key Features</h2>
+        <div class="features-grid">
+          <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+            <i data-feather="wifi"></i>
+            <h3>WiFi Analysis</h3>
+            <p>
+              Advanced scanning of access points and stations with OUI matching
+              and real-time monitoring
+            </p>
+          </div>
 
-                <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
-                    <i data-feather="radio"></i>
-                    <h3>Packet Capture</h3>
-                    <p>Capture probe requests, beacons, deauth packets, WPS, EAPOL and raw WiFi packets with PCAP support</p>
-                </div>
+          <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+            <i data-feather="radio"></i>
+            <h3>Packet Capture</h3>
+            <p>
+              Capture probe requests, beacons, deauth packets, WPS, EAPOL and
+              raw WiFi packets with PCAP support
+            </p>
+          </div>
 
-                <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
-                    <i data-feather="zap"></i>
-                    <h3>Beacon Operations</h3>
-                    <p>Generate custom beacon frames with random, rickroll, or AP list modes for network testing</p>
-                </div>
+          <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+            <i data-feather="zap"></i>
+            <h3>Beacon Operations</h3>
+            <p>
+              Generate custom beacon frames with random, rickroll, or AP list
+              modes for network testing
+            </p>
+          </div>
 
-                <div class="feature-card" data-aos="fade-up" data-aos-delay="400">
-                    <i data-feather="bluetooth"></i>
-                    <h3>BLE Toolkit</h3>
-                    <p>Scan for Flipper devices, detect BLE spam, track AirTags, and capture raw BLE packets</p>
-                </div>
+          <div class="feature-card" data-aos="fade-up" data-aos-delay="400">
+            <i data-feather="bluetooth"></i>
+            <h3>BLE Toolkit</h3>
+            <p>
+              Scan for Flipper devices, detect BLE spam, track AirTags, and
+              capture raw BLE packets
+            </p>
+          </div>
 
-                <div class="feature-card" data-aos="fade-up" data-aos-delay="500">
-                    <i data-feather="map"></i>
-                    <h3>Wardriving</h3>
-                    <p>GPS-enabled WiFi and BLE wardriving with CSV logging for network mapping</p>
-                </div>
+          <div class="feature-card" data-aos="fade-up" data-aos-delay="500">
+            <i data-feather="map"></i>
+            <h3>Wardriving</h3>
+            <p>
+              GPS-enabled WiFi and BLE wardriving with CSV logging for network
+              mapping
+            </p>
+          </div>
 
-                <div class="feature-card" data-aos="fade-up" data-aos-delay="600">
-                    <i data-feather="globe"></i>
-                    <h3>Evil Portal</h3>
-                    <p>Create customizable captive portals with online/offline modes and domain spoofing</p>
-                </div>
+          <div class="feature-card" data-aos="fade-up" data-aos-delay="600">
+            <i data-feather="globe"></i>
+            <h3>Evil Portal</h3>
+            <p>
+              Create customizable captive portals with online/offline modes and
+              domain spoofing
+            </p>
+          </div>
 
-                <div class="feature-card" data-aos="fade-up" data-aos-delay="700">
-                    <i data-feather="cast"></i>
-                    <h3>Network Tools</h3>
-                    <p>DIAL/Chromecast control, network printer access, and TP-Link device management</p>
-                </div>
+          <div class="feature-card" data-aos="fade-up" data-aos-delay="700">
+            <i data-feather="cast"></i>
+            <h3>Network Tools</h3>
+            <p>
+              DIAL/Chromecast control, network printer access, and TP-Link
+              device management
+            </p>
+          </div>
 
-                <div class="feature-card" data-aos="fade-up" data-aos-delay="800">
-                    <i data-feather="shield"></i>
-                    <h3>Security Testing</h3>
-                    <p>WPS scanning, and skimmer detection capabilities and more</p>
-                </div>
+          <div class="feature-card" data-aos="fade-up" data-aos-delay="800">
+            <i data-feather="shield"></i>
+            <h3>Security Testing</h3>
+            <p>WPS scanning, and skimmer detection capabilities and more</p>
+          </div>
 
-                <div class="feature-card" data-aos="fade-up" data-aos-delay="900">
-                    <i data-feather="monitor"></i>
-                    <h3>Display Features</h3>
-                    <p>Built-in games, music visualizer, and RGB rave mode for supported display boards</p>
+          <div class="feature-card" data-aos="fade-up" data-aos-delay="900">
+            <i data-feather="monitor"></i>
+            <h3>Display Features</h3>
+            <p>
+              Built-in games, music visualizer, and RGB rave mode for supported
+              display boards
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="video-showcase" aria-labelledby="video-heading">
+        <h2 id="video-heading" data-aos="fade-up">See Ghost ESP in Action</h2>
+        <div class="video-container">
+          <button class="scroll-button left" aria-label="Scroll left">
+            <i data-feather="chevron-left"></i>
+          </button>
+          <button class="scroll-button right" aria-label="Scroll right">
+            <i data-feather="chevron-right"></i>
+          </button>
+          <div class="video-scroll-wrapper">
+            <div class="video-scroll">
+              <div class="video-card" data-aos="fade-up">
+                <div class="video-wrapper">
+                  <iframe
+                    data-src="https://www.youtube.com/embed/6RjM7aI4k4k?rel=0"
+                    title="GhostESP: The Next Generation WiFi Hacking Tool"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    loading="lazy"
+                    allowfullscreen
+                  ></iframe>
                 </div>
+                <div class="video-info">
+                  <h3>GhostESP Overview</h3>
+                  <p>
+                    Comprehensive overview of GhostESP features including WebUI,
+                    Evil Portal, Rave mode, and network printing capabilities
+                  </p>
+                </div>
+              </div>
+
+              <div class="video-card" data-aos="fade-up">
+                <div class="video-wrapper">
+                  <iframe
+                    data-src="https://www.youtube.com/embed/FGvlEOXA8Cw?rel=0"
+                    title="GhostESP Board Deauthenticate Demo"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                  ></iframe>
+                </div>
+                <div class="video-info">
+                  <h3>Deauth Demo</h3>
+                  <p>
+                    Demonstration of GhostESP and Flipper Zero deauthenticating
+                    a spy camera from a 2.4GHz WiFi network
+                  </p>
+                </div>
+              </div>
+
+              <div class="video-card" data-aos="fade-up">
+                <div class="video-wrapper">
+                  <iframe
+                    data-src="https://www.youtube.com/embed/DsbQBwRUSPY?rel=0"
+                    title="GhostESP Promo Trailer"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                  ></iframe>
+                </div>
+                <div class="video-info">
+                  <h3>Promo Trailer</h3>
+                  <p>Short promotional trailer showcasing GhostESP features</p>
+                </div>
+              </div>
+
+              <div class="video-card" data-aos="fade-up">
+                <div class="video-wrapper">
+                  <iframe
+                    data-src="https://www.youtube.com/embed/OK0DhM7aPro?rel=0"
+                    title="Flashing Lilygo T-Watch S3"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                  ></iframe>
+                </div>
+                <div class="video-info">
+                  <h3>T-Watch S3 Tutorial</h3>
+                  <p>
+                    How to get the T-Watch S3 into bootloader mode and flash
+                    GhostESP
+                  </p>
+                </div>
+              </div>
+
+              <div class="video-card" data-aos="fade-up">
+                <div class="video-wrapper">
+                  <iframe
+                    data-src="https://www.youtube.com/embed/eFqLI-TPjFc?rel=0"
+                    title="Flashing GHOST ESP on ESP32-C3"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                  ></iframe>
+                </div>
+                <div class="video-info">
+                  <h3>Mobile Flashing Tutorial</h3>
+                  <p>
+                    Flash Ghost ESP on ESP32-C3 SuperMini using just your phone
+                  </p>
+                </div>
+              </div>
             </div>
-        </section>
+          </div>
+        </div>
+      </section>
 
-        <section class="video-showcase" aria-labelledby="video-heading">
-            <h2 id="video-heading" data-aos="fade-up">See Ghost ESP in Action</h2>
-            <div class="video-container">
-                <button class="scroll-button left" aria-label="Scroll left">
-                    <i data-feather="chevron-left"></i>
-                </button>
-                <button class="scroll-button right" aria-label="Scroll right">
-                    <i data-feather="chevron-right"></i>
-                </button>
-                <div class="video-scroll-wrapper">
-                    <div class="video-scroll">
-
-                        <div class="video-card" data-aos="fade-up">
-                            <div class="video-wrapper">
-                                <iframe 
-                                    data-src="https://www.youtube.com/embed/6RjM7aI4k4k?rel=0" 
-                                    title="GhostESP: The Next Generation WiFi Hacking Tool" 
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                    loading="lazy"
-                                    allowfullscreen
-                                ></iframe>
-                            </div>
-                            <div class="video-info">
-                                <h3>GhostESP Overview</h3>
-                                <p>Comprehensive overview of GhostESP features including WebUI, Evil Portal, Rave mode, and network printing capabilities</p>
-                            </div>
-                        </div>
-
-
-                        <div class="video-card" data-aos="fade-up">
-                            <div class="video-wrapper">
-                                <iframe 
-                                    data-src="https://www.youtube.com/embed/FGvlEOXA8Cw?rel=0" 
-                                    title="GhostESP Board Deauthenticate Demo" 
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                    allowfullscreen
-                                ></iframe>
-                            </div>
-                            <div class="video-info">
-                                <h3>Deauth Demo</h3>
-                                <p>Demonstration of GhostESP and Flipper Zero deauthenticating a spy camera from a 2.4GHz WiFi network</p>
-                            </div>
-                        </div>
-
-                        <div class="video-card" data-aos="fade-up">
-                            <div class="video-wrapper">
-                                <iframe 
-                                    data-src="https://www.youtube.com/embed/DsbQBwRUSPY?rel=0" 
-                                    title="GhostESP Promo Trailer" 
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                    allowfullscreen
-                                ></iframe>
-                            </div>
-                            <div class="video-info">
-                                <h3>Promo Trailer</h3>
-                                <p>Short promotional trailer showcasing GhostESP features</p>
-                            </div>
-                        </div>
-
-
-                        <div class="video-card" data-aos="fade-up">
-                            <div class="video-wrapper">
-                                <iframe 
-                                    data-src="https://www.youtube.com/embed/OK0DhM7aPro?rel=0" 
-                                    title="Flashing Lilygo T-Watch S3" 
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                    allowfullscreen
-                                ></iframe>
-                            </div>
-                            <div class="video-info">
-                                <h3>T-Watch S3 Tutorial</h3>
-                                <p>How to get the T-Watch S3 into bootloader mode and flash GhostESP</p>
-                            </div>
-                        </div>
-
-                        <div class="video-card" data-aos="fade-up">
-                            <div class="video-wrapper">
-                                <iframe 
-                                    data-src="https://www.youtube.com/embed/eFqLI-TPjFc?rel=0" 
-                                    title="Flashing GHOST ESP on ESP32-C3" 
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                    allowfullscreen
-                                ></iframe>
-                            </div>
-                            <div class="video-info">
-                                <h3>Mobile Flashing Tutorial</h3>
-                                <p>Flash Ghost ESP on ESP32-C3 SuperMini using just your phone</p>
-                            </div>
-                        </div>
-
-
-
-                    </div>
-                </div>
+      <section
+        id="compatibility"
+        class="compatibility"
+        aria-labelledby="compatibility-heading"
+      >
+        <h2 id="compatibility-heading" data-aos="fade-up">
+          Supported Hardware
+        </h2>
+        <div class="board-grid">
+          <div class="board-category" data-aos="fade-up" data-aos-delay="100">
+            <h3><i data-feather="monitor"></i> Display-Enabled Boards</h3>
+            <div class="board-cards">
+              <div class="board-card">
+                <h4>CYD Boards</h4>
+                <ul>
+                  <li>CYD2USB (USB-C)</li>
+                  <li>CYDMicroUSB</li>
+                  <li>CYDDualUSB</li>
+                  <li><small>Compatible with 2.8" ESP32-2432S028</small></li>
+                </ul>
+              </div>
+              <div class="board-card">
+                <h4>7-Inch Displays</h4>
+                <ul>
+                  <li>Waveshare LCD (800x480)</li>
+                  <li>Crowtech LCD (800x480)</li>
+                  <li><small>Both using ESP32-S3</small></li>
+                </ul>
+              </div>
+              <div class="board-card">
+                <h4>Other Display Boards</h4>
+                <ul>
+                  <li>ESP32-S3-Cardputer</li>
+                  <li>MarauderV6 & AwokDual</li>
+                  <li>AwokMini (128x128)</li>
+                </ul>
+              </div>
             </div>
-        </section>
+          </div>
 
-        <section id="compatibility" class="compatibility" aria-labelledby="compatibility-heading">
-            <h2 id="compatibility-heading" data-aos="fade-up">Supported Hardware</h2>
-            <div class="board-grid">
-                <div class="board-category" data-aos="fade-up" data-aos-delay="100">
-                    <h3><i data-feather="monitor"></i> Display-Enabled Boards</h3>
-                    <div class="board-cards">
-                        <div class="board-card">
-                            <h4>CYD Boards</h4>
-                            <ul>
-                                <li>CYD2USB (USB-C)</li>
-                                <li>CYDMicroUSB</li>
-                                <li>CYDDualUSB</li>
-                                <li><small>Compatible with 2.8" ESP32-2432S028</small></li>
-                            </ul>
-                        </div>
-                        <div class="board-card">
-                            <h4>7-Inch Displays</h4>
-                            <ul>
-                                <li>Waveshare LCD (800x480)</li>
-                                <li>Crowtech LCD (800x480)</li>
-                                <li><small>Both using ESP32-S3</small></li>
-                            </ul>
-                        </div>
-                        <div class="board-card">
-                            <h4>Other Display Boards</h4>
-                            <ul>
-                                <li>ESP32-S3-Cardputer</li>
-                                <li>MarauderV6 & AwokDual</li>
-                                <li>AwokMini (128x128)</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="board-category" data-aos="fade-up" data-aos-delay="200">
-                    <h3><i data-feather="cpu"></i> Generic Boards</h3>
-                    <div class="board-cards">
-                        <div class="board-card">
-                            <h4>ESP32 Models</h4>
-                            <ul>
-                                <li>ESP32 Wroom</li>
-                                <li>ESP32-S2</li>
-                                <li>ESP32-S3</li>
-                                <li>ESP32-C3</li>
-                                <li>ESP32-C6</li>
-                            </ul>
-                        </div>
-                        <div class="board-card">
-                            <h4>Custom Builds</h4>
-                            <ul>
-                                <li>Create your own build</li>
-                                <li>Customize features (more coming soon!)</li>
-                                <li>Build for your specific hardware</li>
-                                <li><a href="https://github.com/Spooks4576/Ghost_ESP/wiki/Custom-Build-Guide" target="_blank">View Build Guide →</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+          <div class="board-category" data-aos="fade-up" data-aos-delay="200">
+            <h3><i data-feather="cpu"></i> Generic Boards</h3>
+            <div class="board-cards">
+              <div class="board-card">
+                <h4>ESP32 Models</h4>
+                <ul>
+                  <li>ESP32 Wroom</li>
+                  <li>ESP32-S2</li>
+                  <li>ESP32-S3</li>
+                  <li>ESP32-C3</li>
+                  <li>ESP32-C6</li>
+                </ul>
+              </div>
+              <div class="board-card">
+                <h4>Custom Builds</h4>
+                <ul>
+                  <li>Create your own build</li>
+                  <li>Customize features (more coming soon!)</li>
+                  <li>Build for your specific hardware</li>
+                  <li>
+                    <a
+                      href="https://github.com/Spooks4576/Ghost_ESP/wiki/Custom-Build-Guide"
+                      target="_blank"
+                      >View Build Guide →</a
+                    >
+                  </li>
+                </ul>
+              </div>
             </div>
-        </section>
+          </div>
+        </div>
+      </section>
 
-        <section id="getting-started" class="getting-started" aria-labelledby="getting-started-heading">
-            <h2 id="getting-started-heading" data-aos="fade-up">Getting Started</h2>
-            
-            <div class="steps-container">
-                <div class="step" data-aos="fade-up" data-aos-delay="100">
-                    <div class="step-number">1</div>
-                    <h3>Flash Your Device</h3>
-                    <p>Visit the <a href="https://flasher.spookytools.com/" target="_blank">Spooky Tools Web Flasher</a></p>
-                    <div class="step-details">
-                        <h4>Bootloader Mode:</h4>
-                        <ol>
-                            <li>Hold BOOT button</li>
-                            <li>Connect USB cable</li>
-                            <li>Release BOOT after connection</li>
-                        </ol>
-                    </div>
-                </div>
+      <section
+        id="getting-started"
+        class="getting-started"
+        aria-labelledby="getting-started-heading"
+      >
+        <h2 id="getting-started-heading" data-aos="fade-up">Getting Started</h2>
 
-                <div class="step" data-aos="fade-up" data-aos-delay="200">
-                    <div class="step-number">2</div>
-                    <h3>Basic Commands</h3>
-                    <div class="step-details">
-                        <ul class="command-list">
-                            <li><code>scanap</code> - Scan WiFi networks</li>
-                            <li><code>list -a</code> - List found networks</li>
-                            <li><code>scanlocal</code> - Scan local network</li>
-                            <li><code>help</code> - Show all commands</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="step" data-aos="fade-up" data-aos-delay="300">
-                    <div class="step-number">3</div>
-                    <h3>Touch Navigation</h3>
-                    <div class="step-details">
-                        <ul>
-                            <li>Top Half: Move Up</li>
-                            <li>Bottom Half: Move Down</li>
-                            <li>Middle: Select Item</li>
-                            <li>Main Menu: Direct Touch</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="step" data-aos="fade-up" data-aos-delay="400">
-                    <div class="step-number">4</div>
-                    <h3>Need Help?</h3>
-                    <div class="step-details">
-                        <p>Join our <a href="https://discord.gg/eyE46kKPPR" target="_blank">Discord Community</a> for:</p>
-                        <ul>
-                            <li>Live Support</li>
-                            <li>Troubleshooting</li>
-                            <li>Latest Updates</li>
-                            <li>Community Tips</li>
-                        </ul>
-                    </div>
-                </div>
+        <div class="steps-container">
+          <div class="step" data-aos="fade-up" data-aos-delay="100">
+            <div class="step-number">1</div>
+            <h3>Flash Your Device</h3>
+            <p>
+              Visit the
+              <a href="https://flasher.spookytools.com/" target="_blank"
+                >Spooky Tools Web Flasher</a
+              >
+            </p>
+            <div class="step-details">
+              <h4>Bootloader Mode:</h4>
+              <ol>
+                <li>Hold BOOT button</li>
+                <li>Connect USB cable</li>
+                <li>Release BOOT after connection</li>
+              </ol>
             </div>
-        </section>
+          </div>
 
-        <section id="flipper-app" class="flipper-app" aria-labelledby="flipper-app-heading">
-            <h2 id="flipper-app-heading" data-aos="fade-up">Flipper Zero App</h2>
-            <div class="flipper-content">
-                <div class="flipper-card" data-aos="fade-up">
-                    <div class="flipper-icon">
-                        <i data-feather="smartphone"></i>
-                    </div>
-                    <h3>Ghost ESP for Flipper Zero</h3>
-                    <p>Control your Ghost ESP directly from your Flipper Zero with our official companion app.</p>
-                    <div class="download-options">
-                        <a href="https://cdn.spookytools.com/assets/ghost_esp.fap" class="download-btn primary-btn">
-                            <i data-feather="download"></i>
-                            Download Latest FAP
-                        </a>
-                        <a href="https://github.com/Spooks4576/ghost_esp_app" class="download-btn secondary-btn">
-                            <i data-feather="github"></i>
-                            View Source
-                        </a>
-                    </div>
-                    <div class="app-features">
-                        <h4>App Features:</h4>
-                        <ul>
-                            <li><i data-feather="wifi"></i> WiFi Operations</li>
-                            <li><i data-feather="bluetooth"></i> BLE Controls</li>
-                            <li><i data-feather="map-pin"></i> GPS Functions</li>
-                            <li><i data-feather="settings"></i> Device Configuration</li>
-                        </ul>
-                    </div>
-                </div>
+          <div class="step" data-aos="fade-up" data-aos-delay="200">
+            <div class="step-number">2</div>
+            <h3>Basic Commands</h3>
+            <div class="step-details">
+              <ul class="command-list">
+                <li><code>scanap</code> - Scan WiFi networks</li>
+                <li><code>list -a</code> - List found networks</li>
+                <li><code>scanlocal</code> - Scan local network</li>
+                <li><code>help</code> - Show all commands</li>
+              </ul>
             </div>
-        </section>
+          </div>
+
+          <div class="step" data-aos="fade-up" data-aos-delay="300">
+            <div class="step-number">3</div>
+            <h3>Touch Navigation</h3>
+            <div class="step-details">
+              <ul>
+                <li>Top Half: Move Up</li>
+                <li>Bottom Half: Move Down</li>
+                <li>Middle: Select Item</li>
+                <li>Main Menu: Direct Touch</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="step" data-aos="fade-up" data-aos-delay="400">
+            <div class="step-number">4</div>
+            <h3>Need Help?</h3>
+            <div class="step-details">
+              <p>
+                Join our
+                <a href="https://discord.gg/eyE46kKPPR" target="_blank"
+                  >Discord Community</a
+                >
+                for:
+              </p>
+              <ul>
+                <li>Live Support</li>
+                <li>Troubleshooting</li>
+                <li>Latest Updates</li>
+                <li>Community Tips</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section
+        id="flipper-app"
+        class="flipper-app"
+        aria-labelledby="flipper-app-heading"
+      >
+        <h2 id="flipper-app-heading" data-aos="fade-up">Flipper Zero App</h2>
+        <div class="flipper-content">
+          <div class="flipper-card" data-aos="fade-up">
+            <div class="flipper-icon">
+              <i data-feather="smartphone"></i>
+            </div>
+            <h3>Ghost ESP for Flipper Zero</h3>
+            <p>
+              Control your Ghost ESP directly from your Flipper Zero with our
+              official companion app.
+            </p>
+            <div class="download-options">
+              <a
+                href="https://cdn.spookytools.com/assets/ghost_esp.fap"
+                class="download-btn primary-btn"
+              >
+                <i data-feather="download"></i>
+                Download Latest FAP
+              </a>
+              <a
+                href="https://github.com/Spooks4576/ghost_esp_app"
+                class="download-btn secondary-btn"
+              >
+                <i data-feather="github"></i>
+                View Source
+              </a>
+            </div>
+            <div class="app-features">
+              <h4>App Features:</h4>
+              <ul>
+                <li><i data-feather="wifi"></i> WiFi Operations</li>
+                <li><i data-feather="bluetooth"></i> BLE Controls</li>
+                <li><i data-feather="map-pin"></i> GPS Functions</li>
+                <li><i data-feather="settings"></i> Device Configuration</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="merch" class="merch-section">
+        <div class="merch-container" data-aos="fade-up">
+          <div class="merch-image">
+            <img
+              src="images/widescreen-promo-01-min.webp"
+              alt="Ghost ESP Official Merchandise"
+              loading="lazy"
+            />
+          </div>
+          <div class="merch-content">
+            <h3>Limited Official Store</h3>
+            <p>Exclusive Ghost ESP apparel and accessories</p>
+            <div class="merch-features">
+              <div class="feature">
+                <i class="fas fa-check-circle"></i>
+                <span>Quality Gear</span>
+              </div>
+              <div class="feature">
+                <i class="fas fa-box"></i>
+                <span>Worldwide Shipping</span>
+              </div>
+              <div class="feature">
+                <i class="fas fa-lock"></i>
+                <span>Secure Payment</span>
+              </div>
+            </div>
+            <a
+              href="https://shop.ghostesp.net"
+              target="_blank"
+              class="shop-btn primary"
+            >
+              <i class="fas fa-store"></i>
+              Visit Store
+            </a>
+          </div>
+        </div>
+      </section>
     </main>
 
     <!-- Add this before the closing body tag -->
     <footer class="credits" role="contentinfo">
-        <div class="footer-content">
-            <a href="https://github.com/jaylikesbunda" target="_blank" class="credit-link">
-                Site Developed by Jay Candel <i class="fas fa-heart"></i>
-            </a>
-            <a href="https://www.paypal.com/paypalme/spooks4576" target="_blank" class="support-btn">
-                <i class="fas fa-bolt"></i>
-                Support the Project
-            </a>
-        </div>
+      <div class="footer-content">
+        <a
+          href="https://github.com/jaylikesbunda"
+          target="_blank"
+          class="credit-link"
+        >
+          Site Developed by Jay Candel <i class="fas fa-heart"></i>
+        </a>
+        <a
+          href="https://www.paypal.com/paypalme/spooks4576"
+          target="_blank"
+          class="support-btn"
+        >
+          <i class="fas fa-bolt"></i>
+          Support the Project
+        </a>
+      </div>
     </footer>
 
     <!-- AOS JS -->
@@ -606,157 +1130,171 @@
     <!-- Custom JS -->
     <script src="js/main.js" defer></script>
     <script>
-        // Initialize scroll buttons
-        document.addEventListener('DOMContentLoaded', function() {
-            const scrollWrapper = document.querySelector('.video-scroll-wrapper');
-            const scroll = document.querySelector('.video-scroll');
-            const leftBtn = document.querySelector('.scroll-button.left');
-            const rightBtn = document.querySelector('.scroll-button.right');
-            const cardWidth = document.querySelector('.video-card').offsetWidth + 32; // Including gap
+      // Initialize scroll buttons
+      document.addEventListener("DOMContentLoaded", function () {
+        const scrollWrapper = document.querySelector(".video-scroll-wrapper");
+        const scroll = document.querySelector(".video-scroll");
+        const leftBtn = document.querySelector(".scroll-button.left");
+        const rightBtn = document.querySelector(".scroll-button.right");
+        const cardWidth =
+          document.querySelector(".video-card").offsetWidth + 32; // Including gap
 
-            // Function to update button visibility
-            function updateButtons() {
-                const scrollLeft = scrollWrapper.scrollLeft;
-                const scrollWidth = scroll.scrollWidth;
-                const clientWidth = scrollWrapper.clientWidth;
-                
-                leftBtn.style.opacity = scrollLeft <= 0 ? '0.5' : '1';
-                rightBtn.style.opacity = scrollLeft >= scrollWidth - clientWidth ? '0.5' : '1';
-            }
+        // Function to update button visibility
+        function updateButtons() {
+          const scrollLeft = scrollWrapper.scrollLeft;
+          const scrollWidth = scroll.scrollWidth;
+          const clientWidth = scrollWrapper.clientWidth;
 
-            // Scroll functions
-            leftBtn.addEventListener('click', () => {
-                scrollWrapper.scrollBy({
-                    left: -cardWidth,
-                    behavior: 'smooth'
-                });
-            });
-
-            rightBtn.addEventListener('click', () => {
-                scrollWrapper.scrollBy({
-                    left: cardWidth,
-                    behavior: 'smooth'
-                });
-            });
-
-            // Update button states on scroll
-            scrollWrapper.addEventListener('scroll', updateButtons);
-            
-            // Initial button state
-            updateButtons();
-        });
-
-        document.querySelector('.scroll-arrow').addEventListener('click', function() {
-            window.scrollTo({
-                top: window.innerHeight,
-                behavior: 'smooth'
-            });
-        });
-
-        // Intelligent preload system
-        const preloadManager = {
-            sections: {
-                'features': false,
-                'compatibility': false,
-                'getting-started': false
-            },
-            threshold: 200, // pixels from top/bottom to trigger preload
-            
-            preloadSection(sectionId) {
-                if (this.sections[sectionId]) return; // Already preloaded
-                
-                const section = document.getElementById(sectionId);
-                if (!section) return;
-                
-                // Find all images in the section
-                const images = section.getElementsByTagName('img');
-                for (let img of images) {
-                    if (img.dataset.src) {
-                        img.src = img.dataset.src;
-                    }
-                }
-                
-                // Find all iframes (videos) in the section
-                const iframes = section.getElementsByTagName('iframe');
-                for (let iframe of iframes) {
-                    if (iframe.dataset.src) {
-                        iframe.src = iframe.dataset.src;
-                    }
-                }
-                
-                this.sections[sectionId] = true;
-                console.log(`Preloaded section: ${sectionId}`);
-            }
-        };
-
-        // Mouse movement tracking
-        let lastY = 0;
-        let movingDown = false;
-        
-        document.addEventListener('mousemove', (e) => {
-            // Determine direction
-            movingDown = e.clientY > lastY;
-            lastY = e.clientY;
-            
-            // Check position relative to viewport
-            const viewportHeight = window.innerHeight;
-            const mouseY = e.clientY;
-            
-            // Preload based on mouse position and movement
-            if (movingDown && mouseY > viewportHeight - preloadManager.threshold) {
-                // Mouse moving down near bottom of viewport
-                const nextSection = findNextSection();
-                if (nextSection) {
-                    preloadManager.preloadSection(nextSection);
-                }
-            } else if (!movingDown && mouseY < preloadManager.threshold) {
-                // Mouse moving up near top of viewport
-                const previousSection = findPreviousSection();
-                if (previousSection) {
-                    preloadManager.preloadSection(previousSection);
-                }
-            }
-        });
-
-        // Helper to find next section based on scroll position
-        function findNextSection() {
-            const sections = ['features', 'compatibility', 'getting-started'];
-            const scrollPosition = window.scrollY + window.innerHeight / 2;
-            
-            for (let section of sections) {
-                const element = document.getElementById(section);
-                if (element && element.offsetTop > scrollPosition) {
-                    return section;
-                }
-            }
-            return null;
+          leftBtn.style.opacity = scrollLeft <= 0 ? "0.5" : "1";
+          rightBtn.style.opacity =
+            scrollLeft >= scrollWidth - clientWidth ? "0.5" : "1";
         }
 
-        // Helper to find previous section based on scroll position
-        function findPreviousSection() {
-            const sections = ['features', 'compatibility', 'getting-started'];
-            const scrollPosition = window.scrollY + window.innerHeight / 2;
-            
-            for (let i = sections.length - 1; i >= 0; i--) {
-                const element = document.getElementById(sections[i]);
-                if (element && element.offsetTop < scrollPosition) {
-                    return sections[i];
-                }
-            }
-            return null;
-        }
-
-        // Also preload on scroll for smoother experience
-        let scrollTimeout;
-        window.addEventListener('scroll', () => {
-            clearTimeout(scrollTimeout);
-            scrollTimeout = setTimeout(() => {
-                const nextSection = findNextSection();
-                if (nextSection) {
-                    preloadManager.preloadSection(nextSection);
-                }
-            }, 150); // Debounced to avoid excessive calls
+        // Scroll functions
+        leftBtn.addEventListener("click", () => {
+          scrollWrapper.scrollBy({
+            left: -cardWidth,
+            behavior: "smooth",
+          });
         });
+
+        rightBtn.addEventListener("click", () => {
+          scrollWrapper.scrollBy({
+            left: cardWidth,
+            behavior: "smooth",
+          });
+        });
+
+        // Update button states on scroll
+        scrollWrapper.addEventListener("scroll", updateButtons);
+
+        // Initial button state
+        updateButtons();
+      });
+
+      document
+        .querySelector(".scroll-arrow")
+        .addEventListener("click", function () {
+          window.scrollTo({
+            top: window.innerHeight,
+            behavior: "smooth",
+          });
+        });
+
+      // Intelligent preload system
+      const preloadManager = {
+        sections: {
+          features: false,
+          compatibility: false,
+          "getting-started": false,
+        },
+        threshold: 200, // pixels from top/bottom to trigger preload
+
+        preloadSection(sectionId) {
+          if (this.sections[sectionId]) return; // Already preloaded
+
+          const section = document.getElementById(sectionId);
+          if (!section) return;
+
+          // Find all images in the section
+          const images = section.getElementsByTagName("img");
+          for (let img of images) {
+            if (img.dataset.src) {
+              img.src = img.dataset.src;
+            }
+          }
+
+          // Find all iframes (videos) in the section
+          const iframes = section.getElementsByTagName("iframe");
+          for (let iframe of iframes) {
+            if (iframe.dataset.src) {
+              iframe.src = iframe.dataset.src;
+            }
+          }
+
+          this.sections[sectionId] = true;
+          console.log(`Preloaded section: ${sectionId}`);
+        },
+      };
+
+      // Mouse movement tracking
+      let lastY = 0;
+      let movingDown = false;
+
+      document.addEventListener("mousemove", (e) => {
+        // Determine direction
+        movingDown = e.clientY > lastY;
+        lastY = e.clientY;
+
+        // Check position relative to viewport
+        const viewportHeight = window.innerHeight;
+        const mouseY = e.clientY;
+
+        // Preload based on mouse position and movement
+        if (movingDown && mouseY > viewportHeight - preloadManager.threshold) {
+          // Mouse moving down near bottom of viewport
+          const nextSection = findNextSection();
+          if (nextSection) {
+            preloadManager.preloadSection(nextSection);
+          }
+        } else if (!movingDown && mouseY < preloadManager.threshold) {
+          // Mouse moving up near top of viewport
+          const previousSection = findPreviousSection();
+          if (previousSection) {
+            preloadManager.preloadSection(previousSection);
+          }
+        }
+      });
+
+      // Helper to find next section based on scroll position
+      function findNextSection() {
+        const sections = ["features", "compatibility", "getting-started"];
+        const scrollPosition = window.scrollY + window.innerHeight / 2;
+
+        for (let section of sections) {
+          const element = document.getElementById(section);
+          if (element && element.offsetTop > scrollPosition) {
+            return section;
+          }
+        }
+        return null;
+      }
+
+      // Helper to find previous section based on scroll position
+      function findPreviousSection() {
+        const sections = ["features", "compatibility", "getting-started"];
+        const scrollPosition = window.scrollY + window.innerHeight / 2;
+
+        for (let i = sections.length - 1; i >= 0; i--) {
+          const element = document.getElementById(sections[i]);
+          if (element && element.offsetTop < scrollPosition) {
+            return sections[i];
+          }
+        }
+        return null;
+      }
+
+      // Also preload on scroll for smoother experience
+      let scrollTimeout;
+      window.addEventListener("scroll", () => {
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+          const nextSection = findNextSection();
+          if (nextSection) {
+            preloadManager.preloadSection(nextSection);
+          }
+        }, 150); // Debounced to avoid excessive calls
+      });
+
+      // Mobile menu functionality
+      document.addEventListener("DOMContentLoaded", function () {
+        const mobileMenuBtn = document.querySelector(".mobile-menu-btn");
+        const navLinks = document.querySelector(".nav-links");
+
+        mobileMenuBtn.addEventListener("click", function () {
+          navLinks.classList.toggle("active");
+        });
+      });
     </script>
-</body>
-</html> 
+  </body>
+</html>

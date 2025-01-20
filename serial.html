@@ -1,72 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#0a0a0f">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0a0a0f" />
     <title>Web Serial Console</title>
-    
+
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Chakra+Petch:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Chakra+Petch:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
     <!-- Custom styles -->
-    <link rel="stylesheet" href="css/serial.css">
-</head>
-<body>
+    <link rel="stylesheet" href="css/serial.css" />
+  </head>
+  <body>
     <div class="serial-container">
-        <div class="header">
-            <h1>Serial Console</h1>
-            <div class="status-bar">
-                <div class="status-indicator">
-                    <div class="status-dot" id="connectionDot"></div>
-                    <span id="connectionStatus">Disconnected</span>
-                </div>
-                <div class="status-indicator">
-                    <span id="baudRate">Baud Rate: 115200</span>
-                </div>
-            </div>
+      <div class="header">
+        <h1>Serial Console</h1>
+        <div class="status-bar">
+          <div class="status-indicator">
+            <div class="status-dot" id="connectionDot"></div>
+            <span id="connectionStatus">Disconnected</span>
+          </div>
+          <div class="status-indicator">
+            <span id="baudRate">Baud Rate: 115200</span>
+          </div>
         </div>
-        
-        <div class="console" id="console">
-            <div class="console-output" id="output"></div>
+      </div>
+
+      <div class="console" id="console">
+        <div class="console-output" id="output"></div>
+      </div>
+
+      <div class="controls-container">
+        <div class="control-panel">
+          <button class="btn btn-primary" id="connectButton">Connect</button>
+          <button class="btn" id="clearButton">Clear Console</button>
+          <select class="btn" id="baudSelect">
+            <option value="9600">9600 baud</option>
+            <option value="115200" selected>115200 baud</option>
+            <option value="921600">921600 baud</option>
+          </select>
         </div>
-        
-        <div class="controls-container">
-            <div class="control-panel">
-                <button class="btn btn-primary" id="connectButton">Connect</button>
-                <button class="btn" id="clearButton">Clear Console</button>
-                <select class="btn" id="baudSelect">
-                    <option value="9600">9600 baud</option>
-                    <option value="115200" selected>115200 baud</option>
-                    <option value="921600">921600 baud</option>
-                </select>
-            </div>
-            
-            <div class="input-group">
-                <input type="text" class="serial-input" id="serialInput" placeholder="Type a command and press Enter...">
-                <button class="btn" id="sendButton">Send</button>
-            </div>
+
+        <div class="input-group">
+          <input
+            type="text"
+            class="serial-input"
+            id="serialInput"
+            placeholder="Type a command and press Enter..."
+          />
+          <button class="btn" id="sendButton">Send</button>
         </div>
+      </div>
     </div>
-    
+
     <!-- Browser Support Dialog -->
     <div class="dialog-overlay" id="browserDialog">
-        <div class="dialog">
-            <h2>Browser Not Supported</h2>
-            <p>Web Serial API is only supported in Chromium-based browsers (Chrome, Edge, Opera). Please use a supported browser to access this feature.</p>
-            <button class="btn btn-primary" onclick="document.getElementById('browserDialog').style.display = 'none'">Close</button>
-        </div>
+      <div class="dialog">
+        <h2>Browser Not Supported</h2>
+        <p>
+          Web Serial API is only supported in Chromium-based browsers (Chrome,
+          Edge, Opera). Please use a supported browser to access this feature.
+        </p>
+        <button
+          class="btn btn-primary"
+          onclick="document.getElementById('browserDialog').style.display = 'none'"
+        >
+          Close
+        </button>
+      </div>
     </div>
-    
+
     <!-- Permission Dialog -->
     <div class="dialog-overlay" id="permissionDialog">
-        <div class="dialog">
-            <h2>Permission Required</h2>
-            <p>Please select your device from the popup and click "Connect" to establish a serial connection.</p>
-            <button class="btn btn-primary" onclick="document.getElementById('permissionDialog').style.display = 'none'">OK</button>
-        </div>
+      <div class="dialog">
+        <h2>Permission Required</h2>
+        <p>
+          Please select your device from the popup and click "Connect" to
+          establish a serial connection.
+        </p>
+        <button
+          class="btn btn-primary"
+          onclick="document.getElementById('permissionDialog').style.display = 'none'"
+        >
+          OK
+        </button>
+      </div>
     </div>
 
     <script src="js/serial.js"></script>
-</body>
-</html> 
+  </body>
+</html>

@@ -1,281 +1,288 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Ghost Snake - Ghost ESP Games</title>
-    
+
     <!-- Include existing styles -->
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Share+Tech+Mono&family=Chakra+Petch:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
-    
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Share+Tech+Mono&family=Chakra+Petch:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css" />
+
     <!-- Snake game specific styles -->
     <style>
+      .game-container {
+        max-width: 600px;
+        margin: 80px auto 0;
+        padding: 20px;
+        text-align: center;
+      }
+
+      .score-display {
+        display: flex;
+        justify-content: space-around;
+        margin-bottom: 20px;
+        padding: 15px;
+        background: var(--card-bg);
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        font-family: var(--font-display);
+        color: var(--text-primary);
+      }
+
+      .score-item {
+        font-size: 1rem;
+        opacity: 0.9;
+      }
+
+      .score-item span {
+        color: var(--primary-color);
+        margin-left: 5px;
+      }
+
+      #snakeCanvas {
+        background: var(--background-color);
+        border: 2px solid var(--primary-color);
+        border-radius: 8px;
+        margin-bottom: 20px;
+        box-shadow: 0 0 20px rgba(255, 107, 0, 0.2);
+      }
+
+      .game-controls {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+        margin-bottom: 30px;
+      }
+
+      .game-btn {
+        padding: 12px 24px;
+        font-family: var(--font-display);
+        font-size: 16px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+      }
+
+      #startBtn {
+        background: var(--gradient-1);
+        color: var(--text-primary);
+      }
+
+      #pauseBtn {
+        background: var(--gradient-2);
+        color: var(--text-primary);
+        display: none;
+      }
+
+      .game-instructions {
+        max-width: 500px;
+        margin: 0 auto;
+        padding: 20px;
+        background: var(--card-bg);
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .game-instructions h2 {
+        font-family: var(--font-display);
+        color: var(--text-primary);
+        margin-bottom: 15px;
+        font-size: 1.2rem;
+        opacity: 0.5;
+      }
+
+      .game-instructions p {
+        color: var(--text-secondary);
+        margin-bottom: 10px;
+        font-family: var(--font-mono);
+        font-size: 0.9rem;
+        opacity: 0.5;
+      }
+
+      @media (max-width: 768px) {
         .game-container {
-            max-width: 600px;
-            margin: 80px auto 0;
-            padding: 20px;
-            text-align: center;
-        }
-
-        .score-display {
-            display: flex;
-            justify-content: space-around;
-            margin-bottom: 20px;
-            padding: 15px;
-            background: var(--card-bg);
-            border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            font-family: var(--font-display);
-            color: var(--text-primary);
-        }
-
-        .score-item {
-            font-size: 1rem;
-            opacity: 0.9;
-        }
-
-        .score-item span {
-            color: var(--primary-color);
-            margin-left: 5px;
-        }
-
-        #snakeCanvas {
-            background: var(--background-color);
-            border: 2px solid var(--primary-color);
-            border-radius: 8px;
-            margin-bottom: 20px;
-            box-shadow: 0 0 20px rgba(255, 107, 0, 0.2);
+          margin-top: 100px;
+          padding: 10px;
         }
 
         .game-controls {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            margin-bottom: 30px;
+          flex-direction: column;
+          gap: 10px;
         }
 
         .game-btn {
-            padding: 12px 24px;
-            font-family: var(--font-display);
-            font-size: 16px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
+          width: 100%;
+          padding: 15px;
+          font-size: 14px;
         }
+      }
 
-        #startBtn {
-            background: var(--gradient-1);
-            color: var(--text-primary);
-        }
+      /* Add this to ensure navbar stays at top */
+      .navbar {
+        top: 0;
+      }
 
-        #pauseBtn {
-            background: var(--gradient-2);
-            color: var(--text-primary);
-            display: none;
-        }
+      /* Update snake appearance */
+      .ghost-segment {
+        filter: drop-shadow(0 0 5px rgba(255, 107, 0, 0.5));
+      }
 
-        .game-instructions {
-            max-width: 500px;
-            margin: 0 auto;
-            padding: 20px;
-            background: var(--card-bg);
-            border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
+      /* Add glow effect to food */
+      .ghost-food {
+        filter: drop-shadow(0 0 8px rgba(255, 26, 26, 0.7));
+      }
 
-        .game-instructions h2 {
-            font-family: var(--font-display);
-            color: var(--text-primary);
-            margin-bottom: 15px;
-            font-size: 1.2rem;
-            opacity: 0.5;
-        }
+      /* Add these navbar-specific styles */
+      .menu-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(5px);
+        z-index: 90;
+        display: none;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
 
-        .game-instructions p {
-            color: var(--text-secondary);
-            margin-bottom: 10px;
-            font-family: var(--font-mono);
-            font-size: 0.9rem;
-            opacity: 0.5;
-        }
+      .menu-overlay.active {
+        display: block;
+        opacity: 1;
+      }
 
-        @media (max-width: 768px) {
-            .game-container {
-                margin-top: 100px;
-                padding: 10px;
-            }
+      .mobile-menu-btn {
+        display: none;
+        background: none;
+        border: none;
+        color: var(--text-primary);
+        cursor: pointer;
+        padding: 8px;
+        z-index: 1000;
+      }
 
-            .game-controls {
-                flex-direction: column;
-                gap: 10px;
-            }
-
-            .game-btn {
-                width: 100%;
-                padding: 15px;
-                font-size: 14px;
-            }
-        }
-
-        /* Add this to ensure navbar stays at top */
-        .navbar {
-            top: 0;
-        }
-
-        /* Update snake appearance */
-        .ghost-segment {
-            filter: drop-shadow(0 0 5px rgba(255, 107, 0, 0.5));
-        }
-
-        /* Add glow effect to food */
-        .ghost-food {
-            filter: drop-shadow(0 0 8px rgba(255, 26, 26, 0.7));
-        }
-
-        /* Add these navbar-specific styles */
-        .menu-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(5px);
-            z-index: 90;
-            display: none;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .menu-overlay.active {
-            display: block;
-            opacity: 1;
-        }
-
+      @media (max-width: 768px) {
         .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            color: var(--text-primary);
-            cursor: pointer;
-            padding: 8px;
-            z-index: 1000;
+          display: block;
         }
 
-        @media (max-width: 768px) {
-            .mobile-menu-btn {
-                display: block;
-            }
-
-            .nav-content {
-                padding: 0.5rem 1rem;
-                position: relative;
-            }
-
-            .nav-links {
-                position: fixed;
-                top: 0;
-                right: -100%;
-                height: 100vh;
-                width: 75%;
-                max-width: 300px;
-                background: var(--surface-color);
-                flex-direction: column;
-                padding: 80px 2rem 2rem;
-                transition: right 0.3s ease;
-                backdrop-filter: blur(10px);
-                border-left: 1px solid rgba(255, 255, 255, 0.1);
-                z-index: 95;
-            }
-
-            .nav-links.active {
-                right: 0;
-            }
-
-            .nav-links li {
-                margin: 1rem 0;
-                width: 100%;
-            }
-
-            .nav-links a {
-                font-size: 1.1rem;
-                display: flex;
-                align-items: center;
-                gap: 10px;
-                width: 100%;
-                padding: 0.5rem 0;
-            }
-
-            .menu-label {
-                display: block;
-                margin-left: 10px;
-            }
-
-            .github-btn, .discord-btn, .theme-btn {
-                width: 100%;
-                height: auto;
-                background: none;
-                padding: 0.5rem 0;
-                justify-content: flex-start;
-            }
-
-            .github-btn i, .discord-btn i, .theme-btn i {
-                width: 20px;
-                height: 20px;
-            }
-
-            body.menu-open {
-                overflow: hidden;
-            }
-        }
-
-        /* Update navbar styles for better responsiveness */
         .nav-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0.5rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+          padding: 0.5rem 1rem;
+          position: relative;
         }
 
         .nav-links {
-            display: flex;
-            gap: 2rem;
-            align-items: center;
-            margin: 0;
-            padding: 0;
-            list-style: none;
+          position: fixed;
+          top: 0;
+          right: -100%;
+          height: 100vh;
+          width: 75%;
+          max-width: 300px;
+          background: var(--surface-color);
+          flex-direction: column;
+          padding: 80px 2rem 2rem;
+          transition: right 0.3s ease;
+          backdrop-filter: blur(10px);
+          border-left: 1px solid rgba(255, 255, 255, 0.1);
+          z-index: 95;
+        }
+
+        .nav-links.active {
+          right: 0;
+        }
+
+        .nav-links li {
+          margin: 1rem 0;
+          width: 100%;
         }
 
         .nav-links a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-family: var(--font-mono);
-            font-size: 0.9rem;
-            transition: color 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+          font-size: 1.1rem;
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          width: 100%;
+          padding: 0.5rem 0;
         }
 
-        .nav-links a:hover {
-            color: var(--text-primary);
+        .menu-label {
+          display: block;
+          margin-left: 10px;
         }
 
-        @media (min-width: 769px) {
-            .mobile-menu-btn {
-                display: none;
-            }
-
-            .menu-label {
-                display: none;
-            }
+        .github-btn,
+        .discord-btn,
+        .theme-btn {
+          width: 100%;
+          height: auto;
+          background: none;
+          padding: 0.5rem 0;
+          justify-content: flex-start;
         }
+
+        .github-btn i,
+        .discord-btn i,
+        .theme-btn i {
+          width: 20px;
+          height: 20px;
+        }
+
+        body.menu-open {
+          overflow: hidden;
+        }
+      }
+
+      /* Update navbar styles for better responsiveness */
+      .nav-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0.5rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+        align-items: center;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .nav-links a {
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-family: var(--font-mono);
+        font-size: 0.9rem;
+        transition: color 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .nav-links a:hover {
+        color: var(--text-primary);
+      }
+
+      @media (min-width: 769px) {
+        .mobile-menu-btn {
+          display: none;
+        }
+
+        .menu-label {
+          display: none;
+        }
+      }
     </style>
 
     <script src="https://unpkg.com/feather-icons"></script>
@@ -287,65 +294,84 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 
     <!-- Icons and sprites -->
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
-</head>
-<body>
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
     <!-- Include existing navbar -->
     <nav class="navbar" role="navigation" aria-label="Main navigation">
-        <div class="nav-content">
-            <div class="logo">
-                <img src="images/ghost-esp-logo.png" alt="Ghost ESP Logo">
-            </div>
-            <button class="mobile-menu-btn" aria-label="Toggle menu">
-                <i data-feather="menu"></i>
-            </button>
-            <ul class="nav-links">
-                <li><a href="index.html#features">Features</a></li>
-                <li><a href="index.html#compatibility">Compatibility</a></li>
-                <li><a href="index.html#getting-started">Get Started</a></li>
-                <li><a href="index.html#flipper-app">Flipper App</a></li>
-                <li><a href="serial.html">Serial Console</a></li>
-                <li><a href="#" id="theme-toggle" class="theme-btn">
-                    <i data-feather="gift"></i>
-                    <span class="menu-label">Theme</span>
-                </a></li>
-                <li><a href="https://discord.gg/PkdjxqYKe4" target="_blank" class="discord-btn">
-                    <i data-feather="message-circle"></i>
-                    <span class="menu-label">Discord</span>
-                </a></li>
-                <li><a href="https://github.com/Spooks4576/Ghost_ESP" class="github-btn" target="_blank">
-                    <i data-feather="github"></i>
-                    <span class="menu-label">GitHub</span>
-                </a></li>
-            </ul>
+      <div class="nav-content">
+        <div class="logo">
+          <img src="images/ghost-esp-logo.png" alt="Ghost ESP Logo" />
         </div>
+        <button class="mobile-menu-btn" aria-label="Toggle menu">
+          <i data-feather="menu"></i>
+        </button>
+        <ul class="nav-links">
+          <li><a href="index.html#features">Features</a></li>
+          <li><a href="index.html#compatibility">Compatibility</a></li>
+          <li><a href="index.html#getting-started">Get Started</a></li>
+          <li><a href="index.html#flipper-app">Flipper App</a></li>
+          <li><a href="serial.html">Serial Console</a></li>
+          <li>
+            <a href="#" id="theme-toggle" class="theme-btn">
+              <i data-feather="gift"></i>
+              <span class="menu-label">Theme</span>
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://discord.gg/PkdjxqYKe4"
+              target="_blank"
+              class="discord-btn"
+            >
+              <i data-feather="message-circle"></i>
+              <span class="menu-label">Discord</span>
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://github.com/Spooks4576/Ghost_ESP"
+              class="github-btn"
+              target="_blank"
+            >
+              <i data-feather="github"></i>
+              <span class="menu-label">GitHub</span>
+            </a>
+          </li>
+        </ul>
+      </div>
     </nav>
 
     <!-- Add menu overlay -->
     <div class="menu-overlay"></div>
 
     <div class="game-container">
-        <div class="score-display">
-            <div class="score-item">Score: <span id="currentScore">0</span></div>
-            <div class="score-item">Level: <span id="currentLevel">1</span></div>
-            <div class="score-item">High Score: <span id="highScoreDisplay">0</span></div>
+      <div class="score-display">
+        <div class="score-item">Score: <span id="currentScore">0</span></div>
+        <div class="score-item">Level: <span id="currentLevel">1</span></div>
+        <div class="score-item">
+          High Score: <span id="highScoreDisplay">0</span>
         </div>
-        <canvas id="snakeCanvas"></canvas>
-        <div class="game-controls">
-            <button id="startBtn" class="game-btn">Start</button>
-            <button id="pauseBtn" class="game-btn">Pause</button>
-            <button id="muteBtn" class="game-btn" onclick="toggleMute()">
-                <i class="ri-volume-up-line"></i>
-            </button>
-        </div>
-        <div class="game-instructions">
-            <h2>How to Play</h2>
-            <p>Desktop: Use arrow keys to control the snake</p>
-            <p>Mobile: Swipe in any direction to move</p>
-            <p>Collect the 🔮 to grow and increase your score</p>
-            <p>Avoid the 💣 bombs, walls, and yourself!</p>
-            <p>Level up every 5 points - but watch out, it gets harder!</p>
-        </div>
+      </div>
+      <canvas id="snakeCanvas"></canvas>
+      <div class="game-controls">
+        <button id="startBtn" class="game-btn">Start</button>
+        <button id="pauseBtn" class="game-btn">Pause</button>
+        <button id="muteBtn" class="game-btn" onclick="toggleMute()">
+          <i class="ri-volume-up-line"></i>
+        </button>
+      </div>
+      <div class="game-instructions">
+        <h2>How to Play</h2>
+        <p>Desktop: Use arrow keys to control the snake</p>
+        <p>Mobile: Swipe in any direction to move</p>
+        <p>Collect the 🔮 to grow and increase your score</p>
+        <p>Avoid the 💣 bombs, walls, and yourself!</p>
+        <p>Level up every 5 points - but watch out, it gets harder!</p>
+      </div>
     </div>
 
     <!-- Include necessary scripts -->
@@ -353,11 +379,11 @@
     <script src="js/snake.js"></script>
 
     <script>
-        // Initialize Feather icons and mobile menu
-        document.addEventListener('DOMContentLoaded', function() {
-            feather.replace();
-            initMobileMenu();
-        });
+      // Initialize Feather icons and mobile menu
+      document.addEventListener("DOMContentLoaded", function () {
+        feather.replace();
+        initMobileMenu();
+      });
     </script>
-</body>
-</html> 
+  </body>
+</html>
