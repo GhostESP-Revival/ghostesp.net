@@ -35,6 +35,15 @@
     <meta name="language" content="English" />
     <meta name="revisit-after" content="7 days" />
 
+    <!-- Preload critical assets -->
+    <link 
+      rel="preload" 
+      as="image" 
+      href="images/Spooky_Logo_500x.webp" 
+      type="image/webp"
+      fetchpriority="high"
+    />
+
     <!-- Enhanced Open Graph Tags -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Ghost ESP" />
@@ -264,7 +273,7 @@
 
     <!-- Inline critical CSS -->
     <style>
-      /* Add critical CSS here - styles needed for above-the-fold content */
+      /* Logo and navbar critical styles */
       .navbar {
         background: rgba(18, 18, 18, 0.8);
         position: fixed;
@@ -281,6 +290,20 @@
         justify-content: space-between;
         align-items: center;
         height: 70px;
+      }
+
+      .logo {
+        width: 60px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .logo img {
+        width: 60px;
+        height: 60px;
+        object-fit: contain;
       }
 
       .nav-links {
@@ -573,9 +596,14 @@
           justify-content: space-between;
         }
 
-        .logo img {
+        .logo {
+          width: 35px;
           height: 35px;
-          width: auto;
+        }
+
+        .logo img {
+          width: 35px;
+          height: 35px;
         }
 
         .nav-links {
@@ -610,9 +638,14 @@
 
       /* Mobile responsiveness */
       @media (max-width: 768px) {
-        .logo img {
+        .logo {
+          width: 40px;
           height: 40px;
-          width: auto;
+        }
+
+        .logo img {
+          width: 40px;
+          height: 40px;
         }
 
         .hero-logo img {
@@ -700,8 +733,10 @@
           <img 
             src="images/Spooky_Logo_500x.webp"
             alt="Ghost ESP Logo" 
-            style="height: 60px; width: auto;"
-            fetchpriority="high" 
+            width="60"
+            height="60"
+            fetchpriority="high"
+            decoding="sync"
           />
         </div>
         <button class="mobile-menu-btn" aria-label="Toggle menu">
