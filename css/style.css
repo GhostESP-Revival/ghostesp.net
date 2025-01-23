@@ -345,7 +345,7 @@ body::before {
   overflow: hidden;
   padding: 6rem 2rem;
   background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-    url("../images/IMG_1178.jpg") center/cover no-repeat;
+    url("../images/IMG_1178.webp") center/cover no-repeat;
 }
 
 .hero::before {

@@ -44,7 +44,7 @@
     />
     <meta
       property="og:image"
-      content="https://ghostesp.net/images/ghost-esp-preview.jpg"
+      content="images/ghost-esp-preview.webp"
     />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
@@ -113,22 +113,25 @@
     <link
       href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Share+Tech+Mono&family=Chakra+Petch:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&display=swap&display=swap"
       rel="stylesheet"
+      media="print" 
+      onload="this.media='all'"
     />
 
     <!-- AOS CSS animations library -->
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" media="print" onload="this.media='all'" />
 
     <!-- Custom styles -->
     <link rel="stylesheet" href="css/style.css" fetchpriority="high" />
-    <link rel="stylesheet" href="css/animations.css" />
 
     <!-- Feather icons -->
     <script src="https://unpkg.com/feather-icons" defer></script>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      media="print" 
+      onload="this.media='all'"
     />
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js" defer></script>
 
     <!-- Enhanced Structured Data -->
     <script type="application/ld+json">
@@ -615,7 +618,7 @@
     <nav class="navbar" role="navigation" aria-label="Main navigation">
       <div class="nav-content">
         <div class="logo">
-          <img src="images/Spooky_Logo_500x.png" alt="Ghost ESP Logo" />
+          <img src="images/Spooky_Logo_500x.webp" alt="Ghost ESP Logo" width="500" height="500" fetchpriority="high" />
         </div>
         <button class="mobile-menu-btn" aria-label="Toggle menu">
           <i data-feather="menu"></i>
@@ -662,7 +665,7 @@
       <div class="hero-content" data-aos="fade-up">
         <div class="hero-logo">
           <img
-            src="images/ghost-esp-logo.png"
+            src="images/ghost-esp-logo.webp"
             alt="Ghost ESP Firmware"
             class="responsive-logo"
           />
