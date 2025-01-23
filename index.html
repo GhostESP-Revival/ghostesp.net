@@ -96,7 +96,7 @@
     <link 
       rel="preload" 
       as="image" 
-      href="images/Spooky_Logo_500x_15.webp"
+      href="images/Spooky_Logo_500x_15.webp" 
       type="image/webp"
       fetchpriority="high"
     />
@@ -327,6 +327,439 @@
         rel="stylesheet"
       />
     </noscript>
+
+    <!-- Inline critical CSS -->
+    <style>
+      /* Logo and navbar critical styles */
+      .navbar {
+        background: rgba(18, 18, 18, 0.8);
+        position: fixed;
+        width: 100%;
+        z-index: 1000;
+      }
+
+      .nav-content {
+        max-width: 1400px;
+        width: 100%;
+        padding: 0 2rem;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 70px;
+      }
+
+      .logo {
+        width: 60px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .logo img {
+        width: 60px;
+        height: 60px;
+        object-fit: contain;
+      }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .nav-links a {
+        padding: 0.9rem 0.9rem;
+        white-space: nowrap;
+        transition: all 0.2s ease;
+      }
+
+      .nav-links a[href*="shop.ghostesp.net"] {
+        background: linear-gradient(45deg, #70056b, #920e0e);
+        border-radius: 12px;
+        padding: 0.7rem 1rem;
+        font-weight: 600;
+        color: 45deg, #8b3232, #802a2a;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        margin-right: 1rem;
+      }
+
+      .nav-links a[href*="shop.ghostesp.net"]:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      .mobile-menu-btn {
+        display: none;
+        background: none;
+        border: none;
+        color: white;
+        cursor: pointer;
+        padding: 0.5rem;
+      }
+
+      /* Mobile menu styles */
+      @media (max-width: 768px) {
+        .mobile-menu-btn {
+          display: block;
+          order: 2;
+        }
+
+        .logo {
+          order: 1;
+        }
+
+        .nav-links {
+          display: none;
+          position: absolute;
+          top: 100%;
+          left: 0;
+          right: 0;
+          background: rgba(18, 18, 18, 0.95);
+          padding: 1rem;
+          width: 100%;
+          gap: 1rem;
+          margin: 0;
+        }
+
+        .nav-links.active {
+          display: flex;
+          flex-direction: column;
+        }
+
+        .nav-content {
+          padding: 0.5rem 1rem;
+        }
+
+        .nav-links a {
+          padding: 0.5rem;
+          width: 100%;
+          text-align: center;
+        }
+      }
+
+      .hero {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      /* Add other critical styles... */
+
+      /* Add these styles to your existing CSS */
+      .nav-links .social-btn {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        font-weight: 500;
+        transition: all 0.2s ease;
+      }
+
+      .nav-links .social-btn i {
+        font-size: 1.25rem;
+        text-align: center;
+      }
+
+      /* Remove the Discord logo specific styles since we're not using SVG anymore */
+      .discord-logo {
+        display: none;
+      }
+
+      @media (max-width: 768px) {
+        .nav-links .social-btn {
+          width: 100%;
+          justify-content: center;
+        }
+      }
+
+      /* Merch Section Styles */
+      .merch-section {
+        padding: 8rem 2rem;
+        background: linear-gradient(180deg, #070707 0%, #121212 100%);
+        position: relative;
+      }
+
+      .merch-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4rem;
+        align-items: center;
+        background: rgba(255, 255, 255, 0.02);
+        border-radius: 24px;
+        padding: 2rem;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+      }
+
+      .merch-image img {
+        width: 100%;
+        height: auto;
+        border-radius: 16px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s ease;
+      }
+
+      .merch-image img:hover {
+        transform: scale(1.02);
+      }
+
+      .merch-content {
+        padding: 2rem;
+      }
+
+      .merch-content h3 {
+        font-size: 2.5rem;
+        margin-bottom: 1.5rem;
+        font-family: "Chakra Petch", sans-serif;
+        color: #fff;
+        font-weight: 600;
+        letter-spacing: -0.5px;
+      }
+
+      .merch-content p {
+        font-size: 1.1rem;
+        margin-bottom: 2.5rem;
+        color: #e0e0e0;
+        line-height: 1.6;
+      }
+
+      .merch-features {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+        margin-bottom: 2.5rem;
+        padding: 1.5rem;
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: 16px;
+      }
+
+      .feature {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 0.75rem;
+      }
+
+      .feature i {
+        font-size: 1.5rem;
+        color: #70056b;
+        background: rgba(112, 5, 107, 0.1);
+        padding: 1rem;
+        border-radius: 50%;
+        aspect-ratio: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .feature span {
+        font-weight: 500;
+        color: #fff;
+      }
+
+      .store-buttons {
+        display: flex;
+        gap: 1rem;
+      }
+
+      .shop-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 1rem 2rem;
+        border-radius: 12px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        flex: 1;
+        justify-content: center;
+      }
+
+      .shop-btn.primary {
+        background: linear-gradient(45deg, #70056b, #920e0e);
+        color: white;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      }
+
+      .shop-btn.secondary {
+        background: rgba(255, 255, 255, 0.05);
+        color: #fff;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .shop-btn:hover {
+        transform: translateY(-2px);
+      }
+
+      .shop-btn.primary:hover {
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+      }
+
+      .shop-btn.secondary:hover {
+        background: rgba(255, 255, 255, 0.1);
+      }
+
+      @media (max-width: 968px) {
+        .merch-container {
+          grid-template-columns: 1fr;
+          gap: 2rem;
+          padding: 1.5rem;
+        }
+
+        .merch-content {
+          padding: 1rem;
+          text-align: center;
+        }
+
+        .merch-features {
+          grid-template-columns: repeat(3, 1fr);
+        }
+
+        .store-buttons {
+          flex-direction: column;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .merch-features {
+          grid-template-columns: 1fr;
+          padding: 1rem;
+        }
+
+        .merch-content h3 {
+          font-size: 2rem;
+        }
+
+        .merch-section {
+          padding: 4rem 1rem;
+        }
+      }
+
+      /* Add vertical monitor responsiveness */
+      @media screen and (orientation: portrait) and (min-width: 769px) {
+        .nav-content {
+          height: 50px;
+          padding: 0 0.5rem;
+          justify-content: space-between;
+        }
+
+        .logo {
+          width: 35px;
+          height: 35px;
+        }
+
+        .logo img {
+          width: 35px;
+          height: 35px;
+        }
+
+        .nav-links {
+          gap: 0.5rem;
+          margin: 0;
+          padding: 0;
+        }
+
+        .nav-links a {
+          padding: 0.35rem;
+          font-size: 0.85rem;
+          white-space: nowrap;
+        }
+
+        .nav-links a[href*="shop.ghostesp.net"] {
+          padding: 0.35rem 0.5rem;
+        }
+
+        .social-btn {
+          padding: 0.35rem !important;
+        }
+
+        .menu-label {
+          display: none;
+        }
+
+        .nav-links li {
+          display: flex;
+          align-items: center;
+        }
+      }
+
+      /* Mobile responsiveness */
+      @media (max-width: 768px) {
+        .logo {
+          width: 40px;
+          height: 40px;
+        }
+
+        .logo img {
+          width: 40px;
+          height: 40px;
+        }
+
+        .hero-logo img {
+          max-width: 250px;
+          height: auto;
+        }
+      }
+
+      /* Minimal Font Awesome - Only used icons */
+      @font-face {
+        font-family: 'FA Minimal Brands';
+        font-display: swap;
+        src: url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/webfonts/fa-brands-400.woff2') format('woff2');
+      }
+      
+      @font-face {
+        font-family: 'FA Minimal Solid';
+        font-display: swap;
+        src: url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/webfonts/fa-solid-900.woff2') format('woff2');
+      }
+
+      .fab {
+        font-family: 'FA Minimal Brands';
+        font-weight: 400;
+        -moz-osx-font-smoothing: grayscale;
+        -webkit-font-smoothing: antialiased;
+        display: inline-block;
+        font-style: normal;
+        font-variant: normal;
+        text-rendering: auto;
+        line-height: 1;
+      }
+
+      .fas {
+        font-family: 'FA Minimal Solid';
+        font-weight: 900;
+        -moz-osx-font-smoothing: grayscale;
+        -webkit-font-smoothing: antialiased;
+        display: inline-block;
+        font-style: normal;
+        font-variant: normal;
+        text-rendering: auto;
+        line-height: 1;
+      }
+
+      /* Only include used icons */
+      .fa-discord:before{content:"\f392"}
+      .fa-github:before{content:"\f09b"}
+      .fa-ghost:before{content:"\f6e2"}
+      .fa-chevron-down:before{content:"\f078"}
+      .fa-check-circle:before{content:"\f058"}
+      .fa-box:before{content:"\f466"}
+      .fa-lock:before{content:"\f023"}
+      .fa-store:before{content:"\f54e"}
+      .fa-heart:before{content:"\f004"}
+      .fa-bolt:before{content:"\f0e7"}
+    </style>
 
     <!-- Favicon and App Icons -->
     <link
