@@ -564,33 +564,112 @@
           padding: 4rem 1rem;
         }
       }
+
+      /* Add vertical monitor responsiveness */
+      @media screen and (orientation: portrait) and (min-width: 769px) {
+        .nav-content {
+          height: 50px;
+          padding: 0 0.5rem;
+          justify-content: space-between;
+        }
+
+        .logo img {
+          height: 35px;
+          width: auto;
+        }
+
+        .nav-links {
+          gap: 0.5rem;
+          margin: 0;
+          padding: 0;
+        }
+
+        .nav-links a {
+          padding: 0.35rem;
+          font-size: 0.85rem;
+          white-space: nowrap;
+        }
+
+        .nav-links a[href*="shop.ghostesp.net"] {
+          padding: 0.35rem 0.5rem;
+        }
+
+        .social-btn {
+          padding: 0.35rem !important;
+        }
+
+        .menu-label {
+          display: none;
+        }
+
+        .nav-links li {
+          display: flex;
+          align-items: center;
+        }
+      }
+
+      /* Mobile responsiveness */
+      @media (max-width: 768px) {
+        .logo img {
+          height: 40px;
+          width: auto;
+        }
+
+        .hero-logo img {
+          max-width: 250px;
+          height: auto;
+        }
+      }
+
+      /* Minimal Font Awesome - Only used icons */
+      @font-face {
+        font-family: 'FA Minimal Brands';
+        font-display: swap;
+        src: url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/webfonts/fa-brands-400.woff2') format('woff2');
+      }
+      
+      @font-face {
+        font-family: 'FA Minimal Solid';
+        font-display: swap;
+        src: url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/webfonts/fa-solid-900.woff2') format('woff2');
+      }
+
+      .fab {
+        font-family: 'FA Minimal Brands';
+        font-weight: 400;
+        -moz-osx-font-smoothing: grayscale;
+        -webkit-font-smoothing: antialiased;
+        display: inline-block;
+        font-style: normal;
+        font-variant: normal;
+        text-rendering: auto;
+        line-height: 1;
+      }
+
+      .fas {
+        font-family: 'FA Minimal Solid';
+        font-weight: 900;
+        -moz-osx-font-smoothing: grayscale;
+        -webkit-font-smoothing: antialiased;
+        display: inline-block;
+        font-style: normal;
+        font-variant: normal;
+        text-rendering: auto;
+        line-height: 1;
+      }
+
+      /* Only include used icons */
+      .fa-discord:before{content:"\f392"}
+      .fa-github:before{content:"\f09b"}
+      .fa-ghost:before{content:"\f6e2"}
+      .fa-chevron-down:before{content:"\f078"}
+      .fa-check-circle:before{content:"\f058"}
+      .fa-box:before{content:"\f466"}
+      .fa-lock:before{content:"\f023"}
+      .fa-store:before{content:"\f54e"}
+      .fa-heart:before{content:"\f004"}
+      .fa-bolt:before{content:"\f0e7"}
     </style>
-
-    <!-- Defer non-critical CSS -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
-      media="print"
-      onload="this.media='all'"
-    />
-
-    <!-- Load AOS CSS asynchronously -->
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/aos@2.3.1/dist/aos.css"
-      media="print"
-      onload="this.media='all'"
-    />
-    <!-- Cronitor RUM -->
-    <script async src="https://rum.cronitor.io/script.js"></script>
-    <script>
-      window.cronitor =
-        window.cronitor ||
-        function () {
-          (window.cronitor.q = window.cronitor.q || []).push(arguments);
-        };
-      cronitor("config", { clientKey: "58dd80c3f88ef7cabd4de50f71fc22f8" });
-    </script>
 
     <!-- Favicon and App Icons -->
     <link
@@ -618,7 +697,12 @@
     <nav class="navbar" role="navigation" aria-label="Main navigation">
       <div class="nav-content">
         <div class="logo">
-          <img src="images/Spooky_Logo_500x.webp" alt="Ghost ESP Logo" width="500" height="500" fetchpriority="high" />
+          <img 
+            src="images/Spooky_Logo_500x.webp"
+            alt="Ghost ESP Logo" 
+            style="height: 60px; width: auto;"
+            fetchpriority="high" 
+          />
         </div>
         <button class="mobile-menu-btn" aria-label="Toggle menu">
           <i data-feather="menu"></i>
@@ -668,6 +752,8 @@
             src="images/ghost-esp-logo.webp"
             alt="Ghost ESP Firmware"
             class="responsive-logo"
+            style="max-width: 500px; width: 100%; height: auto;"
+            loading="eager"
           />
         </div>
         <div class="cta-buttons">
