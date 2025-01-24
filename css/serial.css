@@ -561,3 +561,89 @@ select.btn {
     justify-content: flex-start;
   }
 }
+
+.help-section-header {
+  color: #00BCD4;
+  font-weight: bold;
+}
+
+.command-name {
+  color: #8BC34A;
+  font-weight: bold;
+}
+
+.command-usage {
+  color: #81D4FA;
+}
+
+.command-flag {
+  color: #FFB74D;
+}
+
+.flag-description {
+  color: #BDBDBD;
+}
+
+.section-header {
+  color: #F06292;
+  font-weight: bold;
+  font-size: 1.1em;
+  padding: 8px 0;
+}
+
+.command-input {
+  color: #4DB6AC;
+  font-weight: bold;
+}
+
+.connection-status {
+  color: #90CAF9;
+  font-weight: bold;
+}
+
+.warning {
+  color: #FFB74D;
+}
+
+.separator {
+  color: #B0BEC5;
+  font-style: italic;
+}
+
+.regular-text {
+  color: #E0E0E0;
+}
+
+.status-message {
+  color: #4FC3F7;  /* Light blue - informational */
+  font-weight: 500;
+}
+
+.scan-summary {
+  color: #81C784;  /* Soft green - success */
+  font-weight: bold;
+  padding: 4px 0;
+}
+
+.ap-index {
+  color: #FFB74D;  /* Soft orange */
+  font-weight: bold;
+}
+
+.ap-label {
+  color: #B0BEC5;  /* Blue-gray */
+  padding-left: 16px;
+}
+
+.ap-ssid {
+  color: #4DB6AC;  /* Teal */
+  font-weight: 500;
+}
+
+.ap-rssi {
+  color: #FF8A65;  /* Soft red-orange */
+}
+
+.ap-company {
+  color: #9575CD;  /* Soft purple */
+}

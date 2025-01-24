@@ -292,113 +292,108 @@ class SerialConsole {
       : completeLines.pop();
 
     // Process each complete line
-    const formattedLines = completeLines
-      .map((line) => {
-        if (!line.trim()) return "<br>"; // Convert empty lines to line breaks
+    const formattedLines = completeLines.map(line => {
+      if (!line.trim()) return "<br>";
 
-        let formattedLine = line;
-        let matched = false;
+      // Command prompt with command
+      if (line.match(/^>\s*[a-z]+$/i)) {
+        return `<span class="command-input">${line}</span><br>`;
+      }
 
-        // GhostESP-specific formatting (preserved)
-        if (formattedLine.match(/^\[\d+\]\s*SSID:/)) {
-          return `<span class="ap-entry">${formattedLine}</span><br>`;
-        }
-        if (formattedLine.match(/^\s*(RSSI|Company):/)) {
-          return `<span class="ap-detail">${formattedLine}</span><br>`;
-        }
+      // Status messages
+      const statusMessages = [
+        'WiFi scan started',
+        'Stopping Wi-Fi',
+        'WiFi started',
+        'Ready to scan',
+        'Please wait',
+        'WiFi monitor stopped',
+        'HTTP server started'
+      ];
+      if (statusMessages.some(msg => line.includes(msg))) {
+        return `<span class="status-message">${line}</span><br>`;
+      }
 
-        // WiFi related messages (broadened)
-        if (
-          formattedLine.match(
-            /\b(WiFi|scanning|AP|access point|SSID|connected to|network|connection)\b/i
-          )
-        ) {
-          return `<span class="wifi-status">${formattedLine}</span><br>`;
-        }
+      // Scan summary (Found X access points)
+      if (line.match(/^Found \d+ access points$/)) {
+        return `<span class="scan-summary">${line}</span><br>`;
+      }
 
-        // IP/MAC Addresses and network info
-        if (
-          formattedLine.match(/\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b/) || // IPv4
-          formattedLine.match(/\b([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})\b/) || // MAC address
-          formattedLine.match(/\b([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}\b/)
-        ) {
-          // IPv6
-          return `<span class="ip-address">${formattedLine}</span><br>`;
-        }
+      // Access point entries
+      if (line.match(/^\[\d+\]/)) {
+        // Index number
+        const [index, ...rest] = line.split(/(?<=^\[\d+\])\s/);
+        return `<span class="ap-index">${index}</span> ${rest.join('')}<br>`;
+      }
 
-        // Command input (starts with '>' or '$' for different shells)
-        if (formattedLine.match(/^[>$]\s/)) {
-          return `<span class="command">${formattedLine}</span><br>`;
-        }
+      // SSID lines
+      if (line.match(/^\s*SSID:/)) {
+        const [label, value] = line.split(/:\s*/);
+        return `<span class="ap-label">${label}:</span> <span class="ap-ssid">${value}</span><br>`;
+      }
 
-        // Help/Documentation text (broadened)
-        if (
-          formattedLine.match(
-            /^(Description|Usage|Arguments|Example|Options|Commands|Help):/i
-          )
-        ) {
-          return `<span class="help-header">${formattedLine}</span><br>`;
-        }
+      // RSSI lines
+      if (line.match(/^\s*RSSI:/)) {
+        const [label, value] = line.split(/:\s*/);
+        return `<span class="ap-label">${label}:</span> <span class="ap-rssi">${value}</span><br>`;
+      }
 
-        // Command names (more flexible pattern)
-        if (formattedLine.match(/^[a-zA-Z_][a-zA-Z0-9_]*$/)) {
-          return `<span class="command-name">${formattedLine}</span><br>`;
-        }
+      // Company lines
+      if (line.match(/^\s*Company:/)) {
+        const [label, value] = line.split(/:\s*/);
+        return `<span class="ap-label">${label}:</span> <span class="ap-company">${value}</span><br>`;
+      }
 
-        // Error messages (enhanced patterns)
-        if (
-          formattedLine.match(
-            /\b(error|fail(ed|ure)?|exception|invalid|timeout|denied)\b/i
-          ) ||
-          formattedLine.match(/\b(ERR|ERROR|E:)/i) ||
-          formattedLine.match(/^!\s/)
-        ) {
-          return `<span class="error">${formattedLine}</span><br>`;
-        }
+      // Single-word command names (from the root command list)
+      if (line.match(/^[A-Za-z]+$/) && line.length < 20) {
+        return `<span class="command-name">${line}</span><br>`;
+      }
 
-        // Success messages (enhanced patterns)
-        if (
-          formattedLine.match(
-            /\b(success|ok|done|ready|started|complete|finished|connected)\b/i
-          ) ||
-          formattedLine.match(/\b(OK|SUCCESS|S:)/i)
-        ) {
-          return `<span class="success">${formattedLine}</span><br>`;
-        }
+      // Main section header
+      if (line.match(/^Ghost ESP Commands:$/)) {
+        return `<span class="section-header">${line}</span><br>`;
+      }
 
-        // Warning messages (enhanced patterns)
-        if (
-          formattedLine.match(/\b(warning|warn|caution|attention)\b/i) ||
-          formattedLine.match(/\b(WARN|WARNING|W:)/i)
-        ) {
-          return `<span class="warning">${formattedLine}</span><br>`;
-        }
+      // Description/Usage/Arguments headers (must be properly indented)
+      if (line.match(/^\s{4}(Description|Usage|Arguments):(?:\s|$)/)) {
+        return `<span class="help-section-header">${line}</span><br>`;
+      }
 
-        // Info/Debug/Log messages (enhanced patterns)
-        if (
-          formattedLine.match(/\b(info|note|debug|log)\b/i) ||
-          formattedLine.match(/\b(INFO|DEBUG|LOG|I:|D:)/i)
-        ) {
-          return `<span class="info">${formattedLine}</span><br>`;
-        }
+      // Command usage with proper indentation
+      if (line.match(/^\s{4}Usage:\s/)) {
+        const [prefix, ...rest] = line.split(/(?<=Usage:)\s/);
+        return `<span class="help-section-header">${prefix}</span><span class="command-usage">${rest.join(' ')}</span><br>`;
+      }
 
-        // Arguments and parameters (enhanced)
-        if (
-          formattedLine.trim().match(/^(-{1,2}|\/)[a-zA-Z]/) || // Command line args
-          formattedLine.match(/^[a-zA-Z_][a-zA-Z0-9_]*=/)
-        ) {
-          // Key=value pairs
-          return `<span class="argument">${formattedLine}</span><br>`;
-        }
+      // Arguments with flags (must be properly indented)
+      if (line.match(/^\s{8}(-[a-zA-Z]|\[.*?\])\s+:/)) {
+        const [flag, ...description] = line.split(/(?<=:)\s/);
+        return `<span class="command-flag">${flag}</span><span class="flag-description">${description.join(' ')}</span><br>`;
+      }
 
-        // Memory addresses and hex values
-        if (formattedLine.match(/\b(0x[0-9a-fA-F]+)\b/)) {
-          return `<span class="memory-address">${formattedLine}</span><br>`;
-        }
+      // Warning messages (specifically SPI flash warnings)
+      if (line.match(/^\[.*?\]\s*W\s+\(.*?\)\s*spi_flash:/)) {
+        return `<span class="warning">${line}</span><br>`;
+      }
 
-        return `${formattedLine}<br>`; // Add line break to unformatted lines
-      })
-      .filter((line) => line);
+      // Connection status messages (exact matches)
+      if (line.match(/^Connected to device$/) || line.match(/^Disconnected from device$/)) {
+        return `<span class="connection-status">${line}</span><br>`;
+      }
+
+      // Port Scanner section header
+      if (line.match(/^Port Scanner$/)) {
+        return `<span class="section-header">${line}</span><br>`;
+      }
+
+      // OR separator line
+      if (line.match(/^\s*OR\s*$/)) {
+        return `<span class="separator">${line}</span><br>`;
+      }
+
+      // Default case: regular text
+      return `<span class="regular-text">${line}</span><br>`;
+    });
 
     // Always scroll to bottom when new content is added
     if (formattedLines.length) {
