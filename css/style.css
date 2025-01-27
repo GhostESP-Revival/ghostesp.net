@@ -112,7 +112,7 @@ body::before {
   background: rgba(10, 10, 15, 0.9);
   backdrop-filter: blur(10px);
   z-index: 100;
-  padding: 1rem 0;
+  padding: 0.5rem 0;
   border-bottom: 1px solid rgba(255, 107, 0, 0.2);
 }
 
@@ -123,24 +123,19 @@ body::before {
   justify-content: space-between;
   align-items: center;
   padding: 0 2rem;
+  position: relative;
 }
 
 .logo {
-  font-family: var(--font-display);
-  font-size: 1.4rem;
   display: flex;
   align-items: center;
   gap: 4px;
-  cursor: pointer;
-  user-select: none;
-  position: relative;
-  z-index: 2;
+  z-index: 101;
 }
 
 .logo img {
-  width: 70px;
-  height: auto;
-  margin-left: 100px;
+  width: 60px;
+  height: 60px;
   transition: transform 0.3s ease;
 }
 
@@ -160,9 +155,11 @@ body::before {
 
 .nav-links {
   display: flex;
-  gap: 2.5rem;
+  gap: 2rem;
   align-items: center;
   list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 .nav-links a {
@@ -174,6 +171,9 @@ body::before {
   letter-spacing: 1px;
   transition: all 0.3s ease;
   position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .nav-links a::after {
@@ -224,14 +224,56 @@ body::before {
   display: none !important;
 }
 
-/* Mobile Navigation */
+.menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  z-index: 90;
+}
+
+.menu-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.mobile-menu-btn {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--text-primary);
+  cursor: pointer;
+  padding: 8px;
+  z-index: 101;
+}
+
+.mobile-menu-btn svg {
+  width: 24px;
+  height: 24px;
+}
+
+.menu-label {
+  display: none;
+}
+
 @media (max-width: 768px) {
   .nav-content {
     padding: 0 1rem;
   }
 
-  .logo {
-    font-size: 1.2rem;
+  .logo img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .mobile-menu-btn {
+    display: block;
   }
 
   .nav-links {
@@ -250,8 +292,6 @@ body::before {
     z-index: 95;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
-    display: flex;
-    gap: 1.5rem;
   }
 
   .nav-links.active {
@@ -264,11 +304,13 @@ body::before {
 
   .nav-links a {
     font-size: 1.1rem;
-    padding: 0.5rem 0;
+    padding: 0.8rem 0;
     width: 100%;
-    display: flex;
-    align-items: center;
-    gap: 0.8rem;
+    justify-content: flex-start;
+  }
+
+  .menu-label {
+    display: block;
   }
 
   .github-btn,
@@ -276,8 +318,8 @@ body::before {
   .theme-btn {
     width: 100%;
     height: auto;
-    background: none;
-    padding: 0.5rem 0;
+    background: none !important;
+    padding: 0.8rem 0;
     justify-content: flex-start;
   }
 
@@ -286,31 +328,11 @@ body::before {
   .theme-btn i {
     width: 20px;
     height: 20px;
+    flex-shrink: 0;
   }
 
-  .mobile-menu-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    background: none;
-    border: none;
-    color: var(--text-primary);
-    cursor: pointer;
-    z-index: 100;
-    margin-left: auto;
-  }
-
-  .mobile-menu-btn i {
-    width: 24px;
-    height: 24px;
-    stroke-width: 1.5;
-  }
-
-  .logo img {
-    margin-left: 0;
-    width: 50px;
+  body.menu-open {
+    overflow: hidden;
   }
 }
 
@@ -322,17 +344,6 @@ body::before {
   .nav-links {
     width: 85%;
     padding: 80px 1.5rem 2rem;
-  }
-
-  .mobile-menu-btn {
-    width: 32px;
-    height: 32px;
-  }
-
-  .mobile-menu-btn i {
-    width: 20px;
-    height: 20px;
-    stroke-width: 1.25;
   }
 }
 
@@ -1939,11 +1950,13 @@ body.christmas-theme::before {
 
   .nav-links a {
     font-size: 1.1rem;
-    padding: 0.5rem 0;
+    padding: 0.8rem 0;
     width: 100%;
-    display: flex;
-    align-items: center;
-    gap: 0.8rem;
+    justify-content: flex-start;
+  }
+
+  .menu-label {
+    display: block;
   }
 
   .github-btn,
@@ -1951,8 +1964,8 @@ body.christmas-theme::before {
   .theme-btn {
     width: 100%;
     height: auto;
-    background: none;
-    padding: 0.5rem 0;
+    background: none !important;
+    padding: 0.8rem 0;
     justify-content: flex-start;
   }
 
@@ -1961,11 +1974,11 @@ body.christmas-theme::before {
   .theme-btn i {
     width: 20px;
     height: 20px;
+    flex-shrink: 0;
   }
 
-  .menu-label {
-    display: block;
-    font-size: 0.9rem;
+  body.menu-open {
+    overflow: hidden;
   }
 }
 
@@ -2020,8 +2033,8 @@ body.menu-open {
   .theme-btn {
     width: 100%;
     height: auto;
-    background: none;
-    padding: 0.5rem 0;
+    background: none !important;
+    padding: 0.8rem 0;
     justify-content: flex-start;
     color: var(--text-secondary);
     transition: color 0.3s ease;
@@ -2549,7 +2562,7 @@ pre {
 
 .christmas-theme .markdown-content {
   background: rgba(10, 15, 26, 0.4);
-  border-color: rgba(255, 26, 26, 0.1);
+  border: 1px solid rgba(255, 26, 26, 0.1);
 }
 
 .christmas-theme .markdown-content code {
@@ -2903,7 +2916,62 @@ html {
 }
 
 /* Card styles */
-// ... existing code ...
+.flipper-release {
+  background: var(--spooky-card-bg);
+  border: 1px solid var(--spooky-border);
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin-top: 2rem;
+}
+
+.flipper-release .release-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.flipper-release .release-header h3 {
+  font-family: var(--font-mono);
+  color: var(--spooky-accent);
+  margin: 0;
+}
+
+.flipper-release .release-meta {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  font-size: 0.9rem;
+  margin: 1rem 0;
+  color: var(--text-secondary);
+  justify-content: center;
+  align-items: center;
+}
+
+.flipper-release .release-meta span {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: center;
+  text-align: center;
+}
+
+.flipper-release .release-meta i {
+  color: var(--primary-color);
+  flex-shrink: 0;
+}
+
+.flipper-release .release-assets {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.flipper-release .show-more-btn {
+  margin-top: 1rem;
+  background: rgba(179, 0, 0, 0.1);
+  border: 1px solid var(--spooky-border);
+  color: var(--spooky-accent);
+}
 
 .menu-overlay {
   position: fixed;
@@ -2971,16 +3039,21 @@ body.menu-open {
   font-size: 0.9rem;
   margin: 1rem 0;
   color: var(--text-secondary);
+  justify-content: center;
+  align-items: center;
 }
 
 .release-meta span {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  justify-content: center;
+  text-align: center;
 }
 
 .release-meta i {
   color: var(--primary-color);
+  flex-shrink: 0;
 }
 
 .release-loading {
@@ -2993,4 +3066,40 @@ body.menu-open {
   text-align: center;
   padding: 2rem;
   color: #ff4444;
+}
+
+/* Add to existing Flipper card styles */
+.flipper-card .version-badge {
+  background: var(--spooky-primary);
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8em;
+  margin-left: 0.5rem;
+  vertical-align: middle;
+}
+
+.flipper-card .release-notes {
+  border-left: 2px solid var(--spooky-accent);
+  padding-left: 1rem;
+  margin: 1.5rem 0;
+}
+
+.flipper-card .release-notes p {
+  margin: 0.5rem 0;
+}
+
+.flipper-card .release-link {
+  display: inline-block;
+  margin-top: 0.5rem;
+  font-size: 0.9em;
+}
+
+.release-loading .spin {
+  animation: spin 1s infinite linear;
+  margin-right: 0.5rem;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }

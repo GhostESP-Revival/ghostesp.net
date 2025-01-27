@@ -645,53 +645,6 @@
         }
       }
 
-      /* Add vertical monitor responsiveness */
-      @media screen and (orientation: portrait) and (min-width: 769px) {
-        .nav-content {
-          height: 50px;
-          padding: 0 0.5rem;
-          justify-content: space-between;
-        }
-
-        .logo {
-          width: 35px;
-          height: 35px;
-        }
-
-        .logo img {
-          width: 35px;
-          height: 35px;
-        }
-
-        .nav-links {
-          gap: 0.5rem;
-          margin: 0;
-          padding: 0;
-        }
-
-        .nav-links a {
-          padding: 0.35rem;
-          font-size: 0.85rem;
-          white-space: nowrap;
-        }
-
-        .nav-links a[href*="shop.ghostesp.net"] {
-          padding: 0.35rem 0.5rem;
-        }
-
-        .social-btn {
-          padding: 0.35rem !important;
-        }
-
-        .menu-label {
-          display: none;
-        }
-
-        .nav-links li {
-          display: flex;
-          align-items: center;
-        }
-      }
 
       /* Mobile responsiveness */
       @media (max-width: 768px) {
@@ -841,8 +794,9 @@
           />
         </div>
         <button class="mobile-menu-btn" aria-label="Toggle menu">
-          <i data-feather="menu"></i>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
         </button>
+        <div class="menu-overlay"></div>
         <ul class="nav-links">
           <li><a href="#features">Features</a></li>
           <li><a href="#compatibility">Compatibility</a></li>

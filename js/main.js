@@ -116,12 +116,14 @@ document.addEventListener("DOMContentLoaded", () => {
   if (window.requestIdleCallback) {
     requestIdleCallback(() => {
       initNonCriticalFeatures();
-      fetchLatestRelease(); // Ensure latest release is fetched
+      fetchLatestRelease();
+      fetchFlipperRelease();
     });
   } else {
     setTimeout(() => {
       initNonCriticalFeatures();
-      fetchLatestRelease(); // Ensure latest release is fetched
+      fetchLatestRelease();
+      fetchFlipperRelease();
     }, 1);
   }
 });
@@ -1023,61 +1025,99 @@ function enhanceSnowfall() {
 }
 
 // Initialize mobile menu after Feather icons are loaded
-// Remove this duplicate event listener
-// document.addEventListener('DOMContentLoaded', () => {
-//     // First load Feather icons
-//     feather.replace({
-//         'stroke-width': 2.5,
-//         'width': 16,
-//         'height': 16,
-//         'class': 'feather-icon'
-//     }).then(() => {
-//         // Then initialize mobile menu
-//         const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-//         const navLinks = document.querySelector('.nav-links');
-//         const body = document.body;
-//         const overlay = document.createElement('div');
-//         overlay.classList.add('menu-overlay');
-//         document.body.appendChild(overlay);
-//
-//         function toggleMenu() {
-//             navLinks.classList.toggle('active');
-//             overlay.classList.toggle('active');
-//             body.classList.toggle('menu-open');
-//
-//             // Update menu icon
-//             const menuIcon = mobileMenuBtn.querySelector('[data-feather]');
-//             if (menuIcon) {
-//                 if (navLinks.classList.contains('active')) {
-//                     menuIcon.setAttribute('data-feather', 'x');
-//                 } else {
-//                     menuIcon.setAttribute('data-feather', 'menu');
-//                 }
-//                 if (window.feather) {
-//                     feather.replace();
-//                 }
-//             }
-//         }
-//
-//         // Toggle menu on button click
-//         mobileMenuBtn.addEventListener('click', (e) => {
-//             e.stopPropagation();
-//             toggleMenu();
-//         });
-//
-//         // Close menu when clicking overlay
-//         overlay.addEventListener('click', toggleMenu);
-//
-//         // Close menu when clicking a link
-//         navLinks.querySelectorAll('a').forEach(link => {
-//             link.addEventListener('click', () => {
-//                 if (navLinks.classList.contains('active')) {
-//                     toggleMenu();
-//                 }
-//             });
-//         });
-//     });
-// });
+document.addEventListener('DOMContentLoaded', () => {
+    // First load Feather icons
+    feather.replace({
+        'stroke-width': 2.5,
+        'width': 16,
+        'height': 16,
+        'class': 'feather-icon'
+    }).then(() => {
+        // Then initialize mobile menu
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+        const body = document.body;
+        const overlay = document.createElement('div');
+        overlay.classList.add('menu-overlay');
+        document.body.appendChild(overlay);
+
+        function toggleMenu() {
+            navLinks.classList.toggle('active');
+            overlay.classList.toggle('active');
+            body.classList.toggle('menu-open');
+
+            const menuIcon = mobileMenuBtn.querySelector('.feather-menu');
+            const closeIcon = mobileMenuBtn.querySelector('.feather-x');
+            
+            if (navLinks.classList.contains('active')) {
+                // Show close icon, hide menu icon
+                menuIcon.style.display = 'none';
+                if (!closeIcon) {
+                    const closeIconSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+                    closeIconSvg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+                    closeIconSvg.setAttribute('width', '24');
+                    closeIconSvg.setAttribute('height', '24');
+                    closeIconSvg.setAttribute('viewBox', '0 0 24 24');
+                    closeIconSvg.setAttribute('fill', 'none');
+                    closeIconSvg.setAttribute('stroke', 'currentColor');
+                    closeIconSvg.setAttribute('stroke-width', '2');
+                    closeIconSvg.setAttribute('stroke-linecap', 'round');
+                    closeIconSvg.setAttribute('stroke-linejoin', 'round');
+                    closeIconSvg.classList.add('feather', 'feather-x');
+                    
+                    const line1 = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                    line1.setAttribute('x1', '18');
+                    line1.setAttribute('y1', '6');
+                    line1.setAttribute('x2', '6');
+                    line1.setAttribute('y2', '18');
+                    
+                    const line2 = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                    line2.setAttribute('x1', '6');
+                    line2.setAttribute('y1', '6');
+                    line2.setAttribute('x2', '18');
+                    line2.setAttribute('y2', '18');
+                    
+                    closeIconSvg.appendChild(line1);
+                    closeIconSvg.appendChild(line2);
+                    mobileMenuBtn.appendChild(closeIconSvg);
+                } else {
+                    closeIcon.style.display = 'block';
+                }
+            } else {
+                // Show menu icon, hide close icon
+                menuIcon.style.display = 'block';
+                if (closeIcon) {
+                    closeIcon.style.display = 'none';
+                }
+            }
+        }
+
+        // Toggle menu on button click
+        mobileMenuBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            toggleMenu();
+        });
+
+        // Close menu when clicking overlay
+        overlay.addEventListener('click', toggleMenu);
+
+        // Close menu when clicking a link
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (navLinks.classList.contains('active')) {
+                    toggleMenu();
+                }
+            });
+        });
+
+        // Close menu on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && navLinks.classList.contains('active')) {
+                toggleMenu();
+            }
+        });
+    });
+});
 
 // Link preloading functionality
 const linkPreloader = {
@@ -1420,26 +1460,56 @@ function enhanceSpookyElements() {
 function initMobileMenu() {
   const mobileMenuBtn = document.querySelector(".mobile-menu-btn");
   const navLinks = document.querySelector(".nav-links");
+  const menuOverlay = document.querySelector(".menu-overlay");
   const body = document.body;
-  const overlay = document.createElement("div");
-  overlay.classList.add("menu-overlay");
-  document.body.appendChild(overlay);
 
   function toggleMenu() {
     navLinks.classList.toggle("active");
-    overlay.classList.toggle("active");
+    menuOverlay.classList.toggle("active");
     body.classList.toggle("menu-open");
-
-    // Update menu icon
-    const menuIcon = mobileMenuBtn.querySelector("[data-feather]");
-    if (menuIcon) {
-      if (navLinks.classList.contains("active")) {
-        menuIcon.setAttribute("data-feather", "x");
+    
+    const menuIcon = mobileMenuBtn.querySelector(".feather-menu");
+    const closeIcon = mobileMenuBtn.querySelector(".feather-x");
+    
+    if (navLinks.classList.contains("active")) {
+      // Show close icon, hide menu icon
+      menuIcon.style.display = "none";
+      if (!closeIcon) {
+        const closeIconSvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        closeIconSvg.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+        closeIconSvg.setAttribute("width", "24");
+        closeIconSvg.setAttribute("height", "24");
+        closeIconSvg.setAttribute("viewBox", "0 0 24 24");
+        closeIconSvg.setAttribute("fill", "none");
+        closeIconSvg.setAttribute("stroke", "currentColor");
+        closeIconSvg.setAttribute("stroke-width", "2");
+        closeIconSvg.setAttribute("stroke-linecap", "round");
+        closeIconSvg.setAttribute("stroke-linejoin", "round");
+        closeIconSvg.classList.add("feather", "feather-x");
+        
+        const line1 = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        line1.setAttribute("x1", "18");
+        line1.setAttribute("y1", "6");
+        line1.setAttribute("x2", "6");
+        line1.setAttribute("y2", "18");
+        
+        const line2 = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        line2.setAttribute("x1", "6");
+        line2.setAttribute("y1", "6");
+        line2.setAttribute("x2", "18");
+        line2.setAttribute("y2", "18");
+        
+        closeIconSvg.appendChild(line1);
+        closeIconSvg.appendChild(line2);
+        mobileMenuBtn.appendChild(closeIconSvg);
       } else {
-        menuIcon.setAttribute("data-feather", "menu");
+        closeIcon.style.display = "block";
       }
-      if (window.feather) {
-        feather.replace();
+    } else {
+      // Show menu icon, hide close icon
+      menuIcon.style.display = "block";
+      if (closeIcon) {
+        closeIcon.style.display = "none";
       }
     }
   }
@@ -1451,7 +1521,7 @@ function initMobileMenu() {
   });
 
   // Close menu when clicking overlay
-  overlay.addEventListener("click", toggleMenu);
+  menuOverlay.addEventListener("click", toggleMenu);
 
   // Close menu when clicking a link
   navLinks.querySelectorAll("a").forEach((link) => {
@@ -1461,4 +1531,84 @@ function initMobileMenu() {
       }
     });
   });
+
+  // Close menu on escape key
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && navLinks.classList.contains("active")) {
+      toggleMenu();
+    }
+  });
+}
+
+async function fetchFlipperRelease() {
+  const repoOwner = "Spooks4576";
+  const repoName = "Ghost_ESP_App";
+  const flipperCard = document.querySelector(".flipper-card");
+
+  if (!flipperCard) return;
+
+  // Add loader to existing card
+  const loader = document.createElement('div');
+  loader.className = 'release-loading';
+  loader.innerHTML = `<i data-feather="refresh-cw" class="spin"></i> Loading Flipper release...`;
+  flipperCard.insertBefore(loader, flipperCard.querySelector('.download-options'));
+
+  try {
+    const response = await fetch(
+      `https://api.github.com/repos/${repoOwner}/${repoName}/releases/latest`
+    );
+    
+    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+    
+    const release = await response.json();
+    const releaseDate = new Date(release.published_at).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric"
+    });
+
+    // Update existing card elements
+    const versionBadge = `<span class="version-badge" data-aos="zoom-in">${release.tag_name}</span>`;
+    flipperCard.querySelector('h3').innerHTML = `Ghost ESP for Flipper Zero ${versionBadge}`;
+    
+    const metaHTML = `
+      <div class="release-meta" data-aos="fade-up">
+        <span><i data-feather="calendar"></i>${releaseDate}</span>
+        <span><i data-feather="download"></i>${release.assets.reduce((acc, asset) => acc + asset.download_count, 0)} installs</span>
+      </div>
+      <div class="release-notes" data-aos="fade-up">
+        ${marked.parse(release.body.substring(0, 200) + '...')}
+        <a href="${release.html_url}" class="release-link">View full release notes</a>
+      </div>
+    `;
+
+    // Replace loader with dynamic content
+    flipperCard.replaceChild(createHtmlElement(metaHTML), loader);
+    
+    // Update download button with latest asset
+    const fapAsset = release.assets.find(a => a.name.endsWith('.fap'));
+    if(fapAsset) {
+      flipperCard.querySelector('.download-btn.primary-btn').href = fapAsset.browser_download_url;
+    }
+
+    feather.replace();
+    AOS.refresh(); // Refresh animations for new elements
+
+  } catch (error) {
+    console.error("Error fetching Flipper release:", error);
+    loader.innerHTML = `
+      <div class="release-error">
+        <i data-feather="alert-triangle"></i>
+        <p>Failed to load release data. Try refreshing!</p>
+      </div>
+    `;
+    feather.replace();
+  }
+}
+
+// Helper function to convert HTML string to DOM element
+function createHtmlElement(html) {
+  const template = document.createElement('template');
+  template.innerHTML = html.trim();
+  return template.content.firstChild;
 }
