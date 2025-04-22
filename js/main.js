@@ -994,14 +994,31 @@ document.addEventListener("DOMContentLoaded", function () {
   // Revival Notice Modal Logic
   const modal = document.getElementById("revival-modal");
   const closeBtn = document.querySelector(".modal .close-button");
-  const visitedKey = 'ghostEspVisitedRevivalNotice';
+  const visitedKey = 'ghostEspRevivalNoticeLastSeen'; // Changed key name for clarity
+  const targetDate = new Date('2025-04-21T00:00:00Z').getTime(); // Target date timestamp (UTC)
+  const now = new Date().getTime(); // Current timestamp
 
-  // Check if the user has visited before
-  if (!localStorage.getItem(visitedKey)) {
+  // Get the timestamp of the last visit when the notice was seen
+  const lastSeenTimestamp = localStorage.getItem(visitedKey);
+
+  // Determine if the modal should be shown
+  let shouldShowModal = false;
+  if (!lastSeenTimestamp) {
+      // Never seen before
+      shouldShowModal = true;
+  } else {
+      // Seen before, check if it was before the target date
+      if (parseInt(lastSeenTimestamp, 10) < targetDate) {
+          shouldShowModal = true;
+      }
+  }
+
+  // Show the modal if needed and update the timestamp
+  if (shouldShowModal) {
     if (modal) {
       modal.style.display = "block";
-      // Mark as visited
-      localStorage.setItem(visitedKey, 'true');
+      // Update the last seen timestamp to now
+      localStorage.setItem(visitedKey, now.toString());
     }
   }
 
