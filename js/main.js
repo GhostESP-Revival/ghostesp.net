@@ -990,7 +990,133 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Add enhanced spooky elements
   enhanceSpookyElements();
+
+  // Revival Notice Modal Logic
+  const modal = document.getElementById("revival-modal");
+  const closeBtn = document.querySelector(".modal .close-button");
+  const visitedKey = 'ghostEspVisitedRevivalNotice';
+
+  // Check if the user has visited before
+  if (!localStorage.getItem(visitedKey)) {
+    if (modal) {
+      modal.style.display = "block";
+      // Mark as visited
+      localStorage.setItem(visitedKey, 'true');
+    }
+  }
+
+  // Close button functionality
+  if (closeBtn) {
+    closeBtn.onclick = function() {
+      if (modal) {
+        modal.style.display = "none";
+      }
+    }
+  }
+
+  // Close modal if user clicks outside of the modal content
+  window.onclick = function(event) {
+    if (event.target == modal) {
+        if (modal) {
+            modal.style.display = "none";
+        }
+    }
+  }
+
+  // Video lazy loading using Intersection Observer
+  const videos = document.querySelectorAll('iframe[data-src]');
+  const videoObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+          if (entry.isIntersecting) {
+              const iframe = entry.target;
+              iframe.src = iframe.dataset.src;
+              iframe.removeAttribute('data-src'); // Optional: remove data-src once loaded
+              observer.unobserve(iframe); // Stop observing once loaded
+          }
+      });
+  }, { rootMargin: '100px' }); // Load 100px before it enters viewport
+
+  videos.forEach(video => {
+      videoObserver.observe(video);
+  });
+
+  // Existing video scroll functionality (ensure it's placed after DOM elements are defined)
+  const scrollWrapper = document.querySelector(".video-scroll-wrapper");
+  const scroll = document.querySelector(".video-scroll");
+  const leftBtn = document.querySelector(".scroll-button.left");
+  const rightBtn = document.querySelector(".scroll-button.right");
+
+  // Check if elements exist before adding listeners
+  if (scrollWrapper && scroll && leftBtn && rightBtn) {
+      const cardWidth = document.querySelector(".video-card")?.offsetWidth + 32 || 332; // Default width + gap
+
+      function updateButtons() {
+          if (!scrollWrapper || !scroll) return; // Guard clause
+          const scrollLeft = scrollWrapper.scrollLeft;
+          const scrollWidth = scroll.scrollWidth;
+          const clientWidth = scrollWrapper.clientWidth;
+
+          leftBtn.style.opacity = scrollLeft <= 1 ? "0.3" : "1"; // Use 1 to avoid floating point issues
+          leftBtn.style.cursor = scrollLeft <= 1 ? "default" : "pointer";
+
+          // Check if scrollWidth is significantly larger than clientWidth before enabling right button
+          const isScrollable = scrollWidth > clientWidth + 1;
+          rightBtn.style.opacity = !isScrollable || scrollLeft >= scrollWidth - clientWidth -1 ? "0.3" : "1";
+          rightBtn.style.cursor = !isScrollable || scrollLeft >= scrollWidth - clientWidth -1 ? "default" : "pointer";
+      }
+
+      leftBtn.addEventListener("click", () => {
+          if (scrollWrapper.scrollLeft > 0) {
+              scrollWrapper.scrollBy({
+                  left: -cardWidth,
+                  behavior: "smooth",
+              });
+          }
+      });
+
+      rightBtn.addEventListener("click", () => {
+          if (scrollWrapper.scrollLeft < scroll.scrollWidth - scrollWrapper.clientWidth) {
+              scrollWrapper.scrollBy({
+                  left: cardWidth,
+                  behavior: "smooth",
+              });
+          }
+      });
+
+      scrollWrapper.addEventListener("scroll", debounce(updateButtons, 50)); // Debounce update
+
+      // Initial button state and resize handling
+       updateButtons(); // Call initially
+       window.addEventListener('resize', debounce(updateButtons, 100)); // Update on resize
+  }
+
+  // Scroll arrow functionality
+  const scrollArrow = document.querySelector(".scroll-arrow");
+  if (scrollArrow) {
+      scrollArrow.addEventListener("click", function () {
+          window.scrollTo({
+              top: window.innerHeight * 0.9, // Scroll slightly less than full viewport height
+              behavior: "smooth",
+          });
+      });
+  }
 });
+
+// Debounce function
+function debounce(func, wait, immediate) {
+	var timeout;
+	return function() {
+		var context = this, args = arguments;
+		var later = function() {
+			timeout = null;
+			if (!immediate) func.apply(context, args);
+		};
+		var callNow = immediate && !timeout;
+		clearTimeout(timeout);
+		timeout = setTimeout(later, wait);
+		if (callNow) func.apply(context, args);
+	};
+};
 
 function updateChristmasCountdown() {
   const now = new Date();

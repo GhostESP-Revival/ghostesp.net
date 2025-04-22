@@ -262,7 +262,7 @@ body::before {
   display: none;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1100px) {
   .nav-content {
     padding: 0 1rem;
   }
@@ -1910,7 +1910,7 @@ body.christmas-theme::before {
 }
 
 /* Update mobile styles */
-@media (max-width: 768px) {
+@media (max-width: 1100px) {
   .mobile-menu-btn {
     display: block;
   }
@@ -3102,4 +3102,363 @@ body.menu-open {
 @keyframes spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}
+
+/* --- Modal Styles --- */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 2000; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgba(0, 0, 0, 0.6); /* Black w/ opacity */
+  backdrop-filter: blur(5px);
+}
+
+.modal-content {
+  background-color: #1f1f1f; /* Dark background for the modal box */
+  color: #e0e0e0; /* Light text color */
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 30px;
+  border: 1px solid #444;
+  width: 80%; /* Could be more or less, depending on screen size */
+  max-width: 500px; /* Maximum width */
+  border-radius: 12px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.4);
+  position: relative;
+  font-family: 'Inter', sans-serif;
+}
+
+.modal-content h2 {
+  color: #ffffff; /* White heading */
+  margin-top: 0;
+  font-family: 'Chakra Petch', sans-serif;
+  border-bottom: 1px solid #444;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+.modal-content p {
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.close-button {
+  color: #aaa;
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close-button:hover,
+.close-button:focus {
+  color: #fff; /* White on hover */
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.discord-link-modal {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 20px;
+    background-color: #5865F2; /* Discord purple */
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: background-color 0.2s ease;
+}
+
+.discord-link-modal:hover {
+    background-color: #4a56d4; /* Darker Discord purple */
+}
+
+@media (max-width: 600px) {
+  .modal-content {
+    width: 90%;
+    margin: 25% auto;
+    padding: 20px;
+  }
+  .modal-content h2 {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 1100px) {
+  .nav-content {
+    padding: 0 1rem;
+  }
+}
+
+@media (max-height: 500px) {
+  .nav-links {
+    padding-top: 50px;
+  }
+}
+
+@media (max-width: 1100px) {
+  /* ... other mobile styles ... */
+
+  /* Show labels in mobile menu */
+  .menu-label {
+    display: block;
+    margin-left: 10px;
+  }
+
+  /* Update icon buttons in mobile menu */
+  .github-btn,
+  .discord-btn,
+  .theme-btn {
+    width: 100%;
+    height: auto;
+    background: none !important;
+    padding: 0.8rem 0;
+    justify-content: flex-start;
+    color: var(--text-secondary);
+    transition: color 0.3s ease;
+  }
+
+  .github-btn:hover,
+  .discord-btn:hover,
+  .theme-btn:hover {
+    color: var(--text-primary);
+  }
+
+  .github-btn i,
+  .discord-btn i,
+  .theme-btn i {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0; /* Prevent icon from shrinking */
+  }
+}
+
+/* Update video showcase handling on mobile */
+@media (max-width: 1100px) {
+  .video-showcase h2 {
+    font-size: 1.8rem;
+  }
+}
+
+/* Improve board cards on mobile */
+@media (max-width: 1100px) {
+  .board-category h3 {
+    font-size: 1.5rem;
+  }
+}
+
+/* Fix navigation on very small screens */
+@media (max-width: 360px) {
+  .nav-content {
+    padding: 0 1rem;
+  }
+
+  .logo {
+    font-size: 1rem;
+  }
+
+  .github-btn,
+  .discord-btn {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+/* Improve steps container on mobile */
+@media (max-width: 1100px) {
+  .step {
+    margin: 0 1rem;
+  }
+
+  .command-list {
+    overflow-x: auto; /* Allow horizontal scroll for long commands */
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 0.5rem;
+  }
+
+  .command-list code {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 1100px) {
+  .theme-btn {
+    width: 32px;
+  }
+}
+
+/* Update mobile styles */
+@media (max-width: 1100px) {
+  .mobile-menu-btn {
+    display: block;
+  }
+
+  .nav-content {
+    padding: 0.5rem 1rem;
+    position: relative;
+  }
+
+  .nav-links {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    height: 100vh;
+    width: 75%;
+    max-width: 300px;
+    background: var(--surface-color);
+    flex-direction: column;
+    padding: 80px 2rem 2rem;
+    transition: right 0.3s ease;
+    backdrop-filter: blur(10px);
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 95;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  .nav-links.active {
+    right: 0;
+  }
+
+  .nav-links li {
+    width: 100%;
+  }
+
+  .nav-links a {
+    font-size: 1.1rem;
+    padding: 0.8rem 0;
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .menu-label {
+    display: block;
+  }
+
+  .github-btn,
+  .discord-btn,
+  .theme-btn {
+    width: 100%;
+    height: auto;
+    background: none !important;
+    padding: 0.8rem 0;
+    justify-content: flex-start;
+  }
+
+  .github-btn i,
+  .discord-btn i,
+  .theme-btn i {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+  }
+
+  body.menu-open {
+    overflow: hidden;
+  }
+}
+
+@media (max-height: 600px) {
+  .nav-links {
+    padding-top: 60px;
+    gap: 0.8rem;
+  }
+
+  .nav-links a {
+    padding: 0.3rem 0;
+    font-size: 1rem;
+  }
+
+  .menu-label {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-height: 500px) {
+  .nav-links {
+    padding-top: 50px;
+    gap: 0.5rem;
+  }
+}
+
+/* Prevent body scroll when menu is open */
+body.menu-open {
+  overflow: hidden;
+}
+
+/* Add this to your existing styles */
+.menu-label {
+  display: none;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+}
+
+/* Update the mobile styles */
+@media (max-width: 1100px) {
+  /* ... other mobile styles ... */
+
+  /* Show labels in mobile menu */
+  .menu-label {
+    display: block;
+    margin-left: 10px;
+  }
+
+  /* Update icon buttons in mobile menu */
+  .github-btn,
+  .discord-btn,
+  .theme-btn {
+    width: 100%;
+    height: auto;
+    background: none !important;
+    padding: 0.8rem 0;
+    justify-content: flex-start;
+    color: var(--text-secondary);
+    transition: color 0.3s ease;
+  }
+
+  .github-btn:hover,
+  .discord-btn:hover,
+  .theme-btn:hover {
+    color: var(--text-primary);
+  }
+
+  .github-btn i,
+  .discord-btn i,
+  .theme-btn i {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0; /* Prevent icon from shrinking */
+  }
+}
+
+/* Mobile optimizations */
+@media (max-width: 1100px) {
+  .markdown-content {
+    max-height: 250px;
+  }
+}
+
+/* Mobile responsiveness */
+@media (max-width: 1100px) {
+  .flipper-app {
+    padding: 4rem 1rem;
+  }
+}
+
+@media (max-width: 1100px) {
+  .modal-content {
+    width: 90%;
+    margin: 25% auto;
+    padding: 20px;
+  }
+  .modal-content h2 {
+    font-size: 1.5rem;
+  }
 }
