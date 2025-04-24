@@ -1684,8 +1684,8 @@ function initMobileMenu() {
 }
 
 async function fetchFlipperRelease() {
-  const repoOwner = "Spooks4576";
-  const repoName = "Ghost_ESP_App";
+  const repoOwner = "jaylikesbunda";
+  const repoName = "ghost_esp_app";
   const flipperCard = document.querySelector(".flipper-card");
 
   if (!flipperCard) return;
