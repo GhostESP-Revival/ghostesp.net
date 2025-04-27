@@ -1343,7 +1343,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 async function fetchLatestRelease() {
-  const repoOwner = "Spooks4576";
+  const repoOwner = "jaylikesbunda";
   const repoName = "Ghost_ESP";
   const featuresGrid = document.querySelector(".features-grid");
 
