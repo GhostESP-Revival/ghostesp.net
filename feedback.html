@@ -420,6 +420,32 @@
       form.addEventListener('submit', sendFeedback);
       */
 
+      // --- Dynamic Placeholder Logic ---
+      const topicSelect = document.getElementById('feedback-topic');
+      const messageTextarea = document.getElementById('feedback-message');
+
+      const placeholderMap = {
+        "": "Select a topic first...", // Placeholder for the default disabled option
+        "GhostESP: Display Support": "Describe the display issue or suggestion (e.g., specific board, layout, feature)...",
+        "GhostESP: New Feature Request": "Describe the new feature you'd like to see...",
+        "GhostESP: Essential Bug Fix": "Describe the bug, how to reproduce it, and why it's essential...",
+        "GhostESP: What You Like": "Tell us what you appreciate about Ghost ESP!",
+        "GhostESP: What You Dislike": "Tell us what you don't like or find frustrating...",
+        "GhostESP: Other": "Please provide details about your feedback..."
+      };
+
+      function updatePlaceholder() {
+        const selectedTopic = topicSelect.value;
+        messageTextarea.placeholder = placeholderMap[selectedTopic] || placeholderMap[""]; // Default to empty or placeholder for ''
+      }
+
+      // Add event listener for changes
+      topicSelect.addEventListener('change', updatePlaceholder);
+
+      // Set initial placeholder on page load
+      updatePlaceholder();
+      // --- End Dynamic Placeholder Logic ---
+
       // Basic mobile menu functionality (copied from index.html script block)
       document.addEventListener("DOMContentLoaded", function () {
         const mobileMenuBtn = document.querySelector(".mobile-menu-btn");
