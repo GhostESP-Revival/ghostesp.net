@@ -162,6 +162,7 @@
       }
 
       .feedback-form input[type="email"],
+      .feedback-form input[type="text"],
       .feedback-form select,
       .feedback-form textarea {
         width: 100%;
@@ -176,6 +177,7 @@
       }
 
       .feedback-form input[type="email"]:focus,
+      .feedback-form input[type="text"]:focus,
       .feedback-form select:focus,
       .feedback-form textarea:focus {
         outline: none;
@@ -306,8 +308,13 @@
             <div class="form-group">
               <label for="feedback-topic">Feedback Area</label>
               <select id="feedback-topic" name="topic" required>
-                <option value="GhostESP Web Display Support" selected>GhostESP Web Display Support</option>
-                <!-- Add other options here later if needed -->
+                <option value="" disabled selected>Select a feedback topic...</option>
+                <option value="GhostESP: Display Support">GhostESP: Display Support</option>
+                <option value="GhostESP: New Feature Request">GhostESP: New Feature Request</option>
+                <option value="GhostESP: Essential Bug Fix">GhostESP: Essential Bug Fix</option>
+                <option value="GhostESP: What You Like">GhostESP: What You Like</option>
+                <option value="GhostESP: What You Dislike">GhostESP: What You Dislike</option>
+                <option value="GhostESP: Other">GhostESP: Other</option>
                 <!-- <option value="General Feedback">General Feedback</option> -->
                 <!-- <option value="Bug Report">Bug Report</option> -->
                 <!-- <option value="Feature Request">Feature Request</option> -->
