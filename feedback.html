@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#121212" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="
+        default-src 'self';
+        script-src 'self' 'unsafe-inline' https://unpkg.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net;
+        style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com https://cdnjs.cloudflare.com;
+        img-src 'self' https://ghostesp.net data:;
+        font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com;
+        frame-src https://www.youtube.com;
+        connect-src 'self' https://cdn.spookytools.com https://api.github.com https://play.google.com https://googleads.g.doubleclick.net https://discord.com; /* Added discord.com for webhook */
+        object-src 'none';
+        base-uri 'self';
+        form-action 'self';
+        upgrade-insecure-requests;
+    "
+    />
+
+    <meta
+      name="description"
+      content="Provide feedback on Ghost ESP features and development."
+    />
+    <meta
+      name="keywords"
+      content="Ghost ESP, feedback, ESP32, WiFi testing, wireless security, feature request, bug report"
+    />
+    <meta name="author" content="Jay Candel" />
+    <meta name="robots" content="noindex, follow" /> <!-- Noindex for feedback page -->
+
+    <title>Ghost ESP - Feedback</title>
+
+    <!-- Preconnect to CDNs -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://unpkg.com" />
+
+    <!-- Preload critical resources -->
+    <link rel="preload" href="css/style.css" as="style" />
+    <link
+      rel="preload"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/webfonts/fa-solid-900.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/webfonts/fa-brands-400.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Share+Tech+Mono&family=Chakra+Petch:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&display=swap&display=swap"
+      rel="stylesheet"
+      media="print"
+      onload="this.media='all'"
+    />
+
+    <!-- Custom styles -->
+    <link rel="stylesheet" href="css/style.css" fetchpriority="high" />
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      media="print"
+      onload="this.media='all'"
+    />
+
+    <!-- Favicon and App Icons -->
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="images/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="images/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="images/favicon-16x16.png"
+    />
+    <link rel="manifest" href="images/site.webmanifest" />
+    <link rel="icon" type="image/x-icon" href="images/ghosty-icon.ico" />
+
+    <style>
+      /* Add specific styles for feedback form */
+      .feedback-section {
+        padding: 8rem 2rem 4rem; /* Adjust padding */
+        min-height: calc(100vh - 70px - 60px); /* Adjust based on header/footer */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(180deg, #070707 0%, #121212 100%);
+      }
+
+      .feedback-container {
+        max-width: 800px;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.02);
+        border-radius: 16px;
+        padding: 2.5rem;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        color: #e0e0e0;
+      }
+
+      .feedback-container h2 {
+        font-family: "Chakra Petch", sans-serif;
+        color: #fff;
+        font-weight: 600;
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
+        text-align: center;
+      }
+
+      .feedback-form .form-group {
+        margin-bottom: 1.5rem;
+      }
+
+      .feedback-form label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+        color: #ccc;
+      }
+
+      .feedback-form input[type="email"],
+      .feedback-form select,
+      .feedback-form textarea {
+        width: 100%;
+        padding: 0.8rem 1rem;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        color: #e0e0e0;
+        font-family: "Inter", sans-serif;
+        font-size: 1rem;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .feedback-form input[type="email"]:focus,
+      .feedback-form select:focus,
+      .feedback-form textarea:focus {
+        outline: none;
+        border-color: #70056b;
+        box-shadow: 0 0 0 2px rgba(112, 5, 107, 0.3);
+      }
+
+      .feedback-form textarea {
+        min-height: 150px;
+        resize: vertical;
+      }
+
+      .feedback-form .submit-btn {
+          display: block;
+          width: 100%;
+          padding: 1rem 2rem;
+          border: none;
+          border-radius: 12px;
+          font-weight: 600;
+          text-decoration: none;
+          transition: all 0.3s ease;
+          cursor: pointer;
+          font-size: 1.1rem;
+          background: linear-gradient(45deg, #70056b, #920e0e);
+          color: white;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+          margin-top: 1rem;
+      }
+
+      .feedback-form .submit-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+      }
+
+      #form-status {
+          margin-top: 1.5rem;
+          text-align: center;
+          font-weight: 500;
+      }
+
+      #form-status.success {
+          color: #4CAF50; /* Green */
+      }
+
+      #form-status.error {
+          color: #f44336; /* Red */
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <!-- Reusing Navbar from index.html -->
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
+      <div class="nav-content">
+        <div class="logo">
+          <a href="index.html"> <!-- Link logo back to home -->
+            <img
+              src="images/ghostespdotnet.png"
+              alt="Ghost ESP Logo"
+              width="320"
+              height="320"
+              fetchpriority="high"
+              decoding="sync"
+              loading="eager"
+              style="transform: scale(1.8) translateZ(0);"
+            />
+          </a>
+        </div>
+        <button class="mobile-menu-btn" aria-label="Toggle menu">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+        <div class="menu-overlay"></div>
+        <ul class="nav-links">
+          <!-- Update links to point to index.html sections if needed -->
+          <li><a href="index.html#features">Features</a></li>
+          <li><a href="index.html#compatibility">Compatibility</a></li>
+          <li><a href="index.html#getting-started">Get Started</a></li>
+          <li><a href="index.html#flipper-app">Flipper App</a></li>
+          <li><a href="serial.html">Serial Console</a></li>
+          <li><a href="https://shop.ghostesp.net" target="_blank">Merch</a></li>
+          <li><a href="feedback.html">Feedback</a></li> <!-- Add Feedback link -->
+          <li>
+            <a href="#" id="theme-toggle" class="theme-btn">
+              <i class="fas fa-ghost"></i>
+              <span class="menu-label">Theme</span>
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://discord.gg/5cyNmUMgwh"
+              target="_blank"
+              class="social-btn discord-btn"
+            >
+              <i class="fab fa-discord"></i>
+              <span class="menu-label">Discord</span>
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://github.com/jaylikesbunda/Ghost_ESP"
+              class="social-btn github-btn"
+              target="_blank"
+            >
+              <i class="fab fa-github"></i>
+              <span class="menu-label">GitHub</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <main role="main">
+      <section class="feedback-section">
+        <div class="feedback-container">
+          <h2>Submit Feedback</h2>
+          <form id="feedback-form" class="feedback-form" name="feedback" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+            <!-- Netlify hidden input for bot protection -->
+            <p class="hidden" style="display:none;">
+              <label>
+                Don't fill this out if you're human: <input name="bot-field" />
+              </label>
+            </p>
+            <!-- Netlify needs this hidden input to match the form name -->
+            <input type="hidden" name="form-name" value="feedback" />
+
+            <div class="form-group">
+              <label for="feedback-topic">Feedback Area</label>
+              <select id="feedback-topic" name="topic" required>
+                <option value="GhostESP Web Display Support" selected>GhostESP Web Display Support</option>
+                <!-- Add other options here later if needed -->
+                <!-- <option value="General Feedback">General Feedback</option> -->
+                <!-- <option value="Bug Report">Bug Report</option> -->
+                <!-- <option value="Feature Request">Feature Request</option> -->
+              </select>
+            </div>
+            <div class="form-group">
+                <label for="feedback-message">What needs changing, tweaking, or improving?</label>
+                <textarea id="feedback-message" name="message" rows="6" required placeholder="Please provide detailed feedback about display support (e.g., specific boards, features, issues)..."></textarea>
+            </div>
+            <div class="form-group">
+                <label for="user-contact">Contact Info (Optional)</label>
+                <input type="email" id="user-contact" name="contact" placeholder="Your Email or Discord Username (e.g., user#1234)">
+                <small style="color: #aaa; display: block; margin-top: 0.3rem;">Helps us follow up if we have questions.</small>
+            </div>
+            <button type="submit" class="submit-btn">Send Feedback</button>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <!-- Reusing Footer from index.html -->
+    <footer class="credits" role="contentinfo">
+      <div class="footer-content">
+        <a
+          href="https://github.com/jaylikesbunda"
+          target="_blank"
+          class="credit-link"
+        >
+          Site Developed by Jay Candel <i class="fas fa-heart"></i>
+        </a>
+        <a
+          href="https://ko-fi.com/jaylikesbunda"
+          target="_blank"
+          class="support-btn"
+        >
+          <i class="fas fa-bolt"></i>
+          Support the Project
+        </a>
+      </div>
+    </footer>
+
+    <!-- Include main.js for potential theme toggle or mobile menu logic -->
+    <script src="js/main.js" defer></script>
+
+    <script>
+      // Feedback form submission logic (REMOVED - Now handled by Netlify Forms)
+      /*
+      const form = document.getElementById('feedback-form');
+      const formStatus = document.getElementById('form-status');
+
+      // IMPORTANT: This URL points to the Netlify Function proxy
+      const functionUrl = '/.netlify/functions/submit-feedback';
+
+      async function sendFeedback(event) {
+        event.preventDefault();
+        formStatus.textContent = 'Sending...';
+        formStatus.className = ''; // Reset classes
+
+        const topic = document.getElementById('feedback-topic').value;
+        const message = document.getElementById('feedback-message').value;
+        const contact = document.getElementById('user-contact').value || 'Not provided';
+
+        const webhookBody = {
+          embeds: [{
+            title: `Feedback Received: ${topic}`,
+            color: 5814783, // Purple color for embed
+            fields: [
+              { name: 'Topic', value: topic },
+              { name: 'Feedback Message', value: message },
+              { name: 'Contact Info', value: contact }
+            ],
+            timestamp: new Date().toISOString()
+          }],
+        };
+
+        try {
+            const response = await fetch(functionUrl, { // Send to Netlify Function URL
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(webhookBody), // Send the same embed structure
+            });
+
+            const result = await response.json(); // Get JSON response from function
+
+            if (response.ok) {
+                formStatus.textContent = 'Feedback sent successfully! Thank you.';
+                formStatus.className = 'success';
+                form.reset(); // Clear the form
+            } else {
+                console.error('Function Error Response:', result);
+                formStatus.textContent = `Error sending feedback: ${result.message || 'Please try again later.'}`;
+                formStatus.className = 'error';
+            }
+        } catch (error) {
+            console.error('Fetch Error:', error);
+            formStatus.textContent = 'Network error sending feedback. Please check your connection and try again.';
+            formStatus.className = 'error';
+        }
+      }
+
+      form.addEventListener('submit', sendFeedback);
+      */
+
+      // Basic mobile menu functionality (copied from index.html script block)
+      document.addEventListener("DOMContentLoaded", function () {
+        const mobileMenuBtn = document.querySelector(".mobile-menu-btn");
+        const navLinks = document.querySelector(".nav-links");
+
+        if (mobileMenuBtn && navLinks) { // Check if elements exist
+            mobileMenuBtn.addEventListener("click", function () {
+              navLinks.classList.toggle("active");
+            });
+        } else {
+            console.warn("Mobile menu button or nav links not found on this page.");
+        }
+      });
+
+    </script>
+  </body>
+</html> 
