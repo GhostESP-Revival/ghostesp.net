@@ -13,7 +13,7 @@
         img-src 'self' https://ghostesp.net data:;
         font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com;
         frame-src https://www.youtube.com;
-        connect-src 'self' https://cdn.spookytools.com https://api.github.com https://play.google.com https://googleads.g.doubleclick.net;
+        connect-src 'self' https://cdn.spookytools.com https://api.github.com https://play.google.com https://googleads.g.doubleclick.net; /* Ensure api.github.com is here */
         object-src 'none';
         base-uri 'self';
         form-action 'self';
@@ -67,7 +67,7 @@
     />
 
     <!-- Custom styles -->
-    <link rel="stylesheet" href="css/style.css" fetchpriority="high" />
+    <link rel="stylesheet" href="/css/style.css" fetchpriority="high" />
 
     <!-- Font Awesome -->
     <link
