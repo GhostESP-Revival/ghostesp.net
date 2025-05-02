@@ -2,8 +2,8 @@
 
 # Redirect rule for handling dynamic release file requests
 [[redirects]]
-  # Match any path starting with /releases/
-  from = "/releases/*"
+  # Match only paths ending in .zip under /releases/
+  from = "/releases/*.zip"
   # Serve the releases.html file instead
   to = "/releases.html"
   # Status 200 means serve the file, not an HTTP redirect
