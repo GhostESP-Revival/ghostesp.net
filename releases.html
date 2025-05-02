@@ -102,17 +102,14 @@
       /* Specific styles for release page */
       .releases-section {
         padding: 8rem 2rem 4rem;
-        min-height: calc(100vh - 70px - 60px);
+        min-height: 100vh; /* Full viewport height */
         display: flex;
-        align-items: flex-start; /* Align content to top */
+        align-items: center; /* Center content vertically */
         justify-content: center;
-        background: linear-gradient(180deg, #070707 0%, #121212 100%);
-        position: relative;
-        overflow: hidden;
       }
 
       .releases-grid {
-        position: absolute;
+        position: fixed; /* Fixed to viewport */
         top: 0;
         left: 0;
         width: 100%;
@@ -247,69 +244,13 @@
   </head>
 
   <body>
-    <!-- Reusing Navbar from index.html -->
-    <nav class="navbar" role="navigation" aria-label="Main navigation">
-      <div class="nav-content">
-        <div class="logo">
-          <a href="index.html">
-            <img
-              src="images/ghostespdotnet.png"
-              alt="Ghost ESP Logo"
-              width="320"
-              height="320"
-              fetchpriority="high"
-              decoding="sync"
-              loading="eager"
-              style="width: 100%; height: auto; max-width: 60px; object-fit: contain; transform: scale(1.2);"
-            />
-          </a>
-        </div>
-        <button class="mobile-menu-btn" aria-label="Toggle menu">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-        </button>
-        <div class="menu-overlay"></div>
-        <ul class="nav-links">
-          <li><a href="index.html#features">Features</a></li>
-          <li><a href="index.html#compatibility">Compatibility</a></li>
-          <li><a href="index.html#getting-started">Get Started</a></li>
-          <li><a href="index.html#flipper-app">Flipper App</a></li>
-          <li><a href="serial.html">Serial Console</a></li>
-          <li><a href="releases.html">Releases</a></li> <!-- Add Releases link -->
-          <li><a href="https://shop.ghostesp.net" target="_blank">Merch</a></li>
-          <li><a href="feedback.html">Feedback</a></li>
-          <li>
-            <a href="#" id="theme-toggle" class="theme-btn">
-              <i class="fas fa-ghost"></i>
-              <span class="menu-label">Theme</span>
-            </a>
-          </li>
-          <li>
-            <a
-              href="https://discord.gg/5cyNmUMgwh"
-              target="_blank"
-              class="social-btn discord-btn"
-            >
-              <i class="fab fa-discord"></i>
-              <span class="menu-label">Discord</span>
-            </a>
-          </li>
-          <li>
-            <a
-              href="https://github.com/jaylikesbunda/Ghost_ESP"
-              class="social-btn github-btn"
-              target="_blank"
-            >
-              <i class="fab fa-github"></i>
-              <span class="menu-label">GitHub</span>
-            </a>
-          </li>
-        </ul>
-      </div>
-    </nav>
+    <!-- Navbar removed -->
+
+    <!-- Grid moved outside main to cover entire page -->
+    <div class="releases-grid"></div>
 
     <main role="main">
       <section class="releases-section">
-        <div class="releases-grid"></div>
         <div class="releases-container">
           <h2>Latest Firmware Release</h2>
           <h3 id="release-tag">Loading release info...</h3>
@@ -324,29 +265,11 @@
       </section>
     </main>
 
-    <!-- Reusing Footer from index.html -->
-    <footer class="credits" role="contentinfo">
-      <div class="footer-content">
-        <a
-          href="https://github.com/jaylikesbunda"
-          target="_blank"
-          class="credit-link"
-        >
-          Site Developed by Jay Candel <i class="fas fa-heart"></i>
-        </a>
-        <a
-          href="https://ko-fi.com/jaylikesbunda"
-          target="_blank"
-          class="support-btn"
-        >
-          <i class="fas fa-bolt"></i>
-          Support the Project
-        </a>
-      </div>
-    </footer>
+    <!-- Footer removed -->
 
     <!-- Include main.js for potential theme toggle or mobile menu logic -->
-    <script src="js/main.js" defer></script>
+    <!-- Removed link to main.js as it's likely related to nav/footer -->
+    <!-- <script src="js/main.js" defer></script> -->
 
     <script>
       document.addEventListener('DOMContentLoaded', async () => {
@@ -414,7 +337,8 @@
             errorStatus.style.display = 'block';
         }
 
-        // Mobile menu logic (can likely be removed if page just redirects)
+        // Mobile menu logic removed as nav is gone
+        /*
         const mobileMenuBtn = document.querySelector(".mobile-menu-btn");
         const navLinks = document.querySelector(".nav-links");
         if (mobileMenuBtn && navLinks) {
@@ -422,6 +346,7 @@
               navLinks.classList.toggle("active");
             });
         }
+        */
       });
     </script>
   </body>
