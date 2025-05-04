@@ -1755,3 +1755,251 @@ function createHtmlElement(html) {
   template.innerHTML = html.trim();
   return template.content.firstChild;
 }
+
+// --- Language Switcher --- //
+const translations = {
+  en: {
+    nav_features: "Features",
+    nav_compatibility: "Compatibility",
+    nav_get_started: "Get Started",
+    nav_flipper_app: "Flipper App",
+    nav_serial_console: "Serial Console",
+    nav_merch: "Merch",
+    nav_language: "Language",
+    hero_get_started: "Get Started",
+    hero_latest_release: "Latest Release",
+    hero_documentation: "Documentation",
+    features_heading: "Key Features",
+    feature_wifi_title: "WiFi Analysis",
+    feature_wifi_desc: "Advanced scanning of access points and stations with OUI matching and real-time monitoring",
+    feature_packet_capture_title: "Packet Capture",
+    feature_packet_capture_desc: "Capture probe requests, beacons, deauth packets, WPS, EAPOL and raw WiFi packets with PCAP support",
+    feature_beacon_ops_title: "Beacon Operations",
+    feature_beacon_ops_desc: "Generate custom beacon frames with random, rickroll, or AP list modes for network testing",
+    feature_ble_toolkit_title: "BLE Toolkit",
+    feature_ble_toolkit_desc: "Scan for Flipper devices, detect BLE spam, track AirTags, and capture raw BLE packets",
+    feature_wardriving_title: "Wardriving",
+    feature_wardriving_desc: "GPS-enabled WiFi and BLE wardriving with CSV logging for network mapping",
+    feature_evil_portal_title: "Evil Portal",
+    feature_evil_portal_desc: "Create customizable captive portals with online/offline modes and domain spoofing",
+    feature_network_tools_title: "Network Tools",
+    feature_network_tools_desc: "DIAL/Chromecast control, network printer access, and TP-Link device management",
+    feature_security_testing_title: "Security Testing",
+    feature_security_testing_desc: "WPS scanning, and skimmer detection capabilities and more",
+    feature_display_features_title: "Display Features",
+    feature_display_features_desc: "Built-in games, music visualizer, and RGB rave mode for supported display boards",
+    video_heading: "See Ghost ESP in Action",
+    video1_title: "GhostESP Overview",
+    video1_desc: "Comprehensive overview of GhostESP features including WebUI, Evil Portal, Rave mode, and network printing capabilities",
+    video2_title: "Deauth Demo",
+    video2_desc: "Demonstration of GhostESP and Flipper Zero deauthenticating a spy camera from a 2.4GHz WiFi network",
+    video3_title: "Promo Trailer",
+    video3_desc: "Short promotional trailer showcasing GhostESP features",
+    video4_title: "T-Watch S3 Tutorial",
+    video4_desc: "How to get the T-Watch S3 into bootloader mode and flash GhostESP",
+    video5_title: "Mobile Flashing Tutorial",
+    video5_desc: "Flash Ghost ESP on ESP32-C3 SuperMini using just your phone",
+    compatibility_heading: "Supported Hardware",
+    compatibility_display_heading: "Display-Enabled Boards",
+    compatibility_cyd_title: "CYD Boards",
+    compatibility_cyd_note: "Compatible with 2.8\" ESP32-2432S028",
+    compatibility_7inch_title: "7-Inch Displays",
+    compatibility_7inch_note: "Both using ESP32-S3",
+    compatibility_other_display_title: "Other Display Boards",
+    compatibility_generic_heading: "Generic Boards",
+    compatibility_esp_models_title: "ESP32 Models",
+    compatibility_custom_builds_title: "Custom Builds",
+    compatibility_custom_item1: "Create your own build",
+    compatibility_custom_item2: "Customize features (more coming soon!)",
+    compatibility_custom_item3: "Build for your specific hardware",
+    compatibility_custom_link: "View Build Guide →",
+    getting_started_heading: "Getting Started",
+    getting_started_step1_title: "Flash Your Device",
+    getting_started_step1_desc: "Visit the Espresso Flash Web Flasher",
+    getting_started_step1_bootloader: "Bootloader Mode:",
+    getting_started_step1_boot1: "Hold BOOT button",
+    getting_started_step1_boot2: "Connect USB cable",
+    getting_started_step1_boot3: "Release BOOT after connection",
+    getting_started_step2_title: "Basic Commands",
+    getting_started_step2_cmd1: "<code>scanap</code> - Scan WiFi networks",
+    getting_started_step2_cmd2: "<code>list -a</code> - List found networks",
+    getting_started_step2_cmd3: "<code>scanlocal</code> - Scan local network",
+    getting_started_step2_cmd4: "<code>help</code> - Show all commands",
+    getting_started_step3_title: "Touch Navigation",
+    getting_started_step3_nav1: "Top Half: Move Up",
+    getting_started_step3_nav2: "Bottom Half: Move Down",
+    getting_started_step3_nav3: "Middle: Select Item",
+    getting_started_step3_nav4: "Main Menu: Direct Touch",
+    getting_started_step4_title: "Need Help?",
+    getting_started_step4_desc: "Join our Discord Community for:",
+    getting_started_step4_help1: "Live Support",
+    getting_started_step4_help2: "Troubleshooting",
+    getting_started_step4_help3: "Latest Updates",
+    getting_started_step4_help4: "Community Tips",
+    flipper_heading: "Flipper Zero App",
+    flipper_card_title: "Ghost ESP for Flipper Zero",
+    flipper_card_desc: "Control your Ghost ESP directly from your Flipper Zero with our official companion app.",
+    flipper_download_fap: "Download Latest FAP",
+    flipper_view_source: "View Source",
+    flipper_app_features_title: "App Features:",
+    flipper_feature1: "WiFi Operations",
+    flipper_feature2: "BLE Controls",
+    flipper_feature3: "GPS Functions",
+    flipper_feature4: "Device Configuration",
+    merch_heading: "Limited Official Store",
+    merch_desc: "Exclusive Ghost ESP apparel and accessories",
+    merch_feature1: "Quality Gear",
+    merch_feature2: "Worldwide Shipping",
+    merch_feature3: "Secure Payment",
+    merch_visit_store: "Visit Store",
+    footer_developed_by: "Site Developed by Jay Candel",
+    footer_support: "Support the Project",
+  },
+  de: {
+    nav_features: "Funktionen",
+    nav_compatibility: "Kompatibilität",
+    nav_get_started: "Loslegen",
+    nav_flipper_app: "Flipper App",
+    nav_serial_console: "Serielle Konsole",
+    nav_merch: "Merch",
+    nav_language: "Sprache",
+    hero_get_started: "Loslegen",
+    hero_latest_release: "Neueste Version",
+    hero_documentation: "Dokumentation",
+    features_heading: "Hauptfunktionen",
+    feature_wifi_title: "WLAN-Analyse",
+    feature_wifi_desc: "Erweitertes Scannen von Zugangspunkten und Stationen mit OUI-Abgleich und Echtzeitüberwachung",
+    feature_packet_capture_title: "Paketmitschnitt",
+    feature_packet_capture_desc: "Erfassen von Probe Requests, Beacons, Deauth-Paketen, WPS, EAPOL und rohen WLAN-Paketen mit PCAP-Unterstützung",
+    feature_beacon_ops_title: "Beacon-Operationen",
+    feature_beacon_ops_desc: "Generieren Sie benutzerdefinierte Beacon-Frames mit Zufalls-, Rickroll- oder AP-Listenmodi für Netzwerktests",
+    feature_ble_toolkit_title: "BLE-Toolkit",
+    feature_ble_toolkit_desc: "Suchen Sie nach Flipper-Geräten, erkennen Sie BLE-Spam, verfolgen Sie AirTags und erfassen Sie rohe BLE-Pakete",
+    feature_wardriving_title: "Wardriving",
+    feature_wardriving_desc: "GPS-fähiges WLAN- und BLE-Wardriving mit CSV-Protokollierung zur Netzwerkzuordnung",
+    feature_evil_portal_title: "Evil Portal",
+    feature_evil_portal_desc: "Erstellen Sie anpassbare Captive Portals mit Online-/Offline-Modi und Domain-Spoofing",
+    feature_network_tools_title: "Netzwerk-Tools",
+    feature_network_tools_desc: "DIAL/Chromecast-Steuerung, Zugriff auf Netzwerkdrucker und Verwaltung von TP-Link-Geräten",
+    feature_security_testing_title: "Sicherheitstests",
+    feature_security_testing_desc: "WPS-Scanning, Skimmer-Erkennung und mehr",
+    feature_display_features_title: "Anzeigefunktionen",
+    feature_display_features_desc: "Integrierte Spiele, Musikvisualisierer und RGB-Rave-Modus für unterstützte Anzeigeboards",
+    video_heading: "Ghost ESP in Aktion sehen",
+    video1_title: "GhostESP Überblick",
+    video1_desc: "Umfassender Überblick über die GhostESP-Funktionen einschließlich WebUI, Evil Portal, Rave-Modus und Netzwerkdruckfunktionen",
+    video2_title: "Deauth-Demo",
+    video2_desc: "Demonstration der Deauthentifizierung einer Spionagekamera von einem 2,4-GHz-WLAN-Netzwerk durch GhostESP und Flipper Zero",
+    video3_title: "Promo-Trailer",
+    video3_desc: "Kurzer Werbe-Trailer, der GhostESP-Funktionen vorstellt",
+    video4_title: "T-Watch S3 Tutorial",
+    video4_desc: "So versetzen Sie die T-Watch S3 in den Bootloader-Modus und flashen GhostESP",
+    video5_title: "Mobiles Flashing-Tutorial",
+    video5_desc: "Flashen Sie Ghost ESP auf dem ESP32-C3 SuperMini nur mit Ihrem Telefon",
+    compatibility_heading: "Unterstützte Hardware",
+    compatibility_display_heading: "Boards mit Display",
+    compatibility_cyd_title: "CYD-Boards",
+    compatibility_cyd_note: "Kompatibel mit 2.8\" ESP32-2432S028",
+    compatibility_7inch_title: "7-Zoll-Displays",
+    compatibility_7inch_note: "Beide verwenden ESP32-S3",
+    compatibility_other_display_title: "Andere Display-Boards",
+    compatibility_generic_heading: "Generische Boards",
+    compatibility_esp_models_title: "ESP32-Modelle",
+    compatibility_custom_builds_title: "Benutzerdefinierte Builds",
+    compatibility_custom_item1: "Erstellen Sie Ihren eigenen Build",
+    compatibility_custom_item2: "Passen Sie Funktionen an (mehr in Kürze!)",
+    compatibility_custom_item3: "Erstellen Sie für Ihre spezifische Hardware",
+    compatibility_custom_link: "Build-Anleitung anzeigen →",
+    getting_started_heading: "Loslegen",
+    getting_started_step1_title: "Flashen Sie Ihr Gerät",
+    getting_started_step1_desc: "Besuchen Sie den Espresso Flash Web Flasher",
+    getting_started_step1_bootloader: "Bootloader-Modus:",
+    getting_started_step1_boot1: "BOOT-Taste gedrückt halten",
+    getting_started_step1_boot2: "USB-Kabel anschließen",
+    getting_started_step1_boot3: "BOOT nach Verbindung loslassen",
+    getting_started_step2_title: "Grundlegende Befehle",
+    getting_started_step2_cmd1: "<code>scanap</code> - WLAN-Netzwerke scannen",
+    getting_started_step2_cmd2: "<code>list -a</code> - Gefundene Netzwerke auflisten",
+    getting_started_step2_cmd3: "<code>scanlocal</code> - Lokales Netzwerk scannen",
+    getting_started_step2_cmd4: "<code>help</code> - Alle Befehle anzeigen",
+    getting_started_step3_title: "Touch-Navigation",
+    getting_started_step3_nav1: "Obere Hälfte: Nach oben",
+    getting_started_step3_nav2: "Untere Hälfte: Nach unten",
+    getting_started_step3_nav3: "Mitte: Element auswählen",
+    getting_started_step3_nav4: "Hauptmenü: Direkte Berührung",
+    getting_started_step4_title: "Benötigen Sie Hilfe?",
+    getting_started_step4_desc: "Treten Sie unserer Discord-Community bei für:",
+    getting_started_step4_help1: "Live-Support",
+    getting_started_step4_help2: "Fehlerbehebung",
+    getting_started_step4_help3: "Neueste Updates",
+    getting_started_step4_help4: "Community-Tipps",
+    flipper_heading: "Flipper Zero App",
+    flipper_card_title: "Ghost ESP für Flipper Zero",
+    flipper_card_desc: "Steuern Sie Ihren Ghost ESP direkt von Ihrem Flipper Zero mit unserer offiziellen Begleit-App.",
+    flipper_download_fap: "Neueste FAP herunterladen",
+    flipper_view_source: "Quelle anzeigen",
+    flipper_app_features_title: "App-Funktionen:",
+    flipper_feature1: "WLAN-Operationen",
+    flipper_feature2: "BLE-Steuerung",
+    flipper_feature3: "GPS-Funktionen",
+    flipper_feature4: "Gerätekonfiguration",
+    merch_heading: "Limitierter offizieller Shop",
+    merch_desc: "Exklusive Ghost ESP Bekleidung und Accessoires",
+    merch_feature1: "Qualitätsausrüstung",
+    merch_feature2: "Weltweiter Versand",
+    merch_feature3: "Sichere Zahlung",
+    merch_visit_store: "Shop besuchen",
+    footer_developed_by: "Seite entwickelt von Jay Candel",
+    footer_support: "Unterstütze das Projekt",
+  },
+};
+
+const languageToggleButton = document.getElementById('language-toggle-btn');
+const languageDropdown = document.getElementById('language-dropdown');
+const languageButtons = languageDropdown.querySelectorAll('button[data-lang]');
+
+function setLanguage(lang) {
+  localStorage.setItem('preferredLanguage', lang);
+  document.documentElement.lang = lang; // Set lang attribute on <html>
+
+  document.querySelectorAll('[data-lang-key]').forEach(element => {
+    const key = element.getAttribute('data-lang-key');
+    if (translations[lang] && translations[lang][key]) {
+      element.textContent = translations[lang][key];
+    }
+  });
+
+  // Update language toggle button text if needed (e.g., show current lang)
+  // const currentLangDisplay = languageToggleButton.querySelector('.menu-label');
+  // if (currentLangDisplay) currentLangDisplay.textContent = lang.toUpperCase();
+
+  languageDropdown.classList.remove('show');
+  languageToggleButton.classList.remove('open'); // Rotate arrow back
+}
+
+languageToggleButton.addEventListener('click', (event) => {
+  event.stopPropagation(); // Prevent click from closing immediately
+  languageDropdown.classList.toggle('show');
+  languageToggleButton.classList.toggle('open'); // Rotate arrow
+});
+
+languageButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    const selectedLang = button.getAttribute('data-lang');
+    setLanguage(selectedLang);
+  });
+});
+
+// Close dropdown if clicked outside
+document.addEventListener('click', (event) => {
+  if (!languageToggleButton.contains(event.target) && !languageDropdown.contains(event.target)) {
+    languageDropdown.classList.remove('show');
+    languageToggleButton.classList.remove('open');
+  }
+});
+
+// Load preferred language or default to 'en'
+const preferredLanguage = localStorage.getItem('preferredLanguage') || 'en';
+setLanguage(preferredLanguage);
+
+// --- End Language Switcher --- //

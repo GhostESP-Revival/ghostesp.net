@@ -710,6 +710,7 @@
       .fa-store:before{content:"\f54e"}
       .fa-heart:before{content:"\f004"}
       .fa-bolt:before{content:"\f0e7"}
+      .fa-globe:before{content:"\f0ac"}
 
       .help-section-header {
         color: #ffd700;
@@ -752,6 +753,96 @@
         color: #2196F3;
         font-weight: bold;
       }
+
+      /* Language Selector Styles */
+      .language-selector {
+        position: relative;
+        display: inline-block;
+      }
+
+      .language-selector .theme-btn {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        cursor: pointer;
+        background: none;
+        border: none;
+        color: white;
+        font-family: inherit;
+        font-size: inherit;
+      }
+
+      .language-selector .theme-btn .lang-arrow {
+        width: 16px;
+        height: 16px;
+        transition: transform 0.2s ease;
+      }
+
+      .language-selector .theme-btn.open .lang-arrow {
+        transform: rotate(180deg);
+      }
+
+      .language-dropdown {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: rgba(30, 30, 30, 0.9);
+        list-style: none;
+        padding: 0.5rem 0;
+        margin: 0.5rem 0 0 0;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        z-index: 1001;
+        min-width: 100px;
+      }
+
+      .language-dropdown.show {
+        display: block;
+      }
+
+      .language-dropdown li button {
+        background: none;
+        border: none;
+        color: #e0e0e0;
+        padding: 0.5rem 1rem;
+        width: 100%;
+        text-align: left;
+        cursor: pointer;
+        font-family: inherit;
+        font-size: 0.9rem;
+        transition: background-color 0.2s ease;
+      }
+
+      .language-dropdown li button:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+        color: #fff;
+      }
+
+      /* Adjustments for mobile */
+      @media (max-width: 768px) {
+        .language-selector {
+          width: 100%;
+        }
+        .language-selector .theme-btn {
+          justify-content: center;
+          padding: 0.5rem;
+          width: 100%;
+        }
+        .language-dropdown {
+          position: static;
+          transform: none;
+          width: 100%;
+          margin-top: 0.5rem;
+          box-shadow: none;
+          background-color: rgba(18, 18, 18, 0.95);
+        }
+        .language-dropdown li button {
+          text-align: center;
+        }
+      }
+      /* End Language Selector Styles */
     </style>
 
     <!-- Favicon and App Icons -->
@@ -806,12 +897,25 @@
         </button>
         <div class="menu-overlay"></div>
         <ul class="nav-links">
-          <li><a href="#features">Features</a></li>
-          <li><a href="#compatibility">Compatibility</a></li>
-          <li><a href="#getting-started">Get Started</a></li>
-          <li><a href="#flipper-app">Flipper App</a></li>
-          <li><a href="serial.html">Serial Console</a></li>
-          <li><a href="https://shop.ghostesp.net" target="_blank">Merch</a></li>
+          <li><a href="#features" data-lang-key="nav_features">Features</a></li>
+          <li><a href="#compatibility" data-lang-key="nav_compatibility">Compatibility</a></li>
+          <li><a href="#getting-started" data-lang-key="nav_get_started">Get Started</a></li>
+          <li><a href="#flipper-app" data-lang-key="nav_flipper_app">Flipper App</a></li>
+          <li><a href="serial.html" data-lang-key="nav_serial_console">Serial Console</a></li>
+          <li><a href="https://shop.ghostesp.net" target="_blank" data-lang-key="nav_merch">Merch</a></li>
+          <li>
+            <div class="language-selector">
+              <button id="language-toggle-btn" class="theme-btn">
+                <i class="fas fa-globe"></i>
+                <span class="menu-label" data-lang-key="nav_language">Language</span>
+                <i data-feather="chevron-down" class="lang-arrow"></i>
+              </button>
+              <ul id="language-dropdown" class="language-dropdown">
+                <li><button data-lang="en">English</button></li>
+                <li><button data-lang="de">Deutsch</button></li>
+              </ul>
+            </div>
+          </li>
           <li>
             <a href="#" id="theme-toggle" class="theme-btn">
               <i class="fas fa-ghost"></i>
@@ -855,11 +959,12 @@
           />
         </div>
         <div class="cta-buttons">
-          <a href="#getting-started" class="primary-btn">Get Started</a>
-          <a href="#latest-release" class="secondary-btn">Latest Release</a>
+          <a href="#getting-started" class="primary-btn" data-lang-key="hero_get_started">Get Started</a>
+          <a href="#latest-release" class="secondary-btn" data-lang-key="hero_latest_release">Latest Release</a>
           <a
             href="https://github.com/jaylikesbunda/Ghost_ESP/wiki"
             class="secondary-btn"
+            data-lang-key="hero_documentation"
             >Documentation</a
           >
         </div>
@@ -875,12 +980,12 @@
         class="features"
         aria-labelledby="features-heading"
       >
-        <h2 id="features-heading" data-aos="fade-up">Key Features</h2>
+        <h2 id="features-heading" data-aos="fade-up" data-lang-key="features_heading">Key Features</h2>
         <div class="features-grid">
           <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
             <i data-feather="wifi"></i>
-            <h3>WiFi Analysis</h3>
-            <p>
+            <h3 data-lang-key="feature_wifi_title">WiFi Analysis</h3>
+            <p data-lang-key="feature_wifi_desc">
               Advanced scanning of access points and stations with OUI matching
               and real-time monitoring
             </p>
@@ -888,8 +993,8 @@
 
           <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
             <i data-feather="radio"></i>
-            <h3>Packet Capture</h3>
-            <p>
+            <h3 data-lang-key="feature_packet_capture_title">Packet Capture</h3>
+            <p data-lang-key="feature_packet_capture_desc">
               Capture probe requests, beacons, deauth packets, WPS, EAPOL and
               raw WiFi packets with PCAP support
             </p>
@@ -897,8 +1002,8 @@
 
           <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
             <i data-feather="zap"></i>
-            <h3>Beacon Operations</h3>
-            <p>
+            <h3 data-lang-key="feature_beacon_ops_title">Beacon Operations</h3>
+            <p data-lang-key="feature_beacon_ops_desc">
               Generate custom beacon frames with random, rickroll, or AP list
               modes for network testing
             </p>
@@ -906,8 +1011,8 @@
 
           <div class="feature-card" data-aos="fade-up" data-aos-delay="400">
             <i data-feather="bluetooth"></i>
-            <h3>BLE Toolkit</h3>
-            <p>
+            <h3 data-lang-key="feature_ble_toolkit_title">BLE Toolkit</h3>
+            <p data-lang-key="feature_ble_toolkit_desc">
               Scan for Flipper devices, detect BLE spam, track AirTags, and
               capture raw BLE packets
             </p>
@@ -915,8 +1020,8 @@
 
           <div class="feature-card" data-aos="fade-up" data-aos-delay="500">
             <i data-feather="map"></i>
-            <h3>Wardriving</h3>
-            <p>
+            <h3 data-lang-key="feature_wardriving_title">Wardriving</h3>
+            <p data-lang-key="feature_wardriving_desc">
               GPS-enabled WiFi and BLE wardriving with CSV logging for network
               mapping
             </p>
@@ -924,8 +1029,8 @@
 
           <div class="feature-card" data-aos="fade-up" data-aos-delay="600">
             <i data-feather="globe"></i>
-            <h3>Evil Portal</h3>
-            <p>
+            <h3 data-lang-key="feature_evil_portal_title">Evil Portal</h3>
+            <p data-lang-key="feature_evil_portal_desc">
               Create customizable captive portals with online/offline modes and
               domain spoofing
             </p>
@@ -933,8 +1038,8 @@
 
           <div class="feature-card" data-aos="fade-up" data-aos-delay="700">
             <i data-feather="cast"></i>
-            <h3>Network Tools</h3>
-            <p>
+            <h3 data-lang-key="feature_network_tools_title">Network Tools</h3>
+            <p data-lang-key="feature_network_tools_desc">
               DIAL/Chromecast control, network printer access, and TP-Link
               device management
             </p>
@@ -942,14 +1047,14 @@
 
           <div class="feature-card" data-aos="fade-up" data-aos-delay="800">
             <i data-feather="shield"></i>
-            <h3>Security Testing</h3>
-            <p>WPS scanning, and skimmer detection capabilities and more</p>
+            <h3 data-lang-key="feature_security_testing_title">Security Testing</h3>
+            <p data-lang-key="feature_security_testing_desc">WPS scanning, and skimmer detection capabilities and more</p>
           </div>
 
           <div class="feature-card" data-aos="fade-up" data-aos-delay="900">
             <i data-feather="monitor"></i>
-            <h3>Display Features</h3>
-            <p>
+            <h3 data-lang-key="feature_display_features_title">Display Features</h3>
+            <p data-lang-key="feature_display_features_desc">
               Built-in games, music visualizer, and RGB rave mode for supported
               display boards
             </p>
@@ -958,7 +1063,7 @@
       </section>
 
       <section class="video-showcase" aria-labelledby="video-heading">
-        <h2 id="video-heading" data-aos="fade-up">See Ghost ESP in Action</h2>
+        <h2 id="video-heading" data-aos="fade-up" data-lang-key="video_heading">See Ghost ESP in Action</h2>
         <div class="video-container">
           <button class="scroll-button left" aria-label="Scroll left">
             <i data-feather="chevron-left"></i>
@@ -979,8 +1084,8 @@
                   ></iframe>
                 </div>
                 <div class="video-info">
-                  <h3>GhostESP Overview</h3>
-                  <p>
+                  <h3 data-lang-key="video1_title">GhostESP Overview</h3>
+                  <p data-lang-key="video1_desc">
                     Comprehensive overview of GhostESP features including WebUI,
                     Evil Portal, Rave mode, and network printing capabilities
                   </p>
@@ -997,8 +1102,8 @@
                   ></iframe>
                 </div>
                 <div class="video-info">
-                  <h3>Deauth Demo</h3>
-                  <p>
+                  <h3 data-lang-key="video2_title">Deauth Demo</h3>
+                  <p data-lang-key="video2_desc">
                     Demonstration of GhostESP and Flipper Zero deauthenticating
                     a spy camera from a 2.4GHz WiFi network
                   </p>
@@ -1015,8 +1120,8 @@
                   ></iframe>
                 </div>
                 <div class="video-info">
-                  <h3>Promo Trailer</h3>
-                  <p>Short promotional trailer showcasing GhostESP features</p>
+                  <h3 data-lang-key="video3_title">Promo Trailer</h3>
+                  <p data-lang-key="video3_desc">Short promotional trailer showcasing GhostESP features</p>
                 </div>
               </div>
 
@@ -1030,8 +1135,8 @@
                   ></iframe>
                 </div>
                 <div class="video-info">
-                  <h3>T-Watch S3 Tutorial</h3>
-                  <p>
+                  <h3 data-lang-key="video4_title">T-Watch S3 Tutorial</h3>
+                  <p data-lang-key="video4_desc">
                     How to get the T-Watch S3 into bootloader mode and flash
                     GhostESP
                   </p>
@@ -1048,8 +1153,8 @@
                   ></iframe>
                 </div>
                 <div class="video-info">
-                  <h3>Mobile Flashing Tutorial</h3>
-                  <p>
+                  <h3 data-lang-key="video5_title">Mobile Flashing Tutorial</h3>
+                  <p data-lang-key="video5_desc">
                     Flash Ghost ESP on ESP32-C3 SuperMini using just your phone
                   </p>
                 </div>
@@ -1064,32 +1169,32 @@
         class="compatibility"
         aria-labelledby="compatibility-heading"
       >
-        <h2 id="compatibility-heading" data-aos="fade-up">
+        <h2 id="compatibility-heading" data-aos="fade-up" data-lang-key="compatibility_heading">
           Supported Hardware
         </h2>
         <div class="board-grid">
           <div class="board-category" data-aos="fade-up" data-aos-delay="100">
-            <h3><i data-feather="monitor"></i> Display-Enabled Boards</h3>
+            <h3 data-lang-key="compatibility_display_heading"><i data-feather="monitor"></i> Display-Enabled Boards</h3>
             <div class="board-cards">
               <div class="board-card">
-                <h4>CYD Boards</h4>
+                <h4 data-lang-key="compatibility_cyd_title">CYD Boards</h4>
                 <ul>
                   <li>CYD2USB (USB-C)</li>
                   <li>CYDMicroUSB</li>
                   <li>CYDDualUSB</li>
-                  <li><small>Compatible with 2.8" ESP32-2432S028</small></li>
+                  <li><small data-lang-key="compatibility_cyd_note">Compatible with 2.8" ESP32-2432S028</small></li>
                 </ul>
               </div>
               <div class="board-card">
-                <h4>7-Inch Displays</h4>
+                <h4 data-lang-key="compatibility_7inch_title">7-Inch Displays</h4>
                 <ul>
                   <li>Waveshare LCD (800x480)</li>
                   <li>Crowtech LCD (800x480)</li>
-                  <li><small>Both using ESP32-S3</small></li>
+                  <li><small data-lang-key="compatibility_7inch_note">Both using ESP32-S3</small></li>
                 </ul>
               </div>
               <div class="board-card">
-                <h4>Other Display Boards</h4>
+                <h4 data-lang-key="compatibility_other_display_title">Other Display Boards</h4>
                 <ul>
                   <li>ESP32-S3-Cardputer</li>
                   <li>MarauderV6 & AwokDual</li>
@@ -1100,10 +1205,10 @@
           </div>
 
           <div class="board-category" data-aos="fade-up" data-aos-delay="200">
-            <h3><i data-feather="cpu"></i> Generic Boards</h3>
+            <h3 data-lang-key="compatibility_generic_heading"><i data-feather="cpu"></i> Generic Boards</h3>
             <div class="board-cards">
               <div class="board-card">
-                <h4>ESP32 Models</h4>
+                <h4 data-lang-key="compatibility_esp_models_title">ESP32 Models</h4>
                 <ul>
                   <li>ESP32 Wroom</li>
                   <li>ESP32-S2</li>
@@ -1113,15 +1218,16 @@
                 </ul>
               </div>
               <div class="board-card">
-                <h4>Custom Builds</h4>
+                <h4 data-lang-key="compatibility_custom_builds_title">Custom Builds</h4>
                 <ul>
-                  <li>Create your own build</li>
-                  <li>Customize features (more coming soon!)</li>
-                  <li>Build for your specific hardware</li>
+                  <li data-lang-key="compatibility_custom_item1">Create your own build</li>
+                  <li data-lang-key="compatibility_custom_item2">Customize features (more coming soon!)</li>
+                  <li data-lang-key="compatibility_custom_item3">Build for your specific hardware</li>
                   <li>
                     <a
                       href="https://github.com/jaylikesbunda/Ghost_ESP/wiki/Custom-Build-Guide"
                       target="_blank"
+                      data-lang-key="compatibility_custom_link"
                       >View Build Guide →</a
                     >
                   </li>
@@ -1137,59 +1243,59 @@
         class="getting-started"
         aria-labelledby="getting-started-heading"
       >
-        <h2 id="getting-started-heading" data-aos="fade-up">Getting Started</h2>
+        <h2 id="getting-started-heading" data-aos="fade-up" data-lang-key="getting_started_heading">Getting Started</h2>
 
         <div class="steps-container">
           <div class="step" data-aos="fade-up" data-aos-delay="100">
             <div class="step-number">1</div>
-            <h3>Flash Your Device</h3>
-            <p>
+            <h3 data-lang-key="getting_started_step1_title">Flash Your Device</h3>
+            <p data-lang-key="getting_started_step1_desc">
               Visit the
               <a href="https://espressoflash.com/" target="_blank"
                 >Espresso Flash Web Flasher</a
               >
             </p>
             <div class="step-details">
-              <h4>Bootloader Mode:</h4>
+              <h4 data-lang-key="getting_started_step1_bootloader">Bootloader Mode:</h4>
               <ol>
-                <li>Hold BOOT button</li>
-                <li>Connect USB cable</li>
-                <li>Release BOOT after connection</li>
+                <li data-lang-key="getting_started_step1_boot1">Hold BOOT button</li>
+                <li data-lang-key="getting_started_step1_boot2">Connect USB cable</li>
+                <li data-lang-key="getting_started_step1_boot3">Release BOOT after connection</li>
               </ol>
             </div>
           </div>
 
           <div class="step" data-aos="fade-up" data-aos-delay="200">
             <div class="step-number">2</div>
-            <h3>Basic Commands</h3>
+            <h3 data-lang-key="getting_started_step2_title">Basic Commands</h3>
             <div class="step-details">
               <ul class="command-list">
-                <li><code>scanap</code> - Scan WiFi networks</li>
-                <li><code>list -a</code> - List found networks</li>
-                <li><code>scanlocal</code> - Scan local network</li>
-                <li><code>help</code> - Show all commands</li>
+                <li data-lang-key="getting_started_step2_cmd1"><code>scanap</code> - Scan WiFi networks</li>
+                <li data-lang-key="getting_started_step2_cmd2"><code>list -a</code> - List found networks</li>
+                <li data-lang-key="getting_started_step2_cmd3"><code>scanlocal</code> - Scan local network</li>
+                <li data-lang-key="getting_started_step2_cmd4"><code>help</code> - Show all commands</li>
               </ul>
             </div>
           </div>
 
           <div class="step" data-aos="fade-up" data-aos-delay="300">
             <div class="step-number">3</div>
-            <h3>Touch Navigation</h3>
+            <h3 data-lang-key="getting_started_step3_title">Touch Navigation</h3>
             <div class="step-details">
               <ul>
-                <li>Top Half: Move Up</li>
-                <li>Bottom Half: Move Down</li>
-                <li>Middle: Select Item</li>
-                <li>Main Menu: Direct Touch</li>
+                <li data-lang-key="getting_started_step3_nav1">Top Half: Move Up</li>
+                <li data-lang-key="getting_started_step3_nav2">Bottom Half: Move Down</li>
+                <li data-lang-key="getting_started_step3_nav3">Middle: Select Item</li>
+                <li data-lang-key="getting_started_step3_nav4">Main Menu: Direct Touch</li>
               </ul>
             </div>
           </div>
 
           <div class="step" data-aos="fade-up" data-aos-delay="400">
             <div class="step-number">4</div>
-            <h3>Need Help?</h3>
+            <h3 data-lang-key="getting_started_step4_title">Need Help?</h3>
             <div class="step-details">
-              <p>
+              <p data-lang-key="getting_started_step4_desc">
                 Join our
                 <a href="https://discord.gg/5cyNmUMgwh" target="_blank"
                   >Discord Community</a
@@ -1197,10 +1303,10 @@
                 for:
               </p>
               <ul>
-                <li>Live Support</li>
-                <li>Troubleshooting</li>
-                <li>Latest Updates</li>
-                <li>Community Tips</li>
+                <li data-lang-key="getting_started_step4_help1">Live Support</li>
+                <li data-lang-key="getting_started_step4_help2">Troubleshooting</li>
+                <li data-lang-key="getting_started_step4_help3">Latest Updates</li>
+                <li data-lang-key="getting_started_step4_help4">Community Tips</li>
               </ul>
             </div>
           </div>
@@ -1212,14 +1318,14 @@
         class="flipper-app"
         aria-labelledby="flipper-app-heading"
       >
-        <h2 id="flipper-app-heading" data-aos="fade-up">Flipper Zero App</h2>
+        <h2 id="flipper-app-heading" data-aos="fade-up" data-lang-key="flipper_heading">Flipper Zero App</h2>
         <div class="flipper-content">
           <div class="flipper-card" data-aos="fade-up">
             <div class="flipper-icon">
               <i data-feather="smartphone"></i>
             </div>
-            <h3>Ghost ESP for Flipper Zero</h3>
-            <p>
+            <h3 data-lang-key="flipper_card_title">Ghost ESP for Flipper Zero</h3>
+            <p data-lang-key="flipper_card_desc">
               Control your Ghost ESP directly from your Flipper Zero with our
               official companion app.
             </p>
@@ -1229,23 +1335,23 @@
                 class="download-btn primary-btn"
               >
                 <i data-feather="download"></i>
-                Download Latest FAP
+                <span data-lang-key="flipper_download_fap">Download Latest FAP</span>
               </a>
               <a
                 href="https://github.com/jaylikesbunda/ghost_esp_app"
                 class="download-btn secondary-btn"
               >
                 <i data-feather="github"></i>
-                View Source
+                <span data-lang-key="flipper_view_source">View Source</span>
               </a>
             </div>
             <div class="app-features">
-              <h4>App Features:</h4>
+              <h4 data-lang-key="flipper_app_features_title">App Features:</h4>
               <ul>
-                <li><i data-feather="wifi"></i> WiFi Operations</li>
-                <li><i data-feather="bluetooth"></i> BLE Controls</li>
-                <li><i data-feather="map-pin"></i> GPS Functions</li>
-                <li><i data-feather="settings"></i> Device Configuration</li>
+                <li data-lang-key="flipper_feature1"><i data-feather="wifi"></i> WiFi Operations</li>
+                <li data-lang-key="flipper_feature2"><i data-feather="bluetooth"></i> BLE Controls</li>
+                <li data-lang-key="flipper_feature3"><i data-feather="map-pin"></i> GPS Functions</li>
+                <li data-lang-key="flipper_feature4"><i data-feather="settings"></i> Device Configuration</li>
               </ul>
             </div>
           </div>
@@ -1262,20 +1368,20 @@
             />
           </div>
           <div class="merch-content">
-            <h3>Limited Official Store</h3>
-            <p>Exclusive Ghost ESP apparel and accessories</p>
+            <h3 data-lang-key="merch_heading">Limited Official Store</h3>
+            <p data-lang-key="merch_desc">Exclusive Ghost ESP apparel and accessories</p>
             <div class="merch-features">
               <div class="feature">
                 <i class="fas fa-check-circle"></i>
-                <span>Quality Gear</span>
+                <span data-lang-key="merch_feature1">Quality Gear</span>
               </div>
               <div class="feature">
                 <i class="fas fa-box"></i>
-                <span>Worldwide Shipping</span>
+                <span data-lang-key="merch_feature2">Worldwide Shipping</span>
               </div>
               <div class="feature">
                 <i class="fas fa-lock"></i>
-                <span>Secure Payment</span>
+                <span data-lang-key="merch_feature3">Secure Payment</span>
               </div>
             </div>
             <a
@@ -1284,7 +1390,7 @@
               class="shop-btn primary"
             >
               <i class="fas fa-store"></i>
-              Visit Store
+              <span data-lang-key="merch_visit_store">Visit Store</span>
             </a>
           </div>
         </div>
@@ -1298,6 +1404,7 @@
           href="https://github.com/jaylikesbunda"
           target="_blank"
           class="credit-link"
+          data-lang-key="footer_developed_by"
         >
           Site Developed by Jay Candel <i class="fas fa-heart"></i>
         </a>
@@ -1307,7 +1414,7 @@
           class="support-btn"
         >
           <i class="fas fa-bolt"></i>
-          Support the Project
+          <span data-lang-key="footer_support">Support the Project</span>
         </a>
       </div>
     </footer>
