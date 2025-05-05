@@ -171,6 +171,7 @@ body::before {
 
 .github-btn,
 .discord-btn,
+.instagram-btn,
 .theme-btn {
   display: flex;
   align-items: center;
@@ -182,18 +183,21 @@ body::before {
 }
 
 .github-btn,
-.discord-btn {
+.discord-btn,
+.instagram-btn {
   background: rgba(255, 255, 255, 0.05); /* Use subtle white background */
 }
 
 .github-btn:hover,
-.discord-btn:hover {
+.discord-btn:hover,
+.instagram-btn:hover {
   background: rgba(255, 255, 255, 0.1); /* Use subtle white background */
   transform: translateY(-2px);
 }
 
 .github-btn::after,
 .discord-btn::after,
+.instagram-btn::after,
 .theme-btn::after {
   display: none !important;
 }
@@ -289,6 +293,7 @@ body::before {
 
   .github-btn,
   .discord-btn,
+  .instagram-btn,
   .theme-btn {
     width: 100%;
     height: auto;
@@ -299,6 +304,7 @@ body::before {
 
   .github-btn i,
   .discord-btn i,
+  .instagram-btn i,
   .theme-btn i {
     width: 20px;
     height: 20px;
@@ -1890,6 +1896,7 @@ body.christmas-theme::before {
 
   .github-btn,
   .discord-btn,
+  .instagram-btn,
   .theme-btn {
     width: 100%;
     height: auto;
@@ -1900,6 +1907,7 @@ body.christmas-theme::before {
 
   .github-btn i,
   .discord-btn i,
+  .instagram-btn i,
   .theme-btn i {
     width: 20px;
     height: 20px;
@@ -1959,6 +1967,7 @@ body.menu-open {
   /* Update icon buttons in mobile menu */
   .github-btn,
   .discord-btn,
+  .instagram-btn,
   .theme-btn {
     width: 100%;
     height: auto;
@@ -1971,12 +1980,14 @@ body.menu-open {
 
   .github-btn:hover,
   .discord-btn:hover,
+  .instagram-btn:hover,
   .theme-btn:hover {
     color: var(--text-primary);
   }
 
   .github-btn i,
   .discord-btn i,
+  .instagram-btn i,
   .theme-btn i {
     width: 20px;
     height: 20px;
@@ -3141,6 +3152,7 @@ body.menu-open {
   /* Update icon buttons in mobile menu */
   .github-btn,
   .discord-btn,
+  .instagram-btn,
   .theme-btn {
     width: 100%;
     height: auto;
@@ -3153,12 +3165,14 @@ body.menu-open {
 
   .github-btn:hover,
   .discord-btn:hover,
+  .instagram-btn:hover,
   .theme-btn:hover {
     color: var(--text-primary);
   }
 
   .github-btn i,
   .discord-btn i,
+  .instagram-btn i,
   .theme-btn i {
     width: 20px;
     height: 20px;
@@ -3272,6 +3286,7 @@ body.menu-open {
 
   .github-btn,
   .discord-btn,
+  .instagram-btn,
   .theme-btn {
     width: 100%;
     height: auto;
@@ -3282,6 +3297,7 @@ body.menu-open {
 
   .github-btn i,
   .discord-btn i,
+  .instagram-btn i,
   .theme-btn i {
     width: 20px;
     height: 20px;
@@ -3341,6 +3357,7 @@ body.menu-open {
   /* Update icon buttons in mobile menu */
   .github-btn,
   .discord-btn,
+  .instagram-btn,
   .theme-btn {
     width: 100%;
     height: auto;
@@ -3353,12 +3370,14 @@ body.menu-open {
 
   .github-btn:hover,
   .discord-btn:hover,
+  .instagram-btn:hover,
   .theme-btn:hover {
     color: var(--text-primary);
   }
 
   .github-btn i,
   .discord-btn i,
+  .instagram-btn i,
   .theme-btn i {
     width: 20px;
     height: 20px;
@@ -4523,6 +4542,7 @@ body.menu-open {
   /* Update icon buttons in mobile menu */
   .github-btn,
   .discord-btn,
+  .instagram-btn,
   .theme-btn {
     width: 100%;
     height: auto;
@@ -4535,12 +4555,14 @@ body.menu-open {
 
   .github-btn:hover,
   .discord-btn:hover,
+  .instagram-btn:hover,
   .theme-btn:hover {
     color: var(--text-primary);
   }
 
   .github-btn i,
   .discord-btn i,
+  .instagram-btn i,
   .theme-btn i {
     width: 20px;
     height: 20px;
@@ -4654,6 +4676,7 @@ body.menu-open {
 
   .github-btn,
   .discord-btn,
+  .instagram-btn,
   .theme-btn {
     width: 100%;
     height: auto;
@@ -4664,6 +4687,7 @@ body.menu-open {
 
   .github-btn i,
   .discord-btn i,
+  .instagram-btn i,
   .theme-btn i {
     width: 20px;
     height: 20px;
@@ -4723,6 +4747,7 @@ body.menu-open {
   /* Update icon buttons in mobile menu */
   .github-btn,
   .discord-btn,
+  .instagram-btn,
   .theme-btn {
     width: 100%;
     height: auto;
@@ -4735,12 +4760,14 @@ body.menu-open {
 
   .github-btn:hover,
   .discord-btn:hover,
+  .instagram-btn:hover,
   .theme-btn:hover {
     color: var(--text-primary);
   }
 
   .github-btn i,
   .discord-btn i,
+  .instagram-btn i,
   .theme-btn i {
     width: 20px;
     height: 20px;
