@@ -1,19 +1,20 @@
 :root {
-  --primary-color: #ff6b00;
-  --secondary-color: #cc5500;
-  --accent-color: #9c27b0;
-  --background-color: #0a0a0f;
-  --surface-color: #12121a;
+  --primary-color: #ffffff;
+  --secondary-color: #bfbfbf;
+  --accent-color: #888888;
+  --background-color: #000000;
+  --surface-color: #0d0d0d;
   --text-primary: #ffffff;
   --text-secondary: rgba(255, 255, 255, 0.7);
-  --border-color: rgba(255, 107, 0, 0.2);
-  --console-bg: rgba(18, 18, 26, 0.95);
+  --border-color: rgba(255, 255, 255, 0.2);
+  --console-bg: rgba(18, 18, 18, 0.95);
   --console-text: #d4d4d4;
-  --console-command: #ff6b00;
+  --console-command: #ffffff;
   --console-error: #ff4444;
-  --console-timestamp: #9c27b0;
+  --console-timestamp: #ffffff;
   --success-color: #00cc00;
   --error-color: #ff1a1a;
+  --pink-color: #f7a8b8;
   --font-mono: "JetBrains Mono", "Share Tech Mono", monospace;
   --font-body: "Chakra Petch", -apple-system, BlinkMacSystemFont, "Segoe UI",
     Roboto, sans-serif;
@@ -51,15 +52,15 @@ body::before {
   height: 100%;
   background: radial-gradient(
       circle at 20% 20%,
-      rgba(255, 107, 0, 0.15),
+      rgba(255, 255, 255, 0.05),
       transparent 40%
     ),
     radial-gradient(
       circle at 80% 80%,
-      rgba(156, 39, 176, 0.15),
+      rgba(255, 255, 255, 0.05),
       transparent 40%
     ),
-    radial-gradient(circle at 50% 50%, rgba(204, 85, 0, 0.1), transparent 60%);
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.03), transparent 60%);
   z-index: -1;
   pointer-events: none;
 }
@@ -72,6 +73,8 @@ body::before {
   flex: 1;
   position: relative;
   z-index: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .header {
@@ -103,7 +106,7 @@ h1::before {
   color: var(--primary-color);
   font-family: var(--font-mono);
   font-weight: 500;
-  text-shadow: 0 0 10px rgba(255, 107, 0, 0.5);
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }
 
 .console {
@@ -111,8 +114,9 @@ h1::before {
   border-radius: 12px;
   padding: 1rem;
   font-family: var(--font-mono);
-  height: calc(100vh - 300px);
-  min-height: 400px;
+  flex: 1;
+  min-height: 0;
+  max-height: calc(100vh - 20rem);
   overflow-y: auto;
   margin-bottom: 1rem;
   border: 1px solid var(--border-color);
@@ -180,12 +184,13 @@ h1::before {
 .console-output .command {
   color: var(--console-command);
   font-weight: 500;
-  text-shadow: 0 0 8px rgba(255, 107, 0, 0.3);
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
   display: block;
   padding: 0.25rem 0;
   border-left: 2px solid var(--console-command);
   padding-left: 0.5rem;
   margin: 0.25rem 0;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .console-output .help-header {
@@ -202,7 +207,7 @@ h1::before {
   font-size: 1.1em;
   display: block;
   padding: 0.5rem 0 0.25rem 0;
-  border-bottom: 1px solid rgba(255, 107, 0, 0.2);
+  border-bottom: 1px solid var(--border-color);
   margin-top: 0.5rem;
 }
 
@@ -244,13 +249,13 @@ h1::before {
 }
 
 .console-output .info {
-  color: #00bcd4;
+  color: var(--pink-color);
   display: block;
   padding: 0.25rem 0;
-  border-left: 2px solid #00bcd4;
+  border-left: 2px solid var(--pink-color);
   padding-left: 0.5rem;
   margin: 0.25rem 0;
-  background: rgba(0, 188, 212, 0.1);
+  background: rgba(247, 168, 184, 0.1);
 }
 
 .console-output .debug {
@@ -285,7 +290,7 @@ h1::before {
 .console-output .timestamp {
   color: var(--console-timestamp);
   opacity: 0.9;
-  text-shadow: 0 0 8px rgba(156, 39, 176, 0.3);
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
   display: inline-block;
   padding-right: 0.5rem;
   font-weight: 500;
@@ -352,7 +357,7 @@ h1::before {
 .serial-input:focus {
   outline: none;
   border-color: var(--primary-color);
-  box-shadow: 0 0 0 2px rgba(255, 107, 0, 0.25);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.25);
 }
 
 .serial-input:disabled {
@@ -381,10 +386,10 @@ h1::before {
 }
 
 .btn:hover:not(:disabled) {
-  background: rgba(255, 107, 0, 0.1);
+  background: rgba(255, 255, 255, 0.1);
   border-color: var(--primary-color);
   transform: translateY(-1px);
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.25);
 }
 
 .btn:active:not(:disabled) {
@@ -400,17 +405,19 @@ h1::before {
 .btn-primary {
   background: var(--primary-color);
   border-color: var(--secondary-color);
+  color: var(--background-color);
 }
 
 .btn-primary:hover:not(:disabled) {
   background: var(--secondary-color);
   border-color: var(--primary-color);
+  color: var(--background-color) !important;
 }
 
 select.btn {
   appearance: none;
   padding-right: 2.5rem;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23ff6b00' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 0.75rem center;
   background-size: 1em;
@@ -451,13 +458,13 @@ select.btn {
 }
 
 .console::-webkit-scrollbar-thumb {
-  background: rgba(255, 107, 0, 0.3);
+  background: rgba(255, 255, 255, 0.3);
   border-radius: 4px;
   border: 2px solid var(--surface-color);
 }
 
 .console::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 107, 0, 0.5);
+  background: rgba(255, 255, 255, 0.5);
 }
 
 /* Dialog Styling */
@@ -537,7 +544,9 @@ select.btn {
   }
 
   .console {
-    height: calc(100vh - 400px);
+    flex: 1;
+    min-height: 0;
+    max-height: calc(100vh - 22rem);
   }
 
   .input-group {
@@ -577,11 +586,11 @@ select.btn {
 }
 
 .command-flag {
-  color: #FFB74D;
+  color: var(--pink-color);
 }
 
 .flag-description {
-  color: #BDBDBD;
+  color: #e2b4de;
 }
 
 .section-header {
@@ -646,4 +655,79 @@ select.btn {
 
 .ap-company {
   color: #9575CD;  /* Soft purple */
+}
+
+.footer {
+  text-align: center;
+  padding: 1rem 0rem;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.footer a {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: 100;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
+/* Footer close button */
+.footer-close {
+  position: relative;
+  transform: translateX(-50%);
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.footer-close:hover {
+  color: var(--primary-color);
+}
+
+/* Connect button specific styles */
+#connectButton {
+  background: var(--surface-color);
+  border: 1px solid var(--border-color);
+  color: var(--primary-color);
+}
+
+#connectButton:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--primary-color);
+}
+
+#connectButton[data-tooltip] {
+  position: relative;
+}
+
+#connectButton[data-tooltip]::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 120%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--surface-color);
+  color: var(--text-primary);
+  padding: 0.4rem 0.6rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  white-space: nowrap;
+  font-size: 0.75rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  z-index: 100;
+}
+
+#connectButton[data-tooltip]:hover::after {
+  opacity: 1;
 }

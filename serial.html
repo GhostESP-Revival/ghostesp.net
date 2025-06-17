@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#0a0a0f" />
-    <title>Web Serial Console</title>
+    <title>GESP: Revival | Serial Console</title>
 
     <!-- Google Fonts -->
     <link
@@ -49,6 +49,7 @@
         <div class="control-panel">
           <button class="btn btn-primary" id="connectButton">Connect</button>
           <button class="btn" id="clearButton">Clear Console</button>
+          <button class="btn" id="exportButton">Export Log</button>
           <select class="btn" id="baudSelect">
             <option value="9600">9600 baud</option>
             <option value="115200" selected>115200 baud</option>
@@ -102,6 +103,17 @@
       </div>
     </div>
 
+    <footer class="footer">
+      <button id="footerClose" class="footer-close">x</button>
+      <a href="https://ko-fi.com/jaylikesbunda" target="_blank" rel="noopener noreferrer">if you enjoy using this please consider supporting me on ko-fi :)</a>
+    </footer>
+
     <script src="js/serial.js"></script>
+    <script>
+      document.getElementById("footerClose").addEventListener("click", () => {
+        const footer = document.querySelector(".footer");
+        if (footer) footer.style.display = "none";
+      });
+    </script>
   </body>
 </html>

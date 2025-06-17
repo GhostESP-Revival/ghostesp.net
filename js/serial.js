@@ -29,6 +29,7 @@ class SerialConsole {
     this.connectionDot = document.getElementById("connectionDot");
     this.browserDialog = document.getElementById("browserDialog");
     this.permissionDialog = document.getElementById("permissionDialog");
+    this.exportButton = document.getElementById("exportButton");
     this.updateBaudRateDisplay();
   }
 
@@ -36,7 +37,13 @@ class SerialConsole {
     if (!("serial" in navigator)) {
       this.browserDialog.style.display = "flex";
       this.connectButton.disabled = true;
+      this.connectButton.setAttribute(
+        "data-tooltip",
+        "web serial not supported in this browser"
+      );
       return false;
+    } else {
+      this.connectButton.removeAttribute("data-tooltip");
     }
     return true;
   }
@@ -45,6 +52,7 @@ class SerialConsole {
     this.connectButton.addEventListener("click", () => this.toggleConnection());
     this.clearButton.addEventListener("click", () => this.clearConsole());
     this.sendButton.addEventListener("click", () => this.sendData());
+    this.exportButton.addEventListener("click", () => this.exportLog());
     this.serialInput.addEventListener("keydown", (e) => {
       if (e.key === "Enter") {
         this.sendData();
@@ -448,6 +456,24 @@ class SerialConsole {
     setTimeout(() => {
       this.serialInput.selectionStart = this.serialInput.value.length;
       this.serialInput.selectionEnd = this.serialInput.value.length;
+    }, 0);
+  }
+
+  exportLog() {
+    const content = this.output.innerText || "";
+    if (!content.trim()) {
+      return;
+    }
+    const blob = new Blob([content], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `serial_log_${Date.now()}.txt`;
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(() => {
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
     }, 0);
   }
 }
