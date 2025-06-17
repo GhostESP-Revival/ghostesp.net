@@ -70,6 +70,9 @@ function initNonCriticalFeatures() {
 
 // Split video lazy loading into its own function
 function initVideoLazyLoading() {
+  // Allow iframes inside the horizontally-scrollable carousel to be observed
+  const scrollWrapper = document.querySelector(".video-scroll-wrapper");
+
   const videoObserver = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
@@ -83,10 +86,9 @@ function initVideoLazyLoading() {
         }
       });
     },
-    {
-      rootMargin: "50px 0px",
-      threshold: 0.1,
-    }
+    scrollWrapper
+      ? { root: scrollWrapper, threshold: 0.25 }
+      : { rootMargin: "50px 0px", threshold: 0.25 }
   );
 
   document
@@ -1039,23 +1041,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
   }
-
-  // Video lazy loading using Intersection Observer
-  const videos = document.querySelectorAll('iframe[data-src]');
-  const videoObserver = new IntersectionObserver((entries, observer) => {
-      entries.forEach(entry => {
-          if (entry.isIntersecting) {
-              const iframe = entry.target;
-              iframe.src = iframe.dataset.src;
-              iframe.removeAttribute('data-src'); // Optional: remove data-src once loaded
-              observer.unobserve(iframe); // Stop observing once loaded
-          }
-      });
-  }, { rootMargin: '100px' }); // Load 100px before it enters viewport
-
-  videos.forEach(video => {
-      videoObserver.observe(video);
-  });
 
   // Existing video scroll functionality (ensure it's placed after DOM elements are defined)
   const scrollWrapper = document.querySelector(".video-scroll-wrapper");
