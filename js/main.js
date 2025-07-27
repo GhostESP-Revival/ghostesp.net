@@ -1746,6 +1746,7 @@ const translations = {
   en: {
     nav_features: "Features",
     nav_compatibility: "Compatibility",
+    nav_flash: "Flash",
     nav_get_started: "Get Started",
     nav_flipper_app: "Flipper App",
     nav_serial_console: "Serial Console",
@@ -1843,6 +1844,7 @@ const translations = {
   de: {
     nav_features: "Funktionen",
     nav_compatibility: "Kompatibilität",
+    nav_flash: "Flash",
     nav_get_started: "Loslegen",
     nav_flipper_app: "Flipper App",
     nav_serial_console: "Serielle Konsole",
