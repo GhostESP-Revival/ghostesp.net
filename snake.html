@@ -129,6 +129,58 @@
         top: 0;
       }
 
+      .nav-content {
+        max-width: 1400px;
+        width: 100%;
+        padding: 0 2rem;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 70px;
+      }
+
+      .logo {
+        width: 60px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .logo img {
+        width: 60px;
+        height: 60px;
+        object-fit: contain;
+        will-change: transform;
+      }
+
+      @media screen and (orientation: portrait) and (min-width: 769px) {
+        .nav-content {
+          height: 50px;
+          padding: 0 0.5rem;
+        }
+        .logo {
+          width: 35px;
+          height: 35px;
+        }
+        .logo img {
+          width: 35px;
+          height: 35px;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .logo {
+          width: 40px;
+          height: 40px;
+        }
+        .logo img {
+          width: 40px;
+          height: 40px;
+        }
+      }
+
       /* Update snake appearance */
       .ghost-segment {
         filter: drop-shadow(0 0 5px rgba(255, 107, 0, 0.5));
@@ -274,6 +326,93 @@
         color: var(--text-primary);
       }
 
+      /* Social buttons and language dropdown styles copied from main site */
+      .social-btn {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        font-weight: 500;
+        transition: all 0.2s ease;
+        color: var(--text-secondary);
+        background: rgba(255, 255, 255, 0.03);
+      }
+
+      .social-btn i {
+        font-size: 1.25rem;
+      }
+
+      .social-btn:hover {
+        color: var(--text-primary);
+        transform: translateY(-2px);
+      }
+
+      .language-selector {
+        position: relative;
+        display: inline-block;
+      }
+
+      .language-selector .theme-btn {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        cursor: pointer;
+        background: none;
+        border: none;
+        color: var(--text-primary);
+        font-family: inherit;
+        font-size: inherit;
+      }
+
+      .language-selector .lang-arrow {
+        width: 16px;
+        height: 16px;
+        transition: transform 0.2s ease;
+      }
+
+      .language-selector .theme-btn.open .lang-arrow {
+        transform: rotate(180deg);
+      }
+
+      .language-dropdown {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: rgba(30, 30, 30, 0.95);
+        list-style: none;
+        padding: 0.5rem 0;
+        margin: 0.5rem 0 0 0;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        z-index: 1001;
+        min-width: 100px;
+      }
+
+      .language-dropdown.show {
+        display: block;
+      }
+
+      .language-dropdown li button {
+        background: none;
+        border: none;
+        color: #e0e0e0;
+        padding: 0.5rem 1rem;
+        width: 100%;
+        text-align: left;
+        cursor: pointer;
+        font-family: inherit;
+        font-size: 0.9rem;
+        transition: background-color 0.2s ease;
+      }
+
+      .language-dropdown li button:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+        color: #fff;
+      }
+
       @media (min-width: 769px) {
         .mobile-menu-btn {
           display: none;
@@ -284,6 +423,13 @@
         }
       }
     </style>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      media="print"
+      onload="this.media='all'"
+    />
 
     <script src="https://unpkg.com/feather-icons"></script>
 
@@ -300,53 +446,83 @@
     />
   </head>
   <body>
-    <!-- Include existing navbar -->
     <nav class="navbar" role="navigation" aria-label="Main navigation">
       <div class="nav-content">
         <div class="logo">
-          <img src="images/ghost-esp-logo.png" alt="Ghost ESP Logo" />
+          <img 
+            src="images/ghostespdotnet.png"
+            alt="Ghost ESP Logo" 
+            width="320"
+            height="320"
+            fetchpriority="high"
+            decoding="sync"
+            loading="eager"
+            style="transform: scale(1.8) translateZ(0);"
+          />
         </div>
         <button class="mobile-menu-btn" aria-label="Toggle menu">
-          <i data-feather="menu"></i>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
         </button>
+        <div class="menu-overlay"></div>
         <ul class="nav-links">
-          <li><a href="index.html#features">Features</a></li>
-          <li><a href="index.html#compatibility">Compatibility</a></li>
-          <li><a href="index.html#getting-started">Get Started</a></li>
-          <li><a href="index.html#flipper-app">Flipper App</a></li>
-          <li><a href="serial.html">Serial Console</a></li>
+          <li><a href="#features" data-lang-key="nav_features">Features</a></li>
+          <li><a href="https://espressoflash.com" target="_blank" data-lang-key="nav_flash">Flash</a></li>
+          <li><a href="#getting-started" data-lang-key="nav_get_started">Get Started</a></li>
+          <li><a href="#flipper-app" data-lang-key="nav_flipper_app">Flipper App</a></li>
+          <li><a href="serial.html" data-lang-key="nav_serial_console">Serial Console</a></li>
+          <li><a href="https://shop.ghostesp.net" target="_blank" data-lang-key="nav_merch">Merch</a></li>
+          <li>
+            <div class="language-selector">
+              <button id="language-toggle-btn" class="theme-btn">
+                <i class="fas fa-globe"></i>
+                <span class="menu-label" data-lang-key="nav_language">Language</span>
+                <i data-feather="chevron-down" class="lang-arrow"></i>
+              </button>
+              <ul id="language-dropdown" class="language-dropdown">
+                <li><button data-lang="en">English</button></li>
+                <li><button data-lang="de">Deutsch</button></li>
+              </ul>
+            </div>
+          </li>
           <li>
             <a href="#" id="theme-toggle" class="theme-btn">
-              <i data-feather="gift"></i>
+              <i class="fas fa-ghost"></i>
               <span class="menu-label">Theme</span>
             </a>
           </li>
           <li>
             <a
-              href="https://discord.gg/PkdjxqYKe4"
+              href="https://discord.gg/5cyNmUMgwh"
               target="_blank"
-              class="discord-btn"
+              class="social-btn discord-btn"
             >
-              <i data-feather="message-circle"></i>
+              <i class="fab fa-discord"></i>
               <span class="menu-label">Discord</span>
             </a>
           </li>
           <li>
             <a
-              href="https://github.com/Spooks4576/Ghost_ESP"
-              class="github-btn"
+              href="https://github.com/jaylikesbunda/Ghost_ESP"
+              class="social-btn github-btn"
               target="_blank"
             >
-              <i data-feather="github"></i>
+              <i class="fab fa-github"></i>
               <span class="menu-label">GitHub</span>
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://instagram.com/ghostesprevival"
+              target="_blank"
+              class="social-btn instagram-btn"
+            >
+              <i class="fab fa-instagram"></i>
+              <span class="menu-label">Instagram</span>
             </a>
           </li>
         </ul>
       </div>
     </nav>
-
-    <!-- Add menu overlay -->
-    <div class="menu-overlay"></div>
 
     <div class="game-container">
       <div class="score-display">
