@@ -8,3 +8,23 @@
   to = "/releases.html"
   # Status 200 means serve the file, not an HTTP redirect
   status = 200 
+
+[[redirects]]
+  from = "/boards"
+  to = "/boards.html"
+  status = 200
+
+[[redirects]]
+  from = "/boards/"
+  to = "/boards.html"
+  status = 200
+
+[[redirects]]
+  from = "/roadmap"
+  to = "/roadmap.html"
+  status = 200
+
+[[redirects]]
+  from = "/roadmap/"
+  to = "/roadmap.html"
+  status = 200

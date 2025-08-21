@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#121212" />
+    <meta http-equiv="Content-Security-Policy" content="
+        default-src 'self';
+        script-src 'self' 'unsafe-inline' https://unpkg.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net;
+        style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com https://cdnjs.cloudflare.com;
+        img-src 'self' https://ghostesp.net https://ae-pic-a1.aliexpress-media.com https://static.wixstatic.com https://4441fe46.delivery.rocketcdn.me data:;
+        font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com;
+        frame-src https://www.youtube.com;
+        connect-src 'self' https://cdn.spookytools.com https://api.github.com https://play.google.com https://googleads.g.doubleclick.net https://www.google-analytics.com;
+        object-src 'none';
+        base-uri 'self';
+        form-action 'self';
+        upgrade-insecure-requests;
+    " />
+    <title>Ghost ESP - Roadmap</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://unpkg.com" />
+    <link rel="preload" href="css/style.css" as="style" />
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Share+Tech+Mono&family=Chakra+Petch:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" media="print" onload="this.media='all'" />
+    <link rel="stylesheet" href="css/style.css" fetchpriority="high" />
+    <script src="https://unpkg.com/feather-icons" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" media="print" onload="this.media='all'" />
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico" />
+    <link rel="manifest" href="images/site.webmanifest" />
+
+    <style>
+      .navbar { background: rgba(18, 18, 18, 0.8); position: fixed; width: 100%; z-index: 1000; }
+      .nav-content { max-width: 1400px; width: 100%; padding: 0 2rem; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; height: 70px; }
+      .logo { width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; }
+      .logo img { width: 60px; height: 60px; object-fit: contain; will-change: transform; }
+      @media screen and (orientation: portrait) and (min-width: 769px){ .nav-content{height:50px;padding:0 0.5rem}.logo{width:35px;height:35px}.logo img{width:35px;height:35px} }
+      @media (max-width: 768px){ .logo{width:40px;height:40px}.logo img{width:40px;height:40px} }
+    </style>
+    <style>
+      .nav-links{display:flex;align-items:center;gap:2rem;margin-left:auto;margin-right:auto}
+      .nav-links a{padding:0.9rem 0.9rem;white-space:nowrap;transition:all 0.2s ease}
+      .nav-links a[href*="shop.ghostesp.net"]{background:linear-gradient(45deg,#70056b,#920e0e);border-radius:12px;padding:0.7rem 1rem;font-weight:600;color:45deg,#8b3232,#802a2a;text-shadow:0 1px 2px rgba(0,0,0,0.1);box-shadow:0 2px 4px rgba(0,0,0,0.1);margin-right:1rem}
+      .nav-links a[href*="shop.ghostesp.net"]:hover{transform:translateY(-2px);box-shadow:0 4px 8px rgba(0,0,0,0.2)}
+      .mobile-menu-btn{display:none;background:none;border:none;color:white;cursor:pointer;padding:0.5rem}
+      @media (max-width:768px){.mobile-menu-btn{display:block;order:2}.logo{order:1}.nav-links{display:none;position:absolute;top:100%;left:0;right:0;background:rgba(18,18,18,0.95);padding:1rem;width:100%;gap:1rem;margin:0}.nav-links.active{display:flex;flex-direction:column}.nav-content{padding:0.5rem 1rem}.nav-links a{padding:0.5rem;width:100%;text-align:center}}
+      .language-selector{position:relative;display:inline-block}
+      .language-selector .theme-btn{display:flex;align-items:center;gap:0.5rem;cursor:pointer;background:none;border:none;color:white;font-family:inherit;font-size:inherit}
+      .language-selector .theme-btn .lang-arrow{width:16px;height:16px;transition:transform 0.2s ease}
+      .language-selector .theme-btn.open .lang-arrow{transform:rotate(180deg)}
+      .language-dropdown{display:none;position:absolute;top:100%;left:50%;transform:translateX(-50%);background-color:rgba(30,30,30,0.9);list-style:none;padding:0.5rem 0;margin:0.5rem 0 0 0;border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,0.3);z-index:1001;min-width:100px}
+      .language-dropdown.show{display:block}
+      .language-dropdown li button{background:none;border:none;color:#e0e0e0;padding:0.5rem 1rem;width:100%;text-align:left;cursor:pointer;font-family:inherit;font-size:0.9rem;transition:background-color 0.2s ease}
+      .language-dropdown li button:hover{background-color:rgba(255,255,255,0.1);color:#fff}
+      @media (max-width:768px){.language-selector{width:100%}.language-selector .theme-btn{justify-content:center;padding:0.5rem;width:100%}.language-dropdown{position:static;transform:none;width:100%;margin-top:0.5rem;box-shadow:none;background-color:rgba(18,18,18,0.95)}.language-dropdown li button{text-align:center}}
+    </style>
+
+    <style>
+      .roadmap-section{padding:8rem 2rem;background:var(--surface-color)}
+      .roadmap-container{max-width:1400px;margin:0 auto}
+      .roadmap-header{max-width:900px;margin:0 auto 2rem;text-align:center}
+      .roadmap-header h2{font-family:var(--font-display);font-size:2.2rem;color:var(--text-primary);margin-bottom:0.75rem}
+      .roadmap-header p{color:var(--text-secondary)}
+
+      .timeline{display:flex;align-items:center;justify-content:center;gap:2rem;overflow-x:auto;padding:1rem 0;scroll-snap-type:x mandatory;position:relative;cursor:grab;-webkit-user-select:none;user-select:none}
+      .timeline.dragging{cursor:grabbing}
+      .timeline::-webkit-scrollbar{height:8px}
+      .timeline::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.2);border-radius:4px}
+      .timeline::before{display:none}
+      .segment{position:absolute;top:calc(50% - 1px);height:2px;background:rgba(255,255,255,0.25);pointer-events:none;border-radius:2px;z-index:0}
+
+      .milestone{flex:0 0 340px;scroll-snap-align:center;position:relative;z-index:1}
+      .milestone-card{background:var(--card-bg);border:1px solid rgba(255,255,255,0.1);backdrop-filter:blur(10px);border-radius:16px;padding:1.25rem;min-height:220px;display:flex;flex-direction:column;gap:.5rem;transition:transform .2s ease, box-shadow .2s ease}
+      .milestone-card:hover{transform:translateY(-4px);box-shadow:0 8px 30px rgba(0,0,0,.3)}
+      .milestone h3{font-family:var(--font-mono);font-size:1.1rem;margin:0;color:var(--text-primary)}
+      .badge{display:inline-block;background:#fff;color:#000;border-radius:8px;padding:.15rem .45rem;font-size:.8rem;margin-left:.4rem}
+      .milestone small{color:var(--text-secondary)}
+      .milestone ul{margin:.5rem 0 0 1.1rem;color:var(--text-secondary);overflow:auto}
+
+      .connector{display:none}
+      .node{display:none}
+
+      @media (max-width:768px){.roadmap-section{padding:6rem 1rem}.milestone{flex-basis:85vw}}
+    </style>
+  </head>
+  <body>
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
+      <div class="nav-content">
+        <div class="logo">
+          <img 
+            src="images/ghostespdotnet.png"
+            alt="Ghost ESP Logo" 
+            width="320"
+            height="320"
+            fetchpriority="high"
+            decoding="sync"
+            loading="eager"
+            style="transform: scale(1.8) translateZ(0);"
+          />
+        </div>
+        <button class="mobile-menu-btn" aria-label="Toggle menu">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+        <div class="menu-overlay"></div>
+        <ul class="nav-links">
+          <li><a href="#features" data-lang-key="nav_features">Features</a></li>
+          <li><a href="https://espressoflash.com" target="_blank" data-lang-key="nav_flash">Flash</a></li>
+          <li><a href="#getting-started" data-lang-key="nav_get_started">Get Started</a></li>
+          <li><a href="#flipper-app" data-lang-key="nav_flipper_app">Flipper App</a></li>
+          <li><a href="serial.html" data-lang-key="nav_serial_console">Serial Console</a></li>
+          <li><a href="https://shop.ghostesp.net" target="_blank" data-lang-key="nav_merch">Merch</a></li>
+          <li>
+            <div class="language-selector">
+              <button id="language-toggle-btn" class="theme-btn">
+                <i class="fas fa-globe"></i>
+                <span class="menu-label" data-lang-key="nav_language">Language</span>
+                <i data-feather="chevron-down" class="lang-arrow"></i>
+              </button>
+              <ul id="language-dropdown" class="language-dropdown">
+                <li><button data-lang="en">English</button></li>
+                <li><button data-lang="de">Deutsch</button></li>
+              </ul>
+            </div>
+          </li>
+          <li>
+            <a href="#" id="theme-toggle" class="theme-btn">
+              <i class="fas fa-ghost"></i>
+              <span class="menu-label">Theme</span>
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://discord.gg/5cyNmUMgwh"
+              target="_blank"
+              class="social-btn discord-btn"
+            >
+              <i class="fab fa-discord"></i>
+              <span class="menu-label">Discord</span>
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://github.com/jaylikesbunda/Ghost_ESP"
+              class="social-btn github-btn"
+              target="_blank"
+            >
+              <i class="fab fa-github"></i>
+              <span class="menu-label">GitHub</span>
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://instagram.com/ghostesprevival"
+              target="_blank"
+              class="social-btn instagram-btn"
+            >
+              <i class="fab fa-instagram"></i>
+              <span class="menu-label">Instagram</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <main role="main">
+      <section class="roadmap-section">
+        <div class="roadmap-container">
+          <div class="roadmap-header" data-aos="fade-up">
+            <h2>Roadmap</h2>
+            <p>What shipped recently and what's next.</p>
+          </div>
+          <div id="timeline" class="timeline" data-aos="fade-up"></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="credits" role="contentinfo">
+      <div class="footer-content">
+        <a href="https://github.com/jaylikesbunda" target="_blank" class="credit-link">Site Developed by Jay Candel <i class="fas fa-heart"></i></a>
+        <a href="https://ko-fi.com/jaylikesbunda" target="_blank" class="support-btn">
+          <i class="fas fa-bolt"></i>
+          <span>Support the Project</span>
+        </a>
+      </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js" defer></script>
+    <script src="js/main.js" defer></script>
+    <script>
+      window.addEventListener('DOMContentLoaded', () => {
+        const roadmap = [
+          {
+            version: 'Revival v1.8',
+            date: 'Future',
+            items: [
+              '- best of all time :)',
+              '- CLI refactor, CLI File System Management',
+              '- Karma Attack',
+              '- Deauth Burst + Handshake Capture',
+              '- Different menu layout?',
+              ''
+            ]
+          },
+          {
+            version: 'Revival v1.7.1',
+            date: 'Bugfixes',
+            items: [
+              '- Fix RGB handling on devices with no LEDs',
+              '- Possible captive portal reliability fix',
+              '- Apply WROOM display memory optimizations to C5',
+              '- Fix incorrect usage of mDNS',
+              '- Update C5 setcountry to esp_wifi_set_country_code'
+            ]
+          },
+          {
+            version: 'Revival v1.7',
+            date: 'Major update',
+            items: [
+              '- Dual ESP32 communication + WebUI management',
+              '- Power Saving: up to 5x battery on supported boards',
+              '- New board support: TEmbed C1101, TDeck, S3 Touch, CYD/ESP2432S028R, JCMK DevBoard Pro, Rabbit Labs Minion',
+              '- Infrared RX on TEmbed C1101 with remote management',
+              '- New commands and UI tweaks'
+            ]
+          }
+        ];
+
+        const timeline = document.getElementById('timeline');
+
+        function parseVersion(str){
+          const m = String(str||'').match(/v?(\d+(?:\.\d+){0,2})/i);
+          if(!m){ return [0,0,0]; }
+          const parts = m[1].split('.').map(n=>parseInt(n,10)||0);
+          return [parts[0]||0, parts[1]||0, parts[2]||0];
+        }
+
+        function compareVer(a,b){
+          const va = parseVersion(a.version);
+          const vb = parseVersion(b.version);
+          for(let i=0;i<3;i++){
+            if(va[i]!==vb[i]) return va[i]-vb[i];
+          }
+          return 0;
+        }
+
+        function renderRoadmap(list){
+          const sorted = [...list].sort(compareVer);
+          timeline.innerHTML = '';
+          const frag = document.createDocumentFragment();
+          sorted.forEach((m, idx) => {
+            const el = document.createElement('div');
+            el.className = 'milestone';
+            el.innerHTML = `
+              <div class="milestone-card">
+                <h3>${m.version} <span class="badge">${m.date}</span></h3>
+                <ul>${(m.items||[]).map(i=>`<li>${i}</li>`).join('')}</ul>
+              </div>
+              <div class="connector" aria-hidden="true"></div>
+            `;
+            frag.appendChild(el);
+          });
+          timeline.appendChild(frag);
+
+          function drawSegments(){
+            Array.from(timeline.querySelectorAll('.segment')).forEach(s=>s.remove());
+            const ms = Array.from(timeline.querySelectorAll('.milestone'));
+            if(ms.length < 2) return;
+            const rt = timeline.getBoundingClientRect();
+            for(let i=0;i<ms.length-1;i++){
+              const cardA = ms[i].querySelector('.milestone-card');
+              const cardB = ms[i+1].querySelector('.milestone-card');
+              if(!cardA||!cardB) continue;
+              const ra = cardA.getBoundingClientRect();
+              const rb = cardB.getBoundingClientRect();
+              const ax = ra.right - rt.left + timeline.scrollLeft + 8;
+              const bx = rb.left - rt.left + timeline.scrollLeft - 8;
+              const left = Math.min(ax, bx);
+              const width = Math.max(0, bx - ax);
+              if(width <= 0) continue;
+              const seg = document.createElement('div');
+              seg.className = 'segment';
+              seg.style.left = `${left}px`;
+              seg.style.width = `${width}px`;
+              timeline.appendChild(seg);
+            }
+          }
+
+          requestAnimationFrame(drawSegments);
+          new ResizeObserver(drawSegments).observe(timeline);
+          window.addEventListener('resize', drawSegments);
+          timeline.addEventListener('scroll', drawSegments, { passive: true });
+        }
+
+        renderRoadmap(roadmap);
+
+        let isDown=false, startX=0, scrollStart=0;
+        timeline.addEventListener('pointerdown', (e)=>{
+          isDown=true;
+          timeline.classList.add('dragging');
+          startX=e.clientX;
+          scrollStart=timeline.scrollLeft;
+        });
+        window.addEventListener('pointermove', (e)=>{
+          if(!isDown) return;
+          e.preventDefault();
+          const dx = e.clientX - startX;
+          timeline.scrollLeft = scrollStart - dx;
+        }, { passive:false });
+        window.addEventListener('pointerup', ()=>{
+          isDown=false;
+          timeline.classList.remove('dragging');
+        });
+        window.addEventListener('pointerleave', ()=>{
+          isDown=false;
+          timeline.classList.remove('dragging');
+        });
+      });
+    </script>
+  </body>
+</html>
+
+
