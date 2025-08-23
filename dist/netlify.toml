@@ -1,0 +1,30 @@
+# Netlify configuration file
+
+# Redirect rule for handling dynamic release file requests
+[[redirects]]
+  # Match any path starting with /releases/
+  from = "/releases/*"
+  # Serve the releases.html file instead
+  to = "/releases.html"
+  # Status 200 means serve the file, not an HTTP redirect
+  status = 200 
+
+[[redirects]]
+  from = "/boards"
+  to = "/boards.html"
+  status = 200
+
+[[redirects]]
+  from = "/boards/"
+  to = "/boards.html"
+  status = 200
+
+[[redirects]]
+  from = "/roadmap"
+  to = "/roadmap.html"
+  status = 200
+
+[[redirects]]
+  from = "/roadmap/"
+  to = "/roadmap.html"
+  status = 200
