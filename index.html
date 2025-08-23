@@ -91,16 +91,6 @@
         }
       }
     </style>
-
-    <!-- Preload critical logo -->
-    <link 
-      rel="preload" 
-      as="image" 
-      href="images/Spooky_Logo_500x_15.webp" 
-      type="image/webp"
-      fetchpriority="high"
-    />
-
     <!-- Enhanced Open Graph Tags -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content="GhostESP: Revival" />
@@ -232,15 +222,23 @@
           "description": "Ghost ESP - WiFi Testing Platform Preview"
         },
         "featureList": [
-          "WiFi Analysis and Scanning",
-          "Station Detection",
-          "Beacon Frame Generation",
-          "BLE Device Detection",
-          "Deauthentication Attack Detection",
-          "Packet Capture",
-          "Evil Portal Creation",
-          "RGB LED Status Indicators",
-          "DIAL & Chromecast Integration"
+          "Evil Portal",
+          "Deauthentication Attacks",
+          "Beacon Spam",
+          "WiFi Capture (PCAP)",
+          "Pineapple & Evil Twin Detection",
+          "SAE Flood Attack (WPA3)",
+          "EAPOL Logoff Attack",
+          "Web-UI for device and filesystem management",
+          "AP Scanning",
+          "Station Scanning",
+          "Combined AP/Station Scan (scanall)",
+          "BLE Spam & AirTag Spoofing",
+          "BLE Packet Capture",
+          "IR Learn & Transmit (where supported)",
+          "DIAL & Chromecast V2 Support",
+          "RGB LED Modes",
+          "GPS Integration"
         ],
         "keywords": "ESP32, WiFi testing, wireless security, penetration testing, BLE scanning",
         "applicationSubCategory": "Network Security",
@@ -844,6 +842,192 @@
         }
       }
       /* End Language Selector Styles */
+
+      /* Board tag badges */
+      .board-tag {
+        display: inline-block;
+        margin-left: 0.6rem;
+        padding: 0.15rem 0.5rem;
+        border-radius: 999px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: #ffffff;
+        background: linear-gradient(90deg, rgba(112,5,107,0.12), rgba(144,0,36,0.08));
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        vertical-align: middle;
+        box-shadow: 0 1px 0 rgba(0,0,0,0.25) inset;
+      }
+
+      /* Slightly different sizing on small screens */
+      @media (max-width: 768px) {
+        .board-tag {
+          font-size: 0.68rem;
+          padding: 0.1rem 0.4rem;
+        }
+      }
+
+      /* card header/body layout */
+      .board-card {
+        background: rgba(255, 255, 255, 0.02);
+        border-radius: 12px;
+        padding: 0.5rem;
+        margin: 0  auto 1rem;
+        overflow: hidden;
+        position: relative;
+        box-sizing: border-box;
+        width: 100%;
+        max-width: 720px; /* limit card width and keep centered */
+      }
+
+      .board-card-header {
+        padding: 0.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 52px;
+      }
+
+      .board-card-body {
+        padding: 0 0.5rem 0.5rem 0.5rem;
+        transition: max-height 0.28s ease, opacity 0.22s ease;
+        overflow: hidden;
+        opacity: 1;
+        max-height: 1500px;
+      }
+
+      /* when collapsed show only header */
+      .board-card.collapsed {
+        padding-bottom: 0.25rem;
+        margin-bottom: 0;
+      }
+
+      .board-card.collapsed .board-card-body {
+        opacity: 0;
+        max-height: 0;
+        padding-bottom: 0;
+      }
+
+      /* ensure header content centers when collapsed */
+      .board-card.collapsed .board-card-header,
+      .board-card.collapsed .category-toggle {
+        height: 48px;
+        align-items: center;
+        display: flex;
+      }
+
+      .category-toggle {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 0 1.75rem 0 0;
+        background: none;
+        border: none;
+        color: #fff;
+        text-align: center;
+        cursor: pointer;
+        position: relative;
+      }
+
+      .category-toggle h3 {
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 1.1rem;
+        font-weight: 600;
+        text-align: center;
+      }
+
+      .toggle-icon {
+        font-size: 1rem;
+        line-height: 1;
+        position: absolute;
+        right: 0.5rem;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+
+      .board-card ul {
+        margin: 0;
+      }
+
+      .board-card li {
+        gap: 0.25rem;
+        flex-wrap: wrap;
+      }
+
+      @media (max-width: 768px) {
+        .compatibility .board-grid {
+          gap: 1.25rem;
+        }
+        .board-card {
+          padding: 0.5rem;
+        }
+        .board-card-header {
+          padding: 0.25rem 0.5rem;
+          min-height: 56px;
+        }
+        .category-toggle h3 {
+          font-size: 1rem;
+        }
+        .toggle-icon {
+          font-size: 1.1rem;
+        }
+        .board-card li {
+          padding: 0.4rem 0;
+        }
+      }
+
+      /* Category toggle styles */
+      .category-toggle {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        width: 100%;
+        background: none;
+        border: none;
+        color: #fff;
+        padding: 0.2rem 0;
+        cursor: pointer;
+        text-align: left;
+      }
+
+      .category-toggle h3 {
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 1.05rem;
+        font-weight: 600;
+      }
+
+      .toggle-icon {
+        margin-left: auto;
+        transition: transform 0.18s ease;
+        opacity: 0.9;
+      }
+
+      .category-toggle[aria-expanded="true"] .toggle-icon {
+        transform: rotate(0deg);
+      }
+
+      .category-toggle[aria-expanded="false"] .toggle-icon {
+        transform: rotate(-90deg);
+      }
+
+      .board-cards.collapse {
+        transition: max-height 0.28s ease, opacity 0.22s ease;
+        overflow: hidden;
+        opacity: 1;
+        max-height: 1000px;
+      }
+
+      .board-cards.collapse.collapsed {
+        opacity: 0;
+        max-height: 0;
+      }
     </style>
 
     <!-- Favicon and App Icons -->
@@ -994,81 +1178,57 @@
         <h2 id="features-heading" data-aos="fade-up" data-lang-key="features_heading">Key Features</h2>
         <div class="features-grid">
           <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
-            <i data-feather="wifi"></i>
-            <h3 data-lang-key="feature_wifi_title">WiFi Analysis</h3>
-            <p data-lang-key="feature_wifi_desc">
-              Advanced scanning of access points and stations with OUI matching
-              and real-time monitoring
-            </p>
+            <i data-feather="globe"></i>
+            <h3>Evil Portal</h3>
+            <p>Set up a fake WiFi portal with custom SSID and domain.</p>
           </div>
 
           <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
-            <i data-feather="radio"></i>
-            <h3 data-lang-key="feature_packet_capture_title">Packet Capture</h3>
-            <p data-lang-key="feature_packet_capture_desc">
-              Capture probe requests, beacons, deauth packets, WPS, EAPOL and
-              raw WiFi packets with PCAP support
-            </p>
+            <i data-feather="monitor"></i>
+            <h3>Web-UI</h3>
+            <p>Built-in interface for configuration, sending commands, and file management.</p>
           </div>
 
           <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
-            <i data-feather="zap"></i>
-            <h3 data-lang-key="feature_beacon_ops_title">Beacon Operations</h3>
-            <p data-lang-key="feature_beacon_ops_desc">
-              Generate custom beacon frames with random, rickroll, or AP list
-              modes for network testing
-            </p>
+            <i data-feather="database"></i>
+            <h3>WiFi Recon</h3>
+            <p>Log probe requests, beacon frames, deauth packets, and PCAP raw data.</p>
           </div>
 
           <div class="feature-card" data-aos="fade-up" data-aos-delay="400">
-            <i data-feather="bluetooth"></i>
-            <h3 data-lang-key="feature_ble_toolkit_title">BLE Toolkit</h3>
-            <p data-lang-key="feature_ble_toolkit_desc">
-              Scan for Flipper devices, detect BLE spam, track AirTags, and
-              capture raw BLE packets
-            </p>
+            <i data-feather="alert-circle"></i>
+            <h3>Deauthentication Attacks</h3>
+            <p>Disconnect clients from specific networks; supports multiple APs.</p>
           </div>
 
           <div class="feature-card" data-aos="fade-up" data-aos-delay="500">
-            <i data-feather="map"></i>
-            <h3 data-lang-key="feature_wardriving_title">Wardriving</h3>
-            <p data-lang-key="feature_wardriving_desc">
-              GPS-enabled WiFi and BLE wardriving with CSV logging for network
-              mapping
-            </p>
+            <i data-feather="bluetooth"></i>
+            <h3>BLE Toolkit</h3>
+            <p>BLE scanning, packet capture, spam, and AirTag spoofing (where supported).</p>
           </div>
 
           <div class="feature-card" data-aos="fade-up" data-aos-delay="600">
-            <i data-feather="globe"></i>
-            <h3 data-lang-key="feature_evil_portal_title">Evil Portal</h3>
-            <p data-lang-key="feature_evil_portal_desc">
-              Create customizable captive portals with online/offline modes and
-              domain spoofing
-            </p>
+            <i data-feather="wifi-off"></i>
+            <h3>Beacon Spam</h3>
+            <p>Broadcast customizable SSID beacons and manage beacon lists.</p>
           </div>
 
           <div class="feature-card" data-aos="fade-up" data-aos-delay="700">
-            <i data-feather="cast"></i>
-            <h3 data-lang-key="feature_network_tools_title">Network Tools</h3>
-            <p data-lang-key="feature_network_tools_desc">
-              DIAL/Chromecast control, network printer access, and TP-Link
-              device management
-            </p>
+            <i data-feather="shield"></i>
+            <h3>Pineapple & Evil Twin Detection</h3>
+            <p>Detect Wi‑Fi Pineapples and potential evil twin networks.</p>
           </div>
 
           <div class="feature-card" data-aos="fade-up" data-aos-delay="800">
-            <i data-feather="shield"></i>
-            <h3 data-lang-key="feature_security_testing_title">Security Testing</h3>
-            <p data-lang-key="feature_security_testing_desc">WPS scanning, and skimmer detection capabilities and more</p>
+            <i data-feather="zap"></i>
+            <h3>RGB LED Modes & GPS</h3>
+            <p>Customizable LED feedback and optional GPS integration for supported boards.</p>
           </div>
 
           <div class="feature-card" data-aos="fade-up" data-aos-delay="900">
-            <i data-feather="monitor"></i>
-            <h3 data-lang-key="feature_display_features_title">Display Features</h3>
-            <p data-lang-key="feature_display_features_desc">
-              Built-in games, music visualizer, and RGB rave mode for supported
-              display boards
-            </p>
+            <i data-feather="speaker"></i>
+            <h3>IR Learn & Transmit</h3>
+            <p>Learn and transmit IR signals on supported hardware.</p>
           </div>
         </div>
       </section>
@@ -1201,63 +1361,71 @@
         </h2>
         <div class="board-grid">
           <div class="board-category" data-aos="fade-up" data-aos-delay="100">
-            <h3 data-lang-key="compatibility_display_heading"><i data-feather="monitor"></i> Display-Enabled Boards</h3>
-            <div class="board-cards">
-              <div class="board-card">
-                <h4 data-lang-key="compatibility_cyd_title">CYD Boards</h4>
-                <ul>
-                  <li>CYD2USB (USB-C)</li>
-                  <li>CYDMicroUSB</li>
-                  <li>CYDDualUSB</li>
-                  <li><small data-lang-key="compatibility_cyd_note">Compatible with 2.8" ESP32-2432S028</small></li>
-                </ul>
+            <div class="board-card" id="flipper-boards">
+              <div class="board-card-header">
+                <button class="category-toggle" aria-expanded="true" aria-controls="flipper-boards-body">
+                  <h3><i data-feather="cpu"></i> Flipper-Compatible Boards</h3>
+                  <span class="toggle-icon">▾</span>
+                </button>
               </div>
-              <div class="board-card">
-                <h4 data-lang-key="compatibility_7inch_title">7-Inch Displays</h4>
+              <div id="flipper-boards-body" class="board-card-body">
                 <ul>
-                  <li>Waveshare LCD (800x480)</li>
-                  <li>Crowtech LCD (800x480)</li>
-                  <li><small data-lang-key="compatibility_7inch_note">Both using ESP32-S3</small></li>
-                </ul>
-              </div>
-              <div class="board-card">
-                <h4 data-lang-key="compatibility_other_display_title">Other Display Boards</h4>
-                <ul>
-                  <li>ESP32-S3-Cardputer</li>
-                  <li>MarauderV6 & AwokDual</li>
-                  <li>AwokMini (128x128)</li>
+                  <li>FlipperHub Rocket <small class="board-tag">Flipper</small></li>
+                  <li>JCMK Devboard Pro <small class="board-tag">Flipper</small></li>
+                  <li>RabbitLabs GhostBoard <small class="board-tag">Flipper</small></li>
+                  <li>RabbitLabs Yapper Board (GPS NOT SUPPORTED) <small class="board-tag">Flipper</small></li>
                 </ul>
               </div>
             </div>
           </div>
 
           <div class="board-category" data-aos="fade-up" data-aos-delay="200">
-            <h3 data-lang-key="compatibility_generic_heading"><i data-feather="cpu"></i> Generic Boards</h3>
-            <div class="board-cards">
-              <div class="board-card">
-                <h4 data-lang-key="compatibility_esp_models_title">ESP32 Models</h4>
+            <div class="board-card" id="display-boards">
+              <div class="board-card-header">
+                <button class="category-toggle" aria-expanded="true" aria-controls="display-boards-body">
+                  <h3><i data-feather="monitor"></i> Display & Touch Supported</h3>
+                  <span class="toggle-icon">▾</span>
+                </button>
+              </div>
+              <div id="display-boards-body" class="board-card-body">
                 <ul>
-                  <li>ESP32 Wroom</li>
-                  <li>ESP32-S2</li>
-                  <li>ESP32-S3</li>
-                  <li>ESP32-C3</li>
-                  <li>ESP32-C6</li>
+                  <li>FlipperHub Pocker Marauder <small class="board-tag">Touch</small></li>
+                  <li>RabbitLabs Phantom</li>
+                  <li>Waveshare 7" Touch <small class="board-tag">Touch</small></li>
+                  <li>M5 Cardputer <small class="board-tag">Display</small></li>
+                  <li>AWOK Mini <small class="board-tag">Touch</small></li>
+                  <li>CYD2 USB <small class="board-tag">Touch</small></li>
+                  <li>CYD2 USB 2.4" <small class="board-tag">Touch</small></li>
+                  <li>CYD2 USB 2.4" (C Variant) <small class="board-tag">Touch</small></li>
+                  <li>CYD Micro USB <small class="board-tag">Touch</small></li>
+                  <li>CYD Dual USB <small class="board-tag">Touch</small></li>
+                  <li>LilyGo T-Display S3 Touch <small class="board-tag">Touch</small></li>
+                  <li>LilyGo S3 T-Watch <small class="board-tag">Touch</small></li>
+                  <li>Marauder V4 <small class="board-tag">Touch</small></li>
+                  <li>Marauder V6 <small class="board-tag">Touch</small></li>
+                  <li>LilyGo TEmbed C1101 <small class="board-tag">Display</small></li>
+                  <li>LilyGo T-Deck <small class="board-tag">Touch</small></li>
                 </ul>
               </div>
-              <div class="board-card">
-                <h4 data-lang-key="compatibility_custom_builds_title">Custom Builds</h4>
+            </div>
+          </div>
+
+          <div class="board-category" data-aos="fade-up" data-aos-delay="300">
+            <div class="board-card" id="devkit-boards">
+              <div class="board-card-header">
+                <button class="category-toggle" aria-expanded="true" aria-controls="devkit-boards-body">
+                  <h3><i data-feather="cpu"></i> DevKits & Other Boards</h3>
+                  <span class="toggle-icon">▾</span>
+                </button>
+              </div>
+              <div id="devkit-boards-body" class="board-card-body">
                 <ul>
-                  <li data-lang-key="compatibility_custom_item1">Create your own build</li>
-                  <li data-lang-key="compatibility_custom_item2">Customize features (more coming soon!)</li>
-                  <li data-lang-key="compatibility_custom_item3">Build for your specific hardware</li>
-                  <li>
-                    <a
-                      href="https://github.com/jaylikesbunda/Ghost_ESP/wiki/Custom-Build-Guide"
-                      target="_blank"
-                      data-lang-key="compatibility_custom_link"
-                      >View Build Guide →</a
-                    >
-                  </li>
+                  <li>DevKitC-ESP32 <small class="board-tag">DevKit</small></li>
+                  <li>DevKitC-ESP32-S2 <small class="board-tag">DevKit</small> <small>(lacks Bluetooth hardware)</small></li>
+                  <li>DevKitC-ESP32-C3 <small class="board-tag">DevKit</small></li>
+                  <li>DevKitC-ESP32-S3 <small class="board-tag">DevKit</small></li>
+                  <li>DevKitC-ESP32-C5 <small class="board-tag">DevKit</small></li>
+                  <li>DevKitC-ESP32-C6 <small class="board-tag">DevKit</small></li>
                 </ul>
               </div>
             </div>
@@ -1278,9 +1446,7 @@
             <h3 data-lang-key="getting_started_step1_title">Flash Your Device</h3>
             <p data-lang-key="getting_started_step1_desc">
               Visit the
-              <a href="https://espressoflash.com/" target="_blank"
-                >Espresso Flash Web Flasher</a
-              >
+              <a href="https://espressoflash.com" target="_blank">espresso web flasher</a>
             </p>
             <div class="step-details">
               <h4 data-lang-key="getting_started_step1_bootloader">Bootloader Mode:</h4>
@@ -1307,19 +1473,6 @@
 
           <div class="step" data-aos="fade-up" data-aos-delay="300">
             <div class="step-number">3</div>
-            <h3 data-lang-key="getting_started_step3_title">Touch Navigation</h3>
-            <div class="step-details">
-              <ul>
-                <li data-lang-key="getting_started_step3_nav1">Top Half: Move Up</li>
-                <li data-lang-key="getting_started_step3_nav2">Bottom Half: Move Down</li>
-                <li data-lang-key="getting_started_step3_nav3">Middle: Select Item</li>
-                <li data-lang-key="getting_started_step3_nav4">Main Menu: Direct Touch</li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="step" data-aos="fade-up" data-aos-delay="400">
-            <div class="step-number">4</div>
             <h3 data-lang-key="getting_started_step4_title">Need Help?</h3>
             <div class="step-details">
               <p data-lang-key="getting_started_step4_desc">
@@ -1456,8 +1609,8 @@
 
     <!-- AOS JS -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js" defer></script>
-    <!-- Custom JS -->
-    <script src="js/main.js" defer></script>
+    <!-- Custom JS (bundled) -->
+    <script src="js/main.bundle.min.js" defer></script>
     <script>
       // Initialize scroll buttons
       document.addEventListener("DOMContentLoaded", function () {
@@ -1465,8 +1618,9 @@
         const scroll = document.querySelector(".video-scroll");
         const leftBtn = document.querySelector(".scroll-button.left");
         const rightBtn = document.querySelector(".scroll-button.right");
-        const cardWidth =
-          document.querySelector(".video-card").offsetWidth + 32; // Including gap
+        const firstCard = document.querySelector('.video-card');
+        const gap = 32;
+        const cardWidth = firstCard ? firstCard.offsetWidth + gap : 320;
 
         // Function to update button visibility
         function updateButtons() {
@@ -1480,25 +1634,46 @@
         }
 
         // Scroll functions
-        leftBtn.addEventListener("click", () => {
-          scrollWrapper.scrollBy({
-            left: -cardWidth,
-            behavior: "smooth",
+        if (leftBtn && rightBtn && scrollWrapper) {
+          leftBtn.addEventListener("click", () => {
+            scrollWrapper.scrollBy({ left: -cardWidth, behavior: "smooth" });
           });
-        });
-
-        rightBtn.addEventListener("click", () => {
-          scrollWrapper.scrollBy({
-            left: cardWidth,
-            behavior: "smooth",
+          rightBtn.addEventListener("click", () => {
+            scrollWrapper.scrollBy({ left: cardWidth, behavior: "smooth" });
           });
-        });
+        }
 
         // Update button states on scroll
         scrollWrapper.addEventListener("scroll", updateButtons);
 
         // Initial button state
         updateButtons();
+      
+        // Board category toggles
+        const categoryToggles = document.querySelectorAll('.category-toggle');
+        categoryToggles.forEach(btn => {
+          btn.addEventListener('click', () => {
+            const expanded = btn.getAttribute('aria-expanded') === 'true';
+            const targetId = btn.getAttribute('aria-controls');
+            const body = document.getElementById(targetId);
+            const card = btn.closest('.board-card');
+            btn.setAttribute('aria-expanded', String(!expanded));
+            const icon = btn.querySelector('.toggle-icon');
+            if (body && card) {
+              if (expanded) {
+                body.classList.add('collapsed');
+                body.setAttribute('aria-hidden', 'true');
+                card.classList.add('collapsed');
+                if (icon) icon.textContent = '▸';
+              } else {
+                body.classList.remove('collapsed');
+                body.removeAttribute('aria-hidden');
+                card.classList.remove('collapsed');
+                if (icon) icon.textContent = '▾';
+              }
+            }
+          });
+        });
       });
 
       document

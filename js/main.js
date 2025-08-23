@@ -382,6 +382,8 @@ const spookyThemes = {
 // Add ghost follower code
 let mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
 let ghostEnabled = true;
+// Buffer pointer updates from input events and apply once per RAF
+let pointerPending = { x: mouse.x, y: mouse.y, updated: false };
 
 class GhostFollow {
   constructor() {
@@ -515,7 +517,18 @@ class GhostFollow {
     if (!ghostEnabled || !document.body.classList.contains("spooky-theme"))
       return;
 
-    const dist = Math.hypot(mouse.x - this.pos.x, mouse.y - this.pos.y);
+    // If pointer was updated since last RAF, apply it to mouse
+    if (pointerPending.updated) {
+      mouse.x = pointerPending.x;
+      mouse.y = pointerPending.y;
+      pointerPending.updated = false;
+    }
+
+    // Use squared distances to avoid unnecessary hypot when only comparisons are required
+    const dx = mouse.x - this.pos.x;
+    const dy = mouse.y - this.pos.y;
+    const distSq = dx * dx + dy * dy;
+    const dist = Math.sqrt(distSq);
 
     if (dist > this.restThreshold) {
       this.restTimer++;
@@ -534,7 +547,7 @@ class GhostFollow {
       const fleeX = this.pos.x - mouse.x;
       const fleeY = this.pos.y - mouse.y;
 
-      const fleeMagnitude = Math.hypot(fleeX, fleeY);
+      const fleeMagnitude = Math.sqrt(fleeX * fleeX + fleeY * fleeY) || 0.0001;
       const fleeStrength = (this.fleeDistance - dist) / this.fleeDistance;
 
       forceX += (fleeX / fleeMagnitude) * this.fleeFactor * fleeStrength;
@@ -613,12 +626,19 @@ function map(num, in_min, in_max, out_min, out_max) {
   return ((num - in_min) * (out_max - out_min)) / (in_max - in_min) + out_min;
 }
 
-// Track mouse position
+// Track pointer position but buffer updates for RAF
 ["mousemove", "touchstart", "touchmove"].forEach((event) => {
-  window.addEventListener(event, (e) => {
-    mouse.x = e.clientX || (e.touches ? e.touches[0].pageX : 0);
-    mouse.y = e.clientY || (e.touches ? e.touches[0].pageY : 0);
-  });
+  window.addEventListener(
+    event,
+    (e) => {
+      const x = e.clientX || (e.touches ? e.touches[0].pageX : 0);
+      const y = e.clientY || (e.touches ? e.touches[0].pageY : 0);
+      pointerPending.x = x;
+      pointerPending.y = y;
+      pointerPending.updated = true;
+    },
+    { passive: true }
+  );
 });
 
 // Initialize ghost follower in initSpookyTheme

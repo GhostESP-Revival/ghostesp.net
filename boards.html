@@ -17,7 +17,7 @@
         form-action 'self';
         upgrade-insecure-requests;
     " />
-    <title>Ghost ESP - Roadmap</title>
+    <title>Ghost ESP - Boards</title>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://unpkg.com" />
@@ -30,14 +30,63 @@
     <link rel="icon" type="image/x-icon" href="images/favicon.ico" />
     <link rel="manifest" href="images/site.webmanifest" />
 
+    <!-- Critical CSS for logo -->
     <style>
-      .navbar { background: rgba(18, 18, 18, 0.8); position: fixed; width: 100%; z-index: 1000; }
-      .nav-content { max-width: 1400px; width: 100%; padding: 0 2rem; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; height: 70px; }
-      .logo { width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; }
-      .logo img { width: 60px; height: 60px; object-fit: contain; will-change: transform; }
-      @media screen and (orientation: portrait) and (min-width: 769px){ .nav-content{height:50px;padding:0 0.5rem}.logo{width:35px;height:35px}.logo img{width:35px;height:35px} }
-      @media (max-width: 768px){ .logo{width:40px;height:40px}.logo img{width:40px;height:40px} }
-    </style>
+        .navbar {
+          background: rgba(18, 18, 18, 0.8);
+          position: fixed;
+          width: 100%;
+          z-index: 1000;
+        }
+        .nav-content {
+          max-width: 1400px;
+          width: 100%;
+          padding: 0 2rem;
+          margin: 0 auto;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          height: 70px;
+        }
+        .logo {
+          width: 60px;
+          height: 60px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .logo img {
+          width: 60px;
+          height: 60px;
+          object-fit: contain;
+          will-change: transform;
+        }
+        @media screen and (orientation: portrait) and (min-width: 769px) {
+          .nav-content {
+            height: 50px;
+            padding: 0 0.5rem;
+          }
+          .logo {
+            width: 35px;
+            height: 35px;
+          }
+          .logo img {
+            width: 35px;
+            height: 35px;
+          }
+        }
+        @media (max-width: 768px) {
+          .logo {
+            width: 40px;
+            height: 40px;
+          }
+          .logo img {
+            width: 40px;
+            height: 40px;
+          }
+        }
+      </style>
+
     <style>
       .nav-links{display:flex;align-items:center;gap:2rem;margin-left:auto;margin-right:auto}
       .nav-links a{padding:0.9rem 0.9rem;white-space:nowrap;transition:all 0.2s ease}
@@ -57,31 +106,26 @@
     </style>
 
     <style>
-      .roadmap-section{padding:8rem 2rem;background:var(--surface-color)}
-      .roadmap-container{max-width:1400px;margin:0 auto}
-      .roadmap-header{max-width:900px;margin:0 auto 2rem;text-align:center}
-      .roadmap-header h2{font-family:var(--font-display);font-size:2.2rem;color:var(--text-primary);margin-bottom:0.75rem}
-      .roadmap-header p{color:var(--text-secondary)}
-
-      .timeline{display:flex;align-items:center;justify-content:center;gap:2rem;overflow-x:auto;padding:1rem 0;scroll-snap-type:x mandatory;position:relative;cursor:grab;-webkit-user-select:none;user-select:none}
-      .timeline.dragging{cursor:grabbing}
-      .timeline::-webkit-scrollbar{height:8px}
-      .timeline::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.2);border-radius:4px}
-      .timeline::before{display:none}
-      .segment{position:absolute;top:calc(50% - 1px);height:2px;background:rgba(255,255,255,0.25);pointer-events:none;border-radius:2px;z-index:0}
-
-      .milestone{flex:0 0 340px;scroll-snap-align:center;position:relative;z-index:1}
-      .milestone-card{background:var(--card-bg);border:1px solid rgba(255,255,255,0.1);backdrop-filter:blur(10px);border-radius:16px;padding:1.25rem;min-height:220px;display:flex;flex-direction:column;gap:.5rem;transition:transform .2s ease, box-shadow .2s ease}
-      .milestone-card:hover{transform:translateY(-4px);box-shadow:0 8px 30px rgba(0,0,0,.3)}
-      .milestone h3{font-family:var(--font-mono);font-size:1.1rem;margin:0;color:var(--text-primary)}
-      .badge{display:inline-block;background:#fff;color:#000;border-radius:8px;padding:.15rem .45rem;font-size:.8rem;margin-left:.4rem}
-      .milestone small{color:var(--text-secondary)}
-      .milestone ul{margin:.5rem 0 0 1.1rem;color:var(--text-secondary);overflow:auto}
-
-      .connector{display:none}
-      .node{display:none}
-
-      @media (max-width:768px){.roadmap-section{padding:6rem 1rem}.milestone{flex-basis:85vw}}
+      .boards-section{padding:8rem 2rem;background:var(--surface-color)}
+      .boards-container{max-width:1400px;margin:0 auto}
+      .boards-header{max-width:900px;margin:0 auto 2rem;text-align:center}
+      .boards-header h2{font-family:var(--font-display);font-size:2.2rem;color:var(--text-primary);margin-bottom:0.75rem}
+      .boards-header p{color:var(--text-secondary)}
+      .boards-filters{display:flex;gap:0.75rem;justify-content:center;margin:0 0 2rem}
+      .filter-btn{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:#fff;padding:0.6rem 1rem;border-radius:999px;cursor:pointer;transition:all .2s ease;font-family:var(--font-mono)}
+      .filter-btn:hover{background:rgba(255,255,255,0.1)}
+      .filter-btn.active{background:linear-gradient(45deg,#70056b,#920e0e);border-color:transparent}
+      .boards-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:2rem}
+      .board-card{display:flex;flex-direction:column;align-items:stretch}
+      .board-card .board-image{width:100%;height:180px;border-radius:12px;object-fit:cover;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.08)}
+      .board-card h3{font-family:var(--font-mono);font-size:1.2rem;margin:0 0 0.5rem;color:var(--text-primary)}
+      .board-card p{color:var(--text-secondary);margin:0 0 1rem}
+      .board-card .shop-btn{width:100%;justify-content:center}
+      .tag-list{display:flex;gap:.5rem;flex-wrap:wrap;margin:.25rem 0 .75rem}
+      .tag{font-family:var(--font-mono);font-size:.75rem;line-height:1;padding:.25rem .6rem;border-radius:999px;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.08);color:#fff;letter-spacing:.3px}
+      .tag-touch{background:rgba(255,255,255,0.1);border-color:rgba(255,255,255,0.2)}
+      .tag-flipper{background:rgba(179,0,0,0.15);border-color:rgba(179,0,0,0.3)}
+      @media (max-width:768px){.boards-section{padding:6rem 1rem}.board-card .board-image{height:160px}}
     </style>
   </head>
   <body>
@@ -164,13 +208,18 @@
     </nav>
 
     <main role="main">
-      <section class="roadmap-section">
-        <div class="roadmap-container">
-          <div class="roadmap-header" data-aos="fade-up">
-            <h2>Roadmap</h2>
-            <p>What shipped recently and what's next.</p>
+      <section class="boards-section">
+        <div class="boards-container">
+          <div class="boards-header" data-aos="fade-up">
+            <h2>Supported Boards</h2>
+            <p>Hand-picked hardware known to work great with Ghost ESP</p>
           </div>
-          <div id="timeline" class="timeline" data-aos="fade-up"></div>
+          <div class="boards-filters" data-aos="fade-up">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="touch">Touch</button>
+            <button class="filter-btn" data-filter="flipper">Flipper Compatible</button>
+          </div>
+          <div id="boards-grid" class="boards-grid"></div>
         </div>
       </section>
     </main>
@@ -189,143 +238,109 @@
     <script src="js/main.js" defer></script>
     <script>
       window.addEventListener('DOMContentLoaded', () => {
-        const roadmap = [
+        const boards = [
+
           {
-            version: 'Revival v1.8',
-            date: 'Future',
-            items: [
-              '- best of all time :)',
-              '- CLI refactor, CLI File System Management',
-              '- Karma Attack',
-              '- Deauth Burst + Handshake Capture',
-              '- Different menu layout?',
-              ''
-            ]
+            id: 'ghostesp-c6-rl',
+            name: 'GhostBoard (Rabbit‑Labs)',
+            image: 'https://4441fe46.delivery.rocketcdn.me/wp-content/uploads/2024/10/ghostgps-scaled.jpg',
+            description: 'Flipper‑compatible C6 board made for Ghost ESP. SD slot, 3 RGB LEDs, GPS expansion.',
+            url: 'https://rabbit-labs.com/product/spookyesp-the-esp32-c6-board-that-sends-shivers-down-your-spine/',
+            tags: ['flipper']
           },
           {
-            version: 'Revival v1.7.1',
-            date: 'Bugfixes',
-            items: [
-              '- Fix RGB handling on devices with no LEDs',
-              '- Possible captive portal reliability fix',
-              '- Apply WROOM display memory optimizations to C5',
-              '- Fix incorrect usage of mDNS',
-              '- Update C5 setcountry to esp_wifi_set_country_code'
-            ]
+            id: 'cyd2usb-2-4',
+            name: 'CYD2USB 2.4 Inch C Variant',
+            image: 'https://ae-pic-a1.aliexpress-media.com/kf/Se5f531b3b4f642c28c0b0655653c23d2p.jpg_960x960q75.jpg_.avif',
+            description: 'Compact 2.4" capacitive touch display board powered by an ESP32 WROOM module.',
+            url: 'https://s.click.aliexpress.com/e/_olgPirZ',
+            tags: ['touch']
           },
           {
-            version: 'Revival v1.7',
-            date: 'Major update',
-            items: [
-              '- Dual ESP32 communication + WebUI management',
-              '- Power Saving: up to 5x battery on supported boards',
-              '- New board support: TEmbed C1101, TDeck, S3 Touch, CYD/ESP2432S028R, JCMK DevBoard Pro, Rabbit Labs Minion',
-              '- Infrared RX on TEmbed C1101 with remote management',
-              '- New commands and UI tweaks'
-            ]
-          }
+            id: 'esp32-wroom',
+            name: 'ESP‑Rocket (Wiredhatters)',
+            image: 'https://static.wixstatic.com/media/35ea10_b537d4da88a84fddbd67a4029caa690c~mv2.jpg/v1/fill/w_475,h_333,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/35ea10_b537d4da88a84fddbd67a4029caa690c~mv2.jpg',
+            description: 'Powered by a ESP32‑WROOM‑UE, USB‑C, SMA antenna.',
+            url: 'https://www.wiredhatters.com/product-page/esp-rocket',
+            tags: ['flipper']
+          },
+          {
+            id: 'lilygo-twatch-s3',
+            name: 'LILYGO T‑Watch S3',
+            image: 'images/ghost-esp.png',
+            description: 'Wearable ESP32-S3 smartwatch running portable Ghost ESP tools.',
+            url: 'https://shop.ghostesp.net?ref=boards',
+            tags: ['touch']
+          },
+          {
+            id: 'esp32-c5-dev',
+            name: 'ESP32-C5 Dev Board',
+            image: 'images/ghost-esp-logo.webp',
+            description: 'Next‑gen dual‑band ready platform for advanced tests.',
+            url: 'https://shop.ghostesp.net?ref=boards',
+            tags: []
+          },
+          {
+            id: 'cardputer-s3',
+            name: 'ESP32-S3 Cardputer',
+            image: 'images/ghost-esp.png',
+            description: 'Compact keyboard-style ESP32-S3 device with on-the-go control.',
+            url: 'https://shop.ghostesp.net?ref=boards',
+            tags: []
+          },
+          {
+            id: 'c3-supermini',
+            name: 'ESP32-C3 SuperMini',
+            image: 'images/ghost-esp.png',
+            description: 'Tiny and capable ESP32-C3 board perfect for mobile flashing.',
+            url: 'https://shop.ghostesp.net?ref=boards',
+            tags: []
+          },
+          {
+            id: 'esp32-s2-2-8',
+            name: 'ESP32‑S2 2.8 Display',
+            image: 'images/ghost-esp-logo.webp',
+            description: 'Affordable display variant suited for quick UI experiments.',
+            url: 'https://shop.ghostesp.net?ref=boards',
+            tags: ['touch']
+          },
+
+          
         ];
 
-        const timeline = document.getElementById('timeline');
+        const grid = document.getElementById('boards-grid');
+        const filterButtons = document.querySelectorAll('.filter-btn');
 
-        function parseVersion(str){
-          const m = String(str||'').match(/v?(\d+(?:\.\d+){0,2})/i);
-          if(!m){ return [0,0,0]; }
-          const parts = m[1].split('.').map(n=>parseInt(n,10)||0);
-          return [parts[0]||0, parts[1]||0, parts[2]||0];
-        }
-
-        function compareVer(a,b){
-          const va = parseVersion(a.version);
-          const vb = parseVersion(b.version);
-          for(let i=0;i<3;i++){
-            if(va[i]!==vb[i]) return va[i]-vb[i];
-          }
-          return 0;
-        }
-
-        function renderRoadmap(list){
-          const sorted = [...list].sort(compareVer);
-          timeline.innerHTML = '';
-          const frag = document.createDocumentFragment();
-          sorted.forEach((m, idx) => {
-            const el = document.createElement('div');
-            el.className = 'milestone';
-            el.innerHTML = `
-              <div class="milestone-card">
-                <h3>${m.version} <span class="badge">${m.date}</span></h3>
-                <ul>${(m.items||[]).map(i=>`<li>${i}</li>`).join('')}</ul>
-              </div>
-              <div class="connector" aria-hidden="true"></div>
+        function renderBoards(activeTag = 'all') {
+          grid.innerHTML = '';
+          const list = activeTag === 'all' ? boards : boards.filter(b => b.tags.includes(activeTag));
+          list.forEach(b => {
+            const card = document.createElement('div');
+            card.className = 'board-card';
+            card.setAttribute('data-tags', b.tags.join(','));
+            const tagsHtml = (b.tags || []).map(t => `<span class="tag tag-${t}">${t}</span>`).join('');
+            card.innerHTML = `
+              <img class="board-image" src="${b.image}" alt="${b.name}" />
+              <h3>${b.name}</h3>
+              <div class="tag-list">${tagsHtml}</div>
+              <p>${b.description}</p>
+              <a href="${b.url}" target="_blank" rel="noopener" class="shop-btn primary"><i class="fas fa-store"></i><span> Buy</span></a>
             `;
-            frag.appendChild(el);
-          });
-          timeline.appendChild(frag);
-
-          function drawSegments(){
-            Array.from(timeline.querySelectorAll('.segment')).forEach(s=>s.remove());
-            const ms = Array.from(timeline.querySelectorAll('.milestone'));
-            if(ms.length < 2) return;
-            const rt = timeline.getBoundingClientRect();
-            for(let i=0;i<ms.length-1;i++){
-              const cardA = ms[i].querySelector('.milestone-card');
-              const cardB = ms[i+1].querySelector('.milestone-card');
-              if(!cardA||!cardB) continue;
-              const ra = cardA.getBoundingClientRect();
-              const rb = cardB.getBoundingClientRect();
-              const ax = ra.right - rt.left + timeline.scrollLeft + 8;
-              const bx = rb.left - rt.left + timeline.scrollLeft - 8;
-              const left = Math.min(ax, bx);
-              const width = Math.max(0, bx - ax);
-              if(width <= 0) continue;
-              const seg = document.createElement('div');
-              seg.className = 'segment';
-              seg.style.left = `${left}px`;
-              seg.style.width = `${width}px`;
-              timeline.appendChild(seg);
-            }
-          }
-
-          requestAnimationFrame(drawSegments);
-          new ResizeObserver(drawSegments).observe(timeline);
-          window.addEventListener('resize', drawSegments);
-          timeline.addEventListener('scroll', drawSegments, { passive: true });
-          // Center the strip when few milestones
-          requestAnimationFrame(()=>{
-            const totalWidth = Array.from(timeline.querySelectorAll('.milestone')).reduce((w, el)=> w + el.getBoundingClientRect().width + 32, 0);
-            const visible = timeline.clientWidth;
-            if(totalWidth < visible){
-              timeline.scrollLeft = Math.max(0, (totalWidth - visible)/2);
-            }
+            grid.appendChild(card);
           });
         }
 
-        renderRoadmap(roadmap);
+        filterButtons.forEach(btn => {
+          btn.addEventListener('click', () => {
+            filterButtons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderBoards(btn.getAttribute('data-filter'));
+          });
+        });
 
-        let isDown=false, startX=0, scrollStart=0;
-        timeline.addEventListener('pointerdown', (e)=>{
-          isDown=true;
-          timeline.classList.add('dragging');
-          startX=e.clientX;
-          scrollStart=timeline.scrollLeft;
-        });
-        window.addEventListener('pointermove', (e)=>{
-          if(!isDown) return;
-          e.preventDefault();
-          const dx = e.clientX - startX;
-          timeline.scrollLeft = scrollStart - dx;
-        }, { passive:false });
-        window.addEventListener('pointerup', ()=>{
-          isDown=false;
-          timeline.classList.remove('dragging');
-        });
-        window.addEventListener('pointerleave', ()=>{
-          isDown=false;
-          timeline.classList.remove('dragging');
-        });
+        renderBoards('all');
       });
     </script>
   </body>
 </html>
-
 
