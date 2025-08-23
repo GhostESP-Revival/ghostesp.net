@@ -1052,14 +1052,44 @@
     <link rel="icon" type="image/x-icon" href="images/ghosty-icon.ico" />
   </head>
 
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-MS2T2178R5"></script>
+  <!-- Google tag (gtag.js) - deferred until user interaction -->
   <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
+    (function(){
+      var GA_ID = 'G-MS2T2178R5';
+      var loaded = false;
+      function loadGtag(){
+        if(loaded) return; loaded = true;
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+        s.onload = function(){
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);} 
+          window.gtag = gtag;
+          gtag('js', new Date());
+          gtag('config', GA_ID);
+        };
+        document.head.appendChild(s);
+      }
 
-    gtag('config', 'G-MS2T2178R5');
+      // Load GA after a short delay on user interaction or after 5 seconds as fallback
+      function whenInteracted(){
+        loadGtag();
+        removeListeners();
+      }
+
+      function removeListeners(){
+        ['click','scroll','keydown','pointerdown','touchstart'].forEach(function(e){
+          window.removeEventListener(e, whenInteracted, {passive:true});
+        });
+      }
+
+      ['click','scroll','keydown','pointerdown','touchstart'].forEach(function(e){
+        window.addEventListener(e, whenInteracted, {passive:true});
+      });
+
+      setTimeout(function(){ if(!loaded) loadGtag(); }, 5000);
+    })();
   </script>
 
   <body>
@@ -1246,13 +1276,10 @@
             <div class="video-scroll">
               <div class="video-card" data-aos="fade-up">
                 <div class="video-wrapper">
-                  <iframe
-                    data-src="https://www.youtube.com/embed/6RjM7aI4k4k?rel=0"
-                    title="GhostESP: The Next Generation WiFi Hacking Tool"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    loading="lazy"
-                    allowfullscreen
-                  ></iframe>
+                  <div class="yt-placeholder" data-src="https://www.youtube.com/embed/6RjM7aI4k4k?rel=0" role="button" tabindex="0" aria-label="Load video: GhostESP Overview">
+                    <img src="images/ghost-esp-preview.jpg" alt="GhostESP Overview thumbnail" loading="lazy" />
+                    <div class="yt-play">▶</div>
+                  </div>
                 </div>
                 <div class="video-info">
                   <h3 data-lang-key="video1_title">GhostESP Overview</h3>
@@ -1611,6 +1638,33 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js" defer></script>
     <!-- Custom JS (bundled) -->
     <script src="js/main.bundle.min.js" defer></script>
+    <script>
+      // click-to-load YouTube placeholders
+      (function(){
+        function loadYouTube(placeholder){
+          var src = placeholder.getAttribute('data-src');
+          if(!src) return;
+          var iframe = document.createElement('iframe');
+          iframe.setAttribute('src', src + '&autoplay=1');
+          iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
+          iframe.setAttribute('allowfullscreen', '');
+          iframe.setAttribute('title', 'YouTube video');
+          placeholder.parentNode.replaceChild(iframe, placeholder);
+        }
+
+        function onKey(e){ if(e.key === 'Enter' || e.key === ' ') { loadYouTube(e.currentTarget); } }
+
+        document.addEventListener('click', function(e){
+          var p = e.target.closest && e.target.closest('.yt-placeholder');
+          if(p) loadYouTube(p);
+        }, {passive:true});
+
+        document.addEventListener('keydown', function(e){
+          var p = e.target.closest && e.target.closest('.yt-placeholder');
+          if(p && (e.key === 'Enter' || e.key === ' ')) loadYouTube(p);
+        });
+      })();
+    </script>
     <script>
       // Initialize scroll buttons
       document.addEventListener("DOMContentLoaded", function () {
