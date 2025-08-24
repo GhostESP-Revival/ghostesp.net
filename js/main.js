@@ -1972,7 +1972,11 @@ function setLanguage(lang) {
   document.querySelectorAll('[data-lang-key]').forEach(element => {
     const key = element.getAttribute('data-lang-key');
     if (translations[lang] && translations[lang][key]) {
-      element.textContent = translations[lang][key];
+      const translation = translations[lang][key];
+      if (element.querySelector && element.querySelector('a') && !translation.includes('<a')) {
+        return;
+      }
+      element.innerHTML = translation;
     }
   });
 
@@ -2010,3 +2014,11 @@ const preferredLanguage = localStorage.getItem('preferredLanguage') || 'en';
 setLanguage(preferredLanguage);
 
 // --- End Language Switcher --- //
+
+// Ensure German has fallbacks for any missing keys and add Indian ('in') locale
+Object.keys(translations.en).forEach((key) => {
+  if (!translations.de[key]) translations.de[key] = translations.en[key];
+});
+
+// Add Indian locale ('in') as English fallback (can be localized later)
+translations.in = Object.assign({}, translations.en);
