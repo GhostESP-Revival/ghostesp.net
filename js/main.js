@@ -1172,98 +1172,96 @@ function enhanceSnowfall() {
   });
 }
 
-// Initialize mobile menu after Feather icons are loaded
+// Initialize mobile menu after Feather icons are replaced
 document.addEventListener('DOMContentLoaded', () => {
-    // First load Feather icons
+    // Replace Feather icons synchronously (feather.replace is not a Promise)
     feather.replace({
         'stroke-width': 2.5,
         'width': 16,
         'height': 16,
         'class': 'feather-icon'
-    }).then(() => {
-        // Then initialize mobile menu
-        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-        const navLinks = document.querySelector('.nav-links');
-        const body = document.body;
-        const overlay = document.createElement('div');
-        overlay.classList.add('menu-overlay');
-        document.body.appendChild(overlay);
+    });
 
-        function toggleMenu() {
-            navLinks.classList.toggle('active');
-            overlay.classList.toggle('active');
-            body.classList.toggle('menu-open');
+    // Then initialize mobile menu
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    const navLinks = document.querySelector('.nav-links');
+    const body = document.body;
+    const overlay = document.createElement('div');
+    overlay.classList.add('menu-overlay');
+    document.body.appendChild(overlay);
 
-            const menuIcon = mobileMenuBtn.querySelector('.feather-menu');
-            const closeIcon = mobileMenuBtn.querySelector('.feather-x');
-            
-            if (navLinks.classList.contains('active')) {
-                // Show close icon, hide menu icon
-                menuIcon.style.display = 'none';
-                if (!closeIcon) {
-                    const closeIconSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-                    closeIconSvg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
-                    closeIconSvg.setAttribute('width', '24');
-                    closeIconSvg.setAttribute('height', '24');
-                    closeIconSvg.setAttribute('viewBox', '0 0 24 24');
-                    closeIconSvg.setAttribute('fill', 'none');
-                    closeIconSvg.setAttribute('stroke', 'currentColor');
-                    closeIconSvg.setAttribute('stroke-width', '2');
-                    closeIconSvg.setAttribute('stroke-linecap', 'round');
-                    closeIconSvg.setAttribute('stroke-linejoin', 'round');
-                    closeIconSvg.classList.add('feather', 'feather-x');
-                    
-                    const line1 = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-                    line1.setAttribute('x1', '18');
-                    line1.setAttribute('y1', '6');
-                    line1.setAttribute('x2', '6');
-                    line1.setAttribute('y2', '18');
-                    
-                    const line2 = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-                    line2.setAttribute('x1', '6');
-                    line2.setAttribute('y1', '6');
-                    line2.setAttribute('x2', '18');
-                    line2.setAttribute('y2', '18');
-                    
-                    closeIconSvg.appendChild(line1);
-                    closeIconSvg.appendChild(line2);
-                    mobileMenuBtn.appendChild(closeIconSvg);
-                } else {
-                    closeIcon.style.display = 'block';
-                }
+    function toggleMenu() {
+        navLinks.classList.toggle('active');
+        overlay.classList.toggle('active');
+        body.classList.toggle('menu-open');
+
+        const menuIcon = mobileMenuBtn.querySelector('.feather-menu');
+        const closeIcon = mobileMenuBtn.querySelector('.feather-x');
+        
+        if (navLinks.classList.contains('active')) {
+            menuIcon.style.display = 'none';
+            if (!closeIcon) {
+                const closeIconSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+                closeIconSvg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+                closeIconSvg.setAttribute('width', '24');
+                closeIconSvg.setAttribute('height', '24');
+                closeIconSvg.setAttribute('viewBox', '0 0 24 24');
+                closeIconSvg.setAttribute('fill', 'none');
+                closeIconSvg.setAttribute('stroke', 'currentColor');
+                closeIconSvg.setAttribute('stroke-width', '2');
+                closeIconSvg.setAttribute('stroke-linecap', 'round');
+                closeIconSvg.setAttribute('stroke-linejoin', 'round');
+                closeIconSvg.classList.add('feather', 'feather-x');
+                
+                const line1 = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                line1.setAttribute('x1', '18');
+                line1.setAttribute('y1', '6');
+                line1.setAttribute('x2', '6');
+                line1.setAttribute('y2', '18');
+                
+                const line2 = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                line2.setAttribute('x1', '6');
+                line2.setAttribute('y1', '6');
+                line2.setAttribute('x2', '18');
+                line2.setAttribute('y2', '18');
+                
+                closeIconSvg.appendChild(line1);
+                closeIconSvg.appendChild(line2);
+                mobileMenuBtn.appendChild(closeIconSvg);
             } else {
-                // Show menu icon, hide close icon
-                menuIcon.style.display = 'block';
-                if (closeIcon) {
-                    closeIcon.style.display = 'none';
-                }
+                closeIcon.style.display = 'block';
+            }
+        } else {
+            menuIcon.style.display = 'block';
+            if (closeIcon) {
+                closeIcon.style.display = 'none';
             }
         }
+    }
 
-        // Toggle menu on button click
-        mobileMenuBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            toggleMenu();
-        });
+    // Toggle menu on button click
+    mobileMenuBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleMenu();
+    });
 
-        // Close menu when clicking overlay
-        overlay.addEventListener('click', toggleMenu);
+    // Close menu when clicking overlay
+    overlay.addEventListener('click', toggleMenu);
 
-        // Close menu when clicking a link
-        navLinks.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                if (navLinks.classList.contains('active')) {
-                    toggleMenu();
-                }
-            });
-        });
-
-        // Close menu on escape key
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && navLinks.classList.contains('active')) {
+    // Close menu when clicking a link
+    navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            if (navLinks.classList.contains('active')) {
                 toggleMenu();
             }
         });
+    });
+
+    // Close menu on escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && navLinks.classList.contains('active')) {
+            toggleMenu();
+        }
     });
 });
 
@@ -1481,13 +1479,6 @@ async function fetchLatestRelease() {
   }
 }
 
-// Add click handler for logo text
-document.querySelector(".logo").addEventListener("click", () => {
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth",
-  });
-});
 
 // Add Konami code easter egg
 const konamiCode = [
@@ -1530,38 +1521,7 @@ document.addEventListener("keydown", function (e) {
   }
 });
 
-// Add logo click counter for alternative easter egg
-let logoClickCount = 0;
-let logoClickTimer;
-
-document.querySelector(".logo").addEventListener("click", function (e) {
-  e.preventDefault();
-
-  logoClickCount++;
-
-  // Clear existing timer
-  clearTimeout(logoClickTimer);
-
-  // Set new timer to reset count after 2 seconds
-  logoClickTimer = setTimeout(() => {
-    logoClickCount = 0;
-  }, 2000);
-
-  // If logo is clicked 5 times rapidly
-  if (logoClickCount === 5) {
-    logoClickCount = 0;
-    clearTimeout(logoClickTimer);
-
-    // Add a fun effect
-    this.style.transition = "transform 0.5s ease";
-    this.style.transform = "rotate(360deg)";
-
-    // After animation, redirect to snake game
-    setTimeout(() => {
-      window.location.href = "snake.html";
-    }, 500);
-  }
-});
+// Note: logo click handlers removed so anchor navigation to ghostesp.net works normally.
 
 // Add this after initSpookyTheme function
 function enhanceSpookyElements() {
