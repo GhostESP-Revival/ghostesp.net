@@ -1386,16 +1386,23 @@
         <h2 id="compatibility-heading" data-aos="fade-up" data-lang-key="compatibility_heading">
           Supported Hardware
         </h2>
+        <div class="boards-purchase-link" style="text-align: center; margin: 2rem auto; padding: 1.5rem; border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.15); max-width: 600px;">
+          <p style="margin: 0;">
+            <a href="https://ghostesp.net/boards" target="_blank" rel="noopener" style="display: inline-block; padding: 1rem 2rem; background: #99229900; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 1.1rem; border: 2px solid #0057b300; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2);" onmouseover="this.style.background='#0056b3'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(0,0,0,0.3)'" onmouseout="this.style.background='#007bff'; this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(0,0,0,0.2)'">
+              View Tested Boards with links to purchase →
+            </a>
+          </p>
+        </div>
         <div class="board-grid">
           <div class="board-category" data-aos="fade-up" data-aos-delay="100">
             <div class="board-card" id="flipper-boards">
               <div class="board-card-header">
-                <button class="category-toggle" aria-expanded="true" aria-controls="flipper-boards-body">
+                <button class="category-toggle" aria-expanded="false" aria-controls="flipper-boards-body">
                   <h3><i data-feather="cpu"></i> Flipper-Compatible Boards</h3>
                   <span class="toggle-icon">▾</span>
                 </button>
               </div>
-              <div id="flipper-boards-body" class="board-card-body">
+              <div id="flipper-boards-body" class="board-card-body" style="display: none;">
                 <ul>
                   <li>FlipperHub Rocket <small class="board-tag">Flipper</small></li>
                   <li>JCMK Devboard Pro <small class="board-tag">Flipper</small></li>
@@ -1409,12 +1416,12 @@
           <div class="board-category" data-aos="fade-up" data-aos-delay="200">
             <div class="board-card" id="display-boards">
               <div class="board-card-header">
-                <button class="category-toggle" aria-expanded="true" aria-controls="display-boards-body">
+                <button class="category-toggle" aria-expanded="false" aria-controls="display-boards-body">
                   <h3><i data-feather="monitor"></i> Display & Touch Supported</h3>
                   <span class="toggle-icon">▾</span>
                 </button>
               </div>
-              <div id="display-boards-body" class="board-card-body">
+              <div id="display-boards-body" class="board-card-body" style="display: none;">
                 <ul>
                   <li>FlipperHub Pocker Marauder <small class="board-tag">Touch</small></li>
                   <li>RabbitLabs Phantom <small class="board-tag">Touch</small></li>
@@ -1440,12 +1447,12 @@
           <div class="board-category" data-aos="fade-up" data-aos-delay="300">
             <div class="board-card" id="devkit-boards">
               <div class="board-card-header">
-                <button class="category-toggle" aria-expanded="true" aria-controls="devkit-boards-body">
+                <button class="category-toggle" aria-expanded="false" aria-controls="devkit-boards-body">
                   <h3><i data-feather="cpu"></i> DevKits & Other Boards</h3>
                   <span class="toggle-icon">▾</span>
                 </button>
               </div>
-              <div id="devkit-boards-body" class="board-card-body">
+              <div id="devkit-boards-body" class="board-card-body" style="display: none;">
                 <ul>
                   <li>DevKitC-ESP32 <small class="board-tag">DevKit</small></li>
                   <li>DevKitC-ESP32-S2 <small class="board-tag">DevKit</small> <small>(lacks Bluetooth hardware)</small></li>
