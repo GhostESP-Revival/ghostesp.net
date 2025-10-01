@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PNG → GhostESP Bitmap Exporter</title>
+<style>
+    :root { color-scheme: dark light; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji"; }
+    body { margin: 0; padding: 24px; background: #0b0b0c; color: #e7e7ea; }
+    .container { max-width: 980px; margin: 0 auto; }
+    h1 { margin: 0 0 18px; font-size: 1.6rem; letter-spacing: 0.2px; }
+    .subtle { color: rgba(231,231,234,0.75); font-size: 0.95rem; }
+
+    .grid { display: grid; gap: 16px; grid-template-columns: 1fr; }
+    @media (min-width: 880px) { .grid { grid-template-columns: 1fr 1fr; } }
+
+    .card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 16px; }
+    label { display: block; margin: 0 0 6px; font-weight: 600; }
+    input[type="file"] { display: none; }
+    .dropzone { display: grid; place-items: center; text-align: center; border: 2px dashed rgba(255,255,255,0.18); border-radius: 12px; padding: 28px; background: rgba(255,255,255,0.03); cursor: pointer; transition: border-color .15s ease, background .15s ease; }
+    .dropzone.dragover { border-color: #6aa3ff; background: rgba(106,163,255,0.08); }
+    .dropzone strong { display: block; font-size: 1.05rem; margin-bottom: 6px; }
+
+    .controls { display: grid; gap: 10px; grid-template-columns: 1fr; }
+    @media (min-width: 560px) { .controls { grid-template-columns: 1fr 1fr; align-items: end; } }
+    .field { display: grid; gap: 6px; }
+    .row { display: flex; gap: 12px; flex-wrap: wrap; }
+    .row .spacer { flex: 1; }
+    .switch { display: flex; align-items: center; gap: 8px; }
+    .switch input { width: 18px; height: 18px; }
+    input[type="number"], input[type="text"] { width: 100%; max-width: 320px; padding: 8px 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.12); background: rgba(0,0,0,0.25); color: inherit; }
+    input[type="range"] { width: 100%; }
+
+    .btn { appearance: none; border: none; border-radius: 10px; padding: 10px 14px; font-size: 0.98rem; font-weight: 600; cursor: pointer; background: #4062ff; color: #fff; transition: transform .02s ease, opacity .2s ease, background .2s ease; }
+    .btn:active { transform: translateY(1px); }
+    .btn.secondary { background: rgba(255,255,255,0.08); color: inherit; }
+    .btn:disabled { opacity: 0.45; cursor: default; }
+
+    textarea { width: 100%; height: 260px; resize: vertical; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; padding: 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.12); background: rgba(0,0,0,0.3); color: inherit; }
+
+    .preview { display: grid; gap: 16px; grid-template-columns: 1fr 1fr; align-items: start; }
+    @media (max-width: 720px) { .preview { grid-template-columns: 1fr; } }
+    
+    .preview .panel strong { display: block; margin-bottom: 8px; }
+    .preview .media { display: grid; place-items: center; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 8px; min-height: 160px; }
+    .preview img { max-width: 100%; height: auto; border-radius: 6px; }
+    canvas { display: none; }
+
+    .meta { font-size: 0.9rem; opacity: 0.8; margin-top: 8px; }
+    .actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+    @media (prefers-color-scheme: light) {
+        body { background: #fafafa; color: #1c1d21; }
+        .card { background: #fff; border-color: rgba(0,0,0,0.08); }
+        .dropzone { background: #fff; }
+        .btn.secondary { background: #f3f4f6; }
+        textarea { background: #fff; border-color: rgba(0,0,0,0.12); }
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <h1>PNG → Status Display Bitmap Exporter</h1>
+    <div class="grid">
+        <div class="card">
+            <div class="field">
+                <label for="fileInput">PNG File</label>
+                <div id="dropzone" class="dropzone">
+                    <div>
+                        <strong>Drop PNG here or click to upload</strong>
+                        <div class="subtle">Black pixels become On. White becomes Off.</div>
+                    </div>
+                </div>
+                <input id="fileInput" type="file" accept="image/png">
+            </div>
+
+            <div class="controls" style="margin-top:16px;">
+                <div class="field">
+                    <label for="thresholdRange">Threshold</label>
+                    <div class="row" style="align-items:center;">
+                        <input id="thresholdRange" type="range" min="0" max="255" value="128">
+                        <input id="thresholdNumber" type="number" min="0" max="255" value="128" style="width:92px;">
+                        <div class="spacer"></div>
+                    </div>
+                </div>
+                <div class="field">
+                    <label>Options</label>
+                    <div class="row">
+                        <label class="switch"><input id="invertCheckbox" type="checkbox">Invert Source</label>
+                        <label class="switch"><input id="packLsbCheckbox" type="checkbox">Pack LSB-first</label>
+                        <label class="switch"><input id="emitCLiteral" type="checkbox" checked>Emit C Literal</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" style="margin-top:12px;">
+                <button id="processBtn" class="btn" disabled>Convert</button>
+                <button id="copyBtn" class="btn secondary" disabled>Copy</button>
+                <button id="downloadBtn" class="btn secondary" disabled>Download</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="preview">
+                <div class="panel">
+                    <strong>Original</strong>
+                    <div class="media"><img id="previewImg" alt="Original preview"></div>
+                </div>
+                <div class="panel">
+                    <strong>Processed</strong>
+                    <div class="media"><img id="processedImg" alt="Processed preview"></div>
+                </div>
+            </div>
+            <div id="meta" class="meta"></div>
+            <canvas id="canvas"></canvas>
+            <canvas id="processedCanvas"></canvas>
+        </div>
+    </div>
+
+    <div class="card" style="margin-top:16px;">
+        <label for="output">Output</label>
+        <textarea id="output" readonly></textarea>
+    </div>
+</div>
+
+<script>
+const fileInput = document.getElementById('fileInput');
+const dropzone = document.getElementById('dropzone');
+const thresholdRange = document.getElementById('thresholdRange');
+const thresholdNumber = document.getElementById('thresholdNumber');
+const invertCheckbox = document.getElementById('invertCheckbox');
+const packLsbCheckbox = document.getElementById('packLsbCheckbox');
+const emitCLiteral = document.getElementById('emitCLiteral');
+const processBtn = document.getElementById('processBtn');
+const copyBtn = document.getElementById('copyBtn');
+const downloadBtn = document.getElementById('downloadBtn');
+const previewImg = document.getElementById('previewImg');
+const processedImg = document.getElementById('processedImg');
+const outputArea = document.getElementById('output');
+const meta = document.getElementById('meta');
+const canvas = document.getElementById('canvas');
+const processedCanvas = document.getElementById('processedCanvas');
+const ctx = canvas.getContext('2d');
+const pctx = processedCanvas.getContext('2d');
+
+let loadedImage = null;
+let currentFileName = '';
+
+function syncThreshold(value) {
+    const v = Math.max(0, Math.min(255, Number(value) || 0));
+    thresholdRange.value = String(v);
+    thresholdNumber.value = String(v);
+}
+
+function deriveIdentifiers(name) {
+    const base = (name || 'my_bitmap').replace(/\.[^.]*$/, '');
+    let id = base.toLowerCase().replace(/[^a-z0-9_]+/g, '_').replace(/^_+/, '').replace(/_+$/,'').replace(/__+/g,'_');
+    if (!id || !/^[a-z_]/.test(id)) id = 'my_bitmap';
+    return {
+        data: id + '_data',
+        bitmap: id + '_bitmap',
+        filename: id + '.c'
+    };
+}
+
+function setUIEnabled(enabled) {
+    processBtn.disabled = !enabled;
+    copyBtn.disabled = !enabled;
+    downloadBtn.disabled = !enabled;
+}
+
+function loadFile(file) {
+    if (!file) return;
+    currentFileName = file.name || '';
+    const reader = new FileReader();
+    reader.onload = e => {
+        loadedImage = new Image();
+        loadedImage.onload = () => {
+            previewImg.src = e.target.result;
+            meta.textContent = `${loadedImage.width} × ${loadedImage.height}px`;
+            setUIEnabled(true);
+            processImage();
+        };
+        loadedImage.onerror = () => {
+            setUIEnabled(false);
+            outputArea.value = 'Failed to load image.';
+            previewImg.removeAttribute('src');
+            processedImg.removeAttribute('src');
+            meta.textContent = '';
+        };
+        loadedImage.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+}
+
+dropzone.addEventListener('click', () => fileInput.click());
+dropzone.addEventListener('dragover', e => { e.preventDefault(); dropzone.classList.add('dragover'); });
+dropzone.addEventListener('dragleave', () => dropzone.classList.remove('dragover'));
+dropzone.addEventListener('drop', e => {
+    e.preventDefault();
+    dropzone.classList.remove('dragover');
+    const file = e.dataTransfer.files && e.dataTransfer.files[0];
+    if (file && file.type === 'image/png') loadFile(file);
+});
+
+fileInput.addEventListener('change', () => {
+    const file = fileInput.files && fileInput.files[0];
+    if (file) loadFile(file);
+});
+
+thresholdRange.addEventListener('input', () => { syncThreshold(thresholdRange.value); if (loadedImage) processImage(); });
+thresholdNumber.addEventListener('input', () => { syncThreshold(thresholdNumber.value); if (loadedImage) processImage(); });
+invertCheckbox.addEventListener('change', () => { if (loadedImage) processImage(); });
+packLsbCheckbox.addEventListener('change', () => { if (loadedImage) processImage(); });
+emitCLiteral.addEventListener('change', () => { if (loadedImage) processImage(); });
+
+processBtn.addEventListener('click', () => { if (loadedImage) processImage(); });
+
+copyBtn.addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText(outputArea.value || ''); } catch {}
+});
+
+downloadBtn.addEventListener('click', () => {
+    const ids = deriveIdentifiers(currentFileName);
+    const blob = new Blob([outputArea.value || ''], { type: 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = ids.filename;
+    document.body.appendChild(a);
+    a.click();
+    URL.revokeObjectURL(url);
+    a.remove();
+});
+
+function processImage() {
+    const threshold = Math.max(0, Math.min(255, Number(thresholdNumber.value) || 0));
+    const invertSource = invertCheckbox.checked;
+    const packLsb = packLsbCheckbox.checked;
+    const emitC = emitCLiteral.checked;
+
+    const width = loadedImage.width;
+    const height = loadedImage.height;
+    const stride = Math.ceil(width / 8);
+
+    canvas.width = width;
+    canvas.height = height;
+    ctx.drawImage(loadedImage, 0, 0);
+
+    const imageData = ctx.getImageData(0, 0, width, height);
+    const data = imageData.data;
+
+    const packed = new Uint8Array(stride * height);
+    const monoImg = pctx.createImageData(width, height);
+    const mdata = monoImg.data;
+
+    for (let y = 0; y < height; y++) {
+        let rowOffset = y * stride;
+        let bitAccumulator = 0;
+        let bitsFilled = 0;
+        let byteIndex = 0;
+        for (let x = 0; x < width; x++) {
+            const idx = (y * width + x) * 4;
+            const r = data[idx];
+            const g = data[idx + 1];
+            const b = data[idx + 2];
+            const alpha = data[idx + 3];
+            const gray = alpha === 0 ? 255 : Math.round(0.299 * r + 0.587 * g + 0.114 * b);
+            let on = gray < threshold;
+            if (invertSource) on = !on;
+
+            if (packLsb) {
+                bitAccumulator |= (on ? 1 : 0) << bitsFilled;
+            } else {
+                bitAccumulator |= (on ? 1 : 0) << (7 - bitsFilled);
+            }
+
+            const v = on ? 0 : 255;
+            mdata[idx] = v;
+            mdata[idx + 1] = v;
+            mdata[idx + 2] = v;
+            mdata[idx + 3] = 255;
+
+            bitsFilled++;
+            if (bitsFilled === 8 || x === width - 1) {
+                packed[rowOffset + byteIndex] = bitAccumulator;
+                byteIndex++;
+                bitAccumulator = 0;
+                bitsFilled = 0;
+            }
+        }
+        while (byteIndex < stride) {
+            packed[rowOffset + byteIndex] = 0;
+            byteIndex++;
+        }
+    }
+
+    processedCanvas.width = width;
+    processedCanvas.height = height;
+    pctx.putImageData(monoImg, 0, 0);
+    processedImg.src = processedCanvas.toDataURL('image/png');
+
+    const ids = deriveIdentifiers(currentFileName);
+    let output = `// width=${width}, height=${height}, stride=${stride} bytes per row\n`;
+    if (emitC) {
+        const hexValues = [];
+        for (let i = 0; i < packed.length; i++) {
+            hexValues.push(`0x${packed[i].toString(16).padStart(2, '0')}`);
+        }
+        const chunks = [];
+        const perLine = 12;
+        for (let i = 0; i < hexValues.length; i += perLine) {
+            chunks.push('    ' + hexValues.slice(i, i + perLine).join(', '));
+        }
+        output += `static const unsigned char ${ids.data}[] = {\n${chunks.join(',\n')}\n};\n\n`;
+        output += `const status_display_bitmap_t ${ids.bitmap} = {\n`;
+        output += `    .width = ${width},\n    .height = ${height},\n    .stride_bytes = ${stride},\n    .data = ${ids.data}\n};\n`;
+    } else {
+        output += JSON.stringify({ width, height, stride_bytes: stride, data: Array.from(packed) }, null, 2);
+    }
+
+    outputArea.value = output;
+}
+</script>
+</body>
+</html>
