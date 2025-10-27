@@ -8,7 +8,7 @@
         default-src 'self';
         script-src 'self' 'unsafe-inline' https://unpkg.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net;
         style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com https://cdnjs.cloudflare.com;
-        img-src 'self' https://ghostesp.net https://ae-pic-a1.aliexpress-media.com https://static.wixstatic.com https://4441fe46.delivery.rocketcdn.me https://lilygo.cc data:;
+        img-src 'self' https://ghostesp.net https://ae-pic-a1.aliexpress-media.com https://shop.m5stack.com https://static.wixstatic.com https://4441fe46.delivery.rocketcdn.me https://lilygo.cc data:;
         font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com;
         frame-src https://www.youtube.com;
         connect-src 'self' https://cdn.spookytools.com https://api.github.com https://play.google.com https://googleads.g.doubleclick.net https://www.google-analytics.com;
@@ -132,26 +132,28 @@
     <nav class="navbar" role="navigation" aria-label="Main navigation">
       <div class="nav-content">
         <div class="logo">
-          <img 
-            src="images/ghostespdotnet.png"
-            alt="Ghost ESP Logo" 
-            width="320"
-            height="320"
-            fetchpriority="high"
-            decoding="sync"
-            loading="eager"
-            style="transform: scale(1.8) translateZ(0);"
-          />
+          <a href="https://ghostesp.net" target="_blank" rel="noopener">
+            <img 
+              src="images/ghostespdotnet.png"
+              alt="Ghost ESP Logo" 
+              width="320"
+              height="320"
+              fetchpriority="high"
+              decoding="sync"
+              loading="eager"
+              style="transform: scale(1.8) translateZ(0);"
+            />
+          </a>
         </div>
         <button class="mobile-menu-btn" aria-label="Toggle menu">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
         </button>
         <div class="menu-overlay"></div>
         <ul class="nav-links">
-          <li><a href="#features" data-lang-key="nav_features">Features</a></li>
+          <li><a href="https://ghostesp.net#features" data-lang-key="nav_features">Features</a></li>
           <li><a href="https://espressoflash.com" target="_blank" data-lang-key="nav_flash">Flash</a></li>
-          <li><a href="#getting-started" data-lang-key="nav_get_started">Get Started</a></li>
-          <li><a href="#flipper-app" data-lang-key="nav_flipper_app">Flipper App</a></li>
+          <li><a href="https://ghostesp.net#getting-started" data-lang-key="nav_get_started">Get Started</a></li>
+          <li><a href="https://ghostesp.net#flipper-app" data-lang-key="nav_flipper_app">Flipper App</a></li>
           <li><a href="serial.html" data-lang-key="nav_serial_console">Serial Console</a></li>
           <li><a href="https://shop.ghostesp.net" target="_blank" data-lang-key="nav_merch">Merch</a></li>
           <li>
@@ -216,8 +218,8 @@
           </div>
           <div class="boards-filters" data-aos="fade-up">
             <button class="filter-btn active" data-filter="all">All</button>
-            <button class="filter-btn" data-filter="touch">Touch</button>
-            <button class="filter-btn" data-filter="flipper">Flipper Compatible</button>
+            <button class="filter-btn" data-filter="Touch">Touch</button>
+            <button class="filter-btn" data-filter="Flipper">Flipper Compatible</button>
           </div>
           <div id="boards-grid" class="boards-grid"></div>
         </div>
@@ -246,7 +248,7 @@
             image: 'https://4441fe46.delivery.rocketcdn.me/wp-content/uploads/2024/10/ghostgps-scaled.jpg',
             description: 'Flipper‑compatible C6 board made for Ghost ESP. SD slot, 3 RGB LEDs, GPS expansion.',
             url: 'https://rabbit-labs.com/product/spookyesp-the-esp32-c6-board-that-sends-shivers-down-your-spine/',
-            tags: ['flipper']
+            tags: ['Flipper','SD Card']
           },
           {
             id: 'cyd2usb-2-4',
@@ -254,39 +256,48 @@
             image: 'https://ae-pic-a1.aliexpress-media.com/kf/Se5f531b3b4f642c28c0b0655653c23d2p.jpg_960x960q75.jpg_.avif',
             description: 'Compact 2.4" capacitive touch display board powered by an ESP32 WROOM module.',
             url: 'https://s.click.aliexpress.com/e/_olgPirZ',
-            tags: ['touch']
+            tags: ['Touch','SD Card']
+          },
+          {
+            id: 'ultimate-maurauder',
+            name: 'Ultimate Marauder (The Wired Hatters)',
+            image: 'https://static.wixstatic.com/media/35ea10_c352ea38cf4c4ba0982a44c7b898755d~mv2.jpg/v1/fill/w_500,h_333,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/35ea10_c352ea38cf4c4ba0982a44c7b898755d~mv2.jpg',
+            description: 'Dual-ESP32 Marauder board by Wired Hatters',
+            url: 'https://www.wiredhatters.com/product-page/ultimate-maurauder',
+            tags: ['Flipper','GPS','SD Card','Touch']
           },
           {
             id: 'esp32-wroom',
-            name: 'ESP‑Rocket (Wiredhatters)',
+            name: 'ESP‑Rocket (The Wired Hatters)',
             image: 'https://static.wixstatic.com/media/35ea10_b537d4da88a84fddbd67a4029caa690c~mv2.jpg/v1/fill/w_475,h_333,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/35ea10_b537d4da88a84fddbd67a4029caa690c~mv2.jpg',
             description: 'Powered by a ESP32‑WROOM‑UE, USB‑C, SMA antenna.',
             url: 'https://www.wiredhatters.com/product-page/esp-rocket',
-            tags: ['flipper']
-          },
-          {
-            id: 'lilygo-twatch-s3',
-            name: 'LILYGO T‑Watch S3',
-            image: 'images/ghost-esp.png',
-            description: 'Wearable ESP32-S3 smartwatch running portable Ghost ESP tools.',
-            url: 'https://shop.ghostesp.net?ref=boards',
-            tags: ['touch']
+            tags: ['Flipper']
           },
           {
             id: 'esp32-c5-dev',
             name: 'ESP32-C5 Dev Board',
-            image: 'images/ghost-esp-logo.webp',
+            image: 'https://ae-pic-a1.aliexpress-media.com/kf/S64ca5ad2310f41558d934e9f13b876e9S.png_960x960.png_.avif',
             description: 'Next‑gen dual‑band ready platform for advanced tests.',
-            url: 'https://shop.ghostesp.net?ref=boards',
-            tags: []
+            url: 'https://www.aliexpress.com/item/1005009128201189.html',
+            tags: ['5GHz']
           },
+          {
+            id: 'rabbit-phantom-labs',
+            name: 'The Phantom (Rabbit-Labs)',
+            image: 'https://4441fe46.delivery.rocketcdn.me/wp-content/uploads/2024/12/pham-scaled.jpg',
+            description: 'ESP32-based device with SD card, resistive touch display and stylus.',
+            url: 'https://rabbit-labs.com/product/the-phantom-by-rabbit-labs/?v=8bcc25c96aa5',
+            tags: ['SD Card','Touch','Stylus']
+          },
+
           {
             id: 'cardputer-s3',
             name: 'ESP32-S3 Cardputer',
-            image: 'images/ghost-esp.png',
+            image: 'https://shop.m5stack.com/cdn/shop/files/K132_v11_19_1200x1200.webp',
             description: 'Compact keyboard-style ESP32-S3 device with on-the-go control.',
-            url: 'https://shop.ghostesp.net?ref=boards',
-            tags: []
+            url: 'https://s.click.aliexpress.com/e/_oljsRNt',
+            tags: ['Keyboard','SD Card','Infrared']
           },
           {
             id: 'lilygo-t-embed-cc1101',
@@ -294,7 +305,7 @@
             image: 'https://lilygo.cc/cdn/shop/files/T-EMBED-CC1101-PLUS_6_4bda35c0-79ad-41ba-9aa7-52792d723ab1.jpg?v=1755075224&width=493',
             description: 'Built-in IR, Sub-Ghz and NFC with ESP32-S3.',
             url: 'https://www.lilygo.cc/products/t-embed-cc1101?bg_ref=69Mwul6hBm',
-            tags: []
+            tags: ['Infrared RX,TX','SD Card']
           },
           {
             id: 'lilygo-twatch-s3-us',
@@ -302,7 +313,7 @@
             image: 'https://lilygo.cc/cdn/shop/files/shipping_511a8c0c-8aca-4406-bcf0-0a70ea2d3a0e.jpg?v=1685513939&width=493',
             description: 'Wearable ESP32-S3 smartwatch with LoRa support.',
             url: 'https://www.lilygo.cc/products/t-watch-s3-us?bg_ref=69Mwul6hBm',
-            tags: ['touch']
+            tags: ['Touch','Infrared']
           },
           {
             id: 'lilygo-t-deck',
@@ -310,7 +321,7 @@
             image: 'https://lilygo.cc/cdn/shop/files/LILYGO-T-DECK_2_7fbd52e8-0aea-466e-8407-dee4aca5b381.jpg?v=1753155914&width=493',
             description: 'Modular developer board (ESP32-S3) designed for LoRa.',
             url: 'https://www.lilygo.cc/products/t-deck?bg_ref=69Mwul6hBm',
-            tags: []
+            tags: ['Touch','Keyboard']
           },
           {
             id: 'lilygo-tdisplay-s3-touch',
@@ -318,8 +329,17 @@
             image: 'https://lilygo.cc/cdn/shop/products/LILYGO-T-Display-S3-Touch-version_5.jpg?v=1667462221&width=493',
             description: 'ESP32-S3 development board with integrated touch display.',
             url: 'https://www.lilygo.cc/products/t-display-s3?bg_ref=69Mwul6hBm',
-            tags: ['touch']
+            tags: ['Touch']
           },
+          {
+            id: 'cyd-2432s024r',
+            name: 'CYD-2432S024R Resistive',
+            image: 'https://ae-pic-a1.aliexpress-media.com/kf/S59700c86dd9949c7a629e34fa38c7408y.jpg_960x960q75.jpg_.avif',
+            description: '2.4" resistive touch display module (CYD-2432S024R)',
+            url: 'https://s.click.aliexpress.com/e/_ombDm1D',
+            tags: ['Touch','Resistive']
+          },
+
 
           
         ];
