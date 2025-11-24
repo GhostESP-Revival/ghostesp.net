@@ -44,7 +44,31 @@
       .nav-links a[href*="shop.ghostesp.net"]{background:linear-gradient(45deg,#70056b,#920e0e);border-radius:12px;padding:0.7rem 1rem;font-weight:600;color:45deg,#8b3232,#802a2a;text-shadow:0 1px 2px rgba(0,0,0,0.1);box-shadow:0 2px 4px rgba(0,0,0,0.1);margin-right:1rem}
       .nav-links a[href*="shop.ghostesp.net"]:hover{transform:translateY(-2px);box-shadow:0 4px 8px rgba(0,0,0,0.2)}
       .mobile-menu-btn{display:none;background:none;border:none;color:white;cursor:pointer;padding:0.5rem}
-      @media (max-width:768px){.mobile-menu-btn{display:block;order:2}.logo{order:1}.nav-links{display:none;position:absolute;top:100%;left:0;right:0;background:rgba(18,18,18,0.95);padding:1rem;width:100%;gap:1rem;margin:0}.nav-links.active{display:flex;flex-direction:column}.nav-content{padding:0.5rem 1rem}.nav-links a{padding:0.5rem;width:100%;text-align:center}}
+      @media (max-width:768px){
+        .mobile-menu-btn{display:block}
+        .nav-content{padding:0.5rem 1rem}
+        .nav-links{
+          position:fixed;
+          top:0;
+          right:-100%;
+          height:100vh;
+          width:75%;
+          max-width:300px;
+          background:var(--surface-color);
+          flex-direction:column;
+          padding:80px 2rem 2rem;
+          transition:right 0.3s ease;
+          backdrop-filter:blur(10px);
+          border-left:1px solid rgba(255,255,255,0.1);
+          z-index:95;
+          overflow-y:auto;
+          -webkit-overflow-scrolling:touch
+        }
+        .nav-links.active{right:0}
+        .nav-links li{width:100%}
+        .nav-links a{font-size:1.1rem;padding:0.8rem 0;width:100%;text-align:left}
+        body.menu-open{overflow:hidden}
+      }
       .language-selector{position:relative;display:inline-block}
       .language-selector .theme-btn{display:flex;align-items:center;gap:0.5rem;cursor:pointer;background:none;border:none;color:white;font-family:inherit;font-size:inherit}
       .language-selector .theme-btn .lang-arrow{width:16px;height:16px;transition:transform 0.2s ease}
@@ -120,6 +144,7 @@
               <ul id="language-dropdown" class="language-dropdown">
                 <li><button data-lang="en">English</button></li>
                 <li><button data-lang="de">Deutsch</button></li>
+                <li><button data-lang="in">हिन्दी</button></li>
               </ul>
             </div>
           </li>
@@ -167,8 +192,8 @@
       <section class="roadmap-section">
         <div class="roadmap-container">
           <div class="roadmap-header" data-aos="fade-up">
-            <h2>Roadmap</h2>
-            <p>What shipped recently and what's next.</p>
+            <h2 data-lang-key="roadmap_heading">Roadmap</h2>
+            <p data-lang-key="roadmap_subheading">What shipped recently and what's next.</p>
           </div>
           <div id="timeline" class="timeline" data-aos="fade-up"></div>
         </div>

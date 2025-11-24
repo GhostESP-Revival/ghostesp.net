@@ -402,39 +402,71 @@
       @media (max-width: 768px) {
         .mobile-menu-btn {
           display: block;
-          order: 2;
-        }
-
-        .logo {
-          order: 1;
-        }
-
-        .nav-links {
-          display: none;
-          position: absolute;
-          top: 100%;
-          left: 0;
-          right: 0;
-          background: rgba(18, 18, 18, 0.95);
-          padding: 1rem;
-          width: 100%;
-          gap: 1rem;
-          margin: 0;
-        }
-
-        .nav-links.active {
-          display: flex;
-          flex-direction: column;
         }
 
         .nav-content {
           padding: 0.5rem 1rem;
         }
 
-        .nav-links a {
-          padding: 0.5rem;
+        .nav-links {
+          position: fixed;
+          top: 0;
+          right: -100%;
+          height: 100vh;
+          width: 75%;
+          max-width: 300px;
+          background: var(--surface-color);
+          flex-direction: column;
+          padding: 80px 2rem 2rem;
+          transition: right 0.3s ease;
+          backdrop-filter: blur(10px);
+          border-left: 1px solid rgba(255, 255, 255, 0.1);
+          z-index: 95;
+          overflow-y: auto;
+          -webkit-overflow-scrolling: touch;
+        }
+
+        .nav-links.active {
+          right: 0;
+        }
+
+        .nav-links li {
           width: 100%;
-          text-align: center;
+        }
+
+        .nav-links a {
+          font-size: 1.1rem;
+          padding: 0.8rem 0;
+          width: 100%;
+          justify-content: flex-start;
+        }
+
+        .menu-label {
+          display: block;
+        }
+
+        .github-btn,
+        .discord-btn,
+        .instagram-btn,
+        .theme-btn {
+          width: 100%;
+          height: auto;
+          background: none !important;
+          padding: 0.8rem 0;
+          justify-content: flex-start;
+        }
+
+        .github-btn i,
+        .discord-btn i,
+        .instagram-btn i,
+        .theme-btn i {
+          width: 20px;
+          height: 20px;
+          flex-shrink: 0;
+        }
+
+        body.menu-open {
+          overflow: hidden;
         }
       }
 
@@ -1128,6 +1160,7 @@
               <ul id="language-dropdown" class="language-dropdown">
                 <li><button data-lang="en">English</button></li>
                 <li><button data-lang="de">Deutsch</button></li>
+                <li><button data-lang="in">हिन्दी</button></li>
               </ul>
             </div>
           </li>
@@ -1395,14 +1428,14 @@
         </div>
         <div class="board-grid">
           <div class="board-category" data-aos="fade-up" data-aos-delay="100">
-            <div class="board-card" id="flipper-boards">
+            <div class="board-card collapsed" id="flipper-boards">
               <div class="board-card-header">
                 <button class="category-toggle" aria-expanded="false" aria-controls="flipper-boards-body">
                   <h3><i data-feather="cpu"></i> Flipper-Compatible Boards</h3>
                   <span class="toggle-icon">▾</span>
                 </button>
               </div>
-              <div id="flipper-boards-body" class="board-card-body" style="display: none;">
+              <div id="flipper-boards-body" class="board-card-body" aria-hidden="true">
                 <ul>
                   <li>FlipperHub Rocket <small class="board-tag">Flipper</small></li>
                   <li>JCMK Devboard Pro <small class="board-tag">Flipper</small></li>
@@ -1414,14 +1447,14 @@
           </div>
 
           <div class="board-category" data-aos="fade-up" data-aos-delay="200">
-            <div class="board-card" id="display-boards">
+            <div class="board-card collapsed" id="display-boards">
               <div class="board-card-header">
                 <button class="category-toggle" aria-expanded="false" aria-controls="display-boards-body">
                   <h3><i data-feather="monitor"></i> Display & Touch Supported</h3>
                   <span class="toggle-icon">▾</span>
                 </button>
               </div>
-              <div id="display-boards-body" class="board-card-body" style="display: none;">
+              <div id="display-boards-body" class="board-card-body" aria-hidden="true">
                 <ul>
                   <li>FlipperHub Pocker Marauder <small class="board-tag">Touch</small></li>
                   <li>RabbitLabs Phantom <small class="board-tag">Touch</small></li>
@@ -1445,14 +1478,14 @@
           </div>
 
           <div class="board-category" data-aos="fade-up" data-aos-delay="300">
-            <div class="board-card" id="devkit-boards">
+            <div class="board-card collapsed" id="devkit-boards">
               <div class="board-card-header">
                 <button class="category-toggle" aria-expanded="false" aria-controls="devkit-boards-body">
                   <h3><i data-feather="cpu"></i> DevKits & Other Boards</h3>
                   <span class="toggle-icon">▾</span>
                 </button>
               </div>
-              <div id="devkit-boards-body" class="board-card-body" style="display: none;">
+              <div id="devkit-boards-body" class="board-card-body" aria-hidden="true">
                 <ul>
                   <li>DevKitC-ESP32 <small class="board-tag">DevKit</small></li>
                   <li>DevKitC-ESP32-S2 <small class="board-tag">DevKit</small> <small>(lacks Bluetooth hardware)</small></li>
@@ -1849,16 +1882,6 @@
             preloadManager.preloadSection(nextSection);
           }
         }, 150); // Debounced to avoid excessive calls
-      });
-
-      // Mobile menu functionality
-      document.addEventListener("DOMContentLoaded", function () {
-        const mobileMenuBtn = document.querySelector(".mobile-menu-btn");
-        const navLinks = document.querySelector(".nav-links");
-
-        mobileMenuBtn.addEventListener("click", function () {
-          navLinks.classList.toggle("active");
-        });
       });
     </script>
 
