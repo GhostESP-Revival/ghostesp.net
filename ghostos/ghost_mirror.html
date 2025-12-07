@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GhostESP Mirror</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --bg-dark: #121216;
+            --bg-panel: #1c1c20;
+            --bg-header: #23232a;
+            --accent: #f0f0f0;
+            --accent-dim: #b4b4b4;
+            --text: #dcdce1;
+            --text-dim: #78787d;
+            --success: #22c55e;
+            --warning: #facc15;
+            --error: #ef4444;
+            --border: #37374a;
+        }
+        
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: var(--bg-panel);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+        }
+        
+        .header {
+            background: var(--bg-header);
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 2px solid var(--accent);
+        }
+        
+        .header h1 {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-dim);
+        }
+        
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--error);
+            transition: background 0.3s;
+        }
+        
+        .status-dot.connected { background: var(--success); }
+        
+        .main-content {
+            display: flex;
+            padding: 12px;
+            gap: 12px;
+        }
+        
+        .display-wrapper {
+            background: var(--bg-dark);
+            border-radius: 6px;
+            padding: 2px;
+            border: 1px solid var(--border);
+            position: relative;
+        }
+        
+        #display {
+            display: block;
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+            background: #000;
+            width: 640px;
+            height: 480px;
+        }
+        
+        .display-wrapper {
+            width: 644px;
+            height: 484px;
+        }
+        
+        .overlay {
+            position: absolute;
+            inset: 2px;
+            background: rgba(0,0,0,0.85);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-dim);
+            font-size: 14px;
+            font-weight: 500;
+            border-radius: 4px;
+        }
+        
+        .overlay.hidden { display: none; }
+        
+        .controls {
+            width: 120px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .controls-label {
+            text-align: center;
+            font-size: 11px;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .dpad {
+            display: grid;
+            grid-template-columns: repeat(3, 32px);
+            grid-template-rows: repeat(3, 32px);
+            gap: 4px;
+            justify-content: center;
+        }
+        
+        .dpad-btn {
+            background: var(--bg-header);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text);
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.15s;
+        }
+        
+        .dpad-btn:hover { background: var(--accent); color: #000; }
+        .dpad-btn:active { transform: scale(0.95); }
+        .dpad-btn.empty { visibility: hidden; }
+        
+        .hint {
+            text-align: center;
+            font-size: 10px;
+            color: var(--text-dim);
+        }
+        
+        .divider {
+            height: 1px;
+            background: var(--border);
+            margin: 4px 10px;
+        }
+        
+        .action-btn {
+            padding: 8px 12px;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+            background: var(--bg-header);
+            color: var(--text);
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        
+        .action-btn:hover { background: var(--accent-dim); color: #000; }
+        .action-btn.connect:hover { background: var(--success); }
+        .action-btn.disconnect:hover { background: var(--error); }
+        .action-btn.active { background: var(--accent); color: #000; }
+        
+        .status-bar {
+            background: var(--bg-header);
+            padding: 8px 16px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            font-size: 11px;
+            border-top: 1px solid var(--border);
+        }
+        
+        .stat { color: var(--text-dim); }
+        .stat-value { color: var(--text); margin-left: 4px; }
+        .stat-value.success { color: var(--success); }
+        .stat-value.warning { color: var(--warning); }
+        
+        .scale-controls {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .scale-btn {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+            background: var(--bg-panel);
+            color: var(--text);
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .scale-btn:hover { background: var(--accent); color: #000; }
+        
+        .unsupported {
+            text-align: center;
+            padding: 40px;
+            color: var(--error);
+        }
+        
+        .unsupported a { color: var(--accent); }
+    </style>
+</head>
+<body>
+    <div class="container" id="app">
+        <div class="header">
+            <h1>GhostESP Mirror</h1>
+            <div class="status-dot" id="statusDot"></div>
+        </div>
+        
+        <div class="main-content">
+            <div class="display-wrapper">
+                <canvas id="display" width="320" height="240"></canvas>
+                <div class="overlay" id="overlay">Disconnected</div>
+            </div>
+            
+            <div class="controls">
+                <div class="controls-label">Controls</div>
+                
+                <div class="dpad">
+                    <div class="dpad-btn empty"></div>
+                    <button class="dpad-btn" data-cmd="up">▲</button>
+                    <div class="dpad-btn empty"></div>
+                    <button class="dpad-btn" data-cmd="left">◄</button>
+                    <button class="dpad-btn" data-cmd="select">●</button>
+                    <button class="dpad-btn" data-cmd="right">►</button>
+                    <div class="dpad-btn empty"></div>
+                    <button class="dpad-btn" data-cmd="down">▼</button>
+                    <div class="dpad-btn empty"></div>
+                </div>
+                
+                <div class="hint">WASD / Arrows</div>
+                
+                <div class="divider"></div>
+                
+                <button class="action-btn connect" id="connectBtn">Connect</button>
+                <button class="action-btn disconnect" id="disconnectBtn">Disconnect</button>
+                <button class="action-btn" id="swapBtn">Swap: OFF</button>
+            </div>
+        </div>
+        
+        <div class="status-bar">
+            <span class="stat">Res:<span class="stat-value" id="resolution">320×240</span></span>
+            <span class="stat">FPS:<span class="stat-value" id="fps">0</span></span>
+            <div class="scale-controls">
+                <button class="scale-btn" id="scaleDown">−</button>
+                <span class="stat-value" id="scaleValue">2x</span>
+                <button class="scale-btn" id="scaleUp">+</button>
+            </div>
+            <span class="stat">Frames:<span class="stat-value" id="frameCount">0</span></span>
+        </div>
+    </div>
+    
+    <div class="unsupported" id="unsupported" style="display:none;">
+        <p>Web Serial API not supported.</p>
+        <p>Please use <a href="https://www.google.com/chrome/">Chrome</a> or <a href="https://www.microsoft.com/edge">Edge</a>.</p>
+    </div>
+
+    <script>
+        const MIRROR_MARKER = 0x47455350;
+        const MIRROR_END_MARKER = 0x444E4547;
+        const MIRROR_CMD_INFO = 0x01;
+        const MIRROR_CMD_FRAME = 0x02;
+        const HEADER_SIZE = 17;
+
+        class GhostMirror {
+            constructor() {
+                this.port = null;
+                this.reader = null;
+                this.writer = null;
+                this.running = false;
+                this.width = 320;
+                this.height = 240;
+                this.scale = 2;
+                this.swapBytes = false;
+                this.connected = false;
+                this.buffer = new Uint8Array(0);
+                this.frameCount = 0;
+                this.fpsCounter = 0;
+                this.fps = 0;
+                this.lastFpsTime = performance.now();
+                this.pixelData = new Uint8ClampedArray(320 * 240 * 4);
+                
+                this.canvas = document.getElementById('display');
+                this.ctx = this.canvas.getContext('2d', { willReadFrequently: true });
+                this.overlay = document.getElementById('overlay');
+                this.displayWrapper = document.querySelector('.display-wrapper');
+                this.statusDot = document.getElementById('statusDot');
+                
+                this.initPixelData();
+                this.setupUI();
+                this.startFpsTimer();
+            }
+            
+            initPixelData() {
+                for (let i = 0; i < this.pixelData.length; i += 4) {
+                    this.pixelData[i + 3] = 255;
+                }
+            }
+            
+            setupUI() {
+                document.getElementById('connectBtn').onclick = () => this.connect();
+                document.getElementById('disconnectBtn').onclick = () => this.disconnect();
+                document.getElementById('swapBtn').onclick = () => this.toggleSwap();
+                document.getElementById('scaleDown').onclick = () => this.changeScale(-1);
+                document.getElementById('scaleUp').onclick = () => this.changeScale(1);
+                
+                document.querySelectorAll('.dpad-btn[data-cmd]').forEach(btn => {
+                    btn.onclick = () => this.sendInput(btn.dataset.cmd);
+                });
+                
+                document.addEventListener('keydown', e => {
+                    const keyMap = {
+                        'ArrowUp': 'up', 'w': 'up', 'W': 'up',
+                        'ArrowDown': 'down', 's': 'down', 'S': 'down',
+                        'ArrowLeft': 'left', 'a': 'left', 'A': 'left',
+                        'ArrowRight': 'right', 'd': 'right', 'D': 'right',
+                        'Enter': 'select', ' ': 'select'
+                    };
+                    if (keyMap[e.key]) {
+                        e.preventDefault();
+                        this.sendInput(keyMap[e.key]);
+                    }
+                });
+                
+                this.updateScale();
+            }
+            
+            startFpsTimer() {
+                setInterval(() => {
+                    this.fps = this.fpsCounter;
+                    this.fpsCounter = 0;
+                    this.updateStatus();
+                }, 1000);
+            }
+            
+            async connect() {
+                if (!('serial' in navigator)) {
+                    alert('Web Serial API not supported');
+                    return;
+                }
+                
+                try {
+                    this.port = await navigator.serial.requestPort();
+                    await this.port.open({ baudRate: 115200 });
+                    
+                    this.writer = this.port.writable.getWriter();
+                    this.reader = this.port.readable.getReader();
+                    
+                    this.connected = true;
+                    this.running = true;
+                    this.updateConnectionUI();
+                    
+                    await this.sendCommand('mirror on');
+                    this.readLoop();
+                    
+                } catch (e) {
+                    console.error('Connection failed:', e);
+                    this.connected = false;
+                    this.updateConnectionUI();
+                }
+            }
+            
+            async disconnect() {
+                this.running = false;
+                
+                try {
+                    if (this.writer) {
+                        await this.sendCommand('mirror off');
+                        this.writer.releaseLock();
+                    }
+                    if (this.reader) {
+                        await this.reader.cancel();
+                        this.reader.releaseLock();
+                    }
+                    if (this.port) {
+                        await this.port.close();
+                    }
+                } catch (e) {
+                    console.error('Disconnect error:', e);
+                }
+                
+                this.port = null;
+                this.reader = null;
+                this.writer = null;
+                this.connected = false;
+                this.buffer = new Uint8Array(0);
+                this.updateConnectionUI();
+            }
+            
+            async sendCommand(cmd) {
+                if (this.writer) {
+                    const encoder = new TextEncoder();
+                    await this.writer.write(encoder.encode(cmd + '\n'));
+                }
+            }
+            
+            async sendInput(direction) {
+                await this.sendCommand(`input ${direction}`);
+            }
+            
+            async readLoop() {
+                while (this.running && this.reader) {
+                    try {
+                        const { value, done } = await this.reader.read();
+                        if (done) break;
+                        if (value) {
+                            this.appendBuffer(value);
+                            this.processBuffer();
+                        }
+                    } catch (e) {
+                        if (this.running) {
+                            console.error('Read error:', e);
+                            this.connected = false;
+                            this.updateConnectionUI();
+                        }
+                        break;
+                    }
+                }
+            }
+            
+            appendBuffer(newData) {
+                const combined = new Uint8Array(this.buffer.length + newData.length);
+                combined.set(this.buffer);
+                combined.set(newData, this.buffer.length);
+                this.buffer = combined;
+            }
+            
+            findMarker() {
+                const view = new DataView(this.buffer.buffer, this.buffer.byteOffset);
+                for (let i = 0; i <= this.buffer.length - 4; i++) {
+                    if (view.getUint32(i, true) === MIRROR_MARKER) {
+                        return i;
+                    }
+                }
+                return -1;
+            }
+            
+            processBuffer() {
+                while (this.buffer.length >= HEADER_SIZE) {
+                    const markerPos = this.findMarker();
+                    if (markerPos < 0) {
+                        this.buffer = this.buffer.length > 4 ? this.buffer.slice(-4) : this.buffer;
+                        break;
+                    }
+                    
+                    if (markerPos > 0) {
+                        this.buffer = this.buffer.slice(markerPos);
+                    }
+                    
+                    if (this.buffer.length < HEADER_SIZE) break;
+                    
+                    const view = new DataView(this.buffer.buffer, this.buffer.byteOffset);
+                    const cmd = view.getUint8(4);
+                    const x1 = view.getUint16(5, true);
+                    const y1 = view.getUint16(7, true);
+                    const x2 = view.getUint16(9, true);
+                    const y2 = view.getUint16(11, true);
+                    const dataLen = view.getUint32(13, true);
+                    
+                    if (cmd === MIRROR_CMD_INFO) {
+                        if (x1 !== this.width || y1 !== this.height) {
+                            this.resizeDisplay(x1, y1);
+                        }
+                        this.buffer = this.buffer.slice(HEADER_SIZE);
+                        continue;
+                    }
+                    
+                    if (cmd === MIRROR_CMD_FRAME) {
+                        const totalNeeded = HEADER_SIZE + dataLen + 4;
+                        if (this.buffer.length < totalNeeded) break;
+                        
+                        const pixelData = this.buffer.slice(HEADER_SIZE, HEADER_SIZE + dataLen);
+                        const endMarker = view.getUint32(HEADER_SIZE + dataLen, true);
+                        this.buffer = this.buffer.slice(totalNeeded);
+                        
+                        if (endMarker === MIRROR_END_MARKER && dataLen > 0) {
+                            this.processFrame(x1, y1, x2, y2, pixelData);
+                        }
+                    } else {
+                        this.buffer = this.buffer.slice(1);
+                    }
+                }
+            }
+            
+            resizeDisplay(w, h) {
+                this.width = w;
+                this.height = h;
+                this.canvas.width = w;
+                this.canvas.height = h;
+                this.pixelData = new Uint8ClampedArray(w * h * 4);
+                this.initPixelData();
+                this.updateScale();
+                this.clearDisplay();
+                document.getElementById('resolution').textContent = `${w}×${h}`;
+                console.log(`Display resized to ${w}x${h}`);
+            }
+            
+            processFrame(x1, y1, x2, y2, data) {
+                const w = x2 - x1 + 1;
+                const h = y2 - y1 + 1;
+                const expectedSize = w * h * 2;
+                
+                if (data.length < expectedSize) return;
+                
+                const view = new DataView(data.buffer, data.byteOffset);
+                
+                for (let py = 0; py < h; py++) {
+                    for (let px = 0; px < w; px++) {
+                        const srcIdx = (py * w + px) * 2;
+                        let pixel;
+                        
+                        if (this.swapBytes) {
+                            pixel = view.getUint16(srcIdx, false);
+                        } else {
+                            pixel = view.getUint16(srcIdx, true);
+                        }
+                        
+                        const r = ((pixel >> 11) & 0x1F) << 3;
+                        const g = ((pixel >> 5) & 0x3F) << 2;
+                        const b = (pixel & 0x1F) << 3;
+                        
+                        const destX = x1 + px;
+                        const destY = y1 + py;
+                        
+                        if (destX < this.width && destY < this.height) {
+                            const destIdx = (destY * this.width + destX) * 4;
+                            this.pixelData[destIdx] = r;
+                            this.pixelData[destIdx + 1] = g;
+                            this.pixelData[destIdx + 2] = b;
+                        }
+                    }
+                }
+                
+                const imageData = new ImageData(this.pixelData, this.width, this.height);
+                this.ctx.putImageData(imageData, 0, 0);
+                
+                this.frameCount++;
+                this.fpsCounter++;
+                document.getElementById('frameCount').textContent = this.frameCount;
+            }
+            
+            toggleSwap() {
+                this.swapBytes = !this.swapBytes;
+                document.getElementById('swapBtn').textContent = `Swap: ${this.swapBytes ? 'ON' : 'OFF'}`;
+                document.getElementById('swapBtn').classList.toggle('active', this.swapBytes);
+                this.clearDisplay();
+                this.sendCommand('mirror refresh');
+            }
+            
+            changeScale(delta) {
+                this.scale = Math.max(1, Math.min(4, this.scale + delta));
+                this.updateScale();
+                this.sendCommand('mirror refresh');
+            }
+            
+            updateScale() {
+                const displayW = this.width * this.scale;
+                const displayH = this.height * this.scale;
+                this.canvas.style.width = `${displayW}px`;
+                this.canvas.style.height = `${displayH}px`;
+                document.querySelector('.display-wrapper').style.width = `${displayW + 4}px`;
+                document.querySelector('.display-wrapper').style.height = `${displayH + 4}px`;
+                document.getElementById('scaleValue').textContent = `${this.scale}x`;
+            }
+            
+            clearDisplay() {
+                this.pixelData.fill(0);
+                for (let i = 3; i < this.pixelData.length; i += 4) {
+                    this.pixelData[i] = 255;
+                }
+                this.ctx.fillStyle = '#000';
+                this.ctx.fillRect(0, 0, this.width, this.height);
+            }
+            
+            updateConnectionUI() {
+                this.statusDot.classList.toggle('connected', this.connected);
+                this.overlay.classList.toggle('hidden', this.connected);
+                this.overlay.textContent = this.connected ? '' : 'Disconnected';
+            }
+            
+            updateStatus() {
+                const fpsEl = document.getElementById('fps');
+                fpsEl.textContent = this.fps;
+                fpsEl.className = 'stat-value ' + (this.fps >= 10 ? 'success' : this.fps >= 5 ? 'warning' : '');
+            }
+        }
+        
+        if ('serial' in navigator) {
+            document.getElementById('unsupported').style.display = 'none';
+            new GhostMirror();
+        } else {
+            document.getElementById('app').style.display = 'none';
+            document.getElementById('unsupported').style.display = 'block';
+        }
+    </script>
+</body>
+</html>

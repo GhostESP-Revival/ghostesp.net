@@ -116,7 +116,7 @@ h1::before {
   font-family: var(--font-mono);
   flex: 1;
   min-height: 0;
-  max-height: calc(100vh - 20rem);
+  max-height: calc(100vh - 24rem);
   overflow-y: auto;
   margin-bottom: 1rem;
   border: 1px solid var(--border-color);
@@ -546,7 +546,7 @@ select.btn {
   .console {
     flex: 1;
     min-height: 0;
-    max-height: calc(100vh - 22rem);
+    max-height: calc(100vh - 26rem);
   }
 
   .input-group {

@@ -14,6 +14,7 @@
 
     <!-- Custom styles -->
     <link rel="stylesheet" href="css/serial.css" />
+    <link rel="stylesheet" href="css/serial-mirror.css" />
   </head>
   
   <!-- Google tag (gtag.js) -->
@@ -29,7 +30,7 @@
   <body>
     <div class="serial-container">
       <div class="header">
-        <h1>Serial Console</h1>
+        <h1>Serial Tools</h1>
         <div class="status-bar">
           <div class="status-indicator">
             <div class="status-dot" id="connectionDot"></div>
@@ -41,31 +42,42 @@
         </div>
       </div>
 
-      <div class="console" id="console">
-        <div class="console-output" id="output"></div>
+      <div class="tab-bar">
+        <button class="tab-btn active" data-tab="console">Console</button>
+        <button class="tab-btn" data-tab="mirror">Screen Mirror</button>
       </div>
 
-      <div class="controls-container">
-        <div class="control-panel">
-          <button class="btn btn-primary" id="connectButton">Connect</button>
-          <button class="btn" id="clearButton">Clear Console</button>
-          <button class="btn" id="exportButton">Export Log</button>
-          <select class="btn" id="baudSelect">
-            <option value="9600">9600 baud</option>
-            <option value="115200" selected>115200 baud</option>
-            <option value="921600">921600 baud</option>
-          </select>
+      <div class="tab-content active" id="tab-console">
+        <div class="console" id="console">
+          <div class="console-output" id="output"></div>
         </div>
 
-        <div class="input-group">
-          <input
-            type="text"
-            class="serial-input"
-            id="serialInput"
-            placeholder="Type a command and press Enter..."
-          />
-          <button class="btn" id="sendButton">Send</button>
+        <div class="controls-container">
+          <div class="control-panel">
+            <button class="btn btn-primary" id="connectButton">Connect</button>
+            <button class="btn" id="clearButton">Clear Console</button>
+            <button class="btn" id="exportButton">Export Log</button>
+            <select class="btn" id="baudSelect">
+              <option value="9600">9600 baud</option>
+              <option value="115200" selected>115200 baud</option>
+              <option value="921600">921600 baud</option>
+            </select>
+          </div>
+
+          <div class="input-group">
+            <input
+              type="text"
+              class="serial-input"
+              id="serialInput"
+              placeholder="Type a command and press Enter..."
+            />
+            <button class="btn" id="sendButton">Send</button>
+          </div>
         </div>
+      </div>
+
+      <div class="tab-content" id="tab-mirror">
+        <div class="mirror-root" id="mirrorRoot"></div>
       </div>
     </div>
 
@@ -109,6 +121,7 @@
     </footer>
 
     <script src="/js/serial.js"></script>
+    <script src="/js/serial-mirror.js"></script>
     <script>
       document.getElementById("footerClose").addEventListener("click", () => {
         const footer = document.querySelector(".footer");

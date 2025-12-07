@@ -1,0 +1,1754 @@
+:root {
+  --ghostos-bg: #050505;
+  --ghostos-bg-alt: #101010;
+  --ghostos-surface: rgba(12, 12, 12, 0.98);
+  --ghostos-border: rgba(255, 255, 255, 0.08);
+  --ghostos-border-strong: rgba(255, 255, 255, 0.32);
+  --ghostos-accent: #ffffff;
+  --ghostos-accent-soft: rgba(255, 255, 255, 0.18);
+  --ghostos-accent-strong: rgba(255, 255, 255, 0.32);
+  --ghostos-text: #f5f5f5;
+  --ghostos-text-soft: #a0a0a0;
+  --ghostos-danger: #ff4d6a;
+  --ghostos-shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.7);
+  --ghostos-radius-window: 10px;
+  --ghostos-topbar-height: 36px;
+  --ghostos-taskbar-height: 40px;
+  --ghostos-window-min-width: 280px;
+  --ghostos-window-min-height: 190px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  overscroll-behavior-y: none;
+}
+
+body {
+  font-family: "Chakra Petch", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: linear-gradient(180deg, var(--ghostos-bg), #000000);
+  color: var(--ghostos-text);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.ghostos-root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(180deg, var(--ghostos-bg), var(--ghostos-bg-alt));
+  position: relative;
+  overflow: hidden;
+}
+
+.ghostos-root::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+  opacity: 0.9;
+  mix-blend-mode: soft-light;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.ghostos-root::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url('../images/ghostespdotnet.png');
+  background-repeat: no-repeat;
+  background-position: right 32px bottom 48px;
+  background-size: min(260px, 42vw);
+  opacity: 0.16;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@media (max-width: 640px) {
+  .ghostos-root::after {
+    background-position: center bottom 32px;
+    background-size: min(200px, 70vw);
+    opacity: 0.18;
+  }
+}
+
+.ghostos-sprite {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+.ghostos-icon {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  display: block;
+}
+
+.ghostos-icon-large {
+  width: 24px;
+  height: 24px;
+}
+
+.ghostos-icon path,
+.ghostos-icon rect,
+.ghostos-icon circle,
+.ghostos-icon line,
+.ghostos-icon polyline {
+  stroke: var(--ghostos-text-soft);
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+}
+
+.ghostos-topbar,
+.ghostos-taskbar,
+.ghostos-main {
+  position: relative;
+  z-index: 1;
+}
+
+.ghostos-topbar {
+  height: var(--ghostos-topbar-height);
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  padding: 0 10px;
+  background:
+    linear-gradient(to bottom, rgba(8, 8, 18, 0.95), rgba(4, 4, 10, 0.98));
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(12px);
+}
+
+.ghostos-topbar-left,
+.ghostos-topbar-center,
+.ghostos-topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ghostos-topbar-center {
+  flex: 1;
+  justify-content: center;
+  font-family: "Share Tech Mono", monospace;
+  font-size: 0.85rem;
+  color: var(--ghostos-text-soft);
+}
+
+#ghostos-active-title {
+  max-width: 360px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.ghostos-topbar-right {
+  justify-content: flex-end;
+}
+
+.ghostos-menu-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--ghostos-text);
+  font-family: "Share Tech Mono", monospace;
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+  cursor: default;
+}
+
+.ghostos-menu-logo {
+  font-size: 0.9rem;
+}
+
+.ghostos-menu-label {
+  display: none;
+  text-transform: uppercase;
+}
+
+.ghostos-status-link {
+  font-family: "Share Tech Mono", monospace;
+  font-size: 0.8rem;
+  color: var(--ghostos-text-soft);
+  text-decoration: none;
+  padding: 3px 8px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.ghostos-status-link:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.14);
+  color: var(--ghostos-text);
+}
+
+.ghostos-clock {
+  font-family: "Share Tech Mono", monospace;
+  font-size: 0.8rem;
+  color: var(--ghostos-text-soft);
+  padding-left: 10px;
+}
+
+.ghostos-main {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+
+.ghostos-desktop {
+  position: absolute;
+  inset: 0;
+  padding: 10px;
+  display: flex;
+  align-items: stretch;
+  justify-content: stretch;
+}
+
+.ghostos-desktop-icons {
+  position: absolute;
+  top: 18px;
+  left: 24px;
+  right: 24px;
+  bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 0;
+}
+
+.ghostos-window-layer {
+  position: relative;
+  flex: 1;
+  border-radius: 12px;
+  border: none;
+  background: transparent;
+  box-shadow: 0 40px 90px rgba(0, 0, 0, 0.9);
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.ghostos-desktop-icon {
+  width: 96px;
+  padding: 6px 4px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  user-select: none;
+  touch-action: none;
+  transition: background 0.13s ease, box-shadow 0.13s ease, transform 0.08s ease;
+}
+
+.ghostos-desktop-icon:hover {
+  background: rgba(255, 255, 255, 0.03);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08);
+  transform: translateY(-1px);
+}
+
+button.ghostos-desktop-icon {
+  border: none;
+  background: transparent;
+}
+
+.ghostos-desktop-icon-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  background: #050505;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.04) inset,
+    0 -1px 0 rgba(0, 0, 0, 0.9) inset,
+    0 8px 18px rgba(0, 0, 0, 0.9);
+  transition: box-shadow 0.12s ease, transform 0.08s ease, border-color 0.12s ease;
+}
+
+.ghostos-desktop-icon-label {
+  font-family: "Share Tech Mono", monospace;
+  font-size: 0.78rem;
+  color: var(--ghostos-text);
+  text-align: center;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.9);
+}
+
+.ghostos-desktop-icon:hover .ghostos-desktop-icon-icon {
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.06) inset,
+    0 -1px 0 rgba(0, 0, 0, 0.9) inset,
+    0 10px 22px rgba(0, 0, 0, 1);
+}
+
+.ghostos-desktop-icon:active .ghostos-desktop-icon-icon {
+  transform: translateY(1px);
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 1) inset,
+    0 0 0 1px rgba(255, 255, 255, 0.06),
+    0 3px 8px rgba(0, 0, 0, 0.9);
+}
+
+.ghostos-window {
+  position: absolute;
+  top: 22px;
+  left: 140px;
+  min-width: var(--ghostos-window-min-width);
+  min-height: var(--ghostos-window-min-height);
+  max-width: calc(100% - 24px);
+  max-height: calc(100% - 26px);
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--ghostos-radius-window);
+  background: var(--ghostos-surface);
+  border: 1px solid var(--ghostos-border);
+  box-shadow: var(--ghostos-shadow-soft);
+  overflow: hidden;
+  resize: both;
+  box-sizing: border-box;
+  pointer-events: auto;
+}
+
+.ghostos-window--active {
+  border-color: var(--ghostos-border-strong);
+  box-shadow: 0 22px 70px rgba(0, 0, 0, 0.95);
+}
+
+.ghostos-window--minimized {
+  display: none;
+}
+
+.ghostos-window-titlebar {
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8px 0 10px;
+  background: linear-gradient(to right, rgba(20, 20, 35, 0.98), rgba(14, 14, 26, 0.98));
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  cursor: default;
+  user-select: none;
+  touch-action: none;
+}
+
+.ghostos-window-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: "Share Tech Mono", monospace;
+  font-size: 0.78rem;
+  color: var(--ghostos-text-soft);
+}
+
+.ghostos-window-title-icon {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ghostos-window-controls {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.ghostos-window-control {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.7);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.65rem;
+  line-height: 1;
+  cursor: pointer;
+  color: rgba(0, 0, 0, 0.75);
+}
+
+.ghostos-window-control[data-action="minimize"] {
+  background: #f6c453;
+}
+
+.ghostos-window-control[data-action="maximize"] {
+  background: #5ad072;
+}
+
+.ghostos-window-control[data-action="close"] {
+  background: #ff5f57;
+}
+
+.ghostos-window-body {
+  flex: 1;
+  padding: 12px 14px 14px;
+  overflow: auto;
+  font-size: 0.9rem;
+  color: var(--ghostos-text-soft);
+}
+
+.ghostos-pane h1,
+.ghostos-pane h2,
+.ghostos-pane h3 {
+  font-family: "Share Tech Mono", monospace;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.ghostos-pane h1 {
+  font-size: 1.4rem;
+  margin-bottom: 6px;
+}
+
+.ghostos-pane h2 {
+  font-size: 1rem;
+  margin-bottom: 6px;
+}
+
+.ghostos-pane p {
+  margin-bottom: 10px;
+}
+
+.ghostos-pane-section {
+  margin-top: 12px;
+}
+
+.ghostos-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 8px 0 12px;
+}
+
+.ghostos-chip {
+  padding: 3px 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  font-size: 0.75rem;
+  font-family: "Share Tech Mono", monospace;
+  color: var(--ghostos-text-soft);
+}
+
+.ghostos-button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 10px 0 4px;
+}
+
+.ghostos-button {
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  padding: 6px 12px;
+  font-size: 0.8rem;
+  font-family: "Share Tech Mono", monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--ghostos-text);
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.12s ease, border-color 0.12s ease, transform 0.04s ease;
+}
+
+.ghostos-button-primary {
+  background: #f5f5f5;
+  color: #000000;
+  border-color: rgba(255, 255, 255, 0.24);
+}
+
+.ghostos-button:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.24);
+}
+
+.ghostos-button-primary:hover {
+  filter: brightness(1.06);
+}
+
+.ghostos-button:active {
+  transform: scale(0.97);
+}
+
+.ghostos-link-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.ghostos-link {
+  font-family: "Share Tech Mono", monospace;
+  font-size: 0.78rem;
+  color: var(--ghostos-text);
+  text-decoration: none;
+}
+
+.ghostos-link:hover {
+  text-decoration: underline;
+}
+
+.ghostos-list {
+  list-style: none;
+  padding-left: 0;
+  margin: 6px 0 4px;
+}
+
+.ghostos-list li {
+  padding: 4px 0;
+}
+
+.ghostos-taskbar {
+  height: var(--ghostos-taskbar-height);
+  display: flex;
+  align-items: center;
+  padding: 4px 8px;
+  background: linear-gradient(to top, #050505, #0a0a0a);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 -14px 40px rgba(0, 0, 0, 0.9);
+  gap: 8px;
+}
+
+.ghostos-launcher-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--ghostos-text);
+  font-family: "Share Tech Mono", monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.ghostos-launcher-icon {
+  font-size: 0.85rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  transform: translateY(-1px);
+}
+
+.ghostos-taskbar-windows {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0 4px;
+  overflow-x: auto;
+}
+
+.ghostos-taskbar-item {
+  min-width: 120px;
+  max-width: 220px;
+  padding: 4px 10px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--ghostos-text-soft);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: "Share Tech Mono", monospace;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.ghostos-taskbar-item-icon {
+  width: 16px;
+  height: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+}
+
+.ghostos-taskbar-item.is-active {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.18);
+  color: var(--ghostos-text);
+}
+
+.ghostos-taskbar-item.is-minimized {
+  opacity: 0.6;
+}
+
+.ghostos-taskbar-tray {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  min-width: 140px;
+}
+
+.ghostos-taskbar-label {
+  font-family: "Share Tech Mono", monospace;
+  font-size: 0.78rem;
+  color: var(--ghostos-text-soft);
+}
+
+.ghostos-root.ghostos--mobile .ghostos-desktop {
+  padding: 4px;
+}
+
+.ghostos-root.ghostos--mobile .ghostos-desktop-icons {
+  left: 12px;
+  right: 12px;
+  width: auto;
+  max-width: none;
+}
+
+.ghostos-root.ghostos--mobile .ghostos-window-layer {
+  border-radius: 10px;
+}
+
+.ghostos-root.ghostos--mobile .ghostos-window {
+  border-radius: 10px;
+  min-width: clamp(220px, 90vw, 520px);
+  min-height: clamp(180px, 72vh, 520px);
+  max-width: calc(100% - 16px);
+  max-height: calc(100% - 20px);
+}
+
+@media (max-width: 840px) {
+  .ghostos-desktop {
+    flex-direction: column;
+  }
+
+  .ghostos-desktop-icons {
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+
+  .ghostos-window-layer {
+    margin-top: 4px;
+  }
+}
+
+@media (max-width: 640px) {
+  .ghostos-topbar {
+    padding: 0 6px;
+  }
+
+  .ghostos-menu-label {
+    display: none;
+  }
+
+  .ghostos-status-link {
+    display: none;
+  }
+
+  .ghostos-clock {
+    padding-left: 0;
+  }
+
+  .ghostos-launcher-label {
+    display: none;
+  }
+
+  .ghostos-taskbar-label {
+    display: none;
+  }
+}
+
+.ghostos-login-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(circle at top, rgba(255, 255, 255, 0.08), transparent 55%),
+    rgba(0, 0, 0, 0.88);
+  backdrop-filter: blur(18px);
+  z-index: 999;
+  transition: opacity 0.2s ease;
+}
+
+.ghostos-login-overlay--hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.ghostos-login-window {
+  min-width: 260px;
+  max-width: 360px;
+  border-radius: 14px;
+  border: 1px solid var(--ghostos-border-strong);
+  background: var(--ghostos-surface);
+  box-shadow: var(--ghostos-shadow-soft);
+  padding: 16px 18px 18px;
+}
+
+.ghostos-login-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.ghostos-login-logo {
+  width: 26px;
+  height: 26px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #050505;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.ghostos-login-title {
+  font-family: "Share Tech Mono", monospace;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  color: var(--ghostos-text);
+}
+
+.ghostos-login-body {
+  font-size: 0.85rem;
+  color: var(--ghostos-text-soft);
+}
+
+.ghostos-login-loading {
+  margin-bottom: 10px;
+}
+
+.ghostos-login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ghostos-login-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-family: "Share Tech Mono", monospace;
+  font-size: 0.78rem;
+}
+
+.ghostos-login-field span {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ghostos-text-soft);
+}
+
+.ghostos-login-field input {
+  border-radius: 8px;
+  border: 1px solid var(--ghostos-border);
+  background: rgba(0, 0, 0, 0.6);
+  padding: 6px 8px;
+  color: var(--ghostos-text);
+  font-family: "Chakra Petch", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.8rem;
+}
+
+.ghostos-login-field input:focus {
+  outline: none;
+  border-color: var(--ghostos-accent-strong);
+}
+
+.ghostos-login-submit {
+  margin-top: 4px;
+  width: 100%;
+}
+
+.ghostos-launcher-menu {
+  position: absolute;
+  left: 8px;
+  bottom: calc(var(--ghostos-taskbar-height) + 8px);
+  width: 260px;
+  max-height: 440px;
+  border-radius: 12px;
+  border: 1px solid var(--ghostos-border-strong);
+  background: rgba(10, 10, 10, 0.98);
+  box-shadow: var(--ghostos-shadow-soft);
+  padding: 8px 8px 10px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(8px);
+  overflow-y: auto;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+  z-index: 50;
+}
+
+.ghostos-launcher-menu--open {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.ghostos-launcher-menu-header {
+  font-family: "Share Tech Mono", monospace;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ghostos-text-soft);
+  padding: 2px 4px 6px;
+}
+
+.ghostos-launcher-menu-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ghostos-launcher-menu-item {
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  background: transparent;
+  padding: 5px 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--ghostos-text-soft);
+  font-family: "Share Tech Mono", monospace;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.ghostos-launcher-menu-item:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.16);
+  color: var(--ghostos-text);
+}
+
+.ghostos-launcher-menu-item-icon {
+  width: 18px;
+  height: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ghostos-launcher-menu-item-label {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ghostos-releases-status {
+  margin-top: 6px;
+  font-size: 0.8rem;
+  color: var(--ghostos-text-soft);
+}
+
+.ghostos-releases-status--error {
+  color: var(--ghostos-danger);
+}
+
+.ghostos-releases-card {
+  margin-top: 8px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--ghostos-border);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.ghostos-releases-header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.ghostos-releases-title {
+  font-family: "Share Tech Mono", monospace;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ghostos-text);
+}
+
+.ghostos-releases-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 0.78rem;
+  color: var(--ghostos-text-soft);
+  margin-bottom: 6px;
+}
+
+.ghostos-releases-assets li {
+  padding: 2px 0;
+}
+
+.ghostos-flipper-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 0.8rem;
+  color: var(--ghostos-text-soft);
+}
+
+.ghostos-hub {
+  display: flex;
+  flex-direction: column;
+}
+
+.ghostos-hub-subtitle {
+  margin-bottom: 8px;
+}
+
+.ghostos-hub-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 260px));
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.ghostos-hub-card {
+  border-radius: 10px;
+  border: 1px solid var(--ghostos-border);
+  padding: 8px 10px 10px;
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.ghostos-hub-card-title {
+  font-family: "Share Tech Mono", monospace;
+  font-size: 0.9rem;
+  color: var(--ghostos-text);
+  margin-bottom: 4px;
+}
+
+.ghostos-hub-card-text {
+  font-size: 0.82rem;
+  color: var(--ghostos-text-soft);
+}
+
+.ghostos-hub-links {
+  margin-top: 10px;
+}
+
+.ghostos-boards {
+  display: flex;
+  flex-direction: column;
+}
+
+.ghostos-boards-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 8px 0 6px;
+}
+
+.ghostos-boards-filter.is-active {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.ghostos-boards-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 280px));
+  justify-content: center;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.ghostos-boards-card {
+  border-radius: 10px;
+  border: 1px solid var(--ghostos-border);
+  padding: 8px 10px 10px;
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.ghostos-boards-card-title {
+  font-family: "Share Tech Mono", monospace;
+  font-size: 0.9rem;
+  color: var(--ghostos-text);
+  margin-bottom: 4px;
+}
+
+.ghostos-boards-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 6px;
+}
+
+.ghostos-boards-tag {
+  font-family: "Share Tech Mono", monospace;
+  font-size: 0.7rem;
+  padding: 2px 6px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: var(--ghostos-text-soft);
+}
+
+.ghostos-boards-card-description {
+  font-size: 0.82rem;
+  color: var(--ghostos-text-soft);
+}
+
+.ghostos-boards-card-image {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 6px;
+}
+
+.ghostos-flipper {
+  display: flex;
+  flex-direction: column;
+}
+
+.ghostos-flipper-content {
+  margin-top: 8px;
+}
+
+.ghostos-flipper-title {
+  margin-top: 4px;
+  font-family: "Share Tech Mono", monospace;
+  font-size: 0.9rem;
+  color: var(--ghostos-text);
+}
+
+.ghostos-flipper-features {
+  list-style: none;
+  padding-left: 0;
+  margin: 8px 0 0;
+  font-size: 0.82rem;
+  color: var(--ghostos-text-soft);
+}
+
+.ghostos-flipper-features li {
+  padding: 2px 0;
+}
+
+.ghostos-serial-root {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.ghostos-serial-root .serial-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  gap: 8px;
+}
+
+.ghostos-serial-root .header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: rgba(10, 10, 18, 0.95);
+  border: 1px solid var(--ghostos-border);
+}
+
+.ghostos-serial-root h1 {
+  margin: 0;
+  font-family: "Share Tech Mono", monospace;
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ghostos-text);
+}
+
+.ghostos-serial-root .status-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  font-size: 0.78rem;
+}
+
+.ghostos-serial-root .status-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--ghostos-text-soft);
+}
+
+.ghostos-serial-root .status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ff4d6a;
+  box-shadow: 0 0 6px rgba(255, 77, 106, 0.9);
+}
+
+.ghostos-serial-root .status-dot.connected {
+  background: #5ad072;
+  box-shadow: 0 0 6px rgba(90, 208, 114, 0.9);
+}
+
+.ghostos-serial-root .console {
+  flex: 1;
+  min-height: 0;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: rgba(5, 5, 10, 0.96);
+  border: 1px solid var(--ghostos-border);
+  overflow: auto;
+  font-family: "Share Tech Mono", monospace;
+  font-size: 0.8rem;
+}
+
+.ghostos-serial-root .console-output {
+  color: var(--ghostos-text-soft);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.ghostos-serial-root .controls-container {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ghostos-serial-root .control-panel {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.ghostos-serial-root .input-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.ghostos-serial-root .serial-input {
+  flex: 1;
+  min-width: 0;
+  border-radius: 999px;
+  border: 1px solid var(--ghostos-border);
+  background: rgba(0, 0, 0, 0.7);
+  color: var(--ghostos-text);
+  padding: 6px 10px;
+  font-family: "Share Tech Mono", monospace;
+  font-size: 0.78rem;
+}
+
+.ghostos-serial-root .serial-input:focus {
+  outline: none;
+  border-color: var(--ghostos-accent-strong);
+}
+
+.ghostos-serial-root .serial-input:disabled {
+  opacity: 0.6;
+}
+
+.ghostos-serial-root .btn {
+  border-radius: 999px;
+  border: 1px solid var(--ghostos-border);
+  padding: 5px 10px;
+  font-size: 0.75rem;
+  font-family: "Share Tech Mono", monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--ghostos-text);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.ghostos-serial-root .btn-primary {
+  background: #f5f5f5;
+  color: #000000;
+  border-color: var(--ghostos-border-strong);
+}
+
+.ghostos-serial-root .btn:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.ghostos-serial-root .btn:not(:disabled):hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.ghostos-serial-root .btn-primary:not(:disabled):hover {
+  filter: brightness(1.03);
+}
+
+.ghostos-serial-root .dialog-overlay {
+  position: absolute;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(6px);
+  z-index: 10;
+}
+
+.ghostos-serial-root .dialog {
+  max-width: 320px;
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: var(--ghostos-surface);
+  border: 1px solid var(--ghostos-border-strong);
+  color: var(--ghostos-text-soft);
+  font-size: 0.85rem;
+}
+
+.ghostos-serial-root .dialog h2 {
+  margin: 0 0 6px;
+  font-family: "Share Tech Mono", monospace;
+  font-size: 0.9rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ghostos-text);
+}
+
+.ghostos-serial-root .dialog p {
+  margin: 0 0 10px;
+}
+
+@media (max-width: 640px) {
+  .ghostos-serial-root .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .ghostos-serial-root .status-bar {
+    justify-content: flex-start;
+  }
+
+  .ghostos-serial-root .control-panel,
+  .ghostos-serial-root .input-group {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .ghostos-serial-root .btn {
+    width: 100%;
+  }
+}
+
+.ghostos-serial-root .help-section-header {
+  color: #00bcd4;
+  font-weight: bold;
+}
+
+.ghostos-serial-root .command-name {
+  color: #8bc34a;
+  font-weight: bold;
+}
+
+.ghostos-serial-root .command-usage {
+  color: #81d4fa;
+}
+
+.ghostos-serial-root .command-flag {
+  color: #f7a8b8;
+}
+
+.ghostos-serial-root .flag-description {
+  color: #e2b4de;
+}
+
+.ghostos-serial-root .section-header {
+  color: #f06292;
+  font-weight: bold;
+  font-size: 1.05em;
+  padding: 4px 0;
+}
+
+.ghostos-serial-root .command-input {
+  color: #4db6ac;
+  font-weight: bold;
+}
+
+.ghostos-serial-root .connection-status {
+  color: #90caf9;
+  font-weight: bold;
+}
+
+.ghostos-serial-root .warning {
+  color: #ffb74d;
+}
+
+.ghostos-serial-root .separator {
+  color: #b0bec5;
+  font-style: italic;
+}
+
+.ghostos-serial-root .regular-text {
+  color: #e0e0e0;
+}
+
+.ghostos-serial-root .status-message {
+  color: #4fc3f7;
+  font-weight: 500;
+}
+
+.ghostos-serial-root .scan-summary {
+  color: #81c784;
+  font-weight: bold;
+  padding: 2px 0;
+}
+
+.ghostos-serial-root .ap-index {
+  color: #ffb74d;
+  font-weight: bold;
+}
+
+.ghostos-serial-root .ap-label {
+  color: #b0bec5;
+  padding-left: 12px;
+}
+
+.ghostos-serial-root .ap-ssid {
+  color: #4db6ac;
+  font-weight: 500;
+}
+
+.ghostos-serial-root .ap-rssi {
+  color: #ff8a65;
+}
+
+.ghostos-serial-root .ap-company {
+  color: #9575cd;
+}
+
+.ghostos-flasher-root {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.ghostos-flasher-frame-wrap {
+  flex: 1;
+  min-height: 0;
+  border-radius: 8px;
+  border: 1px solid var(--ghostos-border);
+  overflow: hidden;
+  background: #000000;
+}
+
+.ghostos-flasher-frame {
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: #000000;
+}
+
+.ghostos-settings-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.ghostos-settings-row span {
+  font-family: "Share Tech Mono", monospace;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ghostos-text-soft);
+}
+
+.ghostos-settings-row input[type="color"] {
+  appearance: none;
+  -webkit-appearance: none;
+  border-radius: 999px;
+  border: 1px solid var(--ghostos-border);
+  width: 40px;
+  height: 22px;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.ghostos-settings-row input[type="color"]::-webkit-color-swatch-wrapper {
+  padding: 0;
+  border-radius: 999px;
+}
+
+.ghostos-settings-row input[type="color"]::-webkit-color-swatch {
+  border-radius: 999px;
+  border: none;
+}
+
+.ghostos-settings-row input[type="color"]::-moz-color-swatch {
+  border-radius: 999px;
+  border: none;
+}
+
+.ghostos-mirror-root {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+.mirror-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.mirror-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 10px;
+  border-radius: 6px;
+  background: rgba(10, 10, 18, 0.95);
+  border: 1px solid var(--ghostos-border);
+  flex-shrink: 0;
+}
+
+.mirror-title {
+  font-family: "Share Tech Mono", monospace;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ghostos-text);
+}
+
+.mirror-status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ff4d6a;
+  box-shadow: 0 0 6px rgba(255, 77, 106, 0.9);
+  transition: background 0.3s, box-shadow 0.3s;
+}
+
+.mirror-status-dot.connected {
+  background: #5ad072;
+  box-shadow: 0 0 6px rgba(90, 208, 114, 0.9);
+}
+
+.mirror-main {
+  flex: 1;
+  display: flex;
+  gap: 10px;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.mirror-display-wrapper {
+  flex: 1;
+  min-width: 0;
+  background: rgba(5, 5, 10, 0.96);
+  border-radius: 6px;
+  padding: 2px;
+  border: 1px solid var(--ghostos-border);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+#mirrorDisplay {
+  display: block;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  background: #000;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.mirror-overlay {
+  position: absolute;
+  inset: 2px;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ghostos-text-soft);
+  font-family: "Share Tech Mono", monospace;
+  font-size: 0.8rem;
+  font-weight: 500;
+  border-radius: 4px;
+}
+
+.mirror-overlay.hidden {
+  display: none;
+}
+
+.mirror-controls {
+  width: 110px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.mirror-controls-label {
+  text-align: center;
+  font-family: "Share Tech Mono", monospace;
+  font-size: 0.65rem;
+  color: var(--ghostos-text-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.mirror-dpad {
+  display: grid;
+  grid-template-columns: repeat(3, 28px);
+  grid-template-rows: repeat(3, 28px);
+  gap: 3px;
+  justify-content: center;
+}
+
+.mirror-dpad-btn {
+  background: rgba(10, 10, 18, 0.95);
+  border: 1px solid var(--ghostos-border);
+  border-radius: 5px;
+  color: var(--ghostos-text);
+  font-size: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+}
+
+.mirror-dpad-btn:hover {
+  background: var(--ghostos-accent);
+  color: #000;
+}
+
+.mirror-dpad-btn:active {
+  transform: scale(0.95);
+}
+
+.mirror-dpad-btn.empty {
+  visibility: hidden;
+}
+
+.mirror-hint {
+  text-align: center;
+  font-size: 0.6rem;
+  color: var(--ghostos-text-soft);
+  font-family: "Share Tech Mono", monospace;
+}
+
+.mirror-divider {
+  height: 1px;
+  background: var(--ghostos-border);
+  margin: 0 6px;
+}
+
+.mirror-action-btn {
+  padding: 5px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--ghostos-border);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--ghostos-text);
+  font-family: "Share Tech Mono", monospace;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.mirror-action-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.mirror-action-btn.connect:hover {
+  background: #5ad072;
+  color: #000;
+}
+
+.mirror-action-btn.disconnect:hover {
+  background: #ff4d6a;
+  color: #000;
+}
+
+.mirror-action-btn.active {
+  background: var(--ghostos-accent);
+  color: #000;
+}
+
+.mirror-status-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  padding: 5px 10px;
+  border-radius: 6px;
+  background: rgba(10, 10, 18, 0.95);
+  border: 1px solid var(--ghostos-border);
+  font-family: "Share Tech Mono", monospace;
+  font-size: 0.7rem;
+  flex-shrink: 0;
+}
+
+.mirror-stat {
+  color: var(--ghostos-text-soft);
+}
+
+.mirror-stat-value {
+  color: var(--ghostos-text);
+  margin-left: 3px;
+}
+
+.mirror-stat-value.success {
+  color: #5ad072;
+}
+
+.mirror-stat-value.warning {
+  color: #f6c453;
+}
+
+.mirror-scale-controls {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.mirror-scale-btn {
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  border: 1px solid var(--ghostos-border);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--ghostos-text);
+  cursor: pointer;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+}
+
+.mirror-scale-btn:hover {
+  background: var(--ghostos-accent);
+  color: #000;
+}
+
+.mirror-unsupported {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+  color: #ff4d6a;
+  font-family: "Share Tech Mono", monospace;
+  font-size: 0.85rem;
+}
+
+.ghostos-window[data-app-id="mirror"] .ghostos-window-body {
+  padding: 8px;
+}
+
+@container (max-width: 600px) {
+  .mirror-main {
+    flex-direction: column;
+  }
+
+  .mirror-controls {
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .mirror-controls-label {
+    display: none;
+  }
+
+  .mirror-divider {
+    display: none;
+  }
+
+  .mirror-dpad {
+    order: 1;
+  }
+
+  .mirror-action-btn {
+    order: 2;
+  }
+}
+
+@media (max-width: 700px) {
+  .mirror-main {
+    flex-direction: column;
+  }
+
+  .mirror-controls {
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .mirror-controls-label {
+    display: none;
+  }
+
+  .mirror-divider {
+    display: none;
+  }
+
+  .mirror-status-bar {
+    justify-content: center;
+  }
+}
