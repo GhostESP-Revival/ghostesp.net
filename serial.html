@@ -15,6 +15,7 @@
     <!-- Custom styles -->
     <link rel="stylesheet" href="css/serial.css" />
     <link rel="stylesheet" href="css/serial-mirror.css" />
+    <link rel="stylesheet" href="css/serial-files.css" />
   </head>
   
   <!-- Google tag (gtag.js) -->
@@ -45,6 +46,7 @@
       <div class="tab-bar">
         <button class="tab-btn active" data-tab="console">Console</button>
         <button class="tab-btn" data-tab="mirror">Screen Mirror</button>
+        <button class="tab-btn" data-tab="files">Files</button>
       </div>
 
       <div class="tab-content active" id="tab-console">
@@ -78,6 +80,10 @@
 
       <div class="tab-content" id="tab-mirror">
         <div class="mirror-root" id="mirrorRoot"></div>
+      </div>
+
+      <div class="tab-content" id="tab-files">
+        <div class="files-root" id="filesRoot"></div>
       </div>
     </div>
 
@@ -122,6 +128,7 @@
 
     <script src="/js/serial.js"></script>
     <script src="/js/serial-mirror.js"></script>
+    <script src="/js/serial-files.js"></script>
     <script>
       document.getElementById("footerClose").addEventListener("click", () => {
         const footer = document.querySelector(".footer");
