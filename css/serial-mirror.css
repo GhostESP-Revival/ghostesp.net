@@ -212,6 +212,24 @@
   margin: 0 6px;
 }
 
+.mirror-baud-select {
+  width: 100%;
+  padding: 0.35rem 0.5rem;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  background: var(--surface-color);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  cursor: pointer;
+  outline: none;
+}
+
+.mirror-baud-select:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 1px rgba(255, 107, 0, 0.5);
+}
+
 .mirror-action-btn {
   padding: 0.5rem 0.75rem;
   border-radius: 6px;
@@ -241,6 +259,14 @@
 .mirror-action-btn.active {
   background: var(--primary-color);
   color: var(--background-color);
+}
+
+.mirror-note {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: #ffa500;
+  margin-top: 0.35rem;
+  line-height: 1.3;
 }
 
 .mirror-status-bar {

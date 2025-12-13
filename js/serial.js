@@ -1,3 +1,5 @@
+const COMMON_BAUD_RATES = [115200, 921600, 9600, 57600, 38400, 19200, 230400, 460800];
+
 class SerialConsole {
   constructor() {
     this.port = null;
@@ -24,6 +26,7 @@ class SerialConsole {
     this.output = document.getElementById("output");
     this.console = document.getElementById("console");
     this.baudSelect = document.getElementById("baudSelect");
+    this.autoConnectButton = document.getElementById("autoConnectButton");
     this.baudRateDisplay = document.getElementById("baudRate");
     this.connectionStatus = document.getElementById("connectionStatus");
     this.connectionDot = document.getElementById("connectionDot");
@@ -106,6 +109,226 @@ class SerialConsole {
     }
   }
 
+  scoreReadability(data) {
+    if (!data || data.length === 0) return 0;
+    let printable = 0;
+    for (let i = 0; i < data.length; i++) {
+      const c = data[i];
+      if ((c >= 0x20 && c <= 0x7e) || c === 0x0a || c === 0x0d || c === 0x09) {
+        printable++;
+      }
+    }
+    return printable / data.length;
+  }
+
+  async testBaudRate(baud, sampleMs = 500) {
+    try {
+      await this.port.open({
+        baudRate: baud,
+        dataBits: 8,
+        stopBits: 1,
+        parity: "none",
+        flowControl: "none",
+      });
+
+      const writer = this.port.writable.getWriter();
+      await writer.write(this.encoder.encode("help\n"));
+      writer.releaseLock();
+
+      const reader = this.port.readable.getReader();
+      const chunks = [];
+      let totalBytes = 0;
+      const deadline = Date.now() + sampleMs;
+
+      while (Date.now() < deadline && totalBytes < 1024) {
+        const timeout = new Promise((_, reject) =>
+          setTimeout(
+            () => reject(new Error("timeout")),
+            Math.max(50, deadline - Date.now())
+          )
+        );
+        try {
+          const { value, done } = await Promise.race([reader.read(), timeout]);
+          if (done) break;
+          if (value) {
+            chunks.push(value);
+            totalBytes += value.length;
+          }
+        } catch {
+          break;
+        }
+      }
+
+      await reader.cancel();
+      reader.releaseLock();
+      await this.port.close();
+
+      if (totalBytes === 0) return { baud, score: 0, bytes: 0 };
+
+      const combined = new Uint8Array(totalBytes);
+      let offset = 0;
+      for (const chunk of chunks) {
+        combined.set(chunk, offset);
+        offset += chunk.length;
+      }
+
+      return {
+        baud,
+        score: this.scoreReadability(combined),
+        bytes: totalBytes,
+      };
+    } catch (e) {
+      try {
+        await this.port.close();
+      } catch {}
+      return { baud, score: -1, bytes: 0, error: e.message };
+    }
+  }
+
+  async autoDetectBaudOnPort() {
+    const results = [];
+
+    for (const baud of COMMON_BAUD_RATES) {
+      const result = await this.testBaudRate(baud, 400);
+      results.push(result);
+      if (result.score >= 0.8 && result.bytes >= 10) {
+        return baud;
+      }
+    }
+
+    const best = results
+      .filter((r) => r.score > 0.5 && r.bytes >= 10)
+      .sort((a, b) => b.score - a.score || b.bytes - a.bytes)[0];
+
+    return best ? best.baud : null;
+  }
+
+  scoreReadability(data) {
+    if (!data || data.length === 0) return 0;
+    let printable = 0;
+    for (let i = 0; i < data.length; i++) {
+      const c = data[i];
+      if ((c >= 0x20 && c <= 0x7e) || c === 0x0a || c === 0x0d || c === 0x09) {
+        printable++;
+      }
+    }
+    return printable / data.length;
+  }
+
+  async testBaudRate(baud, sampleMs = 500) {
+    try {
+      await this.port.open({
+        baudRate: baud,
+        dataBits: 8,
+        stopBits: 1,
+        parity: "none",
+        flowControl: "none",
+      });
+
+      const writer = this.port.writable.getWriter();
+      await writer.write(this.encoder.encode("help\n"));
+      writer.releaseLock();
+
+      const reader = this.port.readable.getReader();
+      const chunks = [];
+      let totalBytes = 0;
+      const deadline = Date.now() + sampleMs;
+
+      while (Date.now() < deadline && totalBytes < 1024) {
+        const timeout = new Promise((_, reject) =>
+          setTimeout(() => reject(new Error("timeout")), Math.max(50, deadline - Date.now()))
+        );
+        try {
+          const { value, done } = await Promise.race([reader.read(), timeout]);
+          if (done) break;
+          if (value) {
+            chunks.push(value);
+            totalBytes += value.length;
+          }
+        } catch {
+          break;
+        }
+      }
+
+      await reader.cancel();
+      reader.releaseLock();
+      await this.port.close();
+
+      if (totalBytes === 0) return { baud, score: 0, bytes: 0 };
+
+      const combined = new Uint8Array(totalBytes);
+      let offset = 0;
+      for (const chunk of chunks) {
+        combined.set(chunk, offset);
+        offset += chunk.length;
+      }
+
+      return { baud, score: this.scoreReadability(combined), bytes: totalBytes };
+    } catch (e) {
+      try { await this.port.close(); } catch {}
+      return { baud, score: -1, bytes: 0, error: e.message };
+    }
+  }
+
+  async autoDetectBaudRate() {
+    if (this.isAutoDetecting) return;
+    if (this.isConnected) {
+      this.log("Disconnect first before auto-detecting baud rate\n");
+      return;
+    }
+
+    try {
+      this.isAutoDetecting = true;
+      this.autoDetectButton.disabled = true;
+      this.autoDetectButton.textContent = "Detecting...";
+      this.connectButton.disabled = true;
+
+      this.permissionDialog.style.display = "flex";
+      this.port = await navigator.serial.requestPort();
+      this.permissionDialog.style.display = "none";
+
+      this.log("Auto-detecting baud rate...\n");
+      const results = [];
+
+      for (const baud of COMMON_BAUD_RATES) {
+        this.log(`  Testing ${baud}... `);
+        const result = await this.testBaudRate(baud, 400);
+        results.push(result);
+
+        if (result.score >= 0) {
+          this.log(`${(result.score * 100).toFixed(0)}% readable (${result.bytes} bytes)\n`);
+        } else {
+          this.log(`error: ${result.error}\n`);
+        }
+
+        await new Promise(r => setTimeout(r, 100));
+      }
+
+      const best = results
+        .filter(r => r.score > 0.5 && r.bytes >= 10)
+        .sort((a, b) => b.score - a.score || b.bytes - a.bytes)[0];
+
+      if (best) {
+        this.log(`\nDetected: ${best.baud} baud (${(best.score * 100).toFixed(0)}% readable)\n`);
+        this.baudSelect.value = best.baud.toString();
+        this.updateBaudRateDisplay();
+      } else {
+        this.log("\nCould not detect baud rate. Device may be idle - try triggering output.\n");
+      }
+    } catch (e) {
+      this.permissionDialog.style.display = "none";
+      if (e.name !== "NotFoundError") {
+        this.log(`Auto-detect error: ${e.message}\n`);
+      }
+    } finally {
+      this.isAutoDetecting = false;
+      this.autoDetectButton.disabled = false;
+      this.autoDetectButton.textContent = "Auto Detect";
+      this.connectButton.disabled = false;
+      this.port = null;
+    }
+  }
+
   async toggleConnection() {
     if (this.isConnected) {
       await this.disconnect();
@@ -132,15 +355,16 @@ class SerialConsole {
       this.port = await navigator.serial.requestPort();
       this.permissionDialog.style.display = "none";
 
+      const baud = parseInt(this.baudSelect.value);
+
       await this.port.open({
-        baudRate: parseInt(this.baudSelect.value),
+        baudRate: baud,
         dataBits: 8,
         stopBits: 1,
         parity: "none",
         flowControl: "none",
       });
 
-      // Create new AbortController for this connection
       this.abortController = new AbortController();
 
       this.updateConnectionStatus(true);
@@ -158,21 +382,71 @@ class SerialConsole {
     }
   }
 
-  async startReading() {
-    if (!this.port || !this.abortController) return;
+  async autoConnect() {
+    if (!this.checkBrowserSupport()) return;
+    if (this.isConnected) {
+      this.log("Already connected - disconnect first to change baud automatically\n");
+      return;
+    }
 
     try {
-      while (this.port.readable && !this.abortController.signal.aborted) {
+      this.permissionDialog.style.display = "flex";
+      this.port = await navigator.serial.requestPort();
+      this.permissionDialog.style.display = "none";
+
+      let baud = parseInt(this.baudSelect.value);
+      try {
+        const detected = await this.autoDetectBaudOnPort();
+        if (detected) {
+          baud = detected;
+          this.baudSelect.value = String(detected);
+          this.updateBaudRateDisplay();
+        }
+      } catch (e) {
+        this.log(`Baud auto-detect failed, using ${baud}: ${e.message}\n`);
+      }
+
+      await this.port.open({
+        baudRate: baud,
+        dataBits: 8,
+        stopBits: 1,
+        parity: "none",
+        flowControl: "none",
+      });
+
+      this.abortController = new AbortController();
+
+      this.updateConnectionStatus(true);
+      this.startReading();
+      this.log("Connected to device (auto baud)\n");
+    } catch (error) {
+      this.permissionDialog.style.display = "none";
+      if (error.name === "NotFoundError") {
+        this.log("No device selected\n");
+      } else {
+        this.log(`Error connecting: ${error.message}\n`);
+      }
+      this.updateConnectionStatus(false);
+      await this.cleanup();
+    }
+  }
+
+  async startReading() {
+    const controller = this.abortController;
+    if (!this.port || !controller) return;
+
+    try {
+      while (this.port.readable && !controller.signal.aborted) {
         this.reader = this.port.readable.getReader();
         try {
           while (true) {
             const { value, done } = await this.reader.read();
-            if (this.abortController.signal.aborted) break;
+            if (controller.signal.aborted) break;
             if (done) break;
             this.log(this.decoder.decode(value));
           }
         } catch (error) {
-          if (!this.abortController.signal.aborted) {
+          if (controller && !controller.signal.aborted) {
             console.error("Error reading data:", error);
           }
         } finally {
@@ -184,7 +458,7 @@ class SerialConsole {
         }
       }
     } catch (error) {
-      if (!this.abortController.signal.aborted) {
+      if (controller && !controller.signal.aborted) {
         console.error("Fatal read error:", error);
       }
     }
