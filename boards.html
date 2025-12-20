@@ -1,407 +1,254 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#121212" />
-    <meta http-equiv="Content-Security-Policy" content="
-        default-src 'self';
-        script-src 'self' 'unsafe-inline' https://unpkg.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net;
-        style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com https://cdnjs.cloudflare.com;
-        img-src 'self' https://ghostesp.net https://ae-pic-a1.aliexpress-media.com https://shop.m5stack.com https://static.wixstatic.com https://4441fe46.delivery.rocketcdn.me https://lilygo.cc data:;
-        font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com;
-        frame-src https://www.youtube.com;
-        connect-src 'self' https://cdn.spookytools.com https://api.github.com https://play.google.com https://googleads.g.doubleclick.net https://www.google-analytics.com;
-        object-src 'none';
-        base-uri 'self';
-        form-action 'self';
-        upgrade-insecure-requests;
-    " />
-    <title>Ghost ESP - Boards</title>
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://unpkg.com" />
-    <link rel="preload" href="css/style.css" as="style" />
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Share+Tech+Mono&family=Chakra+Petch:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" media="print" onload="this.media='all'" />
-    <link rel="stylesheet" href="css/style.css" fetchpriority="high" />
-    <script src="https://unpkg.com/feather-icons" defer></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" media="print" onload="this.media='all'" />
-    <link rel="icon" type="image/x-icon" href="images/favicon.ico" />
-    <link rel="manifest" href="images/site.webmanifest" />
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#000000">
+  
+  <!-- SEO Meta Tags -->
+  <title>Supported Boards - GhostESP</title>
+  <meta name="description" content="Browse tested ESP32 boards compatible with Ghost ESP. Hand-picked hardware including GhostBoard, Cardputer, T-Watch, T-Deck, and more ESP32 development boards.">
+  <meta name="keywords" content="GhostESP boards, ESP32 boards, Cardputer, T-Watch, T-Deck, GhostBoard, ESP32-C5, ESP32-S3, compatible hardware">
+  <meta name="author" content="Jay Candel">
+  <meta name="robots" content="index, follow">
+  
+  <!-- Open Graph Tags -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Supported Boards - GhostESP">
+  <meta property="og:description" content="Hand-picked ESP32 hardware tested and verified to work with Ghost ESP firmware.">
+  <meta property="og:url" content="https://ghostesp.net/boards.html">
+  <meta property="og:site_name" content="GhostESP">
+  <meta property="og:image" content="https://ghostesp.net/images/IMG_1178.webp">
+  
+  <!-- Twitter Card Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Supported Boards - GhostESP">
+  <meta name="twitter:description" content="Browse compatible ESP32 boards for Ghost ESP firmware.">
+  <meta name="twitter:image" content="https://ghostesp.net/images/IMG_1178.webp">
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://ghostesp.net/boards.html">
+  
+  <!-- Favicons -->
+  <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+  
+  <!-- Fonts and Styles -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+  <script src="https://unpkg.com/lucide@latest" defer></script>
+  <style>
+    .board-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    .board-card-full {
+      display: flex;
+      flex-direction: column;
+    }
+    .board-card-full img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 1rem;
+    }
+    .board-tags {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin: 0.5rem 0;
+    }
+    .board-tag {
+      font-size: 0.75rem;
+      padding: 0.25rem 0.5rem;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-family: var(--font-mono);
+    }
+    .board-card-full .btn {
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav id="nav"></nav>
 
-    <!-- Critical CSS for logo -->
-    <style>
-        .navbar {
-          background: rgba(18, 18, 18, 0.8);
-          position: fixed;
-          width: 100%;
-          z-index: 1000;
-        }
-        .nav-content {
-          max-width: 1400px;
-          width: 100%;
-          padding: 0 2rem;
-          margin: 0 auto;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          height: 70px;
-        }
-        .logo {
-          width: 60px;
-          height: 60px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
-        .logo img {
-          width: 60px;
-          height: 60px;
-          object-fit: contain;
-          will-change: transform;
-        }
-        @media screen and (orientation: portrait) and (min-width: 769px) {
-          .nav-content {
-            height: 50px;
-            padding: 0 0.5rem;
-          }
-          .logo {
-            width: 35px;
-            height: 35px;
-          }
-          .logo img {
-            width: 35px;
-            height: 35px;
-          }
-        }
-        @media (max-width: 768px) {
-          .logo {
-            width: 40px;
-            height: 40px;
-          }
-          .logo img {
-            width: 40px;
-            height: 40px;
-          }
-        }
-      </style>
-
-    <style>
-      .nav-links{display:flex;align-items:center;gap:2rem;margin-left:auto;margin-right:auto}
-      .nav-links a{padding:0.9rem 0.9rem;white-space:nowrap;transition:all 0.2s ease}
-      .nav-links a[href*="shop.ghostesp.net"]{background:linear-gradient(45deg,#70056b,#920e0e);border-radius:12px;padding:0.7rem 1rem;font-weight:600;color:45deg,#8b3232,#802a2a;text-shadow:0 1px 2px rgba(0,0,0,0.1);box-shadow:0 2px 4px rgba(0,0,0,0.1);margin-right:1rem}
-      .nav-links a[href*="shop.ghostesp.net"]:hover{transform:translateY(-2px);box-shadow:0 4px 8px rgba(0,0,0,0.2)}
-      .mobile-menu-btn{display:none;background:none;border:none;color:white;cursor:pointer;padding:0.5rem}
-      @media (max-width:768px){
-        .mobile-menu-btn{display:block}
-        .nav-content{padding:0.5rem 1rem}
-        .nav-links{
-          position:fixed;
-          top:0;
-          right:-100%;
-          height:100vh;
-          width:75%;
-          max-width:300px;
-          background:var(--surface-color);
-          flex-direction:column;
-          padding:80px 2rem 2rem;
-          transition:right 0.3s ease;
-          backdrop-filter:blur(10px);
-          border-left:1px solid rgba(255,255,255,0.1);
-          z-index:95;
-          overflow-y:auto;
-          -webkit-overflow-scrolling:touch
-        }
-        .nav-links.active{right:0}
-        .nav-links li{width:100%}
-        .nav-links a{font-size:1.1rem;padding:0.8rem 0;width:100%;text-align:left}
-        body.menu-open{overflow:hidden}
-      }
-      .language-selector{position:relative;display:inline-block}
-      .language-selector .theme-btn{display:flex;align-items:center;gap:0.5rem;cursor:pointer;background:none;border:none;color:white;font-family:inherit;font-size:inherit}
-      .language-selector .theme-btn .lang-arrow{width:16px;height:16px;transition:transform 0.2s ease}
-      .language-selector .theme-btn.open .lang-arrow{transform:rotate(180deg)}
-      .language-dropdown{display:none;position:absolute;top:100%;left:50%;transform:translateX(-50%);background-color:rgba(30,30,30,0.9);list-style:none;padding:0.5rem 0;margin:0.5rem 0 0 0;border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,0.3);z-index:1001;min-width:100px}
-      .language-dropdown.show{display:block}
-      .language-dropdown li button{background:none;border:none;color:#e0e0e0;padding:0.5rem 1rem;width:100%;text-align:left;cursor:pointer;font-family:inherit;font-size:0.9rem;transition:background-color 0.2s ease}
-      .language-dropdown li button:hover{background-color:rgba(255,255,255,0.1);color:#fff}
-      @media (max-width:768px){.language-selector{width:100%}.language-selector .theme-btn{justify-content:center;padding:0.5rem;width:100%}.language-dropdown{position:static;transform:none;width:100%;margin-top:0.5rem;box-shadow:none;background-color:rgba(18,18,18,0.95)}.language-dropdown li button{text-align:center}}
-    </style>
-
-    <style>
-      .boards-section{padding:8rem 2rem;background:var(--surface-color)}
-      .boards-container{max-width:1400px;margin:0 auto}
-      .boards-header{max-width:900px;margin:0 auto 2rem;text-align:center}
-      .boards-header h2{font-family:var(--font-display);font-size:2.2rem;color:var(--text-primary);margin-bottom:0.75rem}
-      .boards-header p{color:var(--text-secondary)}
-      .boards-filters{display:flex;gap:0.75rem;justify-content:center;margin:0 0 2rem}
-      .filter-btn{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:#fff;padding:0.6rem 1rem;border-radius:999px;cursor:pointer;transition:all .2s ease;font-family:var(--font-mono)}
-      .filter-btn:hover{background:rgba(255,255,255,0.1)}
-      .filter-btn.active{background:linear-gradient(45deg,#70056b,#920e0e);border-color:transparent}
-      .boards-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:2rem}
-      .board-card{display:flex;flex-direction:column;align-items:stretch}
-      .board-card .board-image{width:100%;height:180px;border-radius:12px;object-fit:cover;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.08)}
-      .board-card h3{font-family:var(--font-mono);font-size:1.2rem;margin:0 0 0.5rem;color:var(--text-primary)}
-      .board-card p{color:var(--text-secondary);margin:0 0 1rem}
-      .board-card .shop-btn{width:100%;justify-content:center}
-      .tag-list{display:flex;gap:.5rem;flex-wrap:wrap;margin:.25rem 0 .75rem}
-      .tag{font-family:var(--font-mono);font-size:.75rem;line-height:1;padding:.25rem .6rem;border-radius:999px;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.08);color:#fff;letter-spacing:.3px}
-      .tag-touch{background:rgba(255,255,255,0.1);border-color:rgba(255,255,255,0.2)}
-      .tag-flipper{background:rgba(179,0,0,0.15);border-color:rgba(179,0,0,0.3)}
-      @media (max-width:768px){.boards-section{padding:6rem 1rem}.board-card .board-image{height:160px}}
-    </style>
-  </head>
-  <body>
-    <nav class="navbar" role="navigation" aria-label="Main navigation">
-      <div class="nav-content">
-        <div class="logo">
-          <a href="https://ghostesp.net" target="_blank" rel="noopener">
-            <img 
-              src="images/ghostespdotnet.png"
-              alt="Ghost ESP Logo" 
-              width="320"
-              height="320"
-              fetchpriority="high"
-              decoding="sync"
-              loading="eager"
-              style="transform: scale(1.8) translateZ(0);"
-            />
-          </a>
+  <!-- Boards Section -->
+  <section class="section" style="padding-top: 8rem;">
+    <div class="container">
+      <h2>Supported Boards</h2>
+      <p style="text-align: center; color: var(--text-dim); margin-bottom: 3rem; max-width: 800px; margin-left: auto; margin-right: auto;">
+        Hand-picked hardware known to work great with Ghost ESP. These boards have been tested and verified by our community.
+      </p>
+      
+      <div class="board-grid">
+        <div class="card board-card-full">
+          <img src="https://4441fe46.delivery.rocketcdn.me/wp-content/uploads/2024/10/ghostgps-scaled.jpg" alt="GhostBoard" loading="lazy">
+          <h3>GhostBoard (Rabbit‑Labs)</h3>
+          <div class="board-tags">
+            <span class="board-tag">Flipper</span>
+            <span class="board-tag">SD Card</span>
+            <span class="board-tag">GPS</span>
+          </div>
+          <p>Flipper‑compatible C6 board made for Ghost ESP. SD slot, 3 RGB LEDs, GPS expansion.</p>
+          <a href="https://rabbit-labs.com/product/spookyesp-the-esp32-c6-board-that-sends-shivers-down-your-spine/" target="_blank" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy Now</a>
         </div>
-        <button class="mobile-menu-btn" aria-label="Toggle menu">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-        </button>
-        <div class="menu-overlay"></div>
-        <ul class="nav-links">
-          <li><a href="https://ghostesp.net#features" data-lang-key="nav_features">Features</a></li>
-          <li><a href="https://espressoflash.com" target="_blank" data-lang-key="nav_flash">Flash</a></li>
-          <li><a href="https://ghostesp.net#getting-started" data-lang-key="nav_get_started">Get Started</a></li>
-          <li><a href="https://ghostesp.net#flipper-app" data-lang-key="nav_flipper_app">Flipper App</a></li>
-          <li><a href="serial.html" data-lang-key="nav_serial_console">Serial Console</a></li>
-          <li><a href="https://shop.ghostesp.net" target="_blank" data-lang-key="nav_merch">Merch</a></li>
-          <li>
-            <div class="language-selector">
-              <button id="language-toggle-btn" class="theme-btn">
-                <i class="fas fa-globe"></i>
-                <span class="menu-label" data-lang-key="nav_language">Language</span>
-                <i data-feather="chevron-down" class="lang-arrow"></i>
-              </button>
-              <ul id="language-dropdown" class="language-dropdown">
-                <li><button data-lang="en">English</button></li>
-                <li><button data-lang="de">Deutsch</button></li>
-                <li><button data-lang="in">हिन्दी</button></li>
-              </ul>
-            </div>
-          </li>
-          <li>
-            <a href="#" id="theme-toggle" class="theme-btn">
-              <i class="fas fa-ghost"></i>
-              <span class="menu-label">Theme</span>
-            </a>
-          </li>
-          <li>
-            <a
-              href="https://discord.gg/5cyNmUMgwh"
-              target="_blank"
-              class="social-btn discord-btn"
-            >
-              <i class="fab fa-discord"></i>
-              <span class="menu-label">Discord</span>
-            </a>
-          </li>
-          <li>
-            <a
-              href="https://github.com/jaylikesbunda/Ghost_ESP"
-              class="social-btn github-btn"
-              target="_blank"
-            >
-              <i class="fab fa-github"></i>
-              <span class="menu-label">GitHub</span>
-            </a>
-          </li>
-          <li>
-            <a
-              href="https://instagram.com/ghostesprevival"
-              target="_blank"
-              class="social-btn instagram-btn"
-            >
-              <i class="fab fa-instagram"></i>
-              <span class="menu-label">Instagram</span>
-            </a>
-          </li>
-        </ul>
+
+        <div class="card board-card-full">
+          <img src="https://ae-pic-a1.aliexpress-media.com/kf/Se5f531b3b4f642c28c0b0655653c23d2p.jpg_960x960q75.jpg_.avif" alt="CYD2USB" loading="lazy">
+          <h3>CYD2USB 2.4" C Variant</h3>
+          <div class="board-tags">
+            <span class="board-tag">Touch</span>
+            <span class="board-tag">SD Card</span>
+          </div>
+          <p>Compact 2.4" capacitive touch display board powered by an ESP32 WROOM module.</p>
+          <a href="https://s.click.aliexpress.com/e/_olgPirZ" target="_blank" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy Now</a>
+        </div>
+
+        <div class="card board-card-full">
+          <img src="https://static.wixstatic.com/media/35ea10_c352ea38cf4c4ba0982a44c7b898755d~mv2.jpg/v1/fill/w_500,h_333,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/35ea10_c352ea38cf4c4ba0982a44c7b898755d~mv2.jpg" alt="Ultimate Marauder" loading="lazy">
+          <h3>Ultimate Marauder (TWH)</h3>
+          <div class="board-tags">
+            <span class="board-tag">Flipper</span>
+            <span class="board-tag">GPS</span>
+            <span class="board-tag">Touch</span>
+          </div>
+          <p>Dual-ESP32 Marauder board by Wired Hatters with Flipper support, GPS, SD card and touch.</p>
+          <a href="https://www.wiredhatters.com/product-page/ultimate-maurauder" target="_blank" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy Now</a>
+        </div>
+
+        <div class="card board-card-full">
+          <img src="https://static.wixstatic.com/media/35ea10_b537d4da88a84fddbd67a4029caa690c~mv2.jpg/v1/fill/w_475,h_333,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/35ea10_b537d4da88a84fddbd67a4029caa690c~mv2.jpg" alt="ESP-Rocket" loading="lazy">
+          <h3>ESP‑Rocket (TWH)</h3>
+          <div class="board-tags">
+            <span class="board-tag">Flipper</span>
+          </div>
+          <p>Powered by a ESP32‑WROOM‑UE, USB‑C, SMA antenna.</p>
+          <a href="https://www.wiredhatters.com/product-page/esp-rocket" target="_blank" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy Now</a>
+        </div>
+
+        <div class="card board-card-full">
+          <img src="https://shop.m5stack.com/cdn/shop/files/K132_v11_19_1200x1200.webp" alt="Cardputer" loading="lazy">
+          <h3>ESP32-S3 Cardputer</h3>
+          <div class="board-tags">
+            <span class="board-tag">Keyboard</span>
+            <span class="board-tag">SD Card</span>
+            <span class="board-tag">Infrared</span>
+          </div>
+          <p>Compact keyboard-style ESP32-S3 device with on-the-go control, SD card and infrared.</p>
+          <a href="https://s.click.aliexpress.com/e/_oljsRNt" target="_blank" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy Now</a>
+        </div>
+
+        <div class="card board-card-full">
+          <img src="https://4441fe46.delivery.rocketcdn.me/wp-content/uploads/2024/12/pham-scaled.jpg" alt="The Phantom" loading="lazy">
+          <h3>The Phantom (Rabbit-Labs)</h3>
+          <div class="board-tags">
+            <span class="board-tag">Touch</span>
+            <span class="board-tag">SD Card</span>
+            <span class="board-tag">Stylus</span>
+          </div>
+          <p>ESP32-based device with SD card, resistive touch display and stylus.</p>
+          <a href="https://rabbit-labs.com/product/the-phantom-by-rabbit-labs/?v=8bcc25c96aa5" target="_blank" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy Now</a>
+        </div>
+
+        <div class="card board-card-full">
+          <img src="https://lilygo.cc/cdn/shop/files/T-EMBED-CC1101-PLUS_6_4bda35c0-79ad-41ba-9aa7-52792d723ab1.jpg" alt="T-Embed" loading="lazy">
+          <h3>T-Embed CC1101</h3>
+          <div class="board-tags">
+            <span class="board-tag">Infrared</span>
+            <span class="board-tag">SD Card</span>
+            <span class="board-tag">Sub-GHz</span>
+          </div>
+          <p>Built-in IR, Sub-Ghz and NFC with ESP32-S3 and SD card slot.</p>
+          <a href="https://www.lilygo.cc/products/t-embed-cc1101?bg_ref=69Mwul6hBm" target="_blank" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy Now</a>
+        </div>
+
+        <div class="card board-card-full">
+          <img src="https://lilygo.cc/cdn/shop/files/shipping_511a8c0c-8aca-4406-bcf0-0a70ea2d3a0e.jpg" alt="T-Watch" loading="lazy">
+          <h3>LilyGo T-Watch S3</h3>
+          <div class="board-tags">
+            <span class="board-tag">Touch</span>
+            <span class="board-tag">Infrared</span>
+          </div>
+          <p>Wearable ESP32-S3 smartwatch with LoRa support.</p>
+          <a href="https://www.lilygo.cc/products/t-watch-s3-us?bg_ref=69Mwul6hBm" target="_blank" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy Now</a>
+        </div>
+
+        <div class="card board-card-full">
+          <img src="https://lilygo.cc/cdn/shop/files/LILYGO-T-DECK_2_7fbd52e8-0aea-466e-8407-dee4aca5b381.jpg" alt="T-Deck" loading="lazy">
+          <h3>LilyGo T-Deck</h3>
+          <div class="board-tags">
+            <span class="board-tag">Touch</span>
+            <span class="board-tag">Keyboard</span>
+          </div>
+          <p>Modular developer board (ESP32-S3) designed for LoRa.</p>
+          <a href="https://www.lilygo.cc/products/t-deck?bg_ref=69Mwul6hBm" target="_blank" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy Now</a>
+        </div>
+
+        <div class="card board-card-full">
+          <img src="https://lilygo.cc/cdn/shop/products/LILYGO-T-Display-S3-Touch-version_5.jpg" alt="T-Display S3" loading="lazy">
+          <h3>LilyGo T-Display S3 Touch</h3>
+          <div class="board-tags">
+            <span class="board-tag">Touch</span>
+          </div>
+          <p>ESP32-S3 development board with integrated touch display.</p>
+          <a href="https://www.lilygo.cc/products/t-display-s3?bg_ref=69Mwul6hBm" target="_blank" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy Now</a>
+        </div>
+
+        <div class="card board-card-full">
+          <img src="https://ae-pic-a1.aliexpress-media.com/kf/S59700c86dd9949c7a629e34fa38c7408y.jpg_960x960q75.jpg_.avif" alt="CYD Resistive" loading="lazy">
+          <h3>CYD-2432S024R Resistive</h3>
+          <div class="board-tags">
+            <span class="board-tag">Touch</span>
+            <span class="board-tag">Resistive</span>
+          </div>
+          <p>2.4" resistive touch display module (CYD-2432S024R)</p>
+          <a href="https://s.click.aliexpress.com/e/_ombDm1D" target="_blank" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy Now</a>
+        </div>
+
+        <div class="card board-card-full">
+          <img src="https://ae-pic-a1.aliexpress-media.com/kf/S64ca5ad2310f41558d934e9f13b876e9S.png_960x960.png_.avif" alt="ESP32-C5" loading="lazy">
+          <h3>ESP32-C5 Dev Board</h3>
+          <div class="board-tags">
+            <span class="board-tag">5GHz</span>
+          </div>
+          <p>Next‑gen dual‑band ready platform for advanced tests.</p>
+          <a href="https://www.aliexpress.com/item/1005009128201189.html" target="_blank" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy Now</a>
+        </div>
       </div>
-    </nav>
+    </div>
+  </section>
 
-    <main role="main">
-      <section class="boards-section">
-        <div class="boards-container">
-          <div class="boards-header" data-aos="fade-up">
-            <h2 data-lang-key="boards_heading">Supported Boards</h2>
-            <p data-lang-key="boards_intro">Hand-picked hardware known to work great with Ghost ESP</p>
-          </div>
-          <div class="boards-filters" data-aos="fade-up">
-            <button class="filter-btn active" data-filter="all">All</button>
-            <button class="filter-btn" data-filter="Touch">Touch</button>
-            <button class="filter-btn" data-filter="Flipper">Flipper Compatible</button>
-          </div>
-          <div id="boards-grid" class="boards-grid"></div>
-        </div>
-      </section>
-    </main>
-
-    <footer class="credits" role="contentinfo">
-      <div class="footer-content">
-        <a href="https://github.com/jaylikesbunda" target="_blank" class="credit-link">Site Developed by Jay Candel <i class="fas fa-heart"></i></a>
-        <a href="https://ko-fi.com/jaylikesbunda" target="_blank" class="support-btn">
-          <i class="fas fa-bolt"></i>
-          <span>Support the Project</span>
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>Developed by <a href="https://github.com/jaylikesbunda" target="_blank">Jay Candel</a></p>
+      <a href="https://ko-fi.com/jaylikesbunda" target="_blank" class="support-link">Support on Ko-Fi</a>
+      <div class="footer-links">
+        <a href="https://discord.gg/5cyNmUMgwh" target="_blank" class="icon-link" title="Discord">
+          <i data-lucide="message-circle"></i>
+        </a>
+        <a href="https://github.com/jaylikesbunda/Ghost_ESP" target="_blank" class="icon-link" title="GitHub">
+          <i data-lucide="github"></i>
+        </a>
+        <a href="https://instagram.com/ghostesprevival" target="_blank" class="icon-link" title="Instagram">
+          <i data-lucide="instagram"></i>
         </a>
       </div>
-    </footer>
+    </div>
+  </footer>
 
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js" defer></script>
-    <script src="js/main.js" defer></script>
-    <script>
-      window.addEventListener('DOMContentLoaded', () => {
-        const boards = [
-
-          {
-            id: 'ghostesp-c6-rl',
-            name: 'GhostBoard (Rabbit‑Labs)',
-            image: 'https://4441fe46.delivery.rocketcdn.me/wp-content/uploads/2024/10/ghostgps-scaled.jpg',
-            description: 'Flipper‑compatible C6 board made for Ghost ESP. SD slot, 3 RGB LEDs, GPS expansion.',
-            url: 'https://rabbit-labs.com/product/spookyesp-the-esp32-c6-board-that-sends-shivers-down-your-spine/',
-            tags: ['Flipper','SD Card']
-          },
-          {
-            id: 'cyd2usb-2-4',
-            name: 'CYD2USB 2.4 Inch C Variant',
-            image: 'https://ae-pic-a1.aliexpress-media.com/kf/Se5f531b3b4f642c28c0b0655653c23d2p.jpg_960x960q75.jpg_.avif',
-            description: 'Compact 2.4" capacitive touch display board powered by an ESP32 WROOM module.',
-            url: 'https://s.click.aliexpress.com/e/_olgPirZ',
-            tags: ['Touch','SD Card']
-          },
-          {
-            id: 'ultimate-maurauder',
-            name: 'Ultimate Marauder (The Wired Hatters)',
-            image: 'https://static.wixstatic.com/media/35ea10_c352ea38cf4c4ba0982a44c7b898755d~mv2.jpg/v1/fill/w_500,h_333,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/35ea10_c352ea38cf4c4ba0982a44c7b898755d~mv2.jpg',
-            description: 'Dual-ESP32 Marauder board by Wired Hatters',
-            url: 'https://www.wiredhatters.com/product-page/ultimate-maurauder',
-            tags: ['Flipper','GPS','SD Card','Touch']
-          },
-          {
-            id: 'esp32-wroom',
-            name: 'ESP‑Rocket (The Wired Hatters)',
-            image: 'https://static.wixstatic.com/media/35ea10_b537d4da88a84fddbd67a4029caa690c~mv2.jpg/v1/fill/w_475,h_333,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/35ea10_b537d4da88a84fddbd67a4029caa690c~mv2.jpg',
-            description: 'Powered by a ESP32‑WROOM‑UE, USB‑C, SMA antenna.',
-            url: 'https://www.wiredhatters.com/product-page/esp-rocket',
-            tags: ['Flipper']
-          },
-          {
-            id: 'esp32-c5-dev',
-            name: 'ESP32-C5 Dev Board',
-            image: 'https://ae-pic-a1.aliexpress-media.com/kf/S64ca5ad2310f41558d934e9f13b876e9S.png_960x960.png_.avif',
-            description: 'Next‑gen dual‑band ready platform for advanced tests.',
-            url: 'https://www.aliexpress.com/item/1005009128201189.html',
-            tags: ['5GHz']
-          },
-          {
-            id: 'rabbit-phantom-labs',
-            name: 'The Phantom (Rabbit-Labs)',
-            image: 'https://4441fe46.delivery.rocketcdn.me/wp-content/uploads/2024/12/pham-scaled.jpg',
-            description: 'ESP32-based device with SD card, resistive touch display and stylus.',
-            url: 'https://rabbit-labs.com/product/the-phantom-by-rabbit-labs/?v=8bcc25c96aa5',
-            tags: ['SD Card','Touch','Stylus']
-          },
-
-          {
-            id: 'cardputer-s3',
-            name: 'ESP32-S3 Cardputer',
-            image: 'https://shop.m5stack.com/cdn/shop/files/K132_v11_19_1200x1200.webp',
-            description: 'Compact keyboard-style ESP32-S3 device with on-the-go control.',
-            url: 'https://s.click.aliexpress.com/e/_oljsRNt',
-            tags: ['Keyboard','SD Card','Infrared']
-          },
-          {
-            id: 'lilygo-t-embed-cc1101',
-            name: 'T-Embed CC1101',
-            image: 'https://lilygo.cc/cdn/shop/files/T-EMBED-CC1101-PLUS_6_4bda35c0-79ad-41ba-9aa7-52792d723ab1.jpg?v=1755075224&width=493',
-            description: 'Built-in IR, Sub-Ghz and NFC with ESP32-S3.',
-            url: 'https://www.lilygo.cc/products/t-embed-cc1101?bg_ref=69Mwul6hBm',
-            tags: ['Infrared RX,TX','SD Card']
-          },
-          {
-            id: 'lilygo-twatch-s3-us',
-            name: 'LilyGo T-Watch S3',
-            image: 'https://lilygo.cc/cdn/shop/files/shipping_511a8c0c-8aca-4406-bcf0-0a70ea2d3a0e.jpg?v=1685513939&width=493',
-            description: 'Wearable ESP32-S3 smartwatch with LoRa support.',
-            url: 'https://www.lilygo.cc/products/t-watch-s3-us?bg_ref=69Mwul6hBm',
-            tags: ['Touch','Infrared']
-          },
-          {
-            id: 'lilygo-t-deck',
-            name: 'LilyGo T-Deck',
-            image: 'https://lilygo.cc/cdn/shop/files/LILYGO-T-DECK_2_7fbd52e8-0aea-466e-8407-dee4aca5b381.jpg?v=1753155914&width=493',
-            description: 'Modular developer board (ESP32-S3) designed for LoRa.',
-            url: 'https://www.lilygo.cc/products/t-deck?bg_ref=69Mwul6hBm',
-            tags: ['Touch','Keyboard']
-          },
-          {
-            id: 'lilygo-tdisplay-s3-touch',
-            name: 'LilyGo T-Display S3 Touch',
-            image: 'https://lilygo.cc/cdn/shop/products/LILYGO-T-Display-S3-Touch-version_5.jpg?v=1667462221&width=493',
-            description: 'ESP32-S3 development board with integrated touch display.',
-            url: 'https://www.lilygo.cc/products/t-display-s3?bg_ref=69Mwul6hBm',
-            tags: ['Touch']
-          },
-          {
-            id: 'cyd-2432s024r',
-            name: 'CYD-2432S024R Resistive',
-            image: 'https://ae-pic-a1.aliexpress-media.com/kf/S59700c86dd9949c7a629e34fa38c7408y.jpg_960x960q75.jpg_.avif',
-            description: '2.4" resistive touch display module (CYD-2432S024R)',
-            url: 'https://s.click.aliexpress.com/e/_ombDm1D',
-            tags: ['Touch','Resistive']
-          },
-
-
-          
-        ];
-
-        const grid = document.getElementById('boards-grid');
-        const filterButtons = document.querySelectorAll('.filter-btn');
-
-        function renderBoards(activeTag = 'all') {
-          grid.innerHTML = '';
-          const list = activeTag === 'all' ? boards : boards.filter(b => b.tags.includes(activeTag));
-          list.forEach(b => {
-            const card = document.createElement('div');
-            card.className = 'board-card';
-            card.setAttribute('data-tags', b.tags.join(','));
-            const tagsHtml = (b.tags || []).map(t => `<span class="tag tag-${t}">${t}</span>`).join('');
-            card.innerHTML = `
-              <img class="board-image" src="${b.image}" alt="${b.name}" />
-              <h3>${b.name}</h3>
-              <div class="tag-list">${tagsHtml}</div>
-              <p>${b.description}</p>
-              <a href="${b.url}" target="_blank" rel="noopener" class="shop-btn primary"><i class="fas fa-store"></i><span> Buy</span></a>
-            `;
-            grid.appendChild(card);
-          });
-        }
-
-        filterButtons.forEach(btn => {
-          btn.addEventListener('click', () => {
-            filterButtons.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            renderBoards(btn.getAttribute('data-filter'));
-          });
-        });
-
-        renderBoards('all');
-      });
-    </script>
-  </body>
+  <script src="js/components.js" defer></script>
+  <script src="js/main.js" defer></script>
+</body>
 </html>
 
