@@ -76,6 +76,28 @@
     .board-card-full .btn {
       margin-top: auto;
     }
+    .tag-filter {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: center;
+      margin: 1rem 0 2rem;
+    }
+    .tag-filter-btn {
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: transparent;
+      color: var(--text);
+      padding: 0.35rem 0.9rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .tag-filter-btn.active {
+      background: var(--text);
+      color: #000;
+    }
   </style>
 </head>
 <body>
@@ -89,6 +111,7 @@
       <p style="text-align: center; color: var(--text-dim); margin-bottom: 3rem; max-width: 800px; margin-left: auto; margin-right: auto;">
         Hand-picked hardware known to work great with Ghost ESP. These boards have been tested and verified by our community.
       </p>
+      <div class="tag-filter" id="board-tag-filter" aria-label="Filter supported boards"></div>
       
       <div class="board-grid">
         <div class="card board-card-full">
@@ -216,6 +239,19 @@
         </div>
 
         <div class="card board-card-full">
+          <img src="https://8bbc3d45-b.b-cdn.net/wp-content/uploads/2025/11/pol1-scaled.jpg" alt="Rabbit-Labs Poltergeist 5Ghz WiFi Board" loading="lazy">
+          <h3>Rabbit-Labs™ Poltergeist 5Ghz WiFi Board</h3>
+          <div class="board-tags">
+            <span class="board-tag">5GHz</span>
+            <span class="board-tag">Flipper</span>
+            <span class="board-tag">IR</span>
+            <span class="board-tag">OLED</span>
+          </div>
+          <p>ESP32-C5 board built for the Flipper with dual-band WiFi, BLE spam, OLED status screen, SD slot, and a custom IR blaster/receiver designed for GhostESP use.</p>
+          <a href="https://rabbit-labs.com/product/rabbit-labs-poltergeist-5ghz-wifi-board/" target="_blank" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy Now</a>
+        </div>
+
+        <div class="card board-card-full">
           <img src="https://ae-pic-a1.aliexpress-media.com/kf/S64ca5ad2310f41558d934e9f13b876e9S.png_960x960.png_.avif" alt="ESP32-C5" loading="lazy">
           <h3>ESP32-C5 Dev Board</h3>
           <div class="board-tags">
@@ -249,6 +285,7 @@
 
   <script src="js/components.js" defer></script>
   <script src="js/main.js" defer></script>
+  <script src="js/boards.js" defer></script>
 </body>
 </html>
 
