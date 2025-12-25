@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#000000">
+  <title>GhostESP IRDB - Infrared Remote Database</title>
+  <meta name="description" content="Search and download infrared remote files for your GhostESP device. The largest collection of IR files with direct device upload support.">
+  <meta name="keywords" content="GhostESP, ESP32, IR database, infrared database, remote control, IR files">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/irdb.css">
+  
+  <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+</head>
+<body>
+  <nav id="nav"></nav>
+
+  <div class="irdb-container">
+    <header class="irdb-header">
+      <h1></i> Infrared Remote Database</h1>
+      <p class="header-description">Search and manage IR files for your GhostESP device</p>
+    </header>
+
+    <main class="irdb-main">
+      <div class="search-section">
+        <div class="search-bar">
+          <input type="text" id="searchInput" placeholder="Search by brand, model, or device type...">
+          <button id="searchButton" aria-label="Search"><i class="fas fa-search"></i></button>
+        </div>
+
+        <div class="filters">
+          <select id="deviceTypeFilter" aria-label="Filter by device type">
+            <option value="">All Device Types</option>
+          </select>
+          <select id="brandFilter" aria-label="Filter by brand">
+            <option value="">All Brands</option>
+          </select>
+          <select id="itemsPerPage" aria-label="Results per page">
+            <option value="10">10 per page</option>
+            <option value="20" selected>20 per page</option>
+            <option value="50">50 per page</option>
+            <option value="100">100 per page</option>
+          </select>
+        </div>
+
+        <div id="stats" class="stats"></div>
+        <div class="last-updated"></div>
+      </div>
+
+      <div id="loading" class="loading">
+        <div class="spinner"></div>
+        <p>Loading database...</p>
+      </div>
+
+      <div id="results" class="results"></div>
+
+      <div id="pagination" class="pagination">
+        <button id="prevPage" class="page-nav" aria-label="Previous page"><i class="fas fa-chevron-left"></i></button>
+        <span id="currentPage"></span>
+        <button id="nextPage" class="page-nav" aria-label="Next page"><i class="fas fa-chevron-right"></i></button>
+      </div>
+    </main>
+  </div>
+
+  <div id="serialPopup" class="popup-overlay">
+    <div class="popup-content">
+      <i class="fas fa-exclamation-triangle popup-icon"></i>
+      <h2>Browser Not Compatible</h2>
+      <p>Web Serial is not supported in this browser. To connect to your GhostESP device, please use:</p>
+      <ul>
+        <li><i class="fab fa-chrome"></i> Google Chrome</li>
+        <li><i class="fab fa-edge"></i> Microsoft Edge</li>
+        <li><i class="fab fa-opera"></i> Opera</li>
+      </ul>
+      <button class="btn close-popup">Got it!</button>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <p>Data from <a href="https://github.com/Lucaslhm/Flipper-IRDB" target="_blank">Flipper-IRDB</a></p>
+      <p>Developed by <a href="https://github.com/jaylikesbunda" target="_blank">Jay Candel</a></p>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/lucide@latest" defer></script>
+  <script src="js/components.js" defer></script>
+  <script src="js/irdb.js" defer></script>
+</body>
+</html>
