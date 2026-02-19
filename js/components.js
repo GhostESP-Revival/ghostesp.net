@@ -20,6 +20,7 @@ const components = {
           <li><a href="${prefix}#features">Features</a></li>
           <li><a href="boards.html">Boards</a></li>
           <li><a href="irdb.html">IRDB</a></li>
+          <li><a href="companion.html">App</a></li>
           <li><a href="https://docs.ghostesp.net" target="_blank">Docs</a></li>
           <li><a href="https://shop.ghostesp.net" target="_blank">Merch</a></li>
           <li><a href="feedback.html">Feedback</a></li>

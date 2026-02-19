@@ -54,7 +54,7 @@
   <nav id="nav"></nav>
 
   <!-- Hero Section -->
-  <section class="hero">
+  <section class="hero" style="background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.75)), url('images/IMG_1178.webp') center/cover no-repeat;">
     <div class="container" data-aos="fade-up" data-aos-duration="1000">
       <img src="images/ghostespdotnet.png" alt="GhostESP" class="hero-logo">
       <p class="hero-tagline">Turn your ESP32 into a penetration testing device.</p>
@@ -65,13 +65,37 @@
       </div>
     </div>
     <div class="partner-strip">
-      <span class="partner-label">Official Hardware Partners</span>
-      <div class="partner-list">
-        <a href="https://www.wiredhatters.com/" target="_blank" class="partner-link">
-          <img src="https://static.wixstatic.com/media/35ea10_4e3676aadd454004b37123f8af4128de~mv2.jpg/v1/fill/w_500,h_500,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/logo%20black%20BG%20clean_edited.jpg" alt="The Wired Hatters" class="partner-logo">
-          <span class="partner-name">The Wired Hatters</span>
-          <i data-lucide="arrow-up-right" style="width:14px;height:14px;opacity:0.4;"></i>
-        </a>
+      <div class="partner-marquee">
+        <div class="partner-marquee-content" aria-hidden="false">
+          <span class="partner-label">Official Hardware Partners</span>
+          <a href="https://www.wiredhatters.com/" target="_blank" class="partner-link">
+            <img src="https://static.wixstatic.com/media/35ea10_4e3676aadd454004b37123f8af4128de~mv2.jpg/v1/fill/w_500,h_500,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/logo%20black%20BG%20clean_edited.jpg" alt="The Wired Hatters" class="partner-logo">
+            <span class="partner-name">Wired Hatters<sup class="partner-tm">™</sup></span>
+            <i data-lucide="arrow-up-right" style="width:14px;height:14px;opacity:0.4;"></i>
+          </a>
+          <span class="partner-separator">·</span>
+          <a href="https://rabbit-labs.com/" target="_blank" class="partner-link">
+            <img src="images/rabbitlabs.png" alt="Rabbit Labs" class="partner-logo partner-logo--sm">
+            <span class="partner-name">Rabbit Labs<sup class="partner-tm">™</sup></span>
+            <i data-lucide="arrow-up-right" style="width:14px;height:14px;opacity:0.4;"></i>
+          </a>
+          <span class="partner-separator">·</span>
+        </div>
+        <div class="partner-marquee-content" aria-hidden="true">
+          <span class="partner-label">Official Hardware Partners</span>
+          <a href="https://www.wiredhatters.com/" target="_blank" class="partner-link" tabindex="-1">
+            <img src="https://static.wixstatic.com/media/35ea10_4e3676aadd454004b37123f8af4128de~mv2.jpg/v1/fill/w_500,h_500,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/logo%20black%20BG%20clean_edited.jpg" alt="" class="partner-logo">
+            <span class="partner-name">Wired Hatters<sup class="partner-tm">™</sup></span>
+            <i data-lucide="arrow-up-right" style="width:14px;height:14px;opacity:0.4;"></i>
+          </a>
+          <span class="partner-separator">·</span>
+          <a href="https://rabbit-labs.com/" target="_blank" class="partner-link" tabindex="-1">
+            <img src="images/rabbitlabs.png" alt="" class="partner-logo partner-logo--sm">
+            <span class="partner-name">Rabbit Labs<sup class="partner-tm">™</sup></span>
+            <i data-lucide="arrow-up-right" style="width:14px;height:14px;opacity:0.4;"></i>
+          </a>
+          <span class="partner-separator">·</span>
+        </div>
       </div>
     </div>
   </section>
@@ -293,6 +317,67 @@
         once: true,
         offset: 100
       });
+
+      // Partner marquee - JS-driven RAF scroll for reliability
+      var marquee = document.querySelector('.partner-marquee');
+      if (marquee) {
+        var pos = 0;
+        var paused = false;
+        var contentWidth = 0;
+        var strip = marquee.closest('.partner-strip');
+        
+        function ensureEnoughContent() {
+          var contents = marquee.querySelectorAll('.partner-marquee-content');
+          if (contents.length === 0) return;
+          var firstContent = contents[0];
+          var singleWidth = firstContent.offsetWidth;
+          var viewportWidth = window.innerWidth;
+          var needed = Math.ceil((viewportWidth * 1.5) / singleWidth) + 1;
+          while (marquee.children.length < needed) {
+            var clone = firstContent.cloneNode(true);
+            clone.setAttribute('aria-hidden', 'true');
+            var links = clone.querySelectorAll('a');
+            for (var i = 0; i < links.length; i++) { links[i].setAttribute('tabindex', '-1'); }
+            marquee.appendChild(clone);
+          }
+          contentWidth = singleWidth;
+        }
+        
+        function calculateWidth() {
+          var firstContent = marquee.querySelector('.partner-marquee-content');
+          if (firstContent) {
+            contentWidth = firstContent.offsetWidth;
+          }
+        }
+        
+        ensureEnoughContent();
+        
+        window.addEventListener('resize', function() {
+          var oldWidth = contentWidth;
+          ensureEnoughContent();
+          if (oldWidth > 0 && contentWidth > 0) {
+            pos = pos * (contentWidth / oldWidth);
+          }
+        });
+        
+        if (strip) {
+          strip.addEventListener('mouseenter', function() { paused = true; });
+          strip.addEventListener('mouseleave', function() { paused = false; });
+        }
+        
+        function tickMarquee() {
+          if (!paused && contentWidth > 0) {
+            var baseSpeed = Math.max(0.35, window.innerWidth * 0.00025);
+            pos -= baseSpeed;
+            if (-pos >= contentWidth * (marquee.children.length - 1)) {
+              pos = -contentWidth;
+            }
+            marquee.style.transform = 'translateX(' + pos + 'px)';
+          }
+          requestAnimationFrame(tickMarquee);
+        }
+        requestAnimationFrame(tickMarquee);
+      }
     });
   </script>
   

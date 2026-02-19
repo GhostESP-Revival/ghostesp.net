@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#000000">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://unpkg.com https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com; img-src 'self' https://ghostesp.net https://raw.githubusercontent.com https://www.youtube.com https://i.ytimg.com https://static.wixstatic.com data:; font-src 'self' https://fonts.gstatic.com; frame-src https://www.youtube.com; connect-src 'self' https://api.github.com https://cdn.spookytools.com https://www.google-analytics.com https://googleads.g.doubleclick.net; object-src 'none'; base-uri 'self'; form-action 'self';">
+  
+  <!-- SEO Meta Tags -->
+  <title>GhostESP Companion - Android App (Beta)</title>
+  <meta name="description" content="GhostESP Companion - Control your GhostESP device directly from your Android phone. WiFi management, BLE tools, IR, and more. Currently in Beta.">
+  <meta name="keywords" content="GhostESP, Ghost ESP, Android app, companion app, ESP32, WiFi management, BLE, IR remote, security testing, Android">
+  <meta name="author" content="Jay Candel">
+  <meta name="robots" content="index, follow">
+  <meta name="language" content="English">
+  
+  <!-- Open Graph Tags -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="GhostESP Companion - Android App (Beta)">
+  <meta property="og:description" content="Control your GhostESP device directly from your Android phone">
+  <meta property="og:url" content="https://ghostesp.net/companion.html">
+  <meta property="og:site_name" content="GhostESP">
+  <meta property="og:image" content="https://ghostesp.net/images/IMG_1178.webp">
+  
+  <!-- Twitter Card Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="GhostESP Companion - Android App (Beta)">
+  <meta name="twitter:description" content="Control your GhostESP device directly from your Android phone">
+  <meta name="twitter:image" content="https://ghostesp.net/images/IMG_1178.webp">
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://ghostesp.net/companion.html">
+  
+  <!-- Favicons -->
+  <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+  <link rel="manifest" href="images/site.webmanifest">
+  
+  <!-- Fonts and Styles -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav id="nav"></nav>
+
+  <!-- Hero Section -->
+  <section class="app-hero">
+    <div class="container" data-aos="fade-up" data-aos-duration="1000">
+      <div class="beta-badge">Pre-Beta</div>
+      <img src="images/ghostespdotnet.png" alt="GhostESP" class="hero-logo" style="max-width: 280px; margin-bottom: 0.5rem;">
+      <h1 class="companion-title">COMPANION</h1>
+      <p class="app-subtitle">Control your GhostESP device from your Android phone via USB OTG. BLE for GhostLink devices coming soon.</p>
+      <div class="app-actions">
+        <a href="https://github.com/jaylikesbunda/GhostESP-Companion/releases" class="btn btn-primary" target="_blank">Download Beta</a>
+        <a href="https://github.com/jaylikesbunda/GhostESP-Companion" class="btn btn-secondary" target="_blank">View Source</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="section" style="padding-top: 2rem;">
+    <div class="container">
+      <h2 data-aos="fade-up" style="margin-bottom: 1.5rem;">Features</h2>
+      <div class="features-grid" data-aos="fade-up" data-aos-delay="100">
+        <div class="feature-item">
+          <i data-lucide="wifi"></i>
+          <div>
+            <h3>WiFi Management</h3>
+            <p>Scan networks, capture handshakes, manage evil portals</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <i data-lucide="bluetooth"></i>
+          <div>
+            <h3>BLE Tools</h3>
+            <p>Scan devices, detect Flippers, monitor AirTags</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <i data-lucide="tv"></i>
+          <div>
+            <h3>IR Control</h3>
+            <p>Learn signals, browse remotes, transmit commands</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <i data-lucide="terminal"></i>
+          <div>
+            <h3>Terminal</h3>
+            <p>Full serial terminal access to run commands</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <i data-lucide="hard-drive"></i>
+          <div>
+            <h3>SD Manager</h3>
+            <p>Browse, upload, and manage SD card files</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <i data-lucide="layout-dashboard"></i>
+          <div>
+            <h3>Dashboard</h3>
+            <p>Device status, battery, memory, modules</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <i data-lucide="settings"></i>
+          <div>
+            <h3>Settings</h3>
+            <p>Configure preferences, display, LED effects</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <i data-lucide="smartphone"></i>
+          <div>
+            <h3>Mobile Control</h3>
+            <p>USB OTG connection. BLE for GhostLink devices coming soon.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Info Section -->
+  <section class="section" style="padding-top: 1rem; padding-bottom: 4rem;">
+    <div class="container">
+      <div class="info-grid" style="border-top: 1px solid var(--border); padding-top: 2rem;">
+        <div data-aos="fade-up">
+          <h3>Open Beta</h3>
+          <p>Try the app and help shape it by reporting issues and sharing feedback.</p>
+          <a href="https://github.com/jaylikesbunda/GhostESP-Companion/issues" class="btn btn-secondary btn-small" target="_blank">Report Issues</a>
+        </div>
+        <div data-aos="fade-up" data-aos-delay="100">
+          <h3>Requirements</h3>
+          <ul>
+            <li>Android 7.0+</li>
+            <li>USB OTG cable</li>
+            <li>GhostESP device</li>
+          </ul>
+        </div>
+        <div data-aos="fade-up" data-aos-delay="200">
+          <h3>Open Source</h3>
+          <p>GPL v3 licensed. Contributions, bug reports, and feature requests welcome.</p>
+          <a href="https://github.com/jaylikesbunda/GhostESP-Companion" class="btn btn-secondary btn-small" target="_blank">View on GitHub</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>Developed by <a href="https://github.com/jaylikesbunda" target="_blank">Jay Candel</a></p>
+      <a href="https://ko-fi.com/jaylikesbunda" target="_blank" class="support-link">Support on Ko-Fi</a>
+      <div class="footer-links">
+        <a href="https://discord.gg/5cyNmUMgwh" target="_blank" class="icon-link" title="Discord">
+          <i data-lucide="message-circle"></i>
+        </a>
+        <a href="https://github.com/jaylikesbunda/Ghost_ESP" target="_blank" class="icon-link" title="GitHub">
+          <i data-lucide="github"></i>
+        </a>
+        <a href="https://instagram.com/ghostesprevival" target="_blank" class="icon-link" title="Instagram">
+          <i data-lucide="instagram"></i>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js" defer></script>
+  <script src="https://unpkg.com/lucide@latest" defer></script>
+  <script src="js/components.js" defer></script>
+  <script src="js/main.js" defer></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js" defer></script>
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      AOS.init({
+        duration: 800,
+        once: true,
+        offset: 100
+      });
+    });
+  </script>
+  <style>
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    .app-hero {
+      min-height: 60vh;
+      display: flex;
+      align-items: center;
+      text-align: center;
+      padding: 120px var(--spacing) 60px;
+      position: relative;
+      overflow: hidden;
+    }
+    .app-hero::before {
+      content: '';
+      position: absolute;
+      top: -10px;
+      left: -10px;
+      right: -10px;
+      bottom: -10px;
+      background-image: url('images/companion.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      filter: blur(5px);
+      z-index: 0;
+    }
+    .app-hero .container {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .companion-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 500;
+      margin-bottom: 1rem;
+      letter-spacing: 4px;
+    }
+    .beta-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(255, 107, 0, 0.15);
+      border: 1px solid rgba(255, 107, 0, 0.4);
+      color: #ff6b00;
+      padding: 0.4rem 1rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 1.5rem;
+    }
+    .beta-badge::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      background: #ff6b00;
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    .app-subtitle {
+      font-size: 1.1rem;
+      color: var(--text-dim);
+      margin-bottom: 2rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
+    }
+    .app-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    @media (max-width: 768px) {
+      .app-hero {
+        min-height: 50vh;
+        padding: 100px var(--spacing) 40px;
+      }
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(280px, 1fr));
+      gap: 1rem;
+      max-width: 1000px;
+      margin: 0 auto;
+      justify-items: center;
+    }
+
+    .feature-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--border);
+      width: 100%;
+      max-width: 320px;
+    }
+
+    .feature-item:last-child {
+      border-bottom: none;
+    }
+
+    .feature-item i {
+      width: 24px;
+      height: 24px;
+      color: var(--text-dim);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .feature-item h3 {
+      font-size: 0.95rem;
+      margin-bottom: 0.25rem;
+      font-family: var(--font-sans);
+      font-weight: 500;
+    }
+
+    .feature-item p {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      margin: 0;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 3rem;
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .info-grid h3 {
+      font-size: 1rem;
+      margin-bottom: 1rem;
+      font-family: var(--font-sans);
+      font-weight: 500;
+    }
+
+    .info-grid p {
+      font-size: 0.9rem;
+      color: var(--text-dim);
+      margin-bottom: 1rem;
+      line-height: 1.6;
+    }
+
+    .info-grid ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      text-align: center;
+    }
+
+    .info-grid li {
+      padding: 0.5rem 0;
+      color: var(--text-dim);
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 900px) {
+      .features-grid {
+        grid-template-columns: repeat(2, minmax(280px, 1fr));
+      }
+    }
+
+    @media (max-width: 768px) {
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .info-grid {
+        gap: 2rem;
+      }
+    }
+  </style>
+  
+  <!-- google tag (gtag.js) - deferred until user interaction -->
+  <script>
+    (function(){
+      var GA_ID = 'G-MS2T2178R5';
+      var loaded = false;
+      function loadGtag(){
+        if(loaded) return; loaded = true;
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+        s.onload = function(){
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);} 
+          window.gtag = gtag;
+          gtag('js', new Date());
+          gtag('config', GA_ID);
+        };
+        document.head.appendChild(s);
+      }
+
+      function whenInteracted(){
+        loadGtag();
+        removeListeners();
+      }
+
+      function removeListeners(){
+        ['click','scroll','keydown','pointerdown','touchstart'].forEach(function(e){
+          window.removeEventListener(e, whenInteracted, {passive:true});
+        });
+      }
+
+      ['click','scroll','keydown','pointerdown','touchstart'].forEach(function(e){
+        window.addEventListener(e, whenInteracted, {passive:true});
+      });
+
+      setTimeout(function(){ if(!loaded) loadGtag(); }, 5000);
+    })();
+  </script>
+</body>
+</html>

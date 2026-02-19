@@ -16,6 +16,7 @@
   --radius: 12px;
   --max-width: 1200px;
   --font-mono: 'Share Tech Mono', 'Courier New', monospace;
+  --font-sans: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -54,25 +55,10 @@ html.lenis {
 body {
   background: var(--bg);
   color: var(--text);
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family: var(--font-sans);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
-}
-
-body::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: 
-    radial-gradient(circle at 20% 20%, rgba(255, 20, 147, 0.03), transparent 40%),
-    radial-gradient(circle at 80% 80%, rgba(0, 255, 128, 0.02), transparent 40%),
-    radial-gradient(circle at 50% 50%, rgba(255, 107, 0, 0.02), transparent 60%);
-  z-index: -1;
-  pointer-events: none;
 }
 
 /* utility */
@@ -142,10 +128,8 @@ nav .container {
   color: var(--text-dim);
   text-decoration: none;
   transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  font-size: 0.85rem;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  font-weight: 500;
   display: inline-block;
   position: relative;
 }
@@ -207,27 +191,8 @@ nav .container {
   display: flex;
   align-items: center;
   text-align: center;
-  padding: 120px var(--spacing) 60px; /* Large top padding for fixed nav */
-  background: 
-    linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-    url('../images/IMG_1178.webp') center/cover no-repeat;
+  padding: 120px var(--spacing) 60px;
   position: relative;
-}
-
-.hero::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: 
-    linear-gradient(45deg, rgba(255, 20, 147, 0.02), rgba(0, 255, 128, 0.015), rgba(255, 20, 147, 0.02)),
-    radial-gradient(1px 1px at 20px 20px, rgba(255, 255, 255, 0.01) 0, rgba(255, 255, 255, 0.01) 1px, transparent 1px),
-    radial-gradient(1px 1px at 40px 60px, rgba(0, 0, 0, 0.015) 0, rgba(0, 0, 0, 0.015) 1px, transparent 1px);
-  background-size: 100% 100%, 60px 60px, 90px 90px;
-  pointer-events: none;
-  z-index: 0;
 }
 
 .hero .container {
@@ -268,10 +233,8 @@ nav .container {
   display: inline-block;
   border: 1px solid transparent;
   cursor: pointer;
-  font-size: 0.85rem;
-  font-family: var(--font-mono);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+  font-size: 0.9rem;
+  font-family: var(--font-sans);
   position: relative;
   overflow: hidden;
   will-change: transform, box-shadow;
@@ -591,15 +554,35 @@ nav .container {
   bottom: 0;
   left: 0;
   width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1.5rem;
-  padding: 0.75rem var(--spacing);
+  padding: 0.75rem 0;
   background: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(8px);
   border-top: 1px solid rgba(255, 255, 255, 0.08);
   z-index: 2;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
+}
+
+.partner-marquee {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+}
+
+.partner-marquee-content {
+  display: flex;
+  align-items: center;
+  gap: 3.5rem;
+  padding: 0 3.5rem;
+  flex-shrink: 0;
+}
+
+.partner-separator {
+  color: var(--text-dim);
+  opacity: 0.3;
+  font-size: 1rem;
+  user-select: none;
 }
 
 .partner-label {
@@ -611,19 +594,6 @@ nav .container {
   white-space: nowrap;
 }
 
-.partner-list {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.partner-list .partner-link + .partner-link {
-  padding-left: 1.5rem;
-  border-left: 1px solid var(--border);
-}
-
 .partner-link {
   display: inline-flex;
   align-items: center;
@@ -631,6 +601,7 @@ nav .container {
   text-decoration: none;
   color: var(--text);
   transition: opacity 0.3s ease;
+  white-space: nowrap;
 }
 
 .partner-link:hover {
@@ -644,24 +615,23 @@ nav .container {
   object-fit: cover;
 }
 
+.partner-logo--sm {
+  width: 22px;
+  height: 22px;
+}
+
 .partner-name {
   font-family: var(--font-mono);
   font-size: 0.85rem;
   letter-spacing: 0.3px;
 }
 
-@media (max-width: 768px) {
-  .partner-strip {
-    flex-direction: column;
-    gap: 0.6rem;
-  }
-
-  .partner-list .partner-link + .partner-link {
-    padding-left: 0;
-    border-left: none;
-    padding-top: 0.6rem;
-    border-top: 1px solid var(--border);
-  }
+.partner-tm {
+  font-size: 0.55rem;
+  vertical-align: super;
+  opacity: 0.5;
+  font-style: normal;
+  margin-left: 1px;
 }
 
 /* footer */
@@ -727,13 +697,14 @@ h2 {
   font-size: 2rem;
   margin-bottom: 2rem;
   text-align: center;
-  font-family: var(--font-mono);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  letter-spacing: -0.5px;
 }
 
 h3 {
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
+  font-weight: 500;
 }
 
 /* responsive */
@@ -846,4 +817,37 @@ h3 {
     width: 100%;
     text-align: center;
   }
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 200%;
+  height: 200%;
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 50px 50px;
+  animation: gridMove 40s linear infinite;
+  pointer-events: none;
+  z-index: -1;
+}
+
+@keyframes gridMove {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(-50px, -50px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::after {
+    animation: none;
+  }
+}
+
+.hero-grid-bg {
+  min-height: 70vh;
+  background: transparent;
+  position: relative;
 }
