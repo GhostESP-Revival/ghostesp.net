@@ -367,7 +367,7 @@
         
         function tickMarquee() {
           if (!paused && contentWidth > 0) {
-            var baseSpeed = Math.max(0.35, window.innerWidth * 0.00025);
+            var baseSpeed = 0.5 + window.innerWidth * 0.0001;
             pos -= baseSpeed;
             if (-pos >= contentWidth * (marquee.children.length - 1)) {
               pos = -contentWidth;
