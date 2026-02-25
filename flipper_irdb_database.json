@@ -1310,6 +1310,18 @@
     "additional_info": "x4 tech tu-1200 audio receiver"
   },
   {
+    "filename": "Fosi_Audio_ZD3.ir",
+    "device_type": "Audio_and_Video_Receivers",
+    "brand": "Fosi Audio",
+    "model": "Audio_ZD3",
+    "series": "Fosi_Audio_ZD3.ir",
+    "path": "Audio_and_Video_Receivers/Fosi_Audio/Fosi_Audio_ZD3.ir",
+    "device model": "ZD3",
+    "device type": "Audio and Video Receiver",
+    "link": "https://fosiaudio.com/products/fosi-audio-zd3-fully-balanced-desktop-dac",
+    "description": "Fosi Audio ZD3 desktop DAC remote."
+  },
+  {
     "filename": "Philips_BDP2501F7.ir",
     "device_type": "Blu-Ray",
     "brand": "Philips, Remote Model: NC278, Device Model: BDP2501/F7, Device Type: Blu-ray Player, Description: also works for Philips Models: BDP2501/F7C BDP250/F7C1 BDP2501/F7A.",
@@ -5035,6 +5047,15 @@
     "additional_info": "audioengine a5+, https://audioengineusa.com/shop/wirelessspeakers/a5-plus-classic-speakers/"
   },
   {
+    "filename": "Kanto_YU5.ir",
+    "device_type": "Speakers",
+    "brand": "Kanto",
+    "model": "YU5",
+    "series": "Kanto_YU5.ir",
+    "path": "Speakers/Kanto YU/Kanto_YU5.ir",
+    "additional_info": "kanto yu5 speakers (remote), captured from original remote"
+  },
+  {
     "filename": "Creative_z5400.ir",
     "device_type": "Speakers",
     "brand": "Creative",
@@ -5434,6 +5455,15 @@
     "device type": "DVD Player"
   },
   {
+    "filename": "Sony_BDP-S370.ir",
+    "device_type": "DVD_Players",
+    "brand": "Sony",
+    "model": "BDP-S370",
+    "series": "Sony_BDP-S370.ir",
+    "path": "DVD_Players/Sony/Sony_BDP-S370.ir",
+    "additional_info": "sony bdp-s370 blu-ray, sony bdp-s301 blu-ray"
+  },
+  {
     "filename": "Sony_BDP_S5100_region_free_unlock_0533.ir",
     "device_type": "DVD_Players",
     "brand": "Sony",
@@ -5582,6 +5612,15 @@
     "series": "Brandt_DVDP-7R.ir",
     "path": "DVD_Players/Brandt/Brandt_DVDP-7R.ir",
     "additional_info": "brandt remote for brandt dvdp-7r dvd player, power button is on the dvd player"
+  },
+  {
+    "filename": "dvd-p2.ir",
+    "device_type": "DVD_Players",
+    "brand": "dvd-p2",
+    "model": "",
+    "series": "dvd-p2.ir",
+    "path": "DVD_Players/S2 Digital/dvd-p2.ir",
+    "additional_info": "remote for the s2 digital portable dvd player., most notable is the av in/out and audio function which is only available, via the remote."
   },
   {
     "filename": "Magnavox_NB179_MWD_2206.ir",
@@ -21444,6 +21483,15 @@
     "additional_info": "marriott bonvoy, captured 2023/09/23"
   },
   {
+    "filename": "Hilton_Connected_Room_Remote.ir",
+    "device_type": "TVs",
+    "brand": "Hilton",
+    "model": "Connected_Room_Remote",
+    "series": "Hilton_Connected_Room_Remote.ir",
+    "path": "TVs/Hotels/Hilton_Connected_Room_Remote.ir",
+    "additional_info": "hilton connected room remote control, note - this remote controls an edge computer attached to the back, of the tv, not the tv itself. if you identify the model of your, tv you can use your flipper to control the tv, sidestepping the, hilton connected room system. this is very useful as the hilton, connected room system does not allow access to certain tv, features, the settings menu for example., in my hilton this is connected to a samsung 55\" hcu7000., i assume the remotes are roughly the same between hiltons,, but they may differ slightly based on the tv they are connected to."
+  },
+  {
     "filename": "BBK_TV_LEM-1071.ir",
     "device_type": "TVs",
     "brand": "BBK",
@@ -22081,6 +22129,16 @@
     "series": "Samsung_AA59.ir",
     "path": "TVs/Samsung/Samsung_AA59.ir",
     "additional_info": "samsung_aa59 tv"
+  },
+  {
+    "filename": "Samsung_AA59-00484A.ir",
+    "device_type": "TVs",
+    "brand": "Samsung",
+    "model": "AA59-00484A",
+    "series": "Samsung_AA59-00484A.ir",
+    "path": "TVs/Samsung/Samsung_AA59-00484A.ir",
+    "captured by": "HyperSpeeed",
+    "additional_info": "samsung aa59-00484a, compatible tv models:, - 5wxxh, - le19d450g, - le19d450g1w, - le19d451g3w, - le22d450g1w, - le22d451g3w, - le26d450g, - le26d450g1w, - le32d450g, - le32d450g1w, - le32d550k, - le32d550k1w, - le32d551k2w, - le32d570k2s, - le32d579k, - le32d580k, - le37b550a, - le37d550, - le37d550k, - le37d550k1w, - le37d551k2w, - le37d570k2, - le37d570k2s, - le37d579k, - le37d580k, - le40d550k, - le40d550k1w, - le40d550k2w, - le40d551k2w, - le40d570k2s, - le40d579k, - le40d580k, - le46d550k, - le46d550k1w, - le46d551k2w, - le46d570k2s, - le46d580k, - ps43d450a, - ps43d450a2w, - ps43d451a3w, - ps43d452a5w, - ps51d450a, - ps51d450a2w, - ps51d451a3w, - ps51d452a5w"
   },
   {
     "filename": "Samsung_H6300_TV.ir",
@@ -23403,6 +23461,15 @@
     "additional_info": "classicflame 23irm1500-o107 rolling mantel with infrared quartz fireplace"
   },
   {
+    "filename": "HDFP86-47.ir",
+    "device_type": "Fireplaces",
+    "brand": "HDFP86-47",
+    "model": "",
+    "series": "HDFP86-47.ir",
+    "path": "Fireplaces/Whalen_Furniture/HDFP86-47.ir",
+    "additional_info": "whalen furniture fireplace, works for hdfp68-47 but may work on most others by this brand"
+  },
+  {
     "filename": "Twin_Star_Fireplace.ir",
     "device_type": "Fireplaces",
     "brand": "Twin",
@@ -23473,6 +23540,15 @@
     "series": "Ashley_Furniture_W100-101.ir",
     "path": "Fireplaces/Ashley_Furniture/Ashley_Furniture_W100-101.ir",
     "additional_info": "ashley furniture w100-101 fireplace"
+  },
+  {
+    "filename": "Dimplex_Optiflame_Fireplace.ir",
+    "device_type": "Fireplaces",
+    "brand": "Dimplex",
+    "model": "Optiflame_Fireplace",
+    "series": "Dimplex_Optiflame_Fireplace.ir",
+    "path": "Fireplaces/Dimplex/Dimplex_Optiflame_Fireplace.ir",
+    "additional_info": "brayford bfd20e, brayford pebble bfd20pb, brayford burgundy bfd20brg, brayford slate bfd20sl, springborne sbn20e, bari bar20, optiflame stove fire, optiflame fire"
   },
   {
     "filename": "LongHua_WCF28.ir",
