@@ -35,10 +35,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // load releases if elements exist
   if (document.getElementById('latest-release')) {
-    github.renderRelease('latest-release', 'jaylikesbunda', 'Ghost_ESP');
+    github.renderRelease('latest-release', 'GhostESP-Revival', 'GhostESP');
   }
   if (document.getElementById('flipper-release')) {
-    github.renderRelease('flipper-release', 'jaylikesbunda', 'ghost_esp_app');
+    github.renderRelease('flipper-release', 'GhostESP-Revival', 'GhostESP-FlipperCompanion');
   }
 
   // initialize lucide icons if available
