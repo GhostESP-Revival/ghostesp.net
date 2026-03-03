@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#000000">
+  <title>WDMap - Wardriving Map - GhostESP</title>
+  <meta name="description" content="WDMap - Client-side wardriving map for WiGLE CSV files. Visualize WiFi and BLE networks with GPS coordinates directly in your browser.">
+  <meta name="keywords" content="WDMap, wardriving, WiGLE, WiFi map, BLE map, GPS, ESP32, GhostESP, wardrive, network mapping">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/openwd.css">
+  
+  <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+</head>
+<body>
+  <nav id="nav"></nav>
+
+  <div class="openwd-container">
+    <header class="openwd-header">
+      <h1>WDMap</h1>
+      <p class="header-description">Client-side wardriving map for WiGLE v1.6 CSV files</p>
+    </header>
+
+    <main class="openwd-main">
+        <div class="openwd-toolbar">
+          <div class="toolbar-row">
+            <div class="import-controls">
+              <input id="file-input" type="file" multiple accept=".csv,text/csv">
+              <button id="import-btn" class="btn btn-primary">Import CSV</button>
+              <input id="export-btn" type="button" class="btn" value="Export">
+              <input id="load-input" type="file" accept=".json" style="display:none">
+              <input id="load-btn" type="button" class="btn" value="Load">
+              <button id="clear-btn" class="btn btn-danger">Clear</button>
+            </div>
+            <div class="toolbar-actions">
+              <button id="filter-toggle" class="btn btn-ghost" aria-expanded="false">Filters</button>
+              <button id="animate-btn" class="btn btn-primary">Animate</button>
+            </div>
+          </div>
+          <div id="filter-panel" class="filter-panel" aria-hidden="true">
+            <div class="filter-panel-row">
+              <select id="filter-type">
+                <option value="ALL">All Types</option>
+                <option value="WIFI">WiFi</option>
+                <option value="BLE">BLE</option>
+              </select>
+              <input id="filter-search" type="text" placeholder="Search SSID/MAC...">
+              <input id="filter-rssi-min" type="number" min="-140" max="0" placeholder="RSSI Min">
+              <input id="filter-rssi-max" type="number" min="-140" max="0" placeholder="RSSI Max">
+            </div>
+            <div class="filter-panel-actions">
+              <button id="apply-filters" class="btn">Apply</button>
+              <button id="reset-filters" class="btn btn-ghost">Reset</button>
+            </div>
+          </div>
+        </div>
+        <div id="import-status" class="status"></div>
+      </div>
+
+      <div class="app-shell">
+        <aside class="panel">
+          <section class="card">
+            <h2>Datasets</h2>
+            <div id="dataset-list" class="dataset-list"></div>
+          </section>
+        </aside>
+
+        <main class="map-wrap">
+          <div id="map"></div>
+          <div class="time-slider-float">
+            <span class="time-label">Time</span>
+            <input type="range" id="time-slider" class="time-slider" min="0" max="100" value="100">
+            <span id="time-display" class="time-display">All time</span>
+            <label class="time-toggle">
+              <input type="checkbox" id="time-all-toggle" checked>
+              All time
+            </label>
+          </div>
+          <div id="animate-overlay" class="animate-overlay" style="display:none">
+            <div class="animate-stats">
+              <div class="animate-stat-year" id="animate-year">2024</div>
+              <div class="animate-stat-label" id="animate-date">January</div>
+              <div class="animate-stat-main" id="animate-count">0</div>
+              <div class="animate-stat-sub" id="animate-type">networks found</div>
+              <div class="animate-stat-wifi" id="animate-wifi">0 WiFi</div>
+              <div class="animate-stat-ble" id="animate-ble">0 BLE</div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </main>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <p>OpenWD - Wardriving map for WiGLE CSV files</p>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/supercluster@8.0.1/dist/supercluster.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <script src="https://unpkg.com/lucide@latest" defer></script>
+  <script src="js/components.js" defer></script>
+  <script src="js/openwd.js" defer></script>
+</body>
+</html>

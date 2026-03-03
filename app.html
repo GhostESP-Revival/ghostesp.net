@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#000000">
+  
+  <!-- SEO Meta Tags -->
+  <title>GhostESP Companion - Android App (Beta)</title>
+  <meta name="description" content="GhostESP Companion - Control your GhostESP device from your Android phone. WiFi scanning, BLE monitoring, NFC, IR, GPS, and more. Now in Beta.">
+  <meta name="keywords" content="GhostESP, Ghost ESP, Android app, companion app, WiFi scanner, BLE scanner, NFC, infrared, GPS, wardriving, ESP32">
+  <meta name="author" content="Jay Candel">
+  <meta name="robots" content="index, follow">
+  
+  <!-- Open Graph Tags -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="GhostESP Companion - Android App (Beta)">
+  <meta property="og:description" content="Control your GhostESP device from your Android phone. Now in Beta.">
+  <meta property="og:url" content="https://ghostesp.net/app.html">
+  <meta property="og:site_name" content="GhostESP">
+  <meta property="og:image" content="https://ghostesp.net/images/IMG_1178.webp">
+  
+  <!-- Twitter Card Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="GhostESP Companion - Android App (Beta)">
+  <meta name="twitter:description" content="Control your GhostESP device from your Android phone.">
+  <meta name="twitter:image" content="https://ghostesp.net/images/IMG_1178.webp">
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://ghostesp.net/app.html">
+  
+  <!-- Favicons -->
+  <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+  
+  <!-- Fonts and Styles -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest" defer></script>
+  <style>
+    .app-hero {
+      min-height: 60vh;
+      display: flex;
+      align-items: center;
+      text-align: center;
+      padding: 120px var(--spacing) 60px;
+      background: 
+        linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.85)),
+        url('../images/IMG_1178.webp') center/cover no-repeat;
+      position: relative;
+    }
+    .app-hero::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        linear-gradient(45deg, rgba(255, 20, 147, 0.03), rgba(0, 255, 128, 0.02), rgba(255, 20, 147, 0.03)),
+        radial-gradient(1px 1px at 20px 20px, rgba(255, 255, 255, 0.015) 0, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+        radial-gradient(1px 1px at 40px 60px, rgba(0, 0, 0, 0.02) 0, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
+      background-size: 100% 100%, 60px 60px, 90px 90px;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .app-hero .container {
+      position: relative;
+      z-index: 1;
+    }
+    .app-logo {
+      width: 120px;
+      height: 120px;
+      background: linear-gradient(135deg, #1a1a1a, #0a0a0a);
+      border: 2px solid var(--border);
+      border-radius: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    }
+    .app-logo svg {
+      width: 64px;
+      height: 64px;
+      color: var(--text);
+    }
+    .beta-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(255, 107, 0, 0.15);
+      border: 1px solid rgba(255, 107, 0, 0.4);
+      color: #ff6b00;
+      padding: 0.4rem 1rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 1.5rem;
+    }
+    .beta-badge::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      background: #ff6b00;
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+    .app-title {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .app-subtitle {
+      font-size: 1.1rem;
+      color: var(--text-dim);
+      margin-bottom: 2rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
+    }
+    .app-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .app-store-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: #1a1a1a;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 0.75rem 1.5rem;
+      text-decoration: none;
+      color: var(--text);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .app-store-badge:hover {
+      background: #252525;
+      border-color: rgba(255, 255, 255, 0.3);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    }
+    .app-store-badge svg {
+      width: 28px;
+      height: 28px;
+    }
+    .app-store-badge span {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .app-store-badge .store-name {
+      display: block;
+      font-size: 0.65rem;
+      color: var(--text-dim);
+      margin-bottom: 2px;
+    }
+    .app-store-badge .store-title {
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    .feature-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .feature-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(255, 255, 255, 0.25);
+      box-shadow: 0 8px 24px rgba(255, 255, 255, 0.08);
+    }
+    .feature-card-icon {
+      width: 48px;
+      height: 48px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+    }
+    .feature-card-icon i {
+      width: 24px;
+      height: 24px;
+      color: var(--text);
+    }
+    .feature-card h3 {
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+    }
+    .feature-card p {
+      color: var(--text-dim);
+      font-size: 0.9rem;
+      line-height: 1.5;
+      margin: 0;
+    }
+    .screenshots-section {
+      background: var(--surface);
+      padding: 4rem var(--spacing);
+    }
+    .screenshot-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    .screenshot-item {
+      aspect-ratio: 9/19.5;
+      background: linear-gradient(135deg, #1a1a1a, #0a0a0a);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+    .screenshot-item:hover {
+      transform: scale(1.02);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+    .screenshot-item i {
+      width: 48px;
+      height: 48px;
+      color: var(--text-dim);
+      opacity: 0.3;
+    }
+    .requirements-section {
+      padding: 4rem var(--spacing);
+    }
+    .requirements-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    .requirement-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 1rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
+    .requirement-item i {
+      width: 20px;
+      height: 20px;
+      color: var(--text);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .requirement-item h4 {
+      font-size: 0.95rem;
+      margin-bottom: 0.25rem;
+    }
+    .requirement-item p {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      margin: 0;
+    }
+    .cta-section {
+      background: linear-gradient(135deg, rgba(255, 107, 0, 0.1), rgba(0, 0, 0, 0.3));
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 4rem var(--spacing);
+      text-align: center;
+    }
+    .cta-section h2 {
+      margin-bottom: 1rem;
+    }
+    .cta-section p {
+      color: var(--text-dim);
+      margin-bottom: 2rem;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    @media (max-width: 768px) {
+      .app-title {
+        font-size: 1.75rem;
+      }
+      .app-hero {
+        min-height: 50vh;
+        padding: 100px var(--spacing) 40px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav id="nav"></nav>
+
+  <!-- Hero Section -->
+  <section class="app-hero">
+    <div class="container" data-aos="fade-up" data-aos-duration="1000">
+      <div class="app-logo">
+        <i data-lucide="smartphone"></i>
+      </div>
+      <div class="beta-badge">Beta</div>
+      <h1 class="app-title">GhostESP Companion</h1>
+      <p class="app-subtitle">
+        Take full control of your GhostESP device directly from your Android phone. 
+        Monitor WiFi networks, track BLE devices, manage NFC tags, and more - all from a sleek mobile interface.
+      </p>
+      <div class="app-actions">
+        <a href="https://play.google.com/store/apps/details?id=com.example.ghostespcompanion" class="app-store-badge" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.198l2.807 1.626a1 1 0 0 1 0 1.73l-2.808 1.626L15.206 12l2.492-2.491zM5.864 2.658L16.8 8.99l-2.302 2.302-8.635-8.634z"/>
+          </svg>
+          <span>
+            <span class="store-name">Get it on</span>
+            <span class="store-title">Google Play</span>
+          </span>
+        </a>
+        <a href="https://github.com/GhostESP-Revival/GhostESP-Companion" class="btn btn-secondary" target="_blank">
+          View Source
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="section">
+    <div class="container">
+      <h2 data-aos="fade-up">Features</h2>
+      <div class="feature-grid">
+        <div class="feature-card" data-aos="fade-up" data-aos-delay="50">
+          <div class="feature-card-icon"><i data-lucide="wifi"></i></div>
+          <h3>WiFi Scanner</h3>
+          <p>Scan for nearby WiFi networks, view channel congestion, track access points, and capture handshakes.</p>
+        </div>
+        <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+          <div class="feature-card-icon"><i data-lucide="bluetooth"></i></div>
+          <h3>BLE Monitor</h3>
+          <p>Monitor Bluetooth Low Energy devices, detect Flipper Zero units, track GATT services, and wardrive.</p>
+        </div>
+        <div class="feature-card" data-aos="fade-up" data-aos-delay="150">
+          <div class="feature-card-icon"><i data-lucide="nfc"></i></div>
+          <h3>NFC Tools</h3>
+          <p>Read and write NFC tags, manage saved tags, and integrate with Chameleon Ultra support.</p>
+        </div>
+        <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+          <div class="feature-card-icon"><i data-lucide="tv"></i></div>
+          <h3>IR Control</h3>
+          <p>Learn and transmit infrared signals, browse remote databases, and control your devices seamlessly.</p>
+        </div>
+        <div class="feature-card" data-aos="fade-up" data-aos-delay="250">
+          <div class="feature-card-icon"><i data-lucide="map-pin"></i></div>
+          <h3>GPS Wardriving</h3>
+          <p>Log WiFi and BLE networks with GPS coordinates for wardriving adventures and network mapping.</p>
+        </div>
+        <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+          <div class="feature-card-icon"><i data-lucide="keyboard"></i></div>
+          <h3>BadUSB</h3>
+          <p>Execute BadUSB attacks directly from your phone with easy-to-use scripts and payloads.</p>
+        </div>
+        <div class="feature-card" data-aos="fade-up" data-aos-delay="350">
+          <div class="feature-card-icon"><i data-lucide="sd-card"></i></div>
+          <h3>SD Manager</h3>
+          <p>Browse and manage files on your GhostESP SD card, upload and download with ease.</p>
+        </div>
+        <div class="feature-card" data-aos="fade-up" data-aos-delay="400">
+          <div class="feature-card-icon"><i data-lucide="terminal"></i></div>
+          <h3>Terminal</h3>
+          <p>Full serial console access to execute commands and interact with your GhostESP device.</p>
+        </div>
+        <div class="feature-card" data-aos="fade-up" data-aos-delay="450">
+          <div class="feature-card-icon"><i data-lucide="globe"></i></div>
+          <h3>Evil Portal</h3>
+          <p>Create and manage captive portal attacks with easy configuration and credential harvesting.</p>
+        </div>
+        <div class="feature-card" data-aos="fade-up" data-aos-delay="500">
+          <div class="feature-card-icon"><i data-lucide="settings"></i></div>
+          <h3>Settings</h3>
+          <p>Configure device preferences, theme options, privacy modes, and connection settings.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Screenshots Section -->
+  <section class="screenshots-section">
+    <div class="container">
+      <h2 data-aos="fade-up">Screens</h2>
+      <p style="text-align: center; color: var(--text-dim); margin-bottom: 2rem;" data-aos="fade-up">
+        A clean, intuitive interface designed for efficiency
+      </p>
+      <div class="screenshot-grid">
+        <div class="screenshot-item" data-aos="fade-up" data-aos-delay="50">
+          <i data-lucide="layout-dashboard"></i>
+        </div>
+        <div class="screenshot-item" data-aos="fade-up" data-aos-delay="100">
+          <i data-lucide="wifi"></i>
+        </div>
+        <div class="screenshot-item" data-aos="fade-up" data-aos-delay="150">
+          <i data-lucide="bluetooth"></i>
+        </div>
+        <div class="screenshot-item" data-aos="fade-up" data-aos-delay="200">
+          <i data-lucide="terminal"></i>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Requirements Section -->
+  <section class="requirements-section">
+    <div class="container">
+      <h2 data-aos="fade-up">Requirements</h2>
+      <div class="requirements-grid">
+        <div class="requirement-item" data-aos="fade-up" data-aos-delay="50">
+          <i data-lucide="smartphone"></i>
+          <div>
+            <h4>Android 8.0+</h4>
+            <p>Requires Android Oreo or higher for full functionality</p>
+          </div>
+        </div>
+        <div class="requirement-item" data-aos="fade-up" data-aos-delay="100">
+          <i data-lucide="usb"></i>
+          <div>
+            <h4>USB OTG Cable</h4>
+            <p>On-the-go cable to connect your phone to GhostESP</p>
+          </div>
+        </div>
+        <div class="requirement-item" data-aos="fade-up" data-aos-delay="150">
+          <i data-lucide="wifi"></i>
+          <div>
+            <h4>GhostESP Device</h4>
+            <p>Any GhostESP-compatible ESP32 board running firmware</p>
+          </div>
+        </div>
+        <div class="requirement-item" data-aos="fade-up" data-aos-delay="200">
+          <i data-lucide="download"></i>
+          <div>
+            <h4>Enable USB Debugging</h4>
+            <p>Developer options must be enabled for serial communication</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta-section">
+    <div class="container" data-aos="fade-up">
+      <h2>Try It Now</h2>
+      <p>Join the Beta program to help shape the future of GhostESP Companion. Your feedback drives development.</p>
+      <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+        <a href="https://play.google.com/store/apps/details?id=com.example.ghostespcompanion" class="btn btn-primary" target="_blank">
+          Download Beta
+        </a>
+        <a href="https://discord.gg/5cyNmUMgwh" class="btn btn-secondary" target="_blank">
+          Join Discord
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>Developed by <a href="https://github.com/jaylikesbunda" target="_blank">Jay Candel</a></p>
+      <a href="https://ko-fi.com/jaylikesbunda" target="_blank" class="support-link">Support on Ko-Fi</a>
+      <div class="footer-links">
+        <a href="https://discord.gg/5cyNmUMgwh" target="_blank" class="icon-link" title="Discord">
+          <i data-lucide="message-circle"></i>
+        </a>
+        <a href="https://github.com/GhostESP-Revival/GhostESP" target="_blank" class="icon-link" title="GitHub">
+          <i data-lucide="github"></i>
+        </a>
+        <a href="https://instagram.com/ghostesprevival" target="_blank" class="icon-link" title="Instagram">
+          <i data-lucide="instagram"></i>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js" defer></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js" defer></script>
+  <script src="js/components.js" defer></script>
+  <script src="js/main.js" defer></script>
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      AOS.init({
+        duration: 800,
+        once: true,
+        offset: 100
+      });
+    });
+  </script>
+
+  <!-- google tag (gtag.js) -->
+  <script>
+    (function(){
+      var GA_ID = 'G-MS2T2178R5';
+      var loaded = false;
+      function loadGtag(){
+        if(loaded) return; loaded = true;
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+        s.onload = function(){
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);} 
+          window.gtag = gtag;
+          gtag('js', new Date());
+          gtag('config', GA_ID);
+        };
+        document.head.appendChild(s);
+      }
+
+      function whenInteracted(){
+        loadGtag();
+        removeListeners();
+      }
+
+      function removeListeners(){
+        ['click','scroll','keydown','pointerdown','touchstart'].forEach(function(e){
+          window.removeEventListener(e, whenInteracted, {passive:true});
+        });
+      }
+
+      ['click','scroll','keydown','pointerdown','touchstart'].forEach(function(e){
+        window.addEventListener(e, whenInteracted, {passive:true});
+      });
+
+      setTimeout(function(){ if(!loaded) loadGtag(); }, 5000);
+    })();
+  </script>
+</body>
+</html>
