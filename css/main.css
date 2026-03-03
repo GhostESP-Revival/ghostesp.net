@@ -92,7 +92,7 @@ nav {
   background: rgba(0, 0, 0, 0.95);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--border);
-  z-index: 100;
+  z-index: 2000;
   padding: 1rem 0;
 }
 
@@ -735,9 +735,11 @@ h3 {
     background: rgba(0, 0, 0, 0.98);
     backdrop-filter: blur(10px);
     flex-direction: column;
-    padding: 80px 2rem 2rem;
+    padding: 72px 1.5rem 1.5rem;
     border-left: 1px solid var(--border);
     transition: right 0.3s ease;
+    overflow-y: auto;
+    z-index: 2100;
   }
 
   .nav-links.active {
@@ -750,8 +752,8 @@ h3 {
 
   .nav-links a {
     display: block;
-    padding: 0.6rem 0;
-    font-size: 1rem;
+    padding: 0.45rem 0;
+    font-size: 0.95rem;
   }
 
   .hero {
