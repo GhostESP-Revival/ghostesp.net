@@ -880,6 +880,7 @@ class FileBrowser {
 }
 
 const fileBrowser = new FileBrowser();
+window.fileBrowser = fileBrowser;
 
 const originalLog = SerialConsole.prototype.log;
 SerialConsole.prototype.log = function(text) {
