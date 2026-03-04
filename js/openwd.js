@@ -20,6 +20,9 @@ const DB_NAME = "openwd_local";
 const DB_VERSION = 1;
 const META_STORE = "meta";
 const OBS_STORE = "observations";
+const VIEW_PAD_FACTOR = 0.36;
+const WIFI_POINT_COLOR = "#00e5ff";
+const BLE_POINT_COLOR = "#ffb300";
 
 const state = {
   map: null,
@@ -416,7 +419,7 @@ function rebuildClusterIndex(filtered) {
   }));
 
   state.clusterIndex = new clusterCtor({
-    radius: 58,
+    radius: 50,
     maxZoom: 19,
     minZoom: 0,
     nodeSize: 64,
@@ -426,12 +429,24 @@ function rebuildClusterIndex(filtered) {
 
 function getClustersForView() {
   if (!state.clusterIndex) return [];
-  const bounds = state.map.getBounds();
+  const bounds = state.map.getBounds().pad(VIEW_PAD_FACTOR);
   const zoom = Math.floor(state.map.getZoom());
+  const south = Math.max(-90, bounds.getSouth());
+  const north = Math.min(90, bounds.getNorth());
   const west = bounds.getWest();
-  const south = bounds.getSouth();
   const east = bounds.getEast();
-  const north = bounds.getNorth();
+
+  if (west < -180) {
+    const left = state.clusterIndex.getClusters([west + 360, south, 180, north], zoom);
+    const right = state.clusterIndex.getClusters([-180, south, east, north], zoom);
+    return [...left, ...right];
+  }
+
+  if (east > 180) {
+    const left = state.clusterIndex.getClusters([west, south, 180, north], zoom);
+    const right = state.clusterIndex.getClusters([-180, south, east - 360, north], zoom);
+    return [...left, ...right];
+  }
 
   if (west <= east) {
     return state.clusterIndex.getClusters([west, south, east, north], zoom);
@@ -444,13 +459,15 @@ function getClustersForView() {
 
 function getRawPointsForView() {
   const filters = getFilterValues();
-  const bounds = state.map.getBounds();
+  const bounds = state.map.getBounds().pad(VIEW_PAD_FACTOR);
   const west = bounds.getWest();
   const east = bounds.getEast();
-  const south = bounds.getSouth();
-  const north = bounds.getNorth();
+  const south = Math.max(-90, bounds.getSouth());
+  const north = Math.min(90, bounds.getNorth());
 
   const inLng = (lon) => {
+    if (west < -180) return lon >= west + 360 || lon <= east;
+    if (east > 180) return lon >= west || lon <= east - 360;
     if (west <= east) return lon >= west && lon <= east;
     return lon >= west || lon <= east;
   };
@@ -530,7 +547,7 @@ function renderClusters() {
   if (!state.clusteringAvailable) {
     const visiblePoints = getRawPointsForView();
     for (const point of visiblePoints) {
-      const color = point.type === "BLE" ? "#8f8f8f" : "#ffffff";
+      const color = point.type === "BLE" ? BLE_POINT_COLOR : WIFI_POINT_COLOR;
       const marker = L.circleMarker([point.latitude, point.longitude], {
         renderer: state.canvasRenderer,
         radius: point.type === "BLE" ? 4 : 4.4,
@@ -584,7 +601,7 @@ function renderClusters() {
     const point = state.pointById.get(pointId);
     if (!point) continue;
 
-    const color = point.type === "BLE" ? "#8f8f8f" : "#ffffff";
+    const color = point.type === "BLE" ? BLE_POINT_COLOR : WIFI_POINT_COLOR;
     const marker = L.circleMarker([point.latitude, point.longitude], {
       renderer: state.canvasRenderer,
       radius: point.type === "BLE" ? 4 : 4.4,
