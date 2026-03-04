@@ -1,0 +1,252 @@
+#tab-crash {
+  min-height: calc(100vh - 16rem);
+}
+
+.crash-root {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: var(--console-bg);
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+  min-height: 400px;
+}
+
+.crash-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 1rem;
+  min-height: 0;
+}
+
+.crash-header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0.5rem;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 0.5rem;
+}
+
+.crash-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.crash-status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--error-color);
+  box-shadow: 0 0 8px rgba(255, 26, 26, 0.4);
+  transition: background 0.3s, box-shadow 0.3s;
+}
+
+.crash-status-dot.connected {
+  background: var(--success-color);
+  box-shadow: 0 0 8px rgba(0, 204, 0, 0.6);
+}
+
+.crash-title {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+}
+
+.crash-subtitle {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+}
+
+.crash-config-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.crash-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  font-size: 0.75rem;
+  font-family: var(--font-mono);
+  color: var(--text-secondary);
+}
+
+.crash-file-name {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  word-break: break-all;
+}
+
+.crash-upload-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.crash-file-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.crash-upload-btn {
+  min-width: 120px;
+  text-align: center;
+  cursor: pointer;
+  border: 1px solid var(--border-color);
+  background: var(--surface-color);
+}
+
+.crash-upload-btn:hover {
+  border-color: var(--primary-color);
+  color: var(--text-primary);
+}
+
+.crash-input {
+  width: 100%;
+  font-size: 0.8rem;
+}
+
+.crash-fixed-value {
+  width: 100%;
+  font-size: 0.76rem;
+  font-family: var(--font-mono);
+  color: var(--text-primary);
+  background: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 0.6rem 0.75rem;
+  word-break: break-all;
+}
+
+.crash-actions {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.crash-actions .btn {
+  min-width: 140px;
+}
+
+.crash-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.65rem;
+}
+
+.crash-meta-card {
+  background: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 0.6rem 0.7rem;
+  min-width: 0;
+}
+
+.crash-meta-wide {
+  grid-column: 1 / -1;
+}
+
+.crash-meta-label {
+  font-size: 0.68rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-family: var(--font-mono);
+}
+
+.crash-meta-value {
+  margin-top: 0.35rem;
+  font-size: 0.8rem;
+  color: var(--text-primary);
+  word-break: break-word;
+}
+
+.crash-monospace {
+  font-family: var(--font-mono);
+  font-size: 0.73rem;
+}
+
+.crash-report {
+  background: rgba(5, 5, 10, 0.65);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 0.75rem;
+  min-height: 120px;
+  max-height: 260px;
+  overflow: auto;
+  white-space: pre-wrap;
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+}
+
+.crash-log {
+  flex: 1;
+  min-height: 120px;
+  max-height: 260px;
+  overflow: auto;
+  background: rgba(5, 5, 10, 0.65);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 0.75rem;
+}
+
+.crash-log-line {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+.crash-log-line.success {
+  color: var(--success-color);
+}
+
+.crash-log-line.warning {
+  color: #ffb74d;
+}
+
+.crash-log-line.error {
+  color: var(--error-color);
+}
+
+@media (max-width: 900px) {
+  .crash-config-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .crash-meta-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .crash-container {
+    padding: 0.75rem;
+  }
+
+  .crash-actions .btn {
+    min-width: 100%;
+  }
+
+  .crash-meta-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .crash-subtitle {
+    font-size: 0.72rem;
+  }
+}

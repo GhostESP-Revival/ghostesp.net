@@ -25,6 +25,7 @@ const state = {
   map: null,
   layerGroup: null,
   canvasRenderer: null,
+  baseTiles: null,
   clusterIndex: null,
   allPoints: [],
   pointById: new Map(),
@@ -40,6 +41,7 @@ const state = {
   didInitialFitToData: false,
   timeRange: { min: 0, max: 0 },
   timeFilter: null,
+  privacyMode: false,
 };
 
 let dbHandlePromise = null;
@@ -850,7 +852,7 @@ function initMap() {
     zoomDelta: 0.5,
   }).setView([20, 0], 2);
 
-  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+  state.baseTiles = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     maxZoom: 19,
     updateWhenIdle: false,
     updateWhenZooming: true,
@@ -1385,6 +1387,26 @@ function wireUi() {
       const isOpen = panel.classList.toggle("open");
       panel.setAttribute("aria-hidden", String(!isOpen));
       filterToggle.setAttribute("aria-expanded", String(isOpen));
+    });
+  }
+
+  const privacyToggle = document.getElementById("privacy-toggle");
+  if (privacyToggle) {
+    privacyToggle.addEventListener("click", () => {
+      state.privacyMode = !state.privacyMode;
+      const mapWrap = document.querySelector(".map-wrap");
+      if (mapWrap) {
+        mapWrap.classList.toggle("privacy-on", state.privacyMode);
+      }
+      if (state.baseTiles) {
+        if (state.privacyMode) {
+          state.map.removeLayer(state.baseTiles);
+        } else {
+          state.baseTiles.addTo(state.map);
+        }
+      }
+      privacyToggle.setAttribute("aria-pressed", String(state.privacyMode));
+      privacyToggle.textContent = state.privacyMode ? "Privacy On" : "Privacy";
     });
   }
 

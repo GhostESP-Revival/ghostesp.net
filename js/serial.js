@@ -13,6 +13,8 @@ class SerialConsole {
     this.commandHistory = [];
     this.historyIndex = -1;
     this.currentInput = "";
+    this.rawDataListeners = new Set();
+    this.suppressConsoleOutput = false;
     this.initializeElements();
     this.checkBrowserSupport();
     this.setupEventListeners();
@@ -74,6 +76,35 @@ class SerialConsole {
         await this.reconnectWithNewBaudRate();
       }
     });
+  }
+
+  addRawDataListener(listener) {
+    if (typeof listener !== "function") {
+      return () => {};
+    }
+
+    this.rawDataListeners.add(listener);
+    return () => {
+      this.rawDataListeners.delete(listener);
+    };
+  }
+
+  emitRawData(value) {
+    if (!value || !value.length || !this.rawDataListeners.size) {
+      return;
+    }
+
+    for (const listener of this.rawDataListeners) {
+      try {
+        listener(value);
+      } catch (error) {
+        console.warn("Raw data listener error:", error);
+      }
+    }
+  }
+
+  setConsoleOutputSuppressed(suppressed) {
+    this.suppressConsoleOutput = !!suppressed;
   }
 
   updateBaudRateDisplay() {
@@ -347,6 +378,12 @@ class SerialConsole {
     this.sendButton.disabled = !connected;
     this.serialInput.disabled = !connected;
     this.baudSelect.disabled = connected;
+
+    document.dispatchEvent(
+      new CustomEvent("serial-connection-change", {
+        detail: { connected },
+      })
+    );
   }
 
   async connect() {
@@ -443,7 +480,10 @@ class SerialConsole {
             const { value, done } = await this.reader.read();
             if (controller.signal.aborted) break;
             if (done) break;
-            this.log(this.decoder.decode(value));
+            this.emitRawData(value);
+            if (!this.suppressConsoleOutput) {
+              this.log(this.decoder.decode(value));
+            }
           }
         } catch (error) {
           if (controller && !controller.signal.aborted) {
@@ -535,6 +575,7 @@ class SerialConsole {
     }
 
     this.isConnected = false;
+    this.setConsoleOutputSuppressed(false);
   }
 
   async disconnect() {

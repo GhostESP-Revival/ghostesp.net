@@ -313,6 +313,15 @@
   min-height: 400px;
 }
 
+.map-wrap.privacy-on::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top, rgba(10, 10, 16, 0.92) 0%, rgba(6, 6, 10, 0.96) 65%, rgba(4, 4, 8, 0.98) 100%);
+  z-index: 400;
+  pointer-events: none;
+}
+
 .animate-overlay {
   position: absolute;
   bottom: 1.75rem;
