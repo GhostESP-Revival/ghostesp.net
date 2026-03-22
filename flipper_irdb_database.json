@@ -227,6 +227,16 @@
     "additional_info": "lexus lx470 dvd player (2004)"
   },
   {
+    "filename": "Lexus_GX470_DVD_2008.ir",
+    "device_type": "Car_Multimedia",
+    "brand": "Lexus",
+    "model": "GX470_DVD_2008",
+    "series": "Lexus",
+    "path": "Car_Multimedia/DVD_Players/Lexus/Lexus_GX470_DVD_2008.ir",
+    "note": "Rewind + Fast Forward can't be \"held\" and have to be pressed repeatedly",
+    "additional_info": "lexus gx470 dvd 2008 (possibly 2007-2009)"
+  },
+  {
     "filename": "VES_CH1.ir",
     "device_type": "Car_Multimedia",
     "brand": "VES",
@@ -4593,6 +4603,15 @@
     "additional_info": "toshiba ct-32f2 tv remote"
   },
   {
+    "filename": "Toshiba CT 8560.ir",
+    "device_type": "TVs",
+    "brand": "Toshiba CT 8560",
+    "model": "",
+    "series": "Toshiba CT 8560.ir",
+    "path": "TVs/Toshiba/Toshiba CT 8560.ir",
+    "additional_info": "toshiba ct-8560 tv"
+  },
+  {
     "filename": "Toshiba_50C350LC.ir",
     "device_type": "TVs",
     "brand": "Toshiba",
@@ -6203,6 +6222,15 @@
     "additional_info": "rock ola cd jukebox"
   },
   {
+    "filename": "elWron.ir",
+    "device_type": "TV_Tuner",
+    "brand": "elWron",
+    "model": "",
+    "series": "elWron.ir",
+    "path": "TV_Tuner/elWron/elWron.ir",
+    "additional_info": "elwron tv tuner"
+  },
+  {
     "filename": "TechniSat_DVR401B.ir",
     "device_type": "TV_Tuner",
     "brand": "TechniSat",
@@ -6846,6 +6874,15 @@
     "series": "TRAINER_1000.ir",
     "path": "Miscellaneous/Coretec/TRAINER_1000.ir",
     "additional_info": "coretec trainer 1000"
+  },
+  {
+    "filename": "OREI HD-401MV.ir",
+    "device_type": "Miscellaneous",
+    "brand": "OREI HD-401MV",
+    "model": "",
+    "series": "OREI HD-401MV.ir",
+    "path": "Miscellaneous/OREI HDMI Switcher/OREI HD-401MV.ir",
+    "additional_info": "orei hd-401mv hdmi switcher"
   },
   {
     "filename": "Simulflame_LED_Candles.ir",
@@ -8069,6 +8106,15 @@
     "series": "AlohaBreeze_84001.ir",
     "path": "Fans/AlohaBreeze/AlohaBreeze_84001.ir",
     "additional_info": "remote control for aloha breeze 84001 tower fan., product manual is available at the following url, http://www.gearhack.com/forums/electronics/new_base_for_the_aloha_breeze_84001_tower_fan_with_remote_control.files.hidden/aloha%20breeze%20mdl%2084001%20operation%20manual%20(2pgs).pdf"
+  },
+  {
+    "filename": "Mitsubishi_R30J-HRV.ir",
+    "device_type": "Fans",
+    "brand": "Mitsubishi",
+    "model": "R30J-HRV",
+    "series": "Mitsubishi_R30J-HRV.ir",
+    "path": "Fans/Mitsubishi/Mitsubishi_R30J-HRV.ir",
+    "additional_info": "mitsubishi r30j-hrv fan (aeha-like)., generated from cmd/xx table verified via nature remo."
   },
   {
     "filename": "Taurus_Babel_RC.ir",
@@ -20566,6 +20612,15 @@
     "additional_info": "mecool km6 streaming device"
   },
   {
+    "filename": "MAG_TV_Box.ir",
+    "device_type": "Streaming_Devices",
+    "brand": "MAG",
+    "model": "TV_Box",
+    "series": "MAG_TV_Box.ir",
+    "path": "Streaming_Devices/MAG/MAG_TV_Box.ir",
+    "additional_info": "mag tv box"
+  },
+  {
     "filename": "Alexa_Voice_2ndGen.ir",
     "device_type": "Streaming_Devices",
     "brand": "Alexa",
@@ -21299,6 +21354,16 @@
     "additional_info": "panasonic remote n2qayb000210 for panasonic sa-pt660 home theater system"
   },
   {
+    "filename": "Panasonic_SC-AK15.ir",
+    "device_type": "Audio_and_Video_Receivers",
+    "brand": "Panasonic",
+    "model": "SC-AK15",
+    "series": "Panasonic_SC-AK15.ir",
+    "path": "Audio_and_Video_Receivers/Panasonic/Panasonic_SC-AK15.ir",
+    "remote": "RAK-CH940WK",
+    "additional_info": "panasonic mini hifi audio system panasonic sc-ak15 from 1998, complete capture by vladimir malis from slovakia"
+  },
+  {
     "filename": "Panasonic_N2QAYB001009.ir",
     "device_type": "Audio_and_Video_Receivers",
     "brand": "Panasonic",
@@ -21343,6 +21408,16 @@
     "series": "Sony_MHC_GSX75.ir",
     "path": "Audio_and_Video_Receivers/Sony/Sony_MHC_GSX75.ir",
     "additional_info": "sony rm-sx100w remote for hcd-gsx75 model"
+  },
+  {
+    "filename": "Sony_CMT-EH10.ir",
+    "device_type": "Audio_and_Video_Receivers",
+    "brand": "Sony",
+    "model": "CMT-EH10",
+    "series": "Sony_CMT-EH10.ir",
+    "path": "Audio_and_Video_Receivers/Sony/Sony_CMT-EH10.ir",
+    "remote": "Sony RM-SC30",
+    "additional_info": "sony mini hifi audio systems sony, cmt-cp555, cmt-cpx22, cmt-eh15, hcd-cbx1, hcd-gs10, cmt-bx1, cmt-gpz7, cmt-nez3, cmt-bx5bt, cmt-cpx11, cmt-cpx22, cmt-cpz1, cmt-cpz2, cmt-cpz3, cmt-eh10, cmt-eh12, cmt-eh15, cmt-gpx5, cmt-gpx6, cmt-gpx7, cmt-hpx10w, cmt-hpx9, cmt-hpz7, cmt-hx30, cmt-ne3, cmt-nez3, cmt-nez30, cmt-nez5, cmt-spz50, cmt-spz70, cmtbx5bt, cmtcpx22, cmtcpz2, cmteh15, cmthpx10w, cmthpx9, hcd rg444, hcd-cpz1, hcd-cpz2, hcd-cpz3, hcd-eh10, hcd-gpx7, hcd-gs10, hcd-gs30, hcd-gx355, hcd-gx450, hcd-gx750, hcd-gx9000, hcd-hpx9, hcd-lx10000, hcd-ne5, hcd-nez3, hcd-rg444, hcdcpz2, hcdgx355, hcdgx450, hcdgx750, hcdgx9000, hcdhpx9, hcdlx10000, hcdrg444, lbt-zx6, lbt-zx8, lbt-zx9, lbtzx6, lbtzx8, lbtzx9, mhc-ec50, mhc-ec55, mhc-ec68, mhc-ec77, mhc-gnx880, mhc-gx20, mhc-gx250, mhc-gx30, mhc-gx355, mhc-gx40, mhc-gx450, mhc-gx555, mhc-gx750, mhc-gx9000, mhc-gx99, mhc-gx9900, mhc-lx10000, mhc-rg100, mhc-rg110, mhc-rg121, mhc-rg170, mhc-rg190, mhc-rg22, mhc-rg221, mhc-rg222, mhc-rg33, mhc-rg444s, mhc-rg551, mhc-rg555, mhc-rl3, mhc-srg444s, mhcec50, mhcgnx880, mhcgx355, mhcgx450, mhcgx555, mhcgx9000, mhcgx9900, mhclx10000, mhcrg170, mhcrg190, rm-sc55, complete capture by vladimir malis from slovakia"
   },
   {
     "filename": "Sony_MHC-EC69.ir",
@@ -21643,6 +21718,16 @@
     "series": "Philips_FW750c.ir",
     "path": "Audio_and_Video_Receivers/Philips/Philips_FW750c.ir",
     "additional_info": "philips fw750c av receiver"
+  },
+  {
+    "filename": "Philips_FW-M55.ir",
+    "device_type": "Audio_and_Video_Receivers",
+    "brand": "Philips",
+    "model": "FW-M55",
+    "series": "Philips_FW-M55.ir",
+    "path": "Audio_and_Video_Receivers/Philips/Philips_FW-M55.ir",
+    "remote": "Philips RC2519/01",
+    "additional_info": "philips mini hifi audio system philips fw-m55/22 from year 2000, complete capture by vladimir malis from slovakia, play/pause/next/prev/fast_forward/fast_rewind are different codes for cd/tape/tuner so they have to be three times"
   },
   {
     "filename": "JVC_CA-D851TR.ir",
@@ -24114,6 +24199,15 @@
     "additional_info": "samsung soundbar sk10y"
   },
   {
+    "filename": "Bomaker_Odine_Soundbar..ir",
+    "device_type": "SoundBars",
+    "brand": "Bomaker",
+    "model": "Odine_Soundbar.",
+    "series": "Bomaker_Odine_Soundbar..ir",
+    "path": "SoundBars/Bomaker/Bomaker_Odine_Soundbar..ir",
+    "additional_info": "bomaker odine soundbar, unknown exact version"
+  },
+  {
     "filename": "Audac_IMEO2.ir",
     "device_type": "SoundBars",
     "brand": "Audac",
@@ -24837,6 +24931,51 @@
     "additional_info": "sony rm pj27 projector"
   },
   {
+    "filename": "Sony_RM_PJ1000.ir",
+    "device_type": "Projectors",
+    "brand": "Sony",
+    "model": "RM_PJ1000",
+    "series": "Sony_RM_PJ1000.ir",
+    "path": "Projectors/Sony/Sony_RM_PJ1000.ir",
+    "additional_info": "sony rm-pj1000 remote commander for vph-d50 projector"
+  },
+  {
+    "filename": "Sony RM-PJ30 ID-3.ir",
+    "device_type": "Projectors",
+    "brand": "Sony RM-PJ30 ID-3",
+    "model": "",
+    "series": "Sony RM-PJ30",
+    "path": "Projectors/Sony/Sony RM-PJ30/Sony RM-PJ30 ID-3.ir",
+    "additional_info": "sony rm-pj30 projector (3 of 4)"
+  },
+  {
+    "filename": "Sony RM-PJ30 ID-1.ir",
+    "device_type": "Projectors",
+    "brand": "Sony RM-PJ30 ID-1",
+    "model": "",
+    "series": "Sony RM-PJ30",
+    "path": "Projectors/Sony/Sony RM-PJ30/Sony RM-PJ30 ID-1.ir",
+    "additional_info": "sony rm-pj30 projector (1 of 4)"
+  },
+  {
+    "filename": "Sony RM-PJ30 ID-4.ir",
+    "device_type": "Projectors",
+    "brand": "Sony RM-PJ30 ID-4",
+    "model": "",
+    "series": "Sony RM-PJ30",
+    "path": "Projectors/Sony/Sony RM-PJ30/Sony RM-PJ30 ID-4.ir",
+    "additional_info": "sony rm-pj30 projector (4 of 4)"
+  },
+  {
+    "filename": "Sony RM-PJ30 ID-2.ir",
+    "device_type": "Projectors",
+    "brand": "Sony RM-PJ30 ID-2",
+    "model": "",
+    "series": "Sony RM-PJ30",
+    "path": "Projectors/Sony/Sony RM-PJ30/Sony RM-PJ30 ID-2.ir",
+    "additional_info": "sony rm-pj30 projector (2 of 4)"
+  },
+  {
     "filename": "Gateway_210_projextor.ir",
     "device_type": "Projectors",
     "brand": "Gateway",
@@ -24863,6 +25002,15 @@
     "series": "SAKAWA_Projector.ir",
     "path": "Projectors/SAKAWA/SAKAWA_Projector.ir",
     "additional_info": "sakawa projector"
+  },
+  {
+    "filename": "TOPTRO_TR25.ir",
+    "device_type": "Projectors",
+    "brand": "TOPTRO",
+    "model": "TR25",
+    "series": "TOPTRO_TR25.ir",
+    "path": "Projectors/TOPTRO/TOPTRO_TR25.ir",
+    "additional_info": "toptro tr25 projector"
   },
   {
     "filename": "Thunrlge_X1BQ.ir",
