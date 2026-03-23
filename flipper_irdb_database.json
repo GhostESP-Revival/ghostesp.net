@@ -22248,6 +22248,15 @@
     "additional_info": "unknown led remote"
   },
   {
+    "filename": "44_LED_Strip.ir",
+    "device_type": "LED_Lighting",
+    "brand": "44",
+    "model": "LED_Strip",
+    "series": "44_LED_Strip.ir",
+    "path": "LED_Lighting/Unknown/44_LED_Strip.ir",
+    "additional_info": "44-button generic led strip, includes flash, jump, meteor,roll, auto"
+  },
+  {
     "filename": "Moon_Lamp.ir",
     "device_type": "LED_Lighting",
     "brand": "Moon",
@@ -22266,6 +22275,15 @@
     "additional_info": "generic led sign"
   },
   {
+    "filename": "Conzept_LED_VoksKogle.ir",
+    "device_type": "LED_Lighting",
+    "brand": "Conzept",
+    "model": "LED_VoksKogle",
+    "series": "Conzept_LED_VoksKogle.ir",
+    "path": "LED_Lighting/Unknown/Conzept_LED_VoksKogle.ir",
+    "additional_info": "conzept led volkskogle"
+  },
+  {
     "filename": "LED_Curtain.ir",
     "device_type": "LED_Lighting",
     "brand": "LED",
@@ -22275,6 +22293,34 @@
     "additional_info": "unknown led curtain"
   },
   {
+    "filename": "Submersible_LED_Light.ir",
+    "device_type": "LED_Lighting",
+    "brand": "Submersible",
+    "model": "LED_Light",
+    "series": "Submersible_LED_Light.ir",
+    "path": "LED_Lighting/Unknown/Submersible_LED_Light.ir",
+    "product": "https://www.amazon.com/Submersible-Operated-Decorative-Controlled-Halloween/dp/B06XWVD5NT",
+    "additional_info": "submersible led light"
+  },
+  {
+    "filename": "Christmastree_candle.ir",
+    "device_type": "LED_Lighting",
+    "brand": "Christmastree",
+    "model": "candle",
+    "series": "Christmastree_candle.ir",
+    "path": "LED_Lighting/Unknown/Christmastree_candle.ir",
+    "additional_info": "generic christmas tree candles"
+  },
+  {
+    "filename": "RGB_Lightbulb_NoName.ir",
+    "device_type": "LED_Lighting",
+    "brand": "RGB",
+    "model": "Lightbulb_NoName",
+    "series": "RGB_Lightbulb_NoName.ir",
+    "path": "LED_Lighting/Unknown/RGB_Lightbulb_NoName.ir",
+    "additional_info": "rgb led lightbulb (chinese generic)"
+  },
+  {
     "filename": "nightlampRGB.ir",
     "device_type": "LED_Lighting",
     "brand": "nightlampRGB",
@@ -22282,6 +22328,15 @@
     "series": "nightlampRGB.ir",
     "path": "LED_Lighting/Unknown/nightlampRGB.ir",
     "additional_info": "generic nightlamp rgb"
+  },
+  {
+    "filename": "Closet_LED_3W.ir",
+    "device_type": "LED_Lighting",
+    "brand": "Closet",
+    "model": "LED_3W",
+    "series": "Closet_LED_3W.ir",
+    "path": "LED_Lighting/Unknown/Closet_LED_3W.ir",
+    "additional_info": "closet led 3w"
   },
   {
     "filename": "Generic_LED_light_strip.ir",
@@ -22311,6 +22366,15 @@
     "additional_info": "generic led lightbar, https://www.aliexpress.com/item/1005005088458033.html"
   },
   {
+    "filename": "LED_Cat.ir",
+    "device_type": "LED_Lighting",
+    "brand": "LED",
+    "model": "Cat",
+    "series": "LED_Cat.ir",
+    "path": "LED_Lighting/Unknown/LED_Cat.ir",
+    "additional_info": "led cat lights"
+  },
+  {
     "filename": "Neon_LED.ir",
     "device_type": "LED_Lighting",
     "brand": "Neon",
@@ -22318,6 +22382,15 @@
     "series": "Neon_LED.ir",
     "path": "LED_Lighting/Unknown/Neon_LED.ir",
     "additional_info": "neon led light"
+  },
+  {
+    "filename": "44_Button_Generic_LED.ir",
+    "device_type": "LED_Lighting",
+    "brand": "44",
+    "model": "Button_Generic_LED",
+    "series": "44_Button_Generic_LED.ir",
+    "path": "LED_Lighting/Unknown/44_Button_Generic_LED.ir",
+    "additional_info": "44 button generic led lights"
   },
   {
     "filename": "LED_Disco_Light.ir",
@@ -22871,79 +22944,6 @@
     "series": "Hovvida_LED.ir",
     "path": "LED_Lighting/Hovvida/Hovvida_LED.ir",
     "additional_info": "hovvida led light"
-  },
-  {
-    "filename": "44_LED_Strip.ir",
-    "device_type": "LED_Lighting",
-    "brand": "44",
-    "model": "LED_Strip",
-    "series": "44_LED_Strip.ir",
-    "path": "LED_Lighting/BrandUnknown/44_LED_Strip.ir",
-    "additional_info": "44-button generic led strip, includes flash, jump, meteor,roll, auto"
-  },
-  {
-    "filename": "Conzept_LED_VoksKogle.ir",
-    "device_type": "LED_Lighting",
-    "brand": "Conzept",
-    "model": "LED_VoksKogle",
-    "series": "Conzept_LED_VoksKogle.ir",
-    "path": "LED_Lighting/BrandUnknown/Conzept_LED_VoksKogle.ir",
-    "additional_info": "conzept led volkskogle"
-  },
-  {
-    "filename": "Submersible_LED_Light.ir",
-    "device_type": "LED_Lighting",
-    "brand": "Submersible",
-    "model": "LED_Light",
-    "series": "Submersible_LED_Light.ir",
-    "path": "LED_Lighting/BrandUnknown/Submersible_LED_Light.ir",
-    "product": "https://www.amazon.com/Submersible-Operated-Decorative-Controlled-Halloween/dp/B06XWVD5NT",
-    "additional_info": "submersible led light"
-  },
-  {
-    "filename": "Christmastree_candle.ir",
-    "device_type": "LED_Lighting",
-    "brand": "Christmastree",
-    "model": "candle",
-    "series": "Christmastree_candle.ir",
-    "path": "LED_Lighting/BrandUnknown/Christmastree_candle.ir",
-    "additional_info": "generic christmas tree candles"
-  },
-  {
-    "filename": "RGB_Lightbulb_NoName.ir",
-    "device_type": "LED_Lighting",
-    "brand": "RGB",
-    "model": "Lightbulb_NoName",
-    "series": "RGB_Lightbulb_NoName.ir",
-    "path": "LED_Lighting/BrandUnknown/RGB_Lightbulb_NoName.ir",
-    "additional_info": "rgb led lightbulb (chinese generic)"
-  },
-  {
-    "filename": "Closet_LED_3W.ir",
-    "device_type": "LED_Lighting",
-    "brand": "Closet",
-    "model": "LED_3W",
-    "series": "Closet_LED_3W.ir",
-    "path": "LED_Lighting/BrandUnknown/Closet_LED_3W.ir",
-    "additional_info": "closet led 3w"
-  },
-  {
-    "filename": "LED_Cat.ir",
-    "device_type": "LED_Lighting",
-    "brand": "LED",
-    "model": "Cat",
-    "series": "LED_Cat.ir",
-    "path": "LED_Lighting/BrandUnknown/LED_Cat.ir",
-    "additional_info": "led cat lights"
-  },
-  {
-    "filename": "44_Button_Generic_LED.ir",
-    "device_type": "LED_Lighting",
-    "brand": "44",
-    "model": "Button_Generic_LED",
-    "series": "44_Button_Generic_LED.ir",
-    "path": "LED_Lighting/BrandUnknown/44_Button_Generic_LED.ir",
-    "additional_info": "44 button generic led lights"
   },
   {
     "filename": "Astronaut_Star_Projector.ir",
