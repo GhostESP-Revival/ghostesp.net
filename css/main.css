@@ -53,13 +53,31 @@ html.lenis {
 }
 
 body {
-  background: var(--bg);
+  background: transparent;
   color: var(--text);
   font-family: var(--font-sans);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
+
+/* dot terrain canvas - behind everything */
+#dotTerrain {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  background: #000;
+}
+
+/* Content sits above canvas */
+nav { position: relative; z-index: 2000; }
+.hero { position: relative; z-index: 1; }
+.section { position: relative; z-index: 1; }
+footer { position: relative; z-index: 1; }
 
 /* utility */
 .container {
@@ -398,6 +416,103 @@ nav .container {
 
 .card .btn {
   margin-top: auto;
+}
+
+/* getting started layouts */
+.getting-started-primary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.getting-started-secondary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border);
+}
+
+/* card step numbers */
+.card-step-number {
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: var(--accent);
+  opacity: 0.2;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+  font-family: var(--font-mono);
+  position: relative;
+  z-index: 1;
+}
+
+/* primary cards - featured onboarding steps */
+.card-primary {
+  padding: 2rem;
+  text-align: center;
+}
+
+.card-primary .card-icon {
+  margin-bottom: 1rem;
+}
+
+.card-primary .card-icon i {
+  width: 32px;
+  height: 32px;
+}
+
+.card-primary h3 {
+  font-size: 1.25rem;
+  margin-bottom: 0.75rem;
+}
+
+.card-primary p {
+  margin-bottom: 1.5rem;
+}
+
+/* secondary cards - compact resource links */
+.card-secondary {
+  padding: 1rem 1.25rem;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+}
+
+.card-secondary .card-step-number {
+  display: none;
+}
+
+.card-secondary .card-icon {
+  margin-bottom: 0;
+  flex-shrink: 0;
+}
+
+.card-secondary .card-icon i {
+  width: 20px;
+  height: 20px;
+}
+
+.card-secondary-content {
+  flex: 1;
+  text-align: left;
+  position: relative;
+  z-index: 1;
+}
+
+.card-secondary h3 {
+  margin-bottom: 0.25rem;
+  font-size: 1rem;
+}
+
+.card-secondary p {
+  margin-bottom: 0;
+  font-size: 0.85rem;
+}
+
+.card-secondary .btn {
+  margin-top: 0;
+  flex-shrink: 0;
 }
 
 /* release card */
@@ -782,6 +897,23 @@ h3 {
     grid-template-columns: 1fr;
   }
 
+  .getting-started-primary {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .getting-started-secondary {
+    grid-template-columns: 1fr;
+  }
+
+  .card-primary {
+    padding: 1.5rem;
+  }
+
+  .card-secondary {
+    padding: 1rem;
+  }
+
   .release-header {
     flex-direction: column;
   }
@@ -819,37 +951,13 @@ h3 {
     width: 100%;
     text-align: center;
   }
-}
 
-body::after {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 200%;
-  height: 200%;
-  background-image: 
-    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-  background-size: 50px 50px;
-  animation: gridMove 40s linear infinite;
-  pointer-events: none;
-  z-index: -1;
-}
-
-@keyframes gridMove {
-  0% { transform: translate(0, 0); }
-  100% { transform: translate(-50px, -50px); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  body::after {
-    animation: none;
+  .card-secondary {
+    flex-direction: column;
+    text-align: center;
   }
-}
 
-.hero-grid-bg {
-  min-height: 70vh;
-  background: transparent;
-  position: relative;
+  .card-secondary-content {
+    text-align: center;
+  }
 }

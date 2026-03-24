@@ -50,6 +50,141 @@
   <link rel="preload" href="images/IMG_1178.webp" as="image">
 </head>
 <body>
+  <!-- Dot terrain canvas background -->
+  <canvas id="dotTerrain"></canvas>
+  <script>
+    (function() {
+      var canvas = document.getElementById('dotTerrain');
+      if (!canvas) return;
+      var ctx = canvas.getContext('2d');
+      
+      // Config
+      var SPACING = 28;
+      var dots = [];
+      var ripples = [];
+      var mouseX = -9999, mouseY = -9999;
+      var lastX = 0, lastY = 0;
+      var smoothMouseX = -9999, smoothMouseY = -9999;
+      
+      function init() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        dots = [];
+        
+        var cols = Math.ceil(canvas.width / SPACING) + 1;
+        var rows = Math.ceil(canvas.height / SPACING) + 1;
+        
+        for (var r = 0; r < rows; r++) {
+          for (var c = 0; c < cols; c++) {
+            dots.push({
+              baseX: c * SPACING,
+              baseY: r * SPACING,
+              x: 0, y: 0,
+              brightness: 0.15,
+              targetBrightness: 0.15,
+              radius: 1.5,
+              targetRadius: 1.5
+            });
+          }
+        }
+      }
+      
+      document.addEventListener('mousemove', function(e) {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        
+        // Create ripple on movement
+        var dx = e.clientX - lastX;
+        var dy = e.clientY - lastY;
+        var dist = Math.sqrt(dx * dx + dy * dy);
+        
+        if (dist > 30) {
+          ripples.push({ x: e.clientX, y: e.clientY, radius: 0, strength: 1 });
+          lastX = e.clientX;
+          lastY = e.clientY;
+        }
+      });
+      
+      function animate() {
+        // Smooth mouse tracking
+        smoothMouseX += (mouseX - smoothMouseX) * 0.2;
+        smoothMouseY += (mouseY - smoothMouseY) * 0.2;
+        
+        // Update ripples
+        for (var i = ripples.length - 1; i >= 0; i--) {
+          ripples[i].radius += 7;
+          ripples[i].strength *= 0.97;
+          if (ripples[i].strength < 0.01) ripples.splice(i, 1);
+        }
+        
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        // Update and draw dots
+        for (var d = 0; d < dots.length; d++) {
+          var dot = dots[d];
+          var bx = dot.baseX + SPACING / 2;
+          var by = dot.baseY + SPACING / 2;
+          
+          // Start with base values
+          dot.targetBrightness = 0.2;
+          dot.targetRadius = 1.8;
+          
+          // Mouse proximity - strong glow
+          var mdx = bx - smoothMouseX;
+          var mdy = by - smoothMouseY;
+          var mdist = Math.sqrt(mdx * mdx + mdy * mdy);
+          
+          if (mdist < 220) {
+            var factor = 1 - mdist / 220;
+            factor = factor * factor;
+            dot.targetBrightness = 0.2 + factor * 0.6;
+            dot.targetRadius = 1.8 + factor * 3;
+          }
+          
+          // Ripple effects - visible wave
+          for (var r = 0; r < ripples.length; r++) {
+            var rip = ripples[r];
+            var rdx = bx - rip.x;
+            var rdy = by - rip.y;
+            var rdist = Math.sqrt(rdx * rdx + rdy * rdy);
+            var wavePos = rdist - rip.radius;
+            
+            // Wave front - brighter ring
+            var waveWidth = 120;
+            if (wavePos > -40 && wavePos < waveWidth) {
+              var falloff = 1 - Math.max(0, wavePos) / waveWidth;
+              falloff = falloff * falloff;
+              
+              // Front edge is brightest
+              var edgeFactor = 1 - Math.abs(wavePos + 20) / 60;
+              edgeFactor = Math.max(0, edgeFactor);
+              
+              var bump = (falloff * 0.5 + edgeFactor * 0.5) * rip.strength * 0.6;
+              dot.targetBrightness = Math.max(dot.targetBrightness, 0.2 + bump);
+              dot.targetRadius = Math.max(dot.targetRadius, 1.8 + bump * 3);
+            }
+          }
+          
+          // Smooth interpolation
+          dot.brightness += (dot.targetBrightness - dot.brightness) * 0.3;
+          dot.radius += (dot.targetRadius - dot.radius) * 0.3;
+          
+          // Draw
+          ctx.beginPath();
+          ctx.arc(bx, by, dot.radius, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(255,255,255,' + dot.brightness + ')';
+          ctx.fill();
+        }
+        
+        requestAnimationFrame(animate);
+      }
+      
+      window.addEventListener('resize', init);
+      init();
+      animate();
+    })();
+  </script>
+
   <!-- Navigation -->
   <nav id="nav"></nav>
 
@@ -104,55 +239,60 @@
   <section id="getting-started" class="section">
     <div class="container">
       <h2 data-aos="fade-up">Getting Started</h2>
-      <div class="grid">
-        <div class="card" data-aos="fade-up" data-aos-delay="100">
-          <div class="card-icon"><i data-lucide="zap"></i></div>
-          <h3>Flash Your Device</h3>
-          <p>Install GhostESP on your ESP32 using the web flasher</p>
-          <a href="https://espressoflash.com" target="_blank" class="btn btn-primary">Open Flasher</a>
-        </div>
-        <div class="card" data-aos="fade-up" data-aos-delay="200">
-          <div class="card-icon"><i data-lucide="terminal"></i></div>
-          <h3>Serial Console</h3>
-          <p>Configure your device with console, file manager, and screen mirror</p>
-          <a href="https://ghostesp.net/serial" target="_blank" class="btn btn-primary">Open Tools</a>
-        </div>
-        <div class="card" data-aos="fade-up" data-aos-delay="300">
-          <div class="card-icon"><i data-lucide="cpu"></i></div>
+      <!-- Primary onboarding steps -->
+      <div class="getting-started-primary">
+        <div class="card card-primary" data-aos="fade-up" data-aos-delay="100">
+          <div class="card-step-number">1</div>
           <h3>Pick a Board</h3>
           <p>Browse tested ESP32 boards that work great with Ghost ESP</p>
           <a href="boards.html" class="btn btn-primary">View Boards</a>
         </div>
-        <div class="card" data-aos="fade-up" data-aos-delay="350">
+        <div class="card card-primary" data-aos="fade-up" data-aos-delay="200">
+          <div class="card-step-number">2</div>
+          <h3>Flash Your Device</h3>
+          <p>Install GhostESP on your ESP32 using the web flasher</p>
+          <a href="https://espressoflash.com" target="_blank" class="btn btn-primary">Open Flasher</a>
+        </div>
+        <div class="card card-primary" data-aos="fade-up" data-aos-delay="300">
+          <div class="card-step-number">3</div>
+          <h3>Serial Console</h3>
+          <p>Configure your device with console, file manager, and screen mirror</p>
+          <a href="https://ghostesp.net/serial" target="_blank" class="btn btn-primary">Open Tools</a>
+        </div>
+      </div>
+
+      <!-- Secondary resources -->
+      <div class="getting-started-secondary">
+        <div class="card card-secondary" data-aos="fade-up" data-aos-delay="350">
           <div class="card-icon"><i data-lucide="satellite-dish"></i></div>
-          <h3>IR Database</h3>
-          <p>Search and download infrared remote files for your GhostESP device</p>
-          <a href="irdb.html" class="btn btn-primary">Browse IRDB</a>
+          <div class="card-secondary-content">
+            <h3>IR Database</h3>
+            <p>Search and download infrared remote files</p>
+          </div>
+          <a href="irdb.html" class="btn btn-secondary btn-small">Browse</a>
         </div>
-        <div class="card" data-aos="fade-up" data-aos-delay="450">
-          <div class="card-icon"><i data-lucide="message-square"></i></div>
-          <h3>Join Discord</h3>
-          <p>Get help and share your projects with the community</p>
-          <a href="https://discord.gg/5cyNmUMgwh" target="_blank" class="btn btn-primary">Join Server</a>
-        </div>
-        <div class="card" data-aos="fade-up" data-aos-delay="550">
+        <div class="card card-secondary" data-aos="fade-up" data-aos-delay="400">
           <div class="card-icon"><i data-lucide="book-open"></i></div>
-          <h3>Read the Docs</h3>
-          <p>Learn how to use every feature and customize your setup</p>
-          <a href="https://docs.ghostesp.net" target="_blank" class="btn btn-primary">View Docs</a>
+          <div class="card-secondary-content">
+            <h3>Read the Docs</h3>
+            <p>Learn every feature and customize your setup</p>
+          </div>
+          <a href="https://docs.ghostesp.net" target="_blank" class="btn btn-secondary btn-small">Docs</a>
         </div>
-        <div class="card" data-aos="fade-up" data-aos-delay="650">
-          <div class="card-icon"><i data-lucide="shopping-bag"></i></div>
-          <h3>Get Merch</h3>
-          <p>Grab some GhostESP gear and support the project</p>
-          <a href="https://shop.ghostesp.net" target="_blank" class="btn btn-primary">Visit Shop</a>
+        <div class="card card-secondary" data-aos="fade-up" data-aos-delay="450">
+          <div class="card-icon"><i data-lucide="message-square"></i></div>
+          <div class="card-secondary-content">
+            <h3>Join Discord</h3>
+            <p>Get help and share projects with the community</p>
+          </div>
+          <a href="https://discord.gg/5cyNmUMgwh" target="_blank" class="btn btn-secondary btn-small">Join</a>
         </div>
       </div>
     </div>
   </section>
 
   <!-- Features -->
-  <section id="features" class="section section-alt">
+  <section id="features" class="section">
     <div class="container">
       <h2 data-aos="fade-up">Features</h2>
       <div class="grid">
@@ -273,7 +413,7 @@
   </section>
 
   <!-- Flipper App -->
-  <section id="flipper" class="section section-alt">
+  <section id="flipper" class="section">
     <div class="container">
       <h2 data-aos="fade-up">Flipper Zero App</h2>
       <p style="text-align: center; color: var(--text-dim); margin-bottom: 1.5rem;" data-aos="fade-up">
