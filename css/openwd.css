@@ -3,6 +3,8 @@
   margin: 0 auto;
   padding: 1rem 2.5rem;
   padding-top: 6rem;
+  position: relative;
+  z-index: 1;
 }
 
 .openwd-header {
