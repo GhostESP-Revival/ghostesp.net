@@ -227,6 +227,16 @@
     "additional_info": "lexus lx470 dvd player (2004)"
   },
   {
+    "filename": "Lexus_GX470_DVD_2008.ir",
+    "device_type": "Car_Multimedia",
+    "brand": "Lexus",
+    "model": "GX470_DVD_2008",
+    "series": "Lexus",
+    "path": "Car_Multimedia/DVD_Players/Lexus/Lexus_GX470_DVD_2008.ir",
+    "note": "Rewind + Fast Forward can't be \"held\" and have to be pressed repeatedly",
+    "additional_info": "lexus gx470 dvd 2008 (possibly 2007-2009)"
+  },
+  {
     "filename": "VES_CH1.ir",
     "device_type": "Car_Multimedia",
     "brand": "VES",
@@ -395,6 +405,15 @@
     "additional_info": "for lg digital signs 32sm5d, 43sm5d, 49sm5d, 55sm5d,, 65sm5d, 43sm3d, 49sm3d, 55sm3d, 32sm5kd, 43sm5kd, 49sm5kd, 55sm5kd,, 65sm5kd (per the lg digital signage owner's manual)"
   },
   {
+    "filename": "Dynascan_DS2.ir",
+    "device_type": "Digital_Signs",
+    "brand": "Dynascan",
+    "model": "DS2",
+    "series": "Dynascan_DS2.ir",
+    "path": "Digital_Signs/DynaScan/Dynascan_DS2.ir",
+    "additional_info": "dynascan ds2 remote control for city sidewalk digital signs."
+  },
+  {
     "filename": "iiyama_LExx40UHS.ir",
     "device_type": "Digital_Signs",
     "brand": "iiyama",
@@ -444,6 +463,24 @@
     "additional_info": "fisher price / mattel cdn41., (butterfly dreams soother), night light with music and sounds controlable with a one-button only remote"
   },
   {
+    "filename": "BRIO_WORLD_IR102_Train_ChA.ir",
+    "device_type": "Toys",
+    "brand": "BRIO",
+    "model": "WORLD_IR102_Train_ChA",
+    "series": "BRIO_WORLD_IR102_Train_ChA.ir",
+    "path": "Toys/Brio/BRIO_WORLD_IR102_Train_ChA.ir",
+    "additional_info": "brio world remote control engine (ir 102) remote - channel a (https://www.brio.us/en-us/products/railway-toys/trains-wagons-vehicles/remote-control-engine-63321300)"
+  },
+  {
+    "filename": "BRIO_WORLD_IR102_Train_ChB.ir",
+    "device_type": "Toys",
+    "brand": "BRIO",
+    "model": "WORLD_IR102_Train_ChB",
+    "series": "BRIO_WORLD_IR102_Train_ChB.ir",
+    "path": "Toys/Brio/BRIO_WORLD_IR102_Train_ChB.ir",
+    "additional_info": "brio world remote control engine (ir 102) remote - channel b (https://www.brio.us/en-us/products/railway-toys/trains-wagons-vehicles/remote-control-engine-63321300)"
+  },
+  {
     "filename": "Brio_Travel_Train.ir",
     "device_type": "Toys",
     "brand": "Brio",
@@ -451,6 +488,15 @@
     "series": "Brio_Travel_Train.ir",
     "path": "Toys/Brio/Brio_Travel_Train.ir",
     "additional_info": "brio model train"
+  },
+  {
+    "filename": "K-LINE_COCACOLA_TRAIN.ir",
+    "device_type": "Toys",
+    "brand": "K-LINE",
+    "model": "COCACOLA_TRAIN",
+    "series": "K-LINE_COCACOLA_TRAIN.ir",
+    "path": "Toys/K-Line/K-LINE_COCACOLA_TRAIN.ir",
+    "additional_info": "k-line (goldlok) k-1309 coca-cola santa steam engine set (https://www.trainz.com/products/k-line-k1309-coca-cola-santa-o-gauge-steam-train-set)"
   },
   {
     "filename": "RC_Smart_Dance_Robot.ir",
@@ -469,6 +515,15 @@
     "series": "Flying_orb.ir",
     "path": "Toys/Unknown-brand/Flying_orb.ir",
     "additional_info": "unknown flying orb toy"
+  },
+  {
+    "filename": "SolarSystemInMyRoom.ir",
+    "device_type": "Toys",
+    "brand": "SolarSystemInMyRoom",
+    "model": "",
+    "series": "SolarSystemInMyRoom.ir",
+    "path": "Toys/Uncle_Miltons/SolarSystemInMyRoom.ir",
+    "additional_info": "uncle miltons solar system in my room toy, manual https://www.unclemilton.com/manuals/solar_system_manual.pdf"
   },
   {
     "filename": "Toys_R_Us_Musical_Train.ir",
@@ -1164,6 +1219,24 @@
     "additional_info": "corlitec portable ac, 'corlitec' is rebadge, the same unit is sold under a dozen brand names"
   },
   {
+    "filename": "Ferroli.ir",
+    "device_type": "ACs",
+    "brand": "Ferroli",
+    "model": "",
+    "series": "Ferroli.ir",
+    "path": "ACs/Ferroli/Ferroli.ir",
+    "additional_info": "ferroli air conditioner"
+  },
+  {
+    "filename": "electra_smart.ir",
+    "device_type": "ACs",
+    "brand": "electra",
+    "model": "smart",
+    "series": "electra_smart.ir",
+    "path": "ACs/Electra/electra_smart.ir",
+    "additional_info": "electra smart (non wifi version), on and off are different signals, those are the only buttons that can replayed, taken from this remote:, https://www.electra-air.co.il/product/%d7%a9%d7%9c%d7%98-%d7%a8%d7%97%d7%95%d7%a7/"
+  },
+  {
     "filename": "Honeywell_MN10CESS.ir",
     "device_type": "ACs",
     "brand": "Honeywell",
@@ -1416,6 +1489,15 @@
     "additional_info": "royal clima rc-twn55hn"
   },
   {
+    "filename": "Daikin_ARC480A41.ir",
+    "device_type": "ACs",
+    "brand": "Daikin",
+    "model": "ARC480A41",
+    "series": "Daikin_ARC480A41.ir",
+    "path": "ACs/Daikin/Daikin_ARC480A41.ir",
+    "additional_info": "daikin arc480a4 ac remote"
+  },
+  {
     "filename": "Daikin_AC_industrial_TB.ir",
     "device_type": "ACs",
     "brand": "Daikin",
@@ -1631,6 +1713,15 @@
     "panasonic ac cs-e7nkew remote": "CWA75C4179"
   },
   {
+    "filename": "Panasonic_CS-UE12RKE.ir",
+    "device_type": "ACs",
+    "brand": "Panasonic",
+    "model": "CS-UE12RKE",
+    "series": "Panasonic_CS-UE12RKE.ir",
+    "path": "ACs/Panasonic/Panasonic_CS-UE12RKE.ir",
+    "additional_info": "panasonic_cs-ue12rke ac"
+  },
+  {
     "filename": "Eberg_RIO_R29E1.ir",
     "device_type": "ACs",
     "brand": "EBERG",
@@ -1830,6 +1921,15 @@
     "additional_info": "moretti air cooler"
   },
   {
+    "filename": "Toshiba_RASB10BKVG-E.ir",
+    "device_type": "ACs",
+    "brand": "Toshiba",
+    "model": "RASB10BKVG-E",
+    "series": "Toshiba_RASB10BKVG-E.ir",
+    "path": "ACs/Toshiba/Toshiba_RASB10BKVG-E.ir",
+    "additional_info": "toshiba rasb10bkvg-e air conditionning unit remote sample"
+  },
+  {
     "filename": "Toshiba_AC.ir",
     "device_type": "ACs",
     "brand": "Toshiba",
@@ -1882,6 +1982,15 @@
     "series": "Hitach_RAK-18QH8.ir",
     "path": "ACs/Hitachi/Hitach_RAK-18QH8.ir",
     "additional_info": "compatible with ac indoor units:, - hitachi rak-18qh8(w), - hitachi rak-25qh8(w), - hitachi rak-35qh8(w), - hitachi rak-50qh8(w), - hitachi rak-18qh8(b), - hitachi rak-25qh8(b), - hitachi rak-35qh8(b), - hitachi rak-50qh8(b), compatible with ac remote control:, - hitachi rar-3u2, cool_hi = 16 deg.celsius, heat_hi = 32 deg.celsius"
+  },
+  {
+    "filename": "PioneerMiniSplit.ir",
+    "device_type": "ACs",
+    "brand": "PioneerMiniSplit",
+    "model": "",
+    "series": "PioneerMiniSplit.ir",
+    "path": "ACs/Pioneer/PioneerMiniSplit.ir",
+    "additional_info": "pioneer ac mini split"
   },
   {
     "filename": "Suntec_Transform_AC.ir",
@@ -2277,6 +2386,15 @@
     "additional_info": "winix wac5500 air purifier"
   },
   {
+    "filename": "Blueair_T10i_T20i.ir",
+    "device_type": "Air_Purifiers",
+    "brand": "Blueair",
+    "model": "T10i_T20i",
+    "series": "Blueair_T10i_T20i.ir",
+    "path": "Air_Purifiers/Blueair/Blueair_T10i_T20i.ir",
+    "additional_info": "blueair comfortpure™ 3-in-1 air purifiers (models t10i, t20i) #"
+  },
+  {
     "filename": "IQAir_GC_Series.ir",
     "device_type": "Air_Purifiers",
     "brand": "IQAir",
@@ -2348,6 +2466,15 @@
     "series": "Dyson_Purifier_Humidify+Cool_Autoreact_PH3A.ir",
     "path": "Air_Purifiers/Dyson/Dyson_Purifier_Humidify+Cool_Autoreact_PH3A.ir",
     "additional_info": "dyson purifier humidify+cool autoreact ph3a"
+  },
+  {
+    "filename": "Dyson_PurifiyHumidify_PH04.ir",
+    "device_type": "Air_Purifiers",
+    "brand": "Dyson",
+    "model": "PurifiyHumidify_PH04",
+    "series": "Dyson_PurifiyHumidify_PH04.ir",
+    "path": "Air_Purifiers/Dyson/Dyson_PurifiyHumidify_PH04.ir",
+    "additional_info": "dyson ph04 air purifier"
   },
   {
     "filename": "Dyson_HotCool_HP02.ir",
@@ -3216,6 +3343,15 @@
     "additional_info": "waltham wthd3214b tv"
   },
   {
+    "filename": "Tevion_3221TS.ir",
+    "device_type": "TVs",
+    "brand": "Tevion",
+    "model": "3221TS",
+    "series": "Tevion_3221TS.ir",
+    "path": "TVs/Tevion/Tevion_3221TS.ir",
+    "additional_info": "tevion 3221ts tv"
+  },
+  {
     "filename": "TC_33_VNS2000.ir",
     "device_type": "TVs",
     "brand": "TC",
@@ -3522,6 +3658,15 @@
     "additional_info": "samsung bn59-01388 smart tv remote"
   },
   {
+    "filename": "Samsung_BN59-01330C.ir",
+    "device_type": "TVs",
+    "brand": "Samsung",
+    "model": "BN59-01330C",
+    "series": "Samsung_BN59-01330C.ir",
+    "path": "TVs/Samsung/Samsung_BN59-01330C.ir",
+    "additional_info": "samsung bn59-01330c tv remote"
+  },
+  {
     "filename": "Samsung_UE32F4000AW.ir",
     "device_type": "TVs",
     "brand": "Samsung",
@@ -3632,6 +3777,15 @@
     "additional_info": "gigabyte aorus tv monitor"
   },
   {
+    "filename": "Sanyo_ds32224.ir",
+    "device_type": "TVs",
+    "brand": "Sanyo",
+    "model": "ds32224",
+    "series": "Sanyo_ds32224.ir",
+    "path": "TVs/Sanyo/Sanyo_ds32224.ir",
+    "additional_info": "sanyo ds32224 tv"
+  },
+  {
     "filename": "Sanyo_DP26640.ir",
     "device_type": "TVs",
     "brand": "Sanyo",
@@ -3639,6 +3793,15 @@
     "series": "Sanyo_DP26640.ir",
     "path": "TVs/Sanyo/Sanyo_DP26640.ir",
     "additional_info": "sanyo dp26640 tv"
+  },
+  {
+    "filename": "Sanyo UR77EC2703-3.ir",
+    "device_type": "TVs",
+    "brand": "Sanyo UR77EC2703-3",
+    "model": "",
+    "series": "Sanyo UR77EC2703-3.ir",
+    "path": "TVs/Sanyo/Sanyo UR77EC2703-3.ir",
+    "additional_info": "sanyo ht28745 tv"
   },
   {
     "filename": "Sanyo_FW40R49FC.ir",
@@ -3676,6 +3839,15 @@
     "series": "FireTV_Omni_Series_4K.ir",
     "path": "TVs/Amazon/FireTV_Omni_Series_4K.ir",
     "additional_info": "firetv_omni_series_4k"
+  },
+  {
+    "filename": "Grundig_TP750C.ir",
+    "device_type": "TVs",
+    "brand": "Grundig",
+    "model": "TP750C",
+    "series": "Grundig_TP750C.ir",
+    "path": "TVs/Grundig/Grundig_TP750C.ir",
+    "additional_info": "grundig telepilot 750c remote control - used for a grundig p37-939 14\" portable cathode ray tube television, basic functions should work in the app \"xremote\""
   },
   {
     "filename": "Grundig_TP800.ir",
@@ -3784,6 +3956,16 @@
     "series": "Elitelux_L32HD1000.ir",
     "path": "TVs/Elitelux/Elitelux_L32HD1000.ir",
     "additional_info": "elitelux l32hd1000, by sealldeveloper"
+  },
+  {
+    "filename": "SEG_MALTA.ir",
+    "device_type": "TVs",
+    "brand": "SEG",
+    "model": "MALTA",
+    "series": "SEG_MALTA.ir",
+    "path": "TVs/SEG/SEG_MALTA.ir",
+    "note": "Power key only turns the TV off",
+    "additional_info": "seg malta tv, use ch_prev/ch_next or number, keys to turn on the tv."
   },
   {
     "filename": "NEC_E425.ir",
@@ -3976,6 +4158,15 @@
     "series": "Ffalcon_SF1_Smart_TV.ir",
     "path": "TVs/Ffalcon/Ffalcon_SF1_Smart_TV.ir",
     "additional_info": "ffalcon sf1 smart tv, https://ffalcon.com.au/products/32sf1-series-hd-smart-tv/"
+  },
+  {
+    "filename": "TECHNIKA_22880.ir",
+    "device_type": "TVs",
+    "brand": "TECHNIKA",
+    "model": "22880",
+    "series": "TECHNIKA_22880.ir",
+    "path": "TVs/Technika/TECHNIKA_22880.ir",
+    "additional_info": "technika 22-880 tv remote"
   },
   {
     "filename": "Dynex_RC-701-0A.ir",
@@ -4192,6 +4383,24 @@
     "additional_info": "bush tv vl32hdled"
   },
   {
+    "filename": "Bush43QT24SB.ir",
+    "device_type": "TVs",
+    "brand": "Bush43QT24SB",
+    "model": "",
+    "series": "Bush43QT24SB.ir",
+    "path": "TVs/Bush/Bush43QT24SB.ir",
+    "additional_info": "bush 43qt24sb tv"
+  },
+  {
+    "filename": "BUSH_TV_DLED32287HDCNTDFVP.ir",
+    "device_type": "TVs",
+    "brand": "BUSH",
+    "model": "TV_DLED32287HDCNTDFVP",
+    "series": "BUSH_TV_DLED32287HDCNTDFVP.ir",
+    "path": "TVs/Bush/BUSH_TV_DLED32287HDCNTDFVP.ir",
+    "additional_info": "remote for the bush dled32287hdcntdfvp smart tv, basic functions should work in the app \"xremote\", \"no_function\" is the record button on the remote, but has no effect on the tv"
+  },
+  {
     "filename": "SkyVue.ir",
     "device_type": "TVs",
     "brand": "SkyVue",
@@ -4209,6 +4418,15 @@
     "path": "TVs/SkyVue/SKYVUE_03SI-RI.ir",
     "remote manual can be found at the following url": "https://skyvue.com/pdf/manuals/NEW_PRC-NXG.pdf",
     "additional_info": "03si-ri remote for skyvue televisons."
+  },
+  {
+    "filename": "Emerson_EWC13D4.ir",
+    "device_type": "TVs",
+    "brand": "Emerson",
+    "model": "EWC13D4",
+    "series": "Emerson_EWC13D4.ir",
+    "path": "TVs/Emerson/Emerson_EWC13D4.ir",
+    "additional_info": "emerson ewc13d4 tv, https://crtdatabase.com/crts/emerson/emerson-ewc13d4, emerson ne221ud remote, some buttons have been renamed to match the naming scheme"
   },
   {
     "filename": "Emerson_32FNT004.ir",
@@ -4330,6 +4548,15 @@
     "additional_info": "tv led essentielb android tv, essentiel b is boulanger's distributor brand"
   },
   {
+    "filename": "Crown_RC647340.ir",
+    "device_type": "TVs",
+    "brand": "Crown",
+    "model": "RC647340",
+    "series": "Crown_RC647340.ir",
+    "path": "TVs/Crown/Crown_RC647340.ir",
+    "additional_info": "crown_rc647340 tv"
+  },
+  {
     "filename": "Toshiba_CT-9922.ir",
     "device_type": "TVs",
     "brand": "Toshiba",
@@ -4374,6 +4601,15 @@
     "series": "Toshiba_CT-32F2.ir",
     "path": "TVs/Toshiba/Toshiba_CT-32F2.ir",
     "additional_info": "toshiba ct-32f2 tv remote"
+  },
+  {
+    "filename": "Toshiba CT 8560.ir",
+    "device_type": "TVs",
+    "brand": "Toshiba CT 8560",
+    "model": "",
+    "series": "Toshiba CT 8560.ir",
+    "path": "TVs/Toshiba/Toshiba CT 8560.ir",
+    "additional_info": "toshiba ct-8560 tv"
   },
   {
     "filename": "Toshiba_50C350LC.ir",
@@ -4429,6 +4665,25 @@
     "series": "Hitachi_SmartTV_43140.ir",
     "path": "TVs/Hitachi/Hitachi_SmartTV_43140.ir",
     "additional_info": "hitachi smarttv 43140"
+  },
+  {
+    "filename": "Hitachi_CLE-1031.ir",
+    "device_type": "TVs",
+    "brand": "Hitachi",
+    "model": "CLE-1031",
+    "series": "Hitachi_CLE-1031.ir",
+    "path": "TVs/Hitachi/Hitachi_CLE-1031.ir",
+    "designed for use with hitachi tvs": "32FHDSM6 40FHDSM8 50UHDSM8 55UHDSM8",
+    "additional_info": "hitachi cle-1031 tv remote"
+  },
+  {
+    "filename": "MAGNAVOX_CD130MW8.ir",
+    "device_type": "TVs",
+    "brand": "MAGNAVOX",
+    "model": "CD130MW8",
+    "series": "MAGNAVOX_CD130MW8.ir",
+    "path": "TVs/Magnavox/MAGNAVOX_CD130MW8.ir",
+    "additional_info": "magnavox cd130mw8 tv/dvd combo"
   },
   {
     "filename": "MAGNAVOX_20MT1331_17.ir",
@@ -4520,6 +4775,19 @@
     "path": "TVs/Philips/Philips_14GX8510.ir",
     "also for models": "14GX8310, 14GX8510, 14GX8512, 20GX8350, 20GX8550, 20GX8552",
     "additional_info": "14\" crt philips tv model 14gx8510"
+  },
+  {
+    "filename": "Philips_40PFL6533_F7D.ir",
+    "device_type": "TVs",
+    "brand": "Philips",
+    "model": "40PFL6533_F7D",
+    "series": "Philips_40PFL6533_F7D.ir",
+    "path": "TVs/Philips/Philips_40PFL6533_F7D.ir",
+    "device model": "40PFL6533/F7 D",
+    "device type": "TV",
+    "link": "https://www.usa.philips.com/c-p/40PFL6533_F7/roku-tv-6000-series-led-lcd-tv",
+    "description": "Philips Roku 6500 Series 40 in FHD TV",
+    "contributor": "Kaya Arro"
   },
   {
     "filename": "Philips_50PUT6103_79.ir",
@@ -4813,6 +5081,15 @@
     "additional_info": "dyon movie smart 32 xt"
   },
   {
+    "filename": "JVC_LT-49HW97U.ir",
+    "device_type": "TVs",
+    "brand": "JVC",
+    "model": "LT-49HW97U",
+    "series": "JVC_LT-49HW97U.ir",
+    "path": "TVs/JVC/JVC_LT-49HW97U.ir",
+    "additional_info": "jvc tv lt-49hw97u, jvc remote rm-c3311"
+  },
+  {
     "filename": "JVC_4KTV.ir",
     "device_type": "TVs",
     "brand": "JVC",
@@ -5009,7 +5286,7 @@
     "model": "TV_Box_AUS",
     "series": "Fetch_TV_Box_AUS.ir",
     "path": "TVs/Fetch/Fetch_TV_Box_AUS.ir",
-    "additional_info": "fetch tv box (australia), https://www.fetchtv.com.au/"
+    "additional_info": "generation 4/5 ir remote for fetch tv boxes"
   },
   {
     "filename": "Blitzwolf_BWPCM2.ir",
@@ -5160,6 +5437,15 @@
     "path": "Blu-Ray/LG/LG_AKB73495301.ir",
     "captured by": "MDcurIOs1ty",
     "additional_info": "lg akb73495301 blu-ray disc player remote"
+  },
+  {
+    "filename": "Marantz_UD7007_(RC006UD).ir",
+    "device_type": "Blu-Ray",
+    "brand": "Marantz",
+    "model": "UD7007_(RC006UD)",
+    "series": "Marantz_UD7007_(RC006UD).ir",
+    "path": "Blu-Ray/Marantz/Marantz_UD7007_(RC006UD).ir",
+    "additional_info": "marantz ud7007 a/v receiver"
   },
   {
     "filename": "Marantz_BD8002.ir",
@@ -5695,6 +5981,16 @@
     "additional_info": "lg cd player"
   },
   {
+    "filename": "Marantz_CD5003.ir",
+    "device_type": "CD_Players",
+    "brand": "Marantz",
+    "model": "CD5003",
+    "series": "Marantz_CD5003.ir",
+    "path": "CD_Players/Marantz/Marantz_CD5003.ir",
+    "compliled by": "Tom van Veen",
+    "additional_info": "marantz remote cd 5003 (based of rc2100dr)"
+  },
+  {
     "filename": "Marantz_RC2100DR_CD.ir",
     "device_type": "CD_Players",
     "brand": "Marantz",
@@ -5777,6 +6073,15 @@
     "series": "Panasonic_SC-HC58.ir",
     "path": "CD_Players/Panasonic/Panasonic_SC-HC58.ir",
     "additional_info": "panasonic sc-hc58 audio system"
+  },
+  {
+    "filename": "Sony_CMT-SBT20B.ir",
+    "device_type": "CD_Players",
+    "brand": "Sony",
+    "model": "CMT-SBT20B",
+    "series": "Sony_CMT-SBT20B.ir",
+    "path": "CD_Players/Sony/Sony_CMT-SBT20B.ir",
+    "additional_info": "sony_cmt-sbt20b cd player"
   },
   {
     "filename": "SONY_minidisk-deck.ir",
@@ -5881,6 +6186,15 @@
     "additional_info": "pioneer cu-p0045 cd player"
   },
   {
+    "filename": "Philips_mcm2000.ir",
+    "device_type": "CD_Players",
+    "brand": "Philips",
+    "model": "mcm2000",
+    "series": "Philips_mcm2000.ir",
+    "path": "CD_Players/Philips/Philips_mcm2000.ir",
+    "additional_info": "philips mcm2000/12 hi-fi system cd player"
+  },
+  {
     "filename": "Philips_CD_Player_723.ir",
     "device_type": "CD_Players",
     "brand": "Philips",
@@ -5906,6 +6220,15 @@
     "series": "Rockola_juke.ir",
     "path": "CD_Players/Rockola/Rockola_juke.ir",
     "additional_info": "rock ola cd jukebox"
+  },
+  {
+    "filename": "elWron.ir",
+    "device_type": "TV_Tuner",
+    "brand": "elWron",
+    "model": "",
+    "series": "elWron.ir",
+    "path": "TV_Tuner/elWron/elWron.ir",
+    "additional_info": "elwron tv tuner"
   },
   {
     "filename": "TechniSat_DVR401B.ir",
@@ -6033,6 +6356,15 @@
     "additional_info": "dunehd remote control, compatible with the players:, kartina x, kartina s, kartina micro hd, kartina relax, dune hd max, dune hd duo, dune hd base 3d, dune hd tv-101, dune hd tv-102, dune hd tv-301, dune hd tv-303d, dune hd connect, dune hd smart b1, dune hd smart h1, dune hd smart d1, dune hd lite 53d, dune bd prime 3.0, dune bd prime, dune hd base 3.0, dune hd base 2.0, dune hd base, etc."
   },
   {
+    "filename": "QNAP RM_IR2.ir",
+    "device_type": "Multimedia",
+    "brand": "QNAP RM",
+    "model": "IR2",
+    "series": "QNAP RM_IR2.ir",
+    "path": "Multimedia/QNAP/QNAP RM_IR2.ir",
+    "additional_info": "qnap rm-ir002 nas/media player remote control (https://ukstore.qnap.com/rm-ir002.html)"
+  },
+  {
     "filename": "MediaZapperHD.ir",
     "device_type": "DVB-T",
     "brand": "MediaZapperHD",
@@ -6051,6 +6383,15 @@
     "additional_info": "tilview dvb-t"
   },
   {
+    "filename": "MANHATTAN_SX_FREESAT.ir",
+    "device_type": "DVB-T",
+    "brand": "MANHATTAN",
+    "model": "SX_FREESAT",
+    "series": "MANHATTAN_SX_FREESAT.ir",
+    "path": "DVB-T/Manhattan/MANHATTAN_SX_FREESAT.ir",
+    "additional_info": "manhattan sx freesat stb (https://manhattan-tv.com/freesat/manhattan-sx)"
+  },
+  {
     "filename": "DigiVox_MiniII.ir",
     "device_type": "DVB-T",
     "brand": "DigiVox",
@@ -6058,6 +6399,16 @@
     "series": "DigiVox_MiniII.ir",
     "path": "DVB-T/MSI/DigiVox_MiniII.ir",
     "additional_info": "dvb-t msi digivox mini ii"
+  },
+  {
+    "filename": "Tesla_TE-300.ir",
+    "device_type": "DVB-T",
+    "brand": "Tesla",
+    "model": "TE-300",
+    "series": "Tesla_TE-300.ir",
+    "path": "DVB-T/Tesla/Tesla_TE-300.ir",
+    "captured by": "bababooex",
+    "additional_info": "tesla te-300 dvb-t2 receiver"
   },
   {
     "filename": "Tripp_Lite_B005-HUA4.ir",
@@ -6161,6 +6512,16 @@
     "additional_info": "seville classics ehf10119p fan, https://www.sevilleclassics.com/products/ehf10119pb"
   },
   {
+    "filename": "Roksan_K3_DAC.ir",
+    "device_type": "Miscellaneous",
+    "brand": "Roksan",
+    "model": "K3_DAC",
+    "series": "Roksan_K3_DAC.ir",
+    "path": "Miscellaneous/Roksan/Roksan_K3_DAC.ir",
+    "device model": "Kandy K3 DAC",
+    "device type": "Audio and Video Receiver"
+  },
+  {
     "filename": "Roksan_Caspian_CD_player.ir",
     "device_type": "Miscellaneous",
     "brand": "Roksan",
@@ -6179,6 +6540,16 @@
     "additional_info": "roksan cd player"
   },
   {
+    "filename": "Roksan_K3_Amp.ir",
+    "device_type": "Miscellaneous",
+    "brand": "Roksan",
+    "model": "K3_Amp",
+    "series": "Roksan_K3_Amp.ir",
+    "path": "Miscellaneous/Roksan/Roksan_K3_Amp.ir",
+    "device model": "Kandy K3 Integrated Amplifier",
+    "device type": "Audio and Video Receiver"
+  },
+  {
     "filename": "Amibot_spirit.ir",
     "device_type": "Miscellaneous",
     "brand": "Amibot",
@@ -6195,6 +6566,15 @@
     "series": "Gakken_WorldEye.ir",
     "path": "Miscellaneous/Gakken/Gakken_WorldEye.ir",
     "additional_info": "gakken worldeye"
+  },
+  {
+    "filename": "MROCIOA_HDMI_SWITCH.ir",
+    "device_type": "Miscellaneous",
+    "brand": "MROCIOA",
+    "model": "HDMI_SWITCH",
+    "series": "MROCIOA_HDMI_SWITCH.ir",
+    "path": "Miscellaneous/Mrocioa/MROCIOA_HDMI_SWITCH.ir",
+    "additional_info": "mrocioa hdmi switch 3 in 1 out 4k hdmi switcher box (https://www.amazon.co.uk/dp/b0815v9hvp)"
   },
   {
     "filename": "Climate_German.ir",
@@ -6496,6 +6876,15 @@
     "additional_info": "coretec trainer 1000"
   },
   {
+    "filename": "OREI HD-401MV.ir",
+    "device_type": "Miscellaneous",
+    "brand": "OREI HD-401MV",
+    "model": "",
+    "series": "OREI HD-401MV.ir",
+    "path": "Miscellaneous/OREI HDMI Switcher/OREI HD-401MV.ir",
+    "additional_info": "orei hd-401mv hdmi switcher"
+  },
+  {
     "filename": "Simulflame_LED_Candles.ir",
     "device_type": "Miscellaneous",
     "brand": "Simulflame",
@@ -6712,6 +7101,15 @@
     "additional_info": "roomba robotic vacuum cleaner"
   },
   {
+    "filename": "Topping_DX3_Pro_Plus-Amplifier.ir",
+    "device_type": "Miscellaneous",
+    "brand": "Topping",
+    "model": "DX3_Pro_Plus-Amplifier",
+    "series": "Topping_DX3_Pro_Plus-Amplifier.ir",
+    "path": "Miscellaneous/Topping/Topping_DX3_Pro_Plus-Amplifier.ir",
+    "additional_info": "topping dx3 pro+ amp"
+  },
+  {
     "filename": "Homedics_ARM-720A.ir",
     "device_type": "Miscellaneous",
     "brand": "Homedics",
@@ -6772,6 +7170,15 @@
     "series": "Varytech_Fog_Machine_F80B.ir",
     "path": "Miscellaneous/Varytech/Varytech_Fog_Machine_F80B.ir",
     "additional_info": "for varytech fog machine model f-80b"
+  },
+  {
+    "filename": "TOMLOV_DM9_MICROSCOPE.ir",
+    "device_type": "Miscellaneous",
+    "brand": "TOMLOV",
+    "model": "DM9_MICROSCOPE",
+    "series": "TOMLOV_DM9_MICROSCOPE.ir",
+    "path": "Miscellaneous/Tomlov Microscope/TOMLOV_DM9_MICROSCOPE.ir",
+    "additional_info": "tomlov dm9 microscope remote"
   },
   {
     "filename": "Citysports_WP2.ir",
@@ -7300,6 +7707,16 @@
     "additional_info": "rubine_rcf-forza45-5bl-gm, https://www.rubine.com.my/product/rcf-forza45-5bl-gm"
   },
   {
+    "filename": "ProBreeze_PBF04.ir",
+    "device_type": "Fans",
+    "brand": "ProBreeze",
+    "model": "PBF04",
+    "series": "ProBreeze_PBF04.ir",
+    "path": "Fans/ProBreeze/ProBreeze_PBF04.ir",
+    "vendor product page": "https://probreeze.com/products/40-oscillating-tower-fan-black",
+    "additional_info": "probreeze pb-f04 40\" tower fan"
+  },
+  {
     "filename": "UFESA-TW1700-OSLO-WIFI.ir",
     "device_type": "Fans",
     "brand": "UFESA-TW1700-OSLO-WIFI",
@@ -7691,6 +8108,15 @@
     "additional_info": "remote control for aloha breeze 84001 tower fan., product manual is available at the following url, http://www.gearhack.com/forums/electronics/new_base_for_the_aloha_breeze_84001_tower_fan_with_remote_control.files.hidden/aloha%20breeze%20mdl%2084001%20operation%20manual%20(2pgs).pdf"
   },
   {
+    "filename": "Mitsubishi_R30J-HRV.ir",
+    "device_type": "Fans",
+    "brand": "Mitsubishi",
+    "model": "R30J-HRV",
+    "series": "Mitsubishi_R30J-HRV.ir",
+    "path": "Fans/Mitsubishi/Mitsubishi_R30J-HRV.ir",
+    "additional_info": "mitsubishi r30j-hrv fan (aeha-like)., generated from cmd/xx table verified via nature remo."
+  },
+  {
     "filename": "Taurus_Babel_RC.ir",
     "device_type": "Fans",
     "brand": "Taurus",
@@ -7716,6 +8142,33 @@
     "series": "Stadler_Form_Peter.ir",
     "path": "Fans/Stadler_Form/Stadler_Form_Peter.ir",
     "additional_info": "stadler form peter fan"
+  },
+  {
+    "filename": "SC-UltraSlimLine-Oscillating-Tower-Fan.ir",
+    "device_type": "Fans",
+    "brand": "SC-UltraSlimLine-Oscillating-Tower-Fan",
+    "model": "",
+    "series": "SC-UltraSlimLine-Oscillating-Tower-Fan.ir",
+    "path": "Fans/Seville_Classics/SC-UltraSlimLine-Oscillating-Tower-Fan.ir",
+    "additional_info": "seville classics ultraslimline oscillating tower fan"
+  },
+  {
+    "filename": "SC-UltraSlimLine-Oscillating-Tower-Fan-5-Buttons-EHF10119PB.ir",
+    "device_type": "Fans",
+    "brand": "SC-UltraSlimLine-Oscillating-Tower-Fan-5-Buttons-EHF10119PB",
+    "model": "",
+    "series": "SC-UltraSlimLine-Oscillating-Tower-Fan-5-Buttons-EHF10119PB.ir",
+    "path": "Fans/Seville_Classics/SC-UltraSlimLine-Oscillating-Tower-Fan-5-Buttons-EHF10119PB.ir",
+    "additional_info": "seville classics ehf10119p fan, https://www.sevilleclassics.com/products/ehf10119pb"
+  },
+  {
+    "filename": "SC-UltraSlimLine-Oscillating-Tower-Fan-Touch-Controls-EHF10201T.ir",
+    "device_type": "Fans",
+    "brand": "SC-UltraSlimLine-Oscillating-Tower-Fan-Touch-Controls-EHF10201T",
+    "model": "",
+    "series": "SC-UltraSlimLine-Oscillating-Tower-Fan-Touch-Controls-EHF10201T.ir",
+    "path": "Fans/Seville_Classics/SC-UltraSlimLine-Oscillating-Tower-Fan-Touch-Controls-EHF10201T.ir",
+    "additional_info": "seville classics ultraslimline oscillating tower fan with touch controls"
   },
   {
     "filename": "Utilitech_Fan_FZ10-19JR.ir",
@@ -7872,6 +8325,15 @@
     "additional_info": "dyson air purifier and fan"
   },
   {
+    "filename": "Dyson_TP7A.ir",
+    "device_type": "Fans",
+    "brand": "Dyson",
+    "model": "TP7A",
+    "series": "Dyson_TP7A.ir",
+    "path": "Fans/Dyson/Dyson_TP7A.ir",
+    "additional_info": "dyson tp7a purifier cool autoreact"
+  },
+  {
     "filename": "Dyson_Pure_Cool_TP02.ir",
     "device_type": "Fans",
     "brand": "Dyson",
@@ -7888,6 +8350,15 @@
     "series": "Dyson_HP01.ir",
     "path": "Fans/Dyson/Dyson_HP01.ir",
     "additional_info": "dyson ac hp01"
+  },
+  {
+    "filename": "DOMO_DO8149.ir",
+    "device_type": "Fans",
+    "brand": "DOMO",
+    "model": "DO8149 Fan",
+    "series": "DOMO_DO8149.ir",
+    "path": "Fans/Domo/DOMO_DO8149.ir",
+    "make": "DOMO"
   },
   {
     "filename": "DOMO_Fan.ir",
@@ -19942,6 +20413,15 @@
     "additional_info": "brayford bfd20e, brayford pebble bfd20pb, brayford burgundy bfd20brg, brayford slate bfd20sl, springborne sbn20e, bari bar20, optiflame stove fire, optiflame fire"
   },
   {
+    "filename": "DIMPLEX_OPTIMYST_GOSFORD.ir",
+    "device_type": "Fireplaces",
+    "brand": "DIMPLEX",
+    "model": "OPTIMYST_GOSFORD",
+    "series": "DIMPLEX_OPTIMYST_GOSFORD.ir",
+    "path": "Fireplaces/Dimplex/DIMPLEX_OPTIMYST_GOSFORD.ir",
+    "additional_info": "dimplex optimyst gosford electric fireplace - https://www.dimplexfires.com/en-uk/optimyst-fires/gosford, assuming this remote works for most oltimyst models that support ir remote controls."
+  },
+  {
     "filename": "Ashley_Furniture_W100-101.ir",
     "device_type": "Fireplaces",
     "brand": "Ashley",
@@ -20041,6 +20521,15 @@
     "additional_info": "steering wheel clip remote for dual head units"
   },
   {
+    "filename": "PowerAcoustik_CP71W.ir",
+    "device_type": "Head_Units",
+    "brand": "PowerAcoustik",
+    "model": "CP71W",
+    "series": "PowerAcoustik_CP71W.ir",
+    "path": "Head_Units/PowerAcoustik/PowerAcoustik_CP71W.ir",
+    "additional_info": "power acoustik cp-71w head unit, 8 key, 9 key, 3 key, 4 key, 0 key"
+  },
+  {
     "filename": "LG_43UD79-B.ir",
     "device_type": "Monitors",
     "brand": "LG",
@@ -20123,6 +20612,15 @@
     "additional_info": "mecool km6 streaming device"
   },
   {
+    "filename": "MAG_TV_Box.ir",
+    "device_type": "Streaming_Devices",
+    "brand": "MAG",
+    "model": "TV_Box",
+    "series": "MAG_TV_Box.ir",
+    "path": "Streaming_Devices/MAG/MAG_TV_Box.ir",
+    "additional_info": "mag tv box"
+  },
+  {
     "filename": "Alexa_Voice_2ndGen.ir",
     "device_type": "Streaming_Devices",
     "brand": "Alexa",
@@ -20184,6 +20682,17 @@
     "series": "Roku_SoundBridge.ir",
     "path": "Streaming_Devices/Roku/Roku_SoundBridge.ir",
     "additional_info": "roku soundbridge (sampled from a soundbridge m1001 remote)"
+  },
+  {
+    "filename": "Apple_TV_4K_Gen2.ir",
+    "device_type": "Streaming_Devices",
+    "brand": "Apple",
+    "model": "A2169",
+    "series": "Apple_TV_4K_Gen2.ir",
+    "path": "Streaming_Devices/Apple/Apple_TV_4K_Gen2.ir",
+    "remote control model": "A2540 (Siri Remote)",
+    "note": "I was not able to find codes for these buttons: Vol_up, Vol_dn, Mute, Siri_mic",
+    "additional_info": "tested on:, apple tv 4k (2nd gen, 2021)"
   },
   {
     "filename": "Apple_TV_Gen2.ir",
@@ -20402,6 +20911,17 @@
     "additional_info": "pioneer dvd player vxx2702"
   },
   {
+    "filename": "Pioneer_VXX2914.ir",
+    "device_type": "DVD_Players",
+    "brand": "Pioneer",
+    "model": "VXX2914",
+    "series": "Pioneer_VXX2914.ir",
+    "path": "DVD_Players/Pioneer/Pioneer_VXX2914.ir",
+    "picture": "https://github.com/dhlavaty/Flipper-IRDB/commit/3954b8f494250ab960930c472e98921eac6b9f2d",
+    "link": "https://github.com/DarkFlippers/unleashed-firmware/blob/0530eda8d1df81768c72dbdf51d3e4c8c94148e6/lib/infrared/encoder_decoder/pioneer/infrared_protocol_pioneer_i.h",
+    "additional_info": "remote control pioneer vxx2914 for various pioneer dvd players, buttons use `raw` because flipper zero does not support `pioneer-2part` also known as `pioneer-mix` protocol., order of buttons in this file is as on original remote - from top-down, left-to-right., all raw values normalized using original pioneer protocol timing constants from flipper zero sources., i have wrote a short python script, available at, https://github.com/dhlavaty/flipper-irdb/blob/8177a632e7707e6b411127cfa530241329826ab6/audio_and_video_receivers/pioneer/normalize-pioneer-protocol.py"
+  },
+  {
     "filename": "Philips_DVDR3475.ir",
     "device_type": "DVD_Players",
     "brand": "Philips",
@@ -20428,6 +20948,15 @@
     "series": "dvd-p2.ir",
     "path": "DVD_Players/S2 Digital/dvd-p2.ir",
     "additional_info": "remote for the s2 digital portable dvd player., most notable is the av in/out and audio function which is only available, via the remote."
+  },
+  {
+    "filename": "HANDI_MOVE.ir",
+    "device_type": "Handicap_Ceiling_Lifts",
+    "brand": "HANDI",
+    "model": "MOVE",
+    "series": "",
+    "path": "Handicap_Ceiling_Lifts/HANDI_MOVE.ir",
+    "additional_info": "the remotes used to control them are made only for them, there are no 3rd party parts., because of that, they charge upwards of $400 usd for the new remote. this .ir file contains all the commands (fwd, back; up, down)., the remote control that comes with the handi-move is made by a company called abilia out of sweden. the model is \"control medi easy\"., they make them in small batches in sweden. to buy blanks, you either have to have a contract or pay close to $250 usd., for more information on that remote (in its blank form, without handi-move branding) you can visit their site:, https://www.abilia.com/en/our-products/environmental-control/controllers/control-medi-easy"
   },
   {
     "filename": "LaserActive_CU-CLD085.ir",
@@ -20512,6 +21041,15 @@
     "additional_info": "maxcan mh-602brc"
   },
   {
+    "filename": "Levoit_LV6S.ir",
+    "device_type": "Humidifiers",
+    "brand": "Levoit",
+    "model": "LV6S",
+    "series": "Levoit_LV6S.ir",
+    "path": "Humidifiers/Levoit/Levoit_LV6S.ir",
+    "additional_info": "levoit lv6s humidifier"
+  },
+  {
     "filename": "Levoit_Humidifier.ir",
     "device_type": "Humidifiers",
     "brand": "Levoit",
@@ -20555,6 +21093,15 @@
     "series": "Dyson_Humidifier_AM10.ir",
     "path": "Humidifiers/Dyson/Dyson_Humidifier_AM10.ir",
     "additional_info": "dyson humidifier am10"
+  },
+  {
+    "filename": "Denon_DRA_365R.ir",
+    "device_type": "Audio_and_Video_Receivers",
+    "brand": "Denon",
+    "model": "DRA_365R",
+    "series": "Denon_DRA_365R.ir",
+    "path": "Audio_and_Video_Receivers/Denon/Denon_DRA_365R.ir",
+    "additional_info": "denon dra 365r receiver"
   },
   {
     "filename": "Denon_AVR_Receiver.ir",
@@ -20629,6 +21176,15 @@
     "additional_info": "device must be in standby mode, not completely off."
   },
   {
+    "filename": "Marantz_SR_7009_(RC026SR).ir",
+    "device_type": "Audio_and_Video_Receivers",
+    "brand": "Marantz",
+    "model": "SR_7009_(RC026SR)",
+    "series": "Marantz_SR_7009_(RC026SR).ir",
+    "path": "Audio_and_Video_Receivers/Marantz/Marantz_SR_7009_(RC026SR).ir",
+    "additional_info": "marantz sr 7009 a/v receiver"
+  },
+  {
     "filename": "Marantz_RC042SR.ir",
     "device_type": "Audio_and_Video_Receivers",
     "brand": "Marantz",
@@ -20636,6 +21192,18 @@
     "series": "Marantz_RC042SR.ir",
     "path": "Audio_and_Video_Receivers/Marantz/Marantz_RC042SR.ir",
     "additional_info": "marantz rc042sr audio receiver"
+  },
+  {
+    "filename": "Fossi_Audio_ZH3.ir",
+    "device_type": "Audio_and_Video_Receivers",
+    "brand": "Fossi Audio",
+    "model": "Audio_ZH3",
+    "series": "Fossi_Audio_ZH3.ir",
+    "path": "Audio_and_Video_Receivers/Fossi Audio/Fossi_Audio_ZH3.ir",
+    "device model": "ZH3",
+    "device type": "Audio & Video Receivers",
+    "link": "https://fosiaudio.com/pages/zh3-dac-amp",
+    "additional_info": "remote for the zh3"
   },
   {
     "filename": "ASR_EMITTER1HD.ir",
@@ -20711,6 +21279,15 @@
     "additional_info": "yamaha ax-380 stereo amplifier"
   },
   {
+    "filename": "Yamaha_A-S201.ir",
+    "device_type": "Audio_and_Video_Receivers",
+    "brand": "Yamaha",
+    "model": "A-S201",
+    "series": "Yamaha_A-S201.ir",
+    "path": "Audio_and_Video_Receivers/Yamaha/Yamaha_A-S201.ir",
+    "additional_info": "yamaha a-s201 remote — flipper zero ir profile (necext)"
+  },
+  {
     "filename": "Yamaha_RXA860.ir",
     "device_type": "Audio_and_Video_Receivers",
     "brand": "Yamaha",
@@ -20718,6 +21295,15 @@
     "series": "Yamaha_RXA860.ir",
     "path": "Audio_and_Video_Receivers/Yamaha/Yamaha_RXA860.ir",
     "additional_info": "yamaha rx-a860 audio receiver"
+  },
+  {
+    "filename": "Yamaha_RX-V795RDS.ir",
+    "device_type": "Audio_and_Video_Receivers",
+    "brand": "Yamaha",
+    "model": "RX-V795RDS",
+    "series": "Yamaha_RX-V795RDS.ir",
+    "path": "Audio_and_Video_Receivers/Yamaha/Yamaha_RX-V795RDS.ir",
+    "additional_info": "yamaha rx-v795rds a/v receiver"
   },
   {
     "filename": "Yamaha_RAV203_V473170_US.ir",
@@ -20768,6 +21354,25 @@
     "additional_info": "panasonic remote n2qayb000210 for panasonic sa-pt660 home theater system"
   },
   {
+    "filename": "Panasonic_SC-AK15.ir",
+    "device_type": "Audio_and_Video_Receivers",
+    "brand": "Panasonic",
+    "model": "SC-AK15",
+    "series": "Panasonic_SC-AK15.ir",
+    "path": "Audio_and_Video_Receivers/Panasonic/Panasonic_SC-AK15.ir",
+    "remote": "RAK-CH940WK",
+    "additional_info": "panasonic mini hifi audio system panasonic sc-ak15 from 1998, complete capture by vladimir malis from slovakia"
+  },
+  {
+    "filename": "Panasonic_N2QAYB001009.ir",
+    "device_type": "Audio_and_Video_Receivers",
+    "brand": "Panasonic",
+    "model": "N2QAYB001009",
+    "series": "Panasonic_N2QAYB001009.ir",
+    "path": "Audio_and_Video_Receivers/Panasonic/Panasonic_N2QAYB001009.ir",
+    "additional_info": "panasonic n2qayb001009 a/v receiver"
+  },
+  {
     "filename": "Panasonic_N2QAYB000210.ir",
     "device_type": "Audio_and_Video_Receivers",
     "brand": "Panasonic",
@@ -20803,6 +21408,16 @@
     "series": "Sony_MHC_GSX75.ir",
     "path": "Audio_and_Video_Receivers/Sony/Sony_MHC_GSX75.ir",
     "additional_info": "sony rm-sx100w remote for hcd-gsx75 model"
+  },
+  {
+    "filename": "Sony_CMT-EH10.ir",
+    "device_type": "Audio_and_Video_Receivers",
+    "brand": "Sony",
+    "model": "CMT-EH10",
+    "series": "Sony_CMT-EH10.ir",
+    "path": "Audio_and_Video_Receivers/Sony/Sony_CMT-EH10.ir",
+    "remote": "Sony RM-SC30",
+    "additional_info": "sony mini hifi audio systems sony, cmt-cp555, cmt-cpx22, cmt-eh15, hcd-cbx1, hcd-gs10, cmt-bx1, cmt-gpz7, cmt-nez3, cmt-bx5bt, cmt-cpx11, cmt-cpx22, cmt-cpz1, cmt-cpz2, cmt-cpz3, cmt-eh10, cmt-eh12, cmt-eh15, cmt-gpx5, cmt-gpx6, cmt-gpx7, cmt-hpx10w, cmt-hpx9, cmt-hpz7, cmt-hx30, cmt-ne3, cmt-nez3, cmt-nez30, cmt-nez5, cmt-spz50, cmt-spz70, cmtbx5bt, cmtcpx22, cmtcpz2, cmteh15, cmthpx10w, cmthpx9, hcd rg444, hcd-cpz1, hcd-cpz2, hcd-cpz3, hcd-eh10, hcd-gpx7, hcd-gs10, hcd-gs30, hcd-gx355, hcd-gx450, hcd-gx750, hcd-gx9000, hcd-hpx9, hcd-lx10000, hcd-ne5, hcd-nez3, hcd-rg444, hcdcpz2, hcdgx355, hcdgx450, hcdgx750, hcdgx9000, hcdhpx9, hcdlx10000, hcdrg444, lbt-zx6, lbt-zx8, lbt-zx9, lbtzx6, lbtzx8, lbtzx9, mhc-ec50, mhc-ec55, mhc-ec68, mhc-ec77, mhc-gnx880, mhc-gx20, mhc-gx250, mhc-gx30, mhc-gx355, mhc-gx40, mhc-gx450, mhc-gx555, mhc-gx750, mhc-gx9000, mhc-gx99, mhc-gx9900, mhc-lx10000, mhc-rg100, mhc-rg110, mhc-rg121, mhc-rg170, mhc-rg190, mhc-rg22, mhc-rg221, mhc-rg222, mhc-rg33, mhc-rg444s, mhc-rg551, mhc-rg555, mhc-rl3, mhc-srg444s, mhcec50, mhcgnx880, mhcgx355, mhcgx450, mhcgx555, mhcgx9000, mhcgx9900, mhclx10000, mhcrg170, mhcrg190, rm-sc55, complete capture by vladimir malis from slovakia"
   },
   {
     "filename": "Sony_MHC-EC69.ir",
@@ -20978,6 +21593,15 @@
     "for aiwa xr h100, nsxa909u, nsxmt70u, rc7aso8 and other; remote": "RC-T506"
   },
   {
+    "filename": "NAKAMICHI_RM_4TA.ir",
+    "device_type": "Audio_and_Video_Receivers",
+    "brand": "NAKAMICHI",
+    "model": "RM_4TA",
+    "series": "NAKAMICHI_RM_4TA.ir",
+    "path": "Audio_and_Video_Receivers/Nakamichi/NAKAMICHI_RM_4TA.ir",
+    "additional_info": "nakamichi rm-4ta a/v receiver"
+  },
+  {
     "filename": "Pioneer_RC-974R.ir",
     "device_type": "Audio_and_Video_Receivers",
     "brand": "Pioneer",
@@ -21004,6 +21628,16 @@
     "series": "Pioneer_VSX-D1-S.ir",
     "path": "Audio_and_Video_Receivers/Pioneer/Pioneer_VSX-D1-S.ir",
     "additional_info": "pioneer vsx-d1-s av receiver"
+  },
+  {
+    "filename": "Pioneer_XXD3089.ir",
+    "device_type": "Audio_and_Video_Receivers",
+    "brand": "Pioneer",
+    "model": "XXD3089",
+    "series": "Pioneer_XXD3089.ir",
+    "path": "Audio_and_Video_Receivers/Pioneer/Pioneer_XXD3089.ir",
+    "picture": "https://github.com/dhlavaty/Flipper-IRDB/commit/66547f3f56033ad9be915ebdb23e1699e6dca489",
+    "additional_info": "remote control pioneer xxd3089 for receiver pioneer vsx-515, some buttons use `raw` because flipper zero does not support `pioneer-2part` also known as `pioneer-mix` protocol., order of buttons in this file is as on original remote - from top-down, left-to-right., --- top row ---, --- /top row ---, --- input selector ---, --- /input selector ---, --- sound ---, --- /sound ---, --- center ---, --- /center ---, --- receiver control ---, --- /receiver control ---, --- tuner ---, --- /tuner ---, --- dvd control ---, --- /dvd control ---"
   },
   {
     "filename": "Pioneer SX-Q180.ir",
@@ -21084,6 +21718,16 @@
     "series": "Philips_FW750c.ir",
     "path": "Audio_and_Video_Receivers/Philips/Philips_FW750c.ir",
     "additional_info": "philips fw750c av receiver"
+  },
+  {
+    "filename": "Philips_FW-M55.ir",
+    "device_type": "Audio_and_Video_Receivers",
+    "brand": "Philips",
+    "model": "FW-M55",
+    "series": "Philips_FW-M55.ir",
+    "path": "Audio_and_Video_Receivers/Philips/Philips_FW-M55.ir",
+    "remote": "Philips RC2519/01",
+    "additional_info": "philips mini hifi audio system philips fw-m55/22 from year 2000, complete capture by vladimir malis from slovakia, play/pause/next/prev/fast_forward/fast_rewind are different codes for cd/tape/tuner so they have to be three times"
   },
   {
     "filename": "JVC_CA-D851TR.ir",
@@ -21332,6 +21976,15 @@
     "series": "Rinnai_SpaceHeater.ir",
     "path": "Heaters/Rinnai/Rinnai_SpaceHeater.ir",
     "additional_info": "rinnai space heater, by sealldeveloper"
+  },
+  {
+    "filename": "BLYSS_ZE-82.ir",
+    "device_type": "Heaters",
+    "brand": "BLYSS",
+    "model": "ZE-82",
+    "series": "BLYSS_ZE-82.ir",
+    "path": "Heaters/Blyss/BLYSS_ZE-82.ir",
+    "additional_info": "blyss ze-82 heater"
   },
   {
     "filename": "Arlec_CH226.ir",
@@ -21595,6 +22248,15 @@
     "additional_info": "unknown led remote"
   },
   {
+    "filename": "44_LED_Strip.ir",
+    "device_type": "LED_Lighting",
+    "brand": "44",
+    "model": "LED_Strip",
+    "series": "44_LED_Strip.ir",
+    "path": "LED_Lighting/Unknown/44_LED_Strip.ir",
+    "additional_info": "44-button generic led strip, includes flash, jump, meteor,roll, auto"
+  },
+  {
     "filename": "Moon_Lamp.ir",
     "device_type": "LED_Lighting",
     "brand": "Moon",
@@ -21613,6 +22275,15 @@
     "additional_info": "generic led sign"
   },
   {
+    "filename": "Conzept_LED_VoksKogle.ir",
+    "device_type": "LED_Lighting",
+    "brand": "Conzept",
+    "model": "LED_VoksKogle",
+    "series": "Conzept_LED_VoksKogle.ir",
+    "path": "LED_Lighting/Unknown/Conzept_LED_VoksKogle.ir",
+    "additional_info": "conzept led volkskogle"
+  },
+  {
     "filename": "LED_Curtain.ir",
     "device_type": "LED_Lighting",
     "brand": "LED",
@@ -21622,6 +22293,34 @@
     "additional_info": "unknown led curtain"
   },
   {
+    "filename": "Submersible_LED_Light.ir",
+    "device_type": "LED_Lighting",
+    "brand": "Submersible",
+    "model": "LED_Light",
+    "series": "Submersible_LED_Light.ir",
+    "path": "LED_Lighting/Unknown/Submersible_LED_Light.ir",
+    "product": "https://www.amazon.com/Submersible-Operated-Decorative-Controlled-Halloween/dp/B06XWVD5NT",
+    "additional_info": "submersible led light"
+  },
+  {
+    "filename": "Christmastree_candle.ir",
+    "device_type": "LED_Lighting",
+    "brand": "Christmastree",
+    "model": "candle",
+    "series": "Christmastree_candle.ir",
+    "path": "LED_Lighting/Unknown/Christmastree_candle.ir",
+    "additional_info": "generic christmas tree candles"
+  },
+  {
+    "filename": "RGB_Lightbulb_NoName.ir",
+    "device_type": "LED_Lighting",
+    "brand": "RGB",
+    "model": "Lightbulb_NoName",
+    "series": "RGB_Lightbulb_NoName.ir",
+    "path": "LED_Lighting/Unknown/RGB_Lightbulb_NoName.ir",
+    "additional_info": "rgb led lightbulb (chinese generic)"
+  },
+  {
     "filename": "nightlampRGB.ir",
     "device_type": "LED_Lighting",
     "brand": "nightlampRGB",
@@ -21629,6 +22328,15 @@
     "series": "nightlampRGB.ir",
     "path": "LED_Lighting/Unknown/nightlampRGB.ir",
     "additional_info": "generic nightlamp rgb"
+  },
+  {
+    "filename": "Closet_LED_3W.ir",
+    "device_type": "LED_Lighting",
+    "brand": "Closet",
+    "model": "LED_3W",
+    "series": "Closet_LED_3W.ir",
+    "path": "LED_Lighting/Unknown/Closet_LED_3W.ir",
+    "additional_info": "closet led 3w"
   },
   {
     "filename": "Generic_LED_light_strip.ir",
@@ -21658,6 +22366,15 @@
     "additional_info": "generic led lightbar, https://www.aliexpress.com/item/1005005088458033.html"
   },
   {
+    "filename": "LED_Cat.ir",
+    "device_type": "LED_Lighting",
+    "brand": "LED",
+    "model": "Cat",
+    "series": "LED_Cat.ir",
+    "path": "LED_Lighting/Unknown/LED_Cat.ir",
+    "additional_info": "led cat lights"
+  },
+  {
     "filename": "Neon_LED.ir",
     "device_type": "LED_Lighting",
     "brand": "Neon",
@@ -21665,6 +22382,15 @@
     "series": "Neon_LED.ir",
     "path": "LED_Lighting/Unknown/Neon_LED.ir",
     "additional_info": "neon led light"
+  },
+  {
+    "filename": "44_Button_Generic_LED.ir",
+    "device_type": "LED_Lighting",
+    "brand": "44",
+    "model": "Button_Generic_LED",
+    "series": "44_Button_Generic_LED.ir",
+    "path": "LED_Lighting/Unknown/44_Button_Generic_LED.ir",
+    "additional_info": "44 button generic led lights"
   },
   {
     "filename": "LED_Disco_Light.ir",
@@ -21920,6 +22646,15 @@
     "additional_info": "neuhaus leuchten direkt led light"
   },
   {
+    "filename": "NOMA_LED_STRING_LIGHTS.ir",
+    "device_type": "LED_Lighting",
+    "brand": "NOMA",
+    "model": "LED_STRING_LIGHTS",
+    "series": "NOMA_LED_STRING_LIGHTS.ir",
+    "path": "LED_Lighting/Noma/NOMA_LED_STRING_LIGHTS.ir",
+    "additional_info": "noma led string lights, model number unknown."
+  },
+  {
     "filename": "EGLO_light.ir",
     "device_type": "LED_Lighting",
     "brand": "EGLO",
@@ -21999,6 +22734,16 @@
     "series": "LOLA_LED.ir",
     "path": "LED_Lighting/LolaLED/LOLA_LED.ir",
     "additional_info": "for lola smart led"
+  },
+  {
+    "filename": "Arlec_LVX964.ir",
+    "device_type": "LED_Lighting",
+    "brand": "Arlec",
+    "model": "LVX964",
+    "series": "Arlec_LVX964.ir",
+    "path": "LED_Lighting/Arlec/Arlec_LVX964.ir",
+    "protocol": "NECext, Address: 00 EF",
+    "additional_info": "arlec lvx964 fibre optic christmas tree"
   },
   {
     "filename": "Sylvania_24_Button_LED.ir",
@@ -22201,77 +22946,13 @@
     "additional_info": "hovvida led light"
   },
   {
-    "filename": "44_LED_Strip.ir",
+    "filename": "Astronaut_Star_Projector.ir",
     "device_type": "LED_Lighting",
-    "brand": "44",
-    "model": "LED_Strip",
-    "series": "44_LED_Strip.ir",
-    "path": "LED_Lighting/BrandUnknown/44_LED_Strip.ir",
-    "additional_info": "44-button generic led strip, includes flash, jump, meteor,roll, auto"
-  },
-  {
-    "filename": "Conzept_LED_VoksKogle.ir",
-    "device_type": "LED_Lighting",
-    "brand": "Conzept",
-    "model": "LED_VoksKogle",
-    "series": "Conzept_LED_VoksKogle.ir",
-    "path": "LED_Lighting/BrandUnknown/Conzept_LED_VoksKogle.ir",
-    "additional_info": "conzept led volkskogle"
-  },
-  {
-    "filename": "Submersible_LED_Light.ir",
-    "device_type": "LED_Lighting",
-    "brand": "Submersible",
-    "model": "LED_Light",
-    "series": "Submersible_LED_Light.ir",
-    "path": "LED_Lighting/BrandUnknown/Submersible_LED_Light.ir",
-    "product": "https://www.amazon.com/Submersible-Operated-Decorative-Controlled-Halloween/dp/B06XWVD5NT",
-    "additional_info": "submersible led light"
-  },
-  {
-    "filename": "Christmastree_candle.ir",
-    "device_type": "LED_Lighting",
-    "brand": "Christmastree",
-    "model": "candle",
-    "series": "Christmastree_candle.ir",
-    "path": "LED_Lighting/BrandUnknown/Christmastree_candle.ir",
-    "additional_info": "generic christmas tree candles"
-  },
-  {
-    "filename": "RGB_Lightbulb_NoName.ir",
-    "device_type": "LED_Lighting",
-    "brand": "RGB",
-    "model": "Lightbulb_NoName",
-    "series": "RGB_Lightbulb_NoName.ir",
-    "path": "LED_Lighting/BrandUnknown/RGB_Lightbulb_NoName.ir",
-    "additional_info": "rgb led lightbulb (chinese generic)"
-  },
-  {
-    "filename": "Closet_LED_3W.ir",
-    "device_type": "LED_Lighting",
-    "brand": "Closet",
-    "model": "LED_3W",
-    "series": "Closet_LED_3W.ir",
-    "path": "LED_Lighting/BrandUnknown/Closet_LED_3W.ir",
-    "additional_info": "closet led 3w"
-  },
-  {
-    "filename": "LED_Cat.ir",
-    "device_type": "LED_Lighting",
-    "brand": "LED",
-    "model": "Cat",
-    "series": "LED_Cat.ir",
-    "path": "LED_Lighting/BrandUnknown/LED_Cat.ir",
-    "additional_info": "led cat lights"
-  },
-  {
-    "filename": "44_Button_Generic_LED.ir",
-    "device_type": "LED_Lighting",
-    "brand": "44",
-    "model": "Button_Generic_LED",
-    "series": "44_Button_Generic_LED.ir",
-    "path": "LED_Lighting/BrandUnknown/44_Button_Generic_LED.ir",
-    "additional_info": "44 button generic led lights"
+    "brand": "Astronaut",
+    "model": "Star_Projector",
+    "series": "Astronaut_Star_Projector.ir",
+    "path": "LED_Lighting/HLKZine/Astronaut_Star_Projector.ir",
+    "additional_info": "astronaut nebula projector light/hlkzine/hr-f2, lighting, by doomedbutton327 :)"
   },
   {
     "filename": "ChauvetDJ_IRC6.ir",
@@ -22440,6 +23121,24 @@
     "series": "Govee_TV_Backlights.ir",
     "path": "LED_Lighting/Govee/Govee_TV_Backlights.ir",
     "additional_info": "govee tv backlights"
+  },
+  {
+    "filename": "Tween_Light_Oria.ir",
+    "device_type": "LED_Lighting",
+    "brand": "Tween",
+    "model": "Light_Oria",
+    "series": "Tween_Light_Oria.ir",
+    "path": "LED_Lighting/Tween/Tween_Light_Oria.ir",
+    "additional_info": "tween light led oria (ceiling light)"
+  },
+  {
+    "filename": "MOREDIG_LED_PROTECTOR.ir",
+    "device_type": "LED_Lighting",
+    "brand": "MOREDIG",
+    "model": "LED_PROTECTOR",
+    "series": "MOREDIG_LED_PROTECTOR.ir",
+    "path": "LED_Lighting/Moredig/MOREDIG_LED_PROTECTOR.ir",
+    "additional_info": "moredig baby/kids projector light (https://www.amazon.co.uk/dp/b0761p8sdy)"
   },
   {
     "filename": "Kristjan_LED_candle.ir",
@@ -22966,6 +23665,15 @@
     "additional_info": "edifier r1700bts 2.0 speakers"
   },
   {
+    "filename": "Edifier_S760D.ir",
+    "device_type": "Speakers",
+    "brand": "Edifier",
+    "model": "S760D",
+    "series": "Edifier_S760D.ir",
+    "path": "Speakers/Edifier/Edifier_S760D.ir",
+    "additional_info": "edifier s760d speakers"
+  },
+  {
     "filename": "LG_Hom-Bot_Vacuum.ir",
     "device_type": "Vacuum_Cleaners",
     "brand": "LG",
@@ -23019,6 +23727,15 @@
     "path": "Vacuum_Cleaners/iHome/iHome_Nova.ir"
   },
   {
+    "filename": "Roomba_Combo_Remote.ir",
+    "device_type": "Vacuum_Cleaners",
+    "brand": "iRobot Roomba Combo R1118",
+    "model": "Combo_Remote",
+    "series": "Roomba_Combo_Remote.ir",
+    "path": "Vacuum_Cleaners/iRobot/Roomba_Combo_Remote.ir",
+    "additional_info": "roomba combo remote - by fr4me"
+  },
+  {
     "filename": "iRobot_ROOMBA.ir",
     "device_type": "Vacuum_Cleaners",
     "brand": "iRobot",
@@ -23055,6 +23772,15 @@
     "additional_info": "tikom g8000 vacuum"
   },
   {
+    "filename": "RoboStar_T80_Pro.ir",
+    "device_type": "Vacuum_Cleaners",
+    "brand": "RoboStar",
+    "model": "T80_Pro",
+    "series": "RoboStar_T80_Pro.ir",
+    "path": "Vacuum_Cleaners/Tesla/RoboStar_T80_Pro.ir",
+    "additional_info": "tesla robostar t80 pro - vacuum cleaner"
+  },
+  {
     "filename": "Ecovacs_Deebot_DM82.ir",
     "device_type": "Vacuum_Cleaners",
     "brand": "Ecovacs",
@@ -23089,6 +23815,15 @@
     "series": "iLife_Charger_A4s_Vacuum.ir",
     "path": "Vacuum_Cleaners/iLife/iLife_Charger_A4s_Vacuum.ir",
     "additional_info": "ilife charger a4s vacuum"
+  },
+  {
+    "filename": "iLife_V3_V5_V8_X5.ir",
+    "device_type": "Vacuum_Cleaners",
+    "brand": "iLife",
+    "model": "V3_V5_V8_X5",
+    "series": "iLife_V3_V5_V8_X5.ir",
+    "path": "Vacuum_Cleaners/iLife/iLife_V3_V5_V8_X5.ir",
+    "additional_info": "ilife v3/v5/v8/x5 vacuum cleaners"
   },
   {
     "filename": "iLife_A4s_Vacuum.ir",
@@ -23143,6 +23878,16 @@
     "series": "Teufel_Cinebase_Soundbar.ir",
     "path": "SoundBars/Teufel/Teufel_Cinebase_Soundbar.ir",
     "additional_info": "teufel cinibase soundbar"
+  },
+  {
+    "filename": "Denon-RC-1236.ir",
+    "device_type": "SoundBars",
+    "brand": "Denon-RC-1236",
+    "model": "",
+    "series": "Denon-RC-1236.ir",
+    "path": "SoundBars/Denon/Denon-RC-1236.ir",
+    "picture": "https://github.com/dhlavaty/Flipper-IRDB/commit/3c588ad0cce39e07fff13542d83781bfecb00394",
+    "additional_info": "remote control denon rc-1236 for sound bar denon dht-s216"
   },
   {
     "filename": "Denon_Home_550.ir",
@@ -23233,6 +23978,16 @@
     "series": "TCL_TS8132.ir",
     "path": "SoundBars/TCL/TCL_TS8132.ir",
     "additional_info": "tcl ts8132 soundbar"
+  },
+  {
+    "filename": "Vizio_V51x-J6.ir",
+    "device_type": "SoundBars",
+    "brand": "Vizio",
+    "model": "V51x-J6",
+    "series": "Vizio_V51x-J6.ir",
+    "path": "SoundBars/Vizio/Vizio_V51x-J6.ir",
+    "for models": "SB3620n-H6, SB2020n-H6, SB3221n-J6, SB2021n-J6, SB2021n-H6, V20-J8, V20x-J8,",
+    "additional_info": "vizio soundbar d21-h d51-h d512-h d510-h remote, v21-h8, v21-h8r, v21d-j8, v21x-j8, v214x-k, v21t-j8, v51-h6, v51x-j6, v514x-k6,, m213ad-k8, m21d-h8r, m21d-h8, m215a-j, m215aw-k6, m51a-h6, m51ax-j6"
   },
   {
     "filename": "Vizio_V51-H6.ir",
@@ -23444,6 +24199,15 @@
     "additional_info": "samsung soundbar sk10y"
   },
   {
+    "filename": "Bomaker_Odine_Soundbar..ir",
+    "device_type": "SoundBars",
+    "brand": "Bomaker",
+    "model": "Odine_Soundbar.",
+    "series": "Bomaker_Odine_Soundbar..ir",
+    "path": "SoundBars/Bomaker/Bomaker_Odine_Soundbar..ir",
+    "additional_info": "bomaker odine soundbar, unknown exact version"
+  },
+  {
     "filename": "Audac_IMEO2.ir",
     "device_type": "SoundBars",
     "brand": "Audac",
@@ -23460,6 +24224,15 @@
     "series": "JBL_CINEMA_SB120.ir",
     "path": "SoundBars/JBL/JBL_CINEMA_SB120.ir",
     "additional_info": "jbl cinema sb120 bar"
+  },
+  {
+    "filename": "JBL_CINEMA_SB150.ir",
+    "device_type": "SoundBars",
+    "brand": "JBL",
+    "model": "CINEMA_SB150",
+    "series": "JBL_CINEMA_SB150.ir",
+    "path": "SoundBars/JBL/JBL_CINEMA_SB150.ir",
+    "additional_info": "jbl cinema sb150 2.1 soundbar"
   },
   {
     "filename": "JBL_5_1_Soundbar.ir",
@@ -23808,6 +24581,15 @@
     "additional_info": "boxlight smartboard"
   },
   {
+    "filename": "Acer_XL2530 IR29033.ir",
+    "device_type": "Projectors",
+    "brand": "Acer",
+    "model": "XL2530 IR29033",
+    "series": "Acer_XL2530 IR29033.ir",
+    "path": "Projectors/Acer/Acer_XL2530 IR29033.ir",
+    "acer xl2530. remote id": "IR29033"
+  },
+  {
     "filename": "Acer_H6517ST.ir",
     "device_type": "Projectors",
     "brand": "Acer",
@@ -23842,6 +24624,15 @@
     "series": "Denon_Projector.ir",
     "path": "Projectors/Denon/Denon_Projector.ir",
     "additional_info": "denon projector"
+  },
+  {
+    "filename": "Wanbo_T6_Max.ir",
+    "device_type": "Projectors",
+    "brand": "Wanbo",
+    "model": "T6_Max",
+    "series": "Wanbo_T6_Max.ir",
+    "path": "Projectors/Wanbo/Wanbo_T6_Max.ir",
+    "additional_info": "wanbo t6 max projector"
   },
   {
     "filename": "Dell_projector.ir",
@@ -23953,6 +24744,15 @@
     "series": "Samsung_VG-TM2360E.ir",
     "path": "Projectors/Samsung/Samsung_VG-TM2360E.ir",
     "additional_info": "samsung vg-tm2360e gen 2 freestyle projector"
+  },
+  {
+    "filename": "Yoton Y3.ir",
+    "device_type": "Projectors",
+    "brand": "Yoton Y3",
+    "model": "",
+    "series": "Yoton Y3.ir",
+    "path": "Projectors/Yoton/Yoton Y3.ir",
+    "additional_info": "yoton y3 mini led projector"
   },
   {
     "filename": "Maxell_MC-EU5001.ir",
@@ -24131,6 +24931,51 @@
     "additional_info": "sony rm pj27 projector"
   },
   {
+    "filename": "Sony_RM_PJ1000.ir",
+    "device_type": "Projectors",
+    "brand": "Sony",
+    "model": "RM_PJ1000",
+    "series": "Sony_RM_PJ1000.ir",
+    "path": "Projectors/Sony/Sony_RM_PJ1000.ir",
+    "additional_info": "sony rm-pj1000 remote commander for vph-d50 projector"
+  },
+  {
+    "filename": "Sony RM-PJ30 ID-3.ir",
+    "device_type": "Projectors",
+    "brand": "Sony RM-PJ30 ID-3",
+    "model": "",
+    "series": "Sony RM-PJ30",
+    "path": "Projectors/Sony/Sony RM-PJ30/Sony RM-PJ30 ID-3.ir",
+    "additional_info": "sony rm-pj30 projector (3 of 4)"
+  },
+  {
+    "filename": "Sony RM-PJ30 ID-1.ir",
+    "device_type": "Projectors",
+    "brand": "Sony RM-PJ30 ID-1",
+    "model": "",
+    "series": "Sony RM-PJ30",
+    "path": "Projectors/Sony/Sony RM-PJ30/Sony RM-PJ30 ID-1.ir",
+    "additional_info": "sony rm-pj30 projector (1 of 4)"
+  },
+  {
+    "filename": "Sony RM-PJ30 ID-4.ir",
+    "device_type": "Projectors",
+    "brand": "Sony RM-PJ30 ID-4",
+    "model": "",
+    "series": "Sony RM-PJ30",
+    "path": "Projectors/Sony/Sony RM-PJ30/Sony RM-PJ30 ID-4.ir",
+    "additional_info": "sony rm-pj30 projector (4 of 4)"
+  },
+  {
+    "filename": "Sony RM-PJ30 ID-2.ir",
+    "device_type": "Projectors",
+    "brand": "Sony RM-PJ30 ID-2",
+    "model": "",
+    "series": "Sony RM-PJ30",
+    "path": "Projectors/Sony/Sony RM-PJ30/Sony RM-PJ30 ID-2.ir",
+    "additional_info": "sony rm-pj30 projector (2 of 4)"
+  },
+  {
     "filename": "Gateway_210_projextor.ir",
     "device_type": "Projectors",
     "brand": "Gateway",
@@ -24157,6 +25002,24 @@
     "series": "SAKAWA_Projector.ir",
     "path": "Projectors/SAKAWA/SAKAWA_Projector.ir",
     "additional_info": "sakawa projector"
+  },
+  {
+    "filename": "TOPTRO_TR25.ir",
+    "device_type": "Projectors",
+    "brand": "TOPTRO",
+    "model": "TR25",
+    "series": "TOPTRO_TR25.ir",
+    "path": "Projectors/TOPTRO/TOPTRO_TR25.ir",
+    "additional_info": "toptro tr25 projector"
+  },
+  {
+    "filename": "Thunrlge_X1BQ.ir",
+    "device_type": "Projectors",
+    "brand": "Thunrlge",
+    "model": "X1BQ",
+    "series": "Thunrlge_X1BQ.ir",
+    "path": "Projectors/Thunrlge/Thunrlge_X1BQ.ir",
+    "additional_info": "thunrlge x1bq led projector"
   },
   {
     "filename": "Groview.ir",
@@ -24491,6 +25354,15 @@
     "additional_info": "epson ehtw5650 projector"
   },
   {
+    "filename": "Epson-EB-X12.ir",
+    "device_type": "Projectors",
+    "brand": "Epson-EB-X12",
+    "model": "",
+    "series": "Epson-EB-X12.ir",
+    "path": "Projectors/Epson/Epson-EB-X12.ir",
+    "additional_info": "epson x12 projector"
+  },
+  {
     "filename": "Epson_projector_Power_Only.ir",
     "device_type": "Projectors",
     "brand": "Epson",
@@ -24600,6 +25472,15 @@
     "additional_info": "onoayo portable projector"
   },
   {
+    "filename": "CANON_LV-X320.ir",
+    "device_type": "Projectors",
+    "brand": "CANON",
+    "model": "LV-X320",
+    "series": "CANON_LV-X320.ir",
+    "path": "Projectors/Canon/CANON_LV-X320.ir",
+    "additional_info": "canon lv-x320 projector"
+  },
+  {
     "filename": "Sony_RM-D10E.ir",
     "device_type": "MiniDisc",
     "brand": "Sony",
@@ -24607,6 +25488,24 @@
     "series": "",
     "path": "MiniDisc/Sony_RM-D10E.ir",
     "additional_info": "used with sony mds-je480 minidisc deck"
+  },
+  {
+    "filename": "Pioneer_CU-MJO11.ir",
+    "device_type": "MiniDisc",
+    "brand": "Pioneer",
+    "model": "CU-MJO11",
+    "series": "",
+    "path": "MiniDisc/Pioneer_CU-MJO11.ir",
+    "additional_info": "pioneer cu-mjo11 remote codes (part no. rpx1131), compatible with pioneer mj-d707/mj-17d minidisc recorder"
+  },
+  {
+    "filename": "CCTV_DVR.ir",
+    "device_type": "CCTV",
+    "brand": "CCTV",
+    "model": "DVR",
+    "series": "CCTV_DVR.ir",
+    "path": "CCTV/BrandUnknown/CCTV_DVR.ir",
+    "additional_info": "generic cctv dvr recorder"
   },
   {
     "filename": "HIKVISION_OEM.ir",
@@ -24634,6 +25533,16 @@
     "series": "LG_GC260W.ir",
     "path": "VCR/LG/LG_GC260W.ir",
     "lg vcr remote model": "6711R1P073B"
+  },
+  {
+    "filename": "LG DVX7900.ir",
+    "device_type": "VCR",
+    "brand": "LG DVX7900",
+    "model": "",
+    "series": "LG DVX7900.ir",
+    "path": "VCR/LG/LG DVX7900.ir",
+    "remote model": "6711R1P073B",
+    "additional_info": "lg dvx7900 vcr / dvd player"
   },
   {
     "filename": "RVR-4000.ir",
