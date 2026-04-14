@@ -3,7 +3,9 @@ const components = {
   nav() {
     // check if we're on index page or not
     const isIndex = window.location.pathname.endsWith('index.html') || window.location.pathname.endsWith('/') || window.location.pathname.endsWith('/v2');
+    const isFlasher = window.location.pathname.endsWith('flasher.html');
     const prefix = isIndex ? '' : 'index.html';
+    const navLinksClass = isFlasher ? 'nav-links flasher-nav-links' : 'nav-links';
     
     return `
       <div class="container">
@@ -15,10 +17,11 @@ const components = {
           <span></span>
           <span></span>
         </button>
-        <ul class="nav-links">
+        <ul class="${navLinksClass}">
           <li><a href="${prefix}#getting-started">Get Started</a></li>
           <li><a href="${prefix}#features">Features</a></li>
           <li><a href="boards.html">Boards</a></li>
+          <li><a href="flasher.html">Flasher</a></li>
           <li><a href="irdb.html">IRDB</a></li>
           <li><a href="openwd.html">WDMap</a></li>
           <li><a href="companion.html">App</a></li>
@@ -137,6 +140,18 @@ document.addEventListener('DOMContentLoaded', () => {
   const nav = document.getElementById('nav');
   if (nav) {
     nav.innerHTML = components.nav();
+
+    const updateNavHeight = () => {
+      const navElement = document.querySelector('nav');
+      if (!navElement) return;
+      document.documentElement.style.setProperty('--nav-height', `${navElement.offsetHeight}px`);
+    };
+
+    updateNavHeight();
+    window.addEventListener('resize', updateNavHeight);
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(updateNavHeight).catch(() => {});
+    }
     
     // initialize mobile menu after nav is rendered
     const menuToggle = document.querySelector('.mobile-menu-toggle');
