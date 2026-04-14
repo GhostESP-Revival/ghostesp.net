@@ -118,12 +118,13 @@ nav .container {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  height: 35px;
 }
 
 .nav-logo {
   display: flex;
   align-items: center;
-  height: 35px;
+  height: 100%;
 }
 
 .nav-logo img {
@@ -140,6 +141,10 @@ nav .container {
   display: flex;
   gap: 2rem;
   list-style: none;
+  align-items: center;
+  margin: 0 !important;
+  padding: 0;
+  height: 100%;
 }
 
 .nav-links a {

@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#000000">
+
+  <title>Flasher - GhostESP</title>
+  <meta name="description" content="Flash GhostESP firmware directly from your browser. Web Serial API powered ESP32 flasher for GhostESP.">
+  <meta name="keywords" content="GhostESP flasher, ESP32 flash, web serial, GhostESP firmware, ESP32-S3, ESP32-C6">
+  <meta name="author" content="Jay Candel">
+  <meta name="robots" content="index, follow">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Flasher - GhostESP">
+  <meta property="og:description" content="Flash GhostESP firmware directly from your browser.">
+  <meta property="og:url" content="https://ghostesp.net/flasher.html">
+  <meta property="og:site_name" content="GhostESP">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Flasher - GhostESP">
+  <meta name="twitter:description" content="Flash GhostESP firmware directly from your browser.">
+
+  <link rel="canonical" href="https://ghostesp.net/flasher.html">
+
+  <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/flasher.css">
+  <script src="https://unpkg.com/lucide@latest" defer></script>
+
+</head>
+<body>
+  <canvas id="dotTerrain"></canvas>
+  <script>
+    (function() {
+      var canvas = document.getElementById('dotTerrain');
+      if (!canvas) return;
+      var ctx = canvas.getContext('2d');
+      var SPACING = 28;
+      var dots = [];
+      var ripples = [];
+      var mouseX = -9999, mouseY = -9999;
+      var lastX = 0, lastY = 0;
+      var smoothMouseX = -9999, smoothMouseY = -9999;
+      function init() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        dots = [];
+        var cols = Math.ceil(canvas.width / SPACING) + 1;
+        var rows = Math.ceil(canvas.height / SPACING) + 1;
+        for (var r = 0; r < rows; r++) {
+          for (var c = 0; c < cols; c++) {
+            dots.push({ baseX: c * SPACING, baseY: r * SPACING, x: 0, y: 0, brightness: 0.15, targetBrightness: 0.15, radius: 1.5, targetRadius: 1.5 });
+          }
+        }
+      }
+      document.addEventListener('mousemove', function(e) {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        var dx = e.clientX - lastX;
+        var dy = e.clientY - lastY;
+        var dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist > 30) {
+          ripples.push({ x: e.clientX, y: e.clientY, radius: 0, strength: 1 });
+          lastX = e.clientX;
+          lastY = e.clientY;
+        }
+      });
+      function animate() {
+        smoothMouseX += (mouseX - smoothMouseX) * 0.2;
+        smoothMouseY += (mouseY - smoothMouseY) * 0.2;
+        for (var i = ripples.length - 1; i >= 0; i--) {
+          ripples[i].radius += 7;
+          ripples[i].strength *= 0.97;
+          if (ripples[i].strength < 0.01) ripples.splice(i, 1);
+        }
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        for (var d = 0; d < dots.length; d++) {
+          var dot = dots[d];
+          var bx = dot.baseX + SPACING / 2;
+          var by = dot.baseY + SPACING / 2;
+          dot.targetBrightness = 0.2;
+          dot.targetRadius = 1.8;
+          var mdx = bx - smoothMouseX;
+          var mdy = by - smoothMouseY;
+          var mdist = Math.sqrt(mdx * mdx + mdy * mdy);
+          if (mdist < 220) {
+            var factor = 1 - mdist / 220;
+            factor = factor * factor;
+            dot.targetBrightness = 0.2 + factor * 0.6;
+            dot.targetRadius = 1.8 + factor * 3;
+          }
+          for (var r = 0; r < ripples.length; r++) {
+            var rip = ripples[r];
+            var rdx = bx - rip.x;
+            var rdy = by - rip.y;
+            var rdist = Math.sqrt(rdx * rdx + rdy * rdy);
+            var wavePos = rdist - rip.radius;
+            var waveWidth = 120;
+            if (wavePos > -40 && wavePos < waveWidth) {
+              var falloff = 1 - Math.max(0, wavePos) / waveWidth;
+              falloff = falloff * falloff;
+              var edgeFactor = 1 - Math.abs(wavePos + 20) / 60;
+              edgeFactor = Math.max(0, edgeFactor);
+              var bump = (falloff * 0.5 + edgeFactor * 0.5) * rip.strength * 0.6;
+              dot.targetBrightness = Math.max(dot.targetBrightness, 0.2 + bump);
+              dot.targetRadius = Math.max(dot.targetRadius, 1.8 + bump * 3);
+            }
+          }
+          dot.brightness += (dot.targetBrightness - dot.brightness) * 0.3;
+          dot.radius += (dot.targetRadius - dot.radius) * 0.3;
+          ctx.beginPath();
+          ctx.arc(bx, by, dot.radius, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(255,255,255,' + dot.brightness + ')';
+          ctx.fill();
+        }
+        requestAnimationFrame(animate);
+      }
+      window.addEventListener('resize', init);
+      init();
+      animate();
+    })();
+  </script>
+
+  <nav id="nav"></nav>
+
+  <div class="flasher-page" style="position: relative; z-index: 1;">
+    <div class="container">
+      <div class="flasher-header">
+        <h2>GhostESP Flasher</h2>
+        <p>Flash GhostESP firmware directly from your browser</p>
+      </div>
+
+      <!-- Stepper -->
+      <div class="flasher-stepper">
+        <div class="flasher-stepper-track">
+          <div class="flasher-stepper-item">
+            <div class="flasher-step-dot active" id="stepper1">1</div>
+            <span>Select Device</span>
+          </div>
+          <div class="flasher-stepper-item">
+            <div class="flasher-step-dot" id="stepper2">2</div>
+            <span>Connect & Configure</span>
+          </div>
+          <div class="flasher-stepper-item">
+            <div class="flasher-step-dot" id="stepper3">3</div>
+            <span>Flash</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 1: Select Device -->
+      <div class="flasher-step active" id="step1">
+        <h3>Select Your ESP32 Device</h3>
+        <p class="flusher-step-desc">Choose the ESP32 variant you want to flash GhostESP to</p>
+
+        <div class="flasher-device-grid">
+          <div class="flasher-device-card" data-device="ESP32">
+            <div class="flasher-device-name">ESP32</div>
+            <div class="flasher-device-desc">Original ESP32 with dual core</div>
+            <div class="flasher-device-meta">
+              <span>Dual Core</span>
+              <span>240MHz</span>
+            </div>
+          </div>
+          <div class="flasher-device-card" data-device="ESP32-S2">
+            <div class="flasher-device-name">ESP32-S2</div>
+            <div class="flasher-device-desc">Single core, enhanced security</div>
+            <div class="flasher-device-meta">
+              <span>Single Core</span>
+              <span>240MHz</span>
+            </div>
+          </div>
+          <div class="flasher-device-card" data-device="ESP32-S3">
+            <div class="flasher-device-name">ESP32-S3</div>
+            <div class="flasher-device-desc">Dual core with AI acceleration</div>
+            <div class="flasher-device-meta">
+              <span>Dual Core</span>
+              <span>240MHz</span>
+            </div>
+          </div>
+          <div class="flasher-device-card" data-device="ESP32-C3">
+            <div class="flasher-device-name">ESP32-C3</div>
+            <div class="flasher-device-desc">RISC-V low-power with Wi-Fi/BLE</div>
+            <div class="flasher-device-meta">
+              <span>RISC-V</span>
+              <span>160MHz</span>
+            </div>
+          </div>
+          <div class="flasher-device-card" data-device="ESP32-C5">
+            <div class="flasher-device-name">ESP32-C5</div>
+            <div class="flasher-device-desc">Wi-Fi 6 (2.4/5GHz), BT 5, Thread</div>
+            <div class="flasher-device-meta">
+              <span>RISC-V</span>
+              <span>240MHz</span>
+            </div>
+          </div>
+          <div class="flasher-device-card" data-device="ESP32-C6">
+            <div class="flasher-device-name">ESP32-C6</div>
+            <div class="flasher-device-desc">RISC-V with Wi-Fi 6 and BLE 5</div>
+            <div class="flasher-device-meta">
+              <span>RISC-V</span>
+              <span>160MHz</span>
+            </div>
+          </div>
+          <div class="flasher-device-card" data-device="ESP32-H2">
+            <div class="flasher-device-name">ESP32-H2</div>
+            <div class="flasher-device-desc">Thread/Zigbee & BLE (No Wi-Fi)</div>
+            <div class="flasher-device-meta">
+              <span>RISC-V</span>
+              <span>96MHz</span>
+            </div>
+          </div>
+          <div class="flasher-device-card" data-device="ESP32-P4">
+            <div class="flasher-device-name">ESP32-P4</div>
+            <div class="flasher-device-desc">High-perf RISC-V for AI/Media</div>
+            <div class="flasher-device-meta">
+              <span>Dual RISC-V</span>
+              <span>400MHz</span>
+            </div>
+          </div>
+          <div class="flasher-device-card" data-device="ESP32-C2">
+            <div class="flasher-device-name">ESP32-C2</div>
+            <div class="flasher-device-desc">RISC-V low-power Wi-Fi 4/BLE 5</div>
+            <div class="flasher-device-meta">
+              <span>RISC-V</span>
+              <span>120MHz</span>
+            </div>
+          </div>
+          <div class="flasher-device-card" data-device="ESP8266">
+            <div class="flasher-device-name">ESP8266</div>
+            <div class="flasher-device-desc">Classic low-cost Wi-Fi module</div>
+            <div class="flasher-device-meta">
+              <span>Single Core</span>
+              <span>80MHz</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="flasher-nav">
+          <button class="flasher-btn flasher-btn-help" data-step="1" data-bs-toggle="modal" data-bs-target="#stuckModalStep1">
+            <i class="bi bi-question-circle"></i> Help
+          </button>
+          <div class="flasher-nav-right">
+            <button id="continueToStep2" class="flasher-btn flasher-btn-primary" disabled>
+              Continue <i class="bi bi-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 2: Connect & Configure -->
+      <div class="flasher-step" id="step2">
+        <h3>Connect & Configure <span id="selectedDeviceName"></span></h3>
+        <p class="flusher-step-desc">Connect your device, then select firmware and flash settings</p>
+
+        <!-- Connection Section -->
+        <div class="flasher-connection">
+          <div id="chipInfo" class="flasher-status-bar">
+            <span class="flasher-status-dot disconnected"></span>
+            <span class="flasher-status-label">Disconnected</span>
+          </div>
+          <div class="flasher-btn-group" style="margin-bottom: 1rem;">
+            <button id="connectBtn" class="flasher-btn flasher-btn-primary flasher-btn-lg">
+              <i class="bi bi-usb-symbol"></i> Connect Device
+            </button>
+            <button id="disconnectBtn" class="flasher-btn flasher-btn-secondary" disabled>
+              <i class="bi bi-x-circle"></i> Disconnect
+            </button>
+          </div>
+
+
+        </div>
+
+        <!-- Firmware Source -->
+        <div class="flasher-firmware-section">
+          <div class="flasher-toggle" id="firmwareMethodToggle">
+            <button class="flasher-toggle-btn active" id="choiceDownload" data-source="download">
+              <i class="bi bi-cloud-download"></i> Download Firmware
+            </button>
+            <button class="flasher-toggle-btn" id="choiceManual" data-source="manual">
+              <i class="bi bi-folder2-open"></i> Upload Local Files
+            </button>
+          </div>
+
+          <!-- Download Options -->
+          <div id="downloadOptionsContainer" class="flasher-option-row">
+            
+
+            <div class="flasher-option-row">
+              <label class="flasher-form-label">Release Channel</label>
+              <div class="flasher-toggle" id="releaseToggle">
+                <button class="flasher-toggle-btn active" data-release="stable">
+                  <i class="bi bi-shield-check"></i> Stable
+                </button>
+                <button class="flasher-toggle-btn" data-release="prerelease">
+                  <i class="bi bi-lightning-charge"></i> Pre-release
+                </button>
+              </div>
+            </div>
+
+            <div class="flasher-option-row">
+              <label class="flasher-form-label" for="ghostEspVariantSelect">Build</label>
+              <select id="ghostEspVariantSelect" class="flasher-form-select" disabled>
+                <option value="">Select a build...</option>
+              </select>
+              <div id="ghostEspStatus" class="flasher-status-text" style="margin-top: 0.4rem;"></div>
+            </div>
+
+
+          </div>
+
+          <!-- Manual Upload -->
+          <div id="manualUploadContainer" class="flasher-hidden">
+            <div class="flasher-binary-toggle" id="binaryTypeToggle">
+              <button class="flasher-binary-btn active" data-binary="app">
+                <i class="bi bi-file-earmark-binary"></i> Application
+              </button>
+              <button class="flasher-binary-btn" data-binary="bootloader">
+                <i class="bi bi-hdd-network"></i> Bootloader
+              </button>
+              <button class="flasher-binary-btn" data-binary="partition">
+                <i class="bi bi-table"></i> Partition
+              </button>
+            </div>
+
+            <div id="appFirmware">
+              <div class="flasher-upload-row">
+                <div class="flasher-address-input">
+                  <label class="flasher-form-label" for="appAddress">Address</label>
+                  <input type="text" class="flasher-form-input" id="appAddress" value="0x10000">
+                </div>
+                <div class="flasher-file-zone">
+                  <div class="flasher-file-drop">
+                    <span><i class="bi bi-upload"></i> Select .bin file</span>
+                  </div>
+                  <input type="file" id="appFile" accept=".bin" style="display:none">
+                  <p id="appFileInfo" class="flasher-file-info">No file selected</p>
+                </div>
+              </div>
+            </div>
+
+            <div id="bootloaderFirmware" class="flasher-hidden">
+              <div class="flasher-upload-row">
+                <div class="flasher-address-input">
+                  <label class="flasher-form-label" for="bootloaderAddress">Address</label>
+                  <input type="text" class="flasher-form-input" id="bootloaderAddress" value="0x1000">
+                </div>
+                <div class="flasher-file-zone">
+                  <div class="flasher-file-drop">
+                    <span><i class="bi bi-upload"></i> Select .bin file</span>
+                  </div>
+                  <input type="file" id="bootloaderFile" accept=".bin" style="display:none">
+                  <p id="bootloaderFileInfo" class="flasher-file-info">No file selected</p>
+                </div>
+              </div>
+            </div>
+
+            <div id="partitionFirmware" class="flasher-hidden">
+              <div class="flasher-upload-row">
+                <div class="flasher-address-input">
+                  <label class="flasher-form-label" for="partitionAddress">Address</label>
+                  <input type="text" class="flasher-form-input" id="partitionAddress" value="0x8000">
+                </div>
+                <div class="flasher-file-zone">
+                  <div class="flasher-file-drop">
+                    <span><i class="bi bi-upload"></i> Select .bin file</span>
+                  </div>
+                  <input type="file" id="partitionFile" accept=".bin" style="display:none">
+                  <p id="partitionFileInfo" class="flasher-file-info">No file selected</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Flash Options -->
+        <div class="flasher-settings">
+          <div class="flasher-settings-header">
+            <h4>Flash Options</h4>
+            <button class="flasher-btn flasher-btn-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#flashOptionsCollapse">
+              <i class="bi bi-gear"></i> Show
+            </button>
+          </div>
+          <div class="collapse" id="flashOptionsCollapse">
+            <div class="flasher-settings-grid">
+              <div class="flasher-form-group">
+                <label class="flasher-form-label" for="flashMode">Flash Mode</label>
+                <select id="flashMode" class="flasher-form-select">
+                  <option value="qio">QIO</option>
+                  <option value="dio" selected>DIO</option>
+                  <option value="dout">DOUT</option>
+                  <option value="qout">QOUT</option>
+                </select>
+              </div>
+              <div class="flasher-form-group">
+                <label class="flasher-form-label" for="flashFreq">Flash Freq</label>
+                <select id="flashFreq" class="flasher-form-select">
+                  <option value="20m">20 MHz</option>
+                  <option value="40m" selected>40 MHz</option>
+                  <option value="80m">80 MHz</option>
+                </select>
+              </div>
+              <div class="flasher-form-group">
+                <label class="flasher-form-label" for="flashSize">Flash Size</label>
+                <select id="flashSize" class="flasher-form-select">
+                  <option value="1MB">1 MB</option>
+                  <option value="2MB">2 MB</option>
+                  <option value="4MB" selected>4 MB</option>
+                  <option value="8MB">8 MB</option>
+                  <option value="16MB">16 MB</option>
+                </select>
+              </div>
+              <div class="flasher-form-group">
+                <label class="flasher-form-label" for="baudrate">Baud Rate</label>
+                <select id="baudrate" class="flasher-form-select">
+                  <option value="115200" selected>115200 (Default)</option>
+                  <option value="921600">921600 (Fast)</option>
+                  <option value="460800">460800</option>
+                  <option value="230400">230400</option>
+                  <option value="57600">57600</option>
+                  <option value="38400">38400</option>
+                  <option value="19200">19200</option>
+                  <option value="9600">9600</option>
+                </select>
+              </div>
+              <div class="flasher-form-group">
+                <label class="flasher-form-label" for="resetMethod">Reset Method</label>
+                <select id="resetMethod" class="flasher-form-select">
+                  <option value="normal" selected>Normal (RTS/DTR)</option>
+                  <option value="hardware">Hardware (RTS&DTR)</option>
+                  <option value="none">None (Power Cycle)</option>
+                </select>
+              </div>
+            </div>
+            <div class="flasher-checkbox">
+              <input type="checkbox" id="eraseAll" checked>
+              <label for="eraseAll">Erase all flash before programming</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="flasher-nav">
+          <button id="backToStep1" class="flasher-btn flasher-btn-secondary">
+            <i class="bi bi-arrow-left"></i> Back
+          </button>
+          <div class="flasher-nav-right">
+            <button class="flasher-btn flasher-btn-help" data-step="2" data-bs-toggle="modal" data-bs-target="#stuckModalStep2">
+              <i class="bi bi-question-circle"></i> Help
+            </button>
+            <button id="continueToStep3" class="flasher-btn flasher-btn-primary" disabled>
+              Continue <i class="bi bi-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 3: Flash -->
+      <div class="flasher-step" id="step3">
+        <h3>Flash Your Device</h3>
+        <p class="flusher-step-desc">Review the summary and flash your device</p>
+
+        <div class="flasher-summary" id="flashSummary"></div>
+
+        <div class="flasher-progress">
+          <div class="flasher-progress-bar" id="flashProgress"></div>
+        </div>
+        <div class="flasher-eta" id="flashETA"></div>
+
+        <div class="flasher-btn-group" style="margin-top: 1.25rem;">
+          <button id="flashBtn" class="flasher-btn flasher-btn-primary">
+            <i class="bi bi-lightning-charge"></i> Flash Firmware
+          </button>
+          <button id="eraseBtn" class="flasher-btn flasher-btn-danger">
+            <i class="bi bi-trash"></i> Erase Flash
+          </button>
+          <button id="resetBtn" class="flasher-btn flasher-btn-secondary">
+            <i class="bi bi-arrow-repeat"></i> Reset Device
+          </button>
+        </div>
+
+        <div id="globalStatus" class="flasher-global-status"></div>
+
+        <div class="flasher-nav">
+          <button id="backToStep2" class="flasher-btn flasher-btn-secondary">
+            <i class="bi bi-arrow-left"></i> Back
+          </button>
+          <div class="flasher-nav-right">
+            <button class="flasher-btn flasher-btn-help" data-step="3" data-bs-toggle="modal" data-bs-target="#stuckModalStep3">
+              <i class="bi bi-question-circle"></i> Help
+            </button>
+            <button id="startOver" class="flasher-btn flasher-btn-secondary">
+              <i class="bi bi-arrow-repeat"></i> Start Over
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Terminal -->
+      <button class="flasher-terminal-toggle" id="terminalToggle">
+        <i class="bi bi-terminal"></i> Output Log <i class="bi bi-chevron-down" style="margin-left: 0.5rem;"></i>
+      </button>
+      <pre class="flasher-terminal" id="terminal"></pre>
+
+    </div>
+  </div>
+
+  <!-- Help Modals -->
+  <div class="modal fade" id="stuckModalStep1" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Help: Selecting Device</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Choose the ESP32 chip type for your board.</p>
+          <ul>
+            <li>Check the chip name printed on your board (e.g. ESP32-S3)</li>
+            <li>Click the matching card</li>
+            <li>Click Continue to proceed</li>
+          </ul>
+          <div class="flasher-help-diagram">
+            <div class="flasher-help-step"><i class="bi bi-cpu"></i><p>Identify Chip</p></div>
+            <i class="bi bi-arrow-right flasher-help-arrow"></i>
+            <div class="flasher-help-step"><i class="bi bi-card-heading"></i><p>Click Card</p></div>
+            <i class="bi bi-arrow-right flasher-help-arrow"></i>
+            <div class="flasher-help-step"><i class="bi bi-check-circle"></i><p>Continue</p></div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="flasher-btn flasher-btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="stuckModalStep2" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Help: Connecting & Configuring</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Connect your ESP32 board and select GhostESP firmware.</p>
+          <ul>
+            <li>Connect via a <strong>USB data cable</strong> (not charge-only)</li>
+            <li>Put the board in <strong>bootloader mode</strong>: hold BOOT, press RESET, release BOOT</li>
+            <li>Click <strong>Connect Device</strong> and select the serial port</li>
+            <li>Select your preferred GhostESP build from the dropdown</li>
+            <li>Firmware will download and extract automatically</li>
+          </ul>
+          <div class="flasher-help-diagram">
+            <div class="flasher-help-step"><i class="bi bi-usb-plug"></i><p>Connect USB</p></div>
+            <i class="bi bi-arrow-right flasher-help-arrow"></i>
+            <div class="flasher-help-step"><i class="bi bi-download"></i><p>Boot Mode</p></div>
+            <i class="bi bi-arrow-right flasher-help-arrow"></i>
+            <div class="flasher-help-step"><i class="bi bi-box-arrow-up-right"></i><p>Connect</p></div>
+            <i class="bi bi-arrow-right flasher-help-arrow"></i>
+            <div class="flasher-help-step"><i class="bi bi-cloud-download"></i><p>Select Build</p></div>
+            <i class="bi bi-arrow-right flasher-help-arrow"></i>
+            <div class="flasher-help-step"><i class="bi bi-check-circle"></i><p>Continue</p></div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="flasher-btn flasher-btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="stuckModalStep3" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Help: Flashing</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Write GhostESP firmware to your device.</p>
+          <ul>
+            <li>Review the <strong>Flash Summary</strong></li>
+            <li>Click <strong>Flash Firmware</strong></li>
+            <li>Wait for the progress bar to complete — <strong>do not disconnect!</strong></li>
+            <li>The tool will attempt to reset the device when finished</li>
+          </ul>
+          <div class="flasher-help-diagram">
+            <div class="flasher-help-step"><i class="bi bi-card-checklist"></i><p>Review</p></div>
+            <i class="bi bi-arrow-right flasher-help-arrow"></i>
+            <div class="flasher-help-step"><i class="bi bi-lightning-charge"></i><p>Flash</p></div>
+            <i class="bi bi-arrow-right flasher-help-arrow"></i>
+            <div class="flasher-help-step"><i class="bi bi-hourglass-split"></i><p>Wait</p></div>
+            <i class="bi bi-arrow-right flasher-help-arrow"></i>
+            <div class="flasher-help-step"><i class="bi bi-check-circle"></i><p>Complete!</p></div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="flasher-btn flasher-btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Browser Not Supported Modal -->
+  <div class="modal fade" id="webSerialModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Browser Not Supported</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p style="color: var(--flasher-danger);">WebSerial is not supported in this browser.</p>
+          <p>Please use a supported browser:</p>
+          <ul>
+            <li>Chrome (v89+)</li>
+            <li>Edge (v89+)</li>
+            <li>Opera (v76+)</li>
+          </ul>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="flasher-btn flasher-btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>Developed by <a href="https://github.com/jaylikesbunda" target="_blank">Jay Candel</a></p>
+      <a href="https://ko-fi.com/jaylikesbunda" target="_blank" class="support-link">Support on Ko-Fi</a>
+      <div class="footer-links">
+        <a href="https://discord.gg/5cyNmUMgwh" target="_blank" class="icon-link" title="Discord">
+          <i data-lucide="message-circle"></i>
+        </a>
+        <a href="https://github.com/GhostESP-Revival/GhostESP" target="_blank" class="icon-link" title="GitHub">
+          <i data-lucide="github"></i>
+        </a>
+        <a href="https://instagram.com/ghostesprevival" target="_blank" class="icon-link" title="Instagram">
+          <i data-lucide="instagram"></i>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script type="module">
+    import * as esptoolJS from './js/bundle.js';
+    window.esptoolJS = esptoolJS;
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
+  <script src="js/components.js" defer></script>
+  <script src="js/main.js" defer></script>
+  <script src="js/flasher.js"></script>
+</body>
+</html>
