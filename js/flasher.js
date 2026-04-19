@@ -1331,7 +1331,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (baudrateSelect) baudrateSelect.disabled = connected;
 
-            if (continueToStep3Btn) continueToStep3Btn.disabled = !connected;
+            if (continueToStep3Btn) continueToStep3Btn.disabled = !connected || !hasFirmwareFilesSelected();
         }
 
         function hasFirmwareFilesSelected() {
@@ -1515,28 +1515,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 updateButtonStates();
             };
 
-            fileInput.onchange = function () {
-                if (this.files && this.files.length > 0) {
-                    updateDisplay(this.files[0]);
-                } else {
-                    infoElement.textContent = 'No file selected';
-                    const uploadLabel = dropZone.querySelector('span');
-                    if (uploadLabel) {
-                        uploadLabel.innerHTML = `<i class="bi bi-upload"></i> Upload ${fileInput.id.replace('File', '')} Binary`;
-                    }
-                    dropZone.classList.remove('file-uploaded');
-                    updateBinaryTypeIndicators();
-                    updateButtonStates();
+            fileInput.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    updateDisplay(file);
                 }
-            };
+            });
 
-            dropZone.onclick = (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                if (e.target !== fileInput) {
-                    fileInput.click();
-                }
-            };
+            dropZone.addEventListener('click', () => {
+                fileInput.click();
+            });
 
             dropZone.addEventListener('dragover', (event) => {
                 event.stopPropagation();
