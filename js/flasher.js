@@ -320,7 +320,9 @@ document.addEventListener('DOMContentLoaded', () => {
             "Lolin_S3_Pro.zip": "Lolin S3 Pro",
             "Poltergeist.zip": "Rabbit-Labs Poltergeist",
             "Banshee_C5.zip": "The Wired Hatter's Banshee C5",
-            "Banshee_S3.zip": "The Wired Hatter's Banshee S3"
+            "Banshee_S3.zip": "The Wired Hatter's Banshee S3",
+            "XIAO_S3_Sense.zip": "Seeed XIAO S3 Sense",
+            "XIAO_C5.zip": "Seeed XIAO C5"
         };
 
         const ghostEspChipMapping = {
@@ -370,7 +372,9 @@ document.addEventListener('DOMContentLoaded', () => {
             "Lolin_S3_Pro.zip": "esp32s3",
             "Poltergeist.zip": "esp32c5",
             "Banshee_C5.zip": "esp32c5",
-            "Banshee_S3.zip": "esp32s3"
+            "Banshee_S3.zip": "esp32s3",
+            "XIAO_S3_Sense.zip": "esp32s3",
+            "XIAO_C5.zip": "esp32c5"
         };
 
         // --- Event Listeners: Step Navigation ---
