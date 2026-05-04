@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#000000">
+
+  <title>Wi-Fi Deauthentication vs RF Jamming: What's the Difference? - GhostESP Blog</title>
+  <meta name="description" content="A technical breakdown of the difference between Wi-Fi deauthentication and RF jamming - how each works, where they sit in the stack, and why the distinction matters.">
+  <meta name="author" content="Jay Candel">
+  <meta name="robots" content="index, follow">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Wi-Fi Deauthentication vs RF Jamming: What's the Difference?">
+  <meta property="og:description" content="A technical breakdown of the difference between Wi-Fi deauthentication and RF jamming.">
+  <meta property="og:url" content="https://ghostesp.net/blog-deauth-vs-jamming.html">
+  <meta property="og:site_name" content="GhostESP">
+  <meta property="og:image" content="https://ghostesp.net/images/IMG_1178.webp">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Wi-Fi Deauthentication vs RF Jamming: What's the Difference?">
+  <meta name="twitter:description" content="A technical breakdown of the difference between Wi-Fi deauthentication and RF jamming.">
+  <meta name="twitter:image" content="https://ghostesp.net/images/IMG_1178.webp">
+
+  <link rel="canonical" href="https://ghostesp.net/blog-deauth-vs-jamming.html">
+
+  <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+  <script src="https://unpkg.com/lucide@latest" defer></script>
+  <style>
+    .post-hero {
+      padding: 140px var(--spacing) 40px;
+      position: relative;
+      z-index: 1;
+    }
+    .post-hero .container { max-width: 780px; }
+    .post-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 0.9rem;
+      margin-bottom: 1.5rem;
+      transition: color 0.2s ease;
+    }
+    .post-back:hover { color: var(--text); }
+    .post-back i { width: 16px; height: 16px; }
+    .post-title {
+      font-size: 2.2rem;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+      letter-spacing: -0.5px;
+    }
+    .post-meta {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      flex-wrap: wrap;
+      color: var(--text-dim);
+      font-size: 0.9rem;
+    }
+    .post-meta time {
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-size: 0.8rem;
+    }
+    .post-meta .blog-tag {
+      font-size: 0.75rem;
+      padding: 0.25rem 0.6rem;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-family: var(--font-mono);
+      color: var(--text-dim);
+    }
+    .author-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-top: 1.25rem;
+      padding: 0.6rem 0.9rem;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      width: fit-content;
+    }
+    .author-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+    }
+    .author-info {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.2;
+    }
+    .author-name {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text);
+    }
+    .author-role {
+      font-size: 0.7rem;
+      font-family: var(--font-mono);
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .post-content {
+      position: relative;
+      z-index: 1;
+      padding-bottom: 4rem;
+    }
+    .post-content .container { max-width: 780px; }
+    .post-prose-wrapper {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2.5rem;
+    }
+    .post-prose {
+      font-size: 1.05rem;
+      line-height: 1.75;
+      color: var(--text);
+    }
+    .post-prose h2 {
+      font-size: 1.5rem;
+      text-align: left;
+      margin-top: 2.5rem;
+      margin-bottom: 1rem;
+      letter-spacing: -0.3px;
+    }
+    .post-prose h3 {
+      font-size: 1.2rem;
+      margin-top: 2rem;
+      margin-bottom: 0.75rem;
+    }
+    .post-prose p {
+      margin-bottom: 1.25rem;
+      color: var(--text-dim);
+    }
+    .post-prose strong { color: var(--text); }
+    .post-prose a {
+      color: var(--text);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-color: rgba(255, 255, 255, 0.3);
+      transition: text-decoration-color 0.2s ease;
+    }
+    .post-prose a:hover { text-decoration-color: var(--text); }
+    .post-prose ul, .post-prose ol {
+      margin-bottom: 1.25rem;
+      padding-left: 1.5rem;
+      color: var(--text-dim);
+    }
+    .post-prose li { margin-bottom: 0.4rem; }
+    .post-prose code {
+      background: rgba(255, 255, 255, 0.06);
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+      font-family: var(--font-mono);
+      font-size: 0.9em;
+      color: var(--text);
+    }
+    .post-prose blockquote {
+      border-left: 2px solid var(--border);
+      padding-left: 1.25rem;
+      margin: 1.5rem 0;
+      font-style: italic;
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.02);
+      padding: 1rem 1.25rem;
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    .post-prose hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2.5rem 0;
+    }
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0 2rem;
+      font-size: 0.95rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .compare-table th,
+    .compare-table td {
+      padding: 0.85rem 1rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    .compare-table thead th {
+      background: rgba(255, 255, 255, 0.04);
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-size: 0.75rem;
+      color: var(--text);
+      font-weight: 500;
+    }
+    .compare-table tbody tr:last-child td { border-bottom: none; }
+    .compare-table td:first-child {
+      font-weight: 500;
+      color: var(--text);
+      width: 22%;
+    }
+    .compare-table td:not(:first-child) { color: var(--text-dim); }
+    .diagram {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin: 1.5rem 0 2rem;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      line-height: 1.8;
+      white-space: pre;
+      overflow-x: auto;
+    }
+    .faq-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1rem;
+    }
+    .faq-item h3 {
+      font-size: 1rem;
+      margin: 0 0 0.5rem;
+      color: var(--text);
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .faq-item p {
+      margin: 0;
+      font-size: 0.95rem;
+    }
+    @media (max-width: 768px) {
+      .post-title { font-size: 1.6rem; }
+      .post-prose { font-size: 1rem; }
+      .compare-table { font-size: 0.85rem; }
+      .compare-table th,
+      .compare-table td { padding: 0.6rem 0.75rem; }
+      .diagram { font-size: 0.75rem; }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="dotTerrain"></canvas>
+  <script>
+    (function() {
+      var canvas = document.getElementById('dotTerrain');
+      if (!canvas) return;
+      var ctx = canvas.getContext('2d');
+      var SPACING = 28;
+      var dots = [];
+      var ripples = [];
+      var mouseX = -9999, mouseY = -9999;
+      var lastX = 0, lastY = 0;
+      var smoothMouseX = -9999, smoothMouseY = -9999;
+      function init() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        dots = [];
+        var cols = Math.ceil(canvas.width / SPACING) + 1;
+        var rows = Math.ceil(canvas.height / SPACING) + 1;
+        for (var r = 0; r < rows; r++) {
+          for (var c = 0; c < cols; c++) {
+            dots.push({ baseX: c * SPACING, baseY: r * SPACING, x: 0, y: 0, brightness: 0.15, targetBrightness: 0.15, radius: 1.5, targetRadius: 1.5 });
+          }
+        }
+      }
+      document.addEventListener('mousemove', function(e) {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        var dx = e.clientX - lastX;
+        var dy = e.clientY - lastY;
+        var dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist > 30) {
+          ripples.push({ x: e.clientX, y: e.clientY, radius: 0, strength: 1 });
+          lastX = e.clientX;
+          lastY = e.clientY;
+        }
+      });
+      function animate() {
+        smoothMouseX += (mouseX - smoothMouseX) * 0.2;
+        smoothMouseY += (mouseY - smoothMouseY) * 0.2;
+        for (var i = ripples.length - 1; i >= 0; i--) {
+          ripples[i].radius += 7;
+          ripples[i].strength *= 0.97;
+          if (ripples[i].strength < 0.01) ripples.splice(i, 1);
+        }
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        for (var d = 0; d < dots.length; d++) {
+          var dot = dots[d];
+          var bx = dot.baseX + SPACING / 2;
+          var by = dot.baseY + SPACING / 2;
+          dot.targetBrightness = 0.2;
+          dot.targetRadius = 1.8;
+          var mdx = bx - smoothMouseX;
+          var mdy = by - smoothMouseY;
+          var mdist = Math.sqrt(mdx * mdx + mdy * mdy);
+          if (mdist < 220) {
+            var factor = 1 - mdist / 220;
+            factor = factor * factor;
+            dot.targetBrightness = 0.2 + factor * 0.6;
+            dot.targetRadius = 1.8 + factor * 3;
+          }
+          for (var r = 0; r < ripples.length; r++) {
+            var rip = ripples[r];
+            var rdx = bx - rip.x;
+            var rdy = by - rip.y;
+            var rdist = Math.sqrt(rdx * rdx + rdy * rdy);
+            var wavePos = rdist - rip.radius;
+            var waveWidth = 120;
+            if (wavePos > -40 && wavePos < waveWidth) {
+              var falloff = 1 - Math.max(0, wavePos) / waveWidth;
+              falloff = falloff * falloff;
+              var edgeFactor = 1 - Math.abs(wavePos + 20) / 60;
+              edgeFactor = Math.max(0, edgeFactor);
+              var bump = (falloff * 0.5 + edgeFactor * 0.5) * rip.strength * 0.6;
+              dot.targetBrightness = Math.max(dot.targetBrightness, 0.2 + bump);
+              dot.targetRadius = Math.max(dot.targetRadius, 1.8 + bump * 3);
+            }
+          }
+          dot.brightness += (dot.targetBrightness - dot.brightness) * 0.3;
+          dot.radius += (dot.targetRadius - dot.radius) * 0.3;
+          ctx.beginPath();
+          ctx.arc(bx, by, dot.radius, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(255,255,255,' + dot.brightness + ')';
+          ctx.fill();
+        }
+        requestAnimationFrame(animate);
+      }
+      window.addEventListener('resize', init);
+      init();
+      animate();
+    })();
+  </script>
+
+  <nav id="nav"></nav>
+
+  <header class="post-hero">
+    <div class="container">
+      <a href="blog.html" class="post-back">
+        <i data-lucide="arrow-left"></i>
+        Back to Blog
+      </a>
+      <h1 class="post-title">Wi-Fi Deauthentication vs RF Jamming: What's the Difference?</h1>
+      <div class="post-meta">
+        <time datetime="2026-05-04">May 4, 2026</time>
+        <span class="blog-tag">Education</span>
+        <span class="blog-tag">Technical</span>
+      </div>
+      <div class="author-badge">
+        <img src="https://avatars.githubusercontent.com/jaylikesbunda" alt="Jay Candel" class="author-avatar">
+        <div class="author-info">
+          <span class="author-name">Jay Candel</span>
+          <span class="author-role">GhostESP Maintainer</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <article class="post-content">
+    <div class="container">
+      <div class="post-prose-wrapper">
+        <div class="post-prose">
+
+        <p>There's growing confusion around RF-related features in ESP32 tools. Terms like <strong>"deauth"</strong> and <strong>"jamming"</strong> are often used interchangeably in community discussions, but they refer to fundamentally different things. This post aims to clarify the distinction.</p>
+        <p>Wi-Fi deauthentication and RF jamming operate on different layers, use different mechanisms, target different things, and carry very different technical and legal implications. Understanding the difference matters, both for using these tools responsibly and for discussing them accurately.</p>
+        <h2>What is Wi-Fi Deauthentication?</h2>
+        <p>Wi-Fi deauthentication is a <strong>protocol-level interaction</strong> defined in the <a href="https://en.wikipedia.org/wiki/IEEE_802.11" target="_blank" rel="noopener">IEEE 802.11 standard</a>. It uses <em>management frames</em> (specifically <code>deauthentication</code> and <code>disassociation</code> frames) that are a normal part of how Wi-Fi operates. A station or AP sends one of these frames to tell the other end: "we're done, disconnect now." The receiving end honours it because the frame looks valid within the protocol.</p>
+        <p>Key characteristics:</p>
+        <ul>
+          <li>Operates at <strong>Layer 2</strong> (Data Link) of the OSI model.</li>
+          <li>Uses valid 802.11 management frames recognised by clients and access points.</li>
+          <li>Can be directed at a specific client, a specific AP, or a specific BSSID.</li>
+          <li>Requires being within Wi-Fi range and interacting with the protocol stack.</li>
+          <li>Historically unauthenticated in 802.11, which is why <a href="https://en.wikipedia.org/wiki/IEEE_802.11w-2009" target="_blank" rel="noopener">802.11w / Protected Management Frames</a> was introduced.</li>
+        </ul>
+        <h2>What is RF Jamming?</h2>
+        <p>RF jamming is a <strong>physical-layer action</strong>. It works by transmitting noise or signal energy across a frequency range, making the radio medium itself unusable. It doesn't interact with the Wi-Fi protocol at all; it just raises the noise floor until nothing on that channel can decode frames reliably.</p>
+        <p>Key characteristics:</p>
+        <ul>
+          <li>Operates at <strong>Layer 1</strong> (Physical).</li>
+          <li>Not protocol-aware: it doesn't know or care what's being transmitted.</li>
+          <li>Affects <strong>every</strong> device sharing that frequency, not a specific target.</li>
+          <li>Can impact unrelated systems: other Wi-Fi networks, Bluetooth, IoT devices, and in some bands, safety-critical communications.</li>
+          <li>Generally indiscriminate by nature.</li>
+        </ul>
+        <h2>Side-by-Side Comparison</h2>
+        <table class="compare-table">
+          <thead>
+            <tr>
+              <th>Aspect</th>
+              <th>Wi-Fi Deauth</th>
+              <th>RF Jamming</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Layer</td>
+              <td>Protocol (Layer 2)</td>
+              <td>Physical (Layer 1)</td>
+            </tr>
+            <tr>
+              <td>Targeting</td>
+              <td>Specific devices or networks</td>
+              <td>Broad spectrum disruption</td>
+            </tr>
+            <tr>
+              <td>Method</td>
+              <td>Valid or forged 802.11 frames</td>
+              <td>Noise / interference transmission</td>
+            </tr>
+            <tr>
+              <td>Control</td>
+              <td>Can be targeted and limited</td>
+              <td>Generally indiscriminate</td>
+            </tr>
+            <tr>
+              <td>Protocol-aware</td>
+              <td>Yes</td>
+              <td>No</td>
+            </tr>
+            <tr>
+              <td>Typical use</td>
+              <td>Security testing, auditing, research</td>
+              <td>Disruption / interference</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2>A Simple Mental Model</h2>
+        <div class="diagram">Deauth:    [Client] ──×── [AP]      (one specific link broken via protocol)
+
+Jamming:   [Client] ░░░░░ [AP]
+           [Client] ░░░░░ [AP]      (noise blankets the whole band,
+           [IoT]    ░░░░░ [Hub]      affecting everything on it)
+           [BT dev] ░░░░░ [Phone]</div>
+        <h2>Legitimate Use Cases for Deauthentication</h2>
+        <p>Within authorised environments, deauthentication is a standard tool used in:</p>
+        <ul>
+          <li>Network auditing and penetration testing.</li>
+          <li>Testing client and AP resilience to disconnect events.</li>
+          <li>Studying roaming behaviour and reconnect logic.</li>
+          <li>Validating Protected Management Frame (802.11w) deployments.</li>
+          <li>Wireless intrusion detection and response research.</li>
+        </ul>
+
+        <h2>RF Jamming in Context</h2>
+        <p>Jamming is generally discussed in <strong>regulatory and safety</strong> contexts, not as a security testing technique. Because it isn't protocol-aware, the side effects extend well beyond any intended target, including unrelated networks, IoT devices, and in some bands, communications that people rely on for safety.</p>
+        <p>It's worth being explicit about this: there is <strong>no legal way to use a jammer</strong>. <strong>There is no "controlled environment" exception</strong>, no "I know what I'm doing" exception, and no authorisation process that makes it permissible. The <a href="https://www.fcc.gov/general/jammer-enforcement" target="_blank" rel="noopener">FCC</a> is unambiguous on this point. <strong>Marketing, promoting, selling, or distributing jamming equipment is also illegal</strong> under <a href="https://www.law.cornell.edu/uscode/text/47/333" target="_blank" rel="noopener">47 U.S.C. &sect; 333</a> and <a href="https://www.law.cornell.edu/uscode/text/18/1343" target="_blank" rel="noopener">18 U.S.C. &sect; 1343</a>.</p>
+
+        <h2>Legal &amp; Ethical Considerations</h2>
+        <p>Regulations vary by region, but a few things are broadly true:</p>
+        <ul>
+          <li>RF jamming (intentional interference with licensed spectrum) is <strong>illegal in many jurisdictions with no exceptions for controlled environments or authorised testing</strong>. In the US, the <a href="https://www.fcc.gov/general/jammer-enforcement" target="_blank" rel="noopener">FCC states plainly</a> that <strong>there is no legal way to use a jammer</strong>, and <strong>marketing, promoting, or distributing jamming equipment is also prohibited</strong> under <a href="https://www.law.cornell.edu/uscode/text/47/333" target="_blank" rel="noopener">47 U.S.C. &sect; 333</a>. In the UK, the <a href="https://www.legislation.gov.uk/ukpga/2006/36/contents" target="_blank" rel="noopener">Wireless Telegraphy Act 2006</a> applies. In Australia, the <a href="https://www.legislation.gov.au/C2004A04372/latest/versions" target="_blank" rel="noopener">Radiocommunications Act 1992</a> applies.</li>
+          <li>Deauthentication testing against networks you don't own or have permission to test can fall under computer-misuse laws such as the US <a href="https://www.law.cornell.edu/uscode/text/18/1030" target="_blank" rel="noopener">Computer Fraud and Abuse Act (18 U.S.C. &sect; 1030)</a> or the UK <a href="https://www.legislation.gov.uk/ukpga/1990/18/contents" target="_blank" rel="noopener">Computer Misuse Act 1990</a>.</li>
+          <li>Local regulators (<a href="https://www.fcc.gov/" target="_blank" rel="noopener">FCC</a>, <a href="https://www.ofcom.org.uk/" target="_blank" rel="noopener">Ofcom</a>, <a href="https://www.acma.gov.au/" target="_blank" rel="noopener">ACMA</a>, <a href="https://www.etsi.org/" target="_blank" rel="noopener">ETSI</a> member states, etc.) define what is and isn't permitted in your region.</li>
+        </ul>
+        <blockquote>All deauthentication testing should be conducted on networks and equipment you own, or with explicit written permission to assess.</blockquote>
+
+        <h2>Where GhostESP Fits</h2>
+        <p>GhostESP is a tool focused on:</p>
+        <ul>
+          <li>Wireless <strong>auditing</strong>.</li>
+          <li>Security <strong>research</strong>.</li>
+          <li><strong>Protocol-level</strong> analysis of Wi-Fi, BLE, and related standards.</li>
+        </ul>
+        <p><strong>GhostESP does not support RF jamming or indiscriminate interference.</strong> Its capabilities are built around interacting with protocols, not disrupting the radio medium itself.</p>
+
+        <h2>FAQ</h2>
+        <div class="faq-item">
+          <h3>Is deauth illegal?</h3>
+          <p>It depends on jurisdiction and context. Sending deauth frames against networks you don't own or have permission to test can violate computer misuse and telecommunications laws. In authorised testing or on your own equipment, it's a standard part of wireless security work.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Why is jamming considered more dangerous?</h3>
+          <p>Because it's indiscriminate by nature. A jammer doesn't distinguish between a target network, a neighbour's Wi-Fi, an IoT sensor, or other systems sharing the band. The collateral impact is fundamentally larger than a targeted protocol-level interaction.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Does deauthentication still work on modern networks?</h3>
+          <p>Increasingly less so. Networks that enforce <a href="https://en.wikipedia.org/wiki/IEEE_802.11w-2009" target="_blank" rel="noopener">802.11w / Protected Management Frames</a> cryptographically protect deauth and disassociation frames, making forged ones easy to detect and ignore. This is one of the reasons modern Wi-Fi 6/6E deployments are significantly more resilient.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Are deauth and jamming ever combined?</h3>
+          <p>They're sometimes discussed together because both can disrupt connectivity, but they remain technically distinct: one is a protocol message, the other is raw RF energy. Using the terms interchangeably obscures what's actually happening on the wire and over the air.</p>
+        </div>
+
+        <h2>Key Takeaways</h2>
+        <ul>
+          <li><strong>Deauth is not jamming.</strong> One is a protocol interaction, the other is signal disruption.</li>
+          <li>They sit on <strong>different layers</strong>, with different targeting models and different side effects.</li>
+          <li>The <strong>legal and ethical</strong> implications differ accordingly.</li>
+          <li>Clear terminology leads to clearer understanding and more responsible use.</li>
+        </ul>
+
+      </div>
+      </div>
+    </div>
+  </article>
+
+  <footer class="footer">
+    <div class="container">
+      <p>Developed by <a href="https://github.com/jaylikesbunda" target="_blank">Jay Candel</a></p>
+      <a href="https://ko-fi.com/jaylikesbunda" target="_blank" class="support-link">Support on Ko-Fi</a>
+      <div class="footer-links">
+        <a href="https://discord.gg/5cyNmUMgwh" target="_blank" class="icon-link" title="Discord">
+          <i data-lucide="message-circle"></i>
+        </a>
+        <a href="https://github.com/GhostESP-Revival/GhostESP" target="_blank" class="icon-link" title="GitHub">
+          <i data-lucide="github"></i>
+        </a>
+        <a href="https://instagram.com/ghostesprevival" target="_blank" class="icon-link" title="Instagram">
+          <i data-lucide="instagram"></i>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/components.js" defer></script>
+  <script src="js/main.js" defer></script>
+</body>
+</html>

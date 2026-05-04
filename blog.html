@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#000000">
+
+  <title>Blog - GhostESP</title>
+  <meta name="description" content="News, updates, and deep dives from the GhostESP project.">
+  <meta name="author" content="Jay Candel">
+  <meta name="robots" content="index, follow">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Blog - GhostESP">
+  <meta property="og:description" content="News, updates, and deep dives from the GhostESP project.">
+  <meta property="og:url" content="https://ghostesp.net/blog.html">
+  <meta property="og:site_name" content="GhostESP">
+  <meta property="og:image" content="https://ghostesp.net/images/IMG_1178.webp">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Blog - GhostESP">
+  <meta name="twitter:description" content="News, updates, and deep dives from the GhostESP project.">
+  <meta name="twitter:image" content="https://ghostesp.net/images/IMG_1178.webp">
+
+  <link rel="canonical" href="https://ghostesp.net/blog.html">
+
+  <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+  <script src="https://unpkg.com/lucide@latest" defer></script>
+  <style>
+    .blog-hero {
+      padding: 140px var(--spacing) 60px;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+    .blog-hero h1 {
+      font-family: var(--font-mono);
+      font-size: 2.5rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+    .blog-hero p {
+      color: var(--text-dim);
+      max-width: 500px;
+      margin: 0 auto;
+      font-size: 1.05rem;
+    }
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+      position: relative;
+      z-index: 1;
+    }
+    .blog-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+    .blog-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, rgba(255, 20, 147, 0.04), rgba(0, 255, 128, 0.03), rgba(255, 20, 147, 0.04));
+      transform: translateX(-100%);
+      transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 0;
+    }
+    .blog-card:hover::before {
+      transform: translateX(100%);
+    }
+    .blog-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(255, 255, 255, 0.25);
+      box-shadow: 0 8px 24px rgba(255, 255, 255, 0.08);
+    }
+    .blog-card > * {
+      position: relative;
+      z-index: 1;
+    }
+    .blog-card-meta {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+    .blog-card-date {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .blog-card-tags {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .blog-tag {
+      font-size: 0.75rem;
+      padding: 0.25rem 0.6rem;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-family: var(--font-mono);
+      color: var(--text-dim);
+    }
+    .blog-card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 0.75rem;
+      line-height: 1.3;
+    }
+    .blog-card h3 a {
+      color: var(--text);
+      text-decoration: none;
+      transition: opacity 0.2s ease;
+    }
+    .blog-card h3 a:hover {
+      opacity: 0.8;
+    }
+    .blog-card p {
+      color: var(--text-dim);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+      flex: 1;
+    }
+    .blog-card .btn {
+      align-self: flex-start;
+    }
+    @media (max-width: 768px) {
+      .blog-hero h1 { font-size: 1.8rem; }
+      .blog-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="dotTerrain"></canvas>
+  <script>
+    (function() {
+      var canvas = document.getElementById('dotTerrain');
+      if (!canvas) return;
+      var ctx = canvas.getContext('2d');
+      var SPACING = 28;
+      var dots = [];
+      var ripples = [];
+      var mouseX = -9999, mouseY = -9999;
+      var lastX = 0, lastY = 0;
+      var smoothMouseX = -9999, smoothMouseY = -9999;
+      function init() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        dots = [];
+        var cols = Math.ceil(canvas.width / SPACING) + 1;
+        var rows = Math.ceil(canvas.height / SPACING) + 1;
+        for (var r = 0; r < rows; r++) {
+          for (var c = 0; c < cols; c++) {
+            dots.push({ baseX: c * SPACING, baseY: r * SPACING, x: 0, y: 0, brightness: 0.15, targetBrightness: 0.15, radius: 1.5, targetRadius: 1.5 });
+          }
+        }
+      }
+      document.addEventListener('mousemove', function(e) {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        var dx = e.clientX - lastX;
+        var dy = e.clientY - lastY;
+        var dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist > 30) {
+          ripples.push({ x: e.clientX, y: e.clientY, radius: 0, strength: 1 });
+          lastX = e.clientX;
+          lastY = e.clientY;
+        }
+      });
+      function animate() {
+        smoothMouseX += (mouseX - smoothMouseX) * 0.2;
+        smoothMouseY += (mouseY - smoothMouseY) * 0.2;
+        for (var i = ripples.length - 1; i >= 0; i--) {
+          ripples[i].radius += 7;
+          ripples[i].strength *= 0.97;
+          if (ripples[i].strength < 0.01) ripples.splice(i, 1);
+        }
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        for (var d = 0; d < dots.length; d++) {
+          var dot = dots[d];
+          var bx = dot.baseX + SPACING / 2;
+          var by = dot.baseY + SPACING / 2;
+          dot.targetBrightness = 0.2;
+          dot.targetRadius = 1.8;
+          var mdx = bx - smoothMouseX;
+          var mdy = by - smoothMouseY;
+          var mdist = Math.sqrt(mdx * mdx + mdy * mdy);
+          if (mdist < 220) {
+            var factor = 1 - mdist / 220;
+            factor = factor * factor;
+            dot.targetBrightness = 0.2 + factor * 0.6;
+            dot.targetRadius = 1.8 + factor * 3;
+          }
+          for (var r = 0; r < ripples.length; r++) {
+            var rip = ripples[r];
+            var rdx = bx - rip.x;
+            var rdy = by - rip.y;
+            var rdist = Math.sqrt(rdx * rdx + rdy * rdy);
+            var wavePos = rdist - rip.radius;
+            var waveWidth = 120;
+            if (wavePos > -40 && wavePos < waveWidth) {
+              var falloff = 1 - Math.max(0, wavePos) / waveWidth;
+              falloff = falloff * falloff;
+              var edgeFactor = 1 - Math.abs(wavePos + 20) / 60;
+              edgeFactor = Math.max(0, edgeFactor);
+              var bump = (falloff * 0.5 + edgeFactor * 0.5) * rip.strength * 0.6;
+              dot.targetBrightness = Math.max(dot.targetBrightness, 0.2 + bump);
+              dot.targetRadius = Math.max(dot.targetRadius, 1.8 + bump * 3);
+            }
+          }
+          dot.brightness += (dot.targetBrightness - dot.brightness) * 0.3;
+          dot.radius += (dot.targetRadius - dot.radius) * 0.3;
+          ctx.beginPath();
+          ctx.arc(bx, by, dot.radius, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(255,255,255,' + dot.brightness + ')';
+          ctx.fill();
+        }
+        requestAnimationFrame(animate);
+      }
+      window.addEventListener('resize', init);
+      init();
+      animate();
+    })();
+  </script>
+
+  <nav id="nav"></nav>
+
+  <section class="blog-hero">
+    <div class="container">
+      <h1>Blog</h1>
+      <p>News, updates, and deep dives from the GhostESP project.</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 0;">
+    <div class="container">
+      <div class="blog-grid">
+
+        <article class="blog-card">
+          <div class="blog-card-meta">
+            <span class="blog-card-date">May 4, 2026</span>
+            <div class="blog-card-tags">
+              <span class="blog-tag">Education</span>
+              <span class="blog-tag">Ecosystem</span>
+            </div>
+          </div>
+          <h3><a href="blog-esp32-misconceptions.html">Common Misconceptions About ESP32 "Hacking" Tools</a></h3>
+          <p>A maintainer's honest look at what people keep getting wrong about the ESP32 security-tool ecosystem, from feature-list marketing to the deauth vs jamming confusion.</p>
+          <a href="blog-esp32-misconceptions.html" class="btn btn-small btn-secondary">Read Post</a>
+        </article>
+
+        <article class="blog-card">
+          <div class="blog-card-meta">
+            <span class="blog-card-date">May 4, 2026</span>
+            <div class="blog-card-tags">
+              <span class="blog-tag">Education</span>
+              <span class="blog-tag">Technical</span>
+            </div>
+          </div>
+          <h3><a href="blog-deauth-vs-jamming.html">Wi-Fi Deauthentication vs RF Jamming: What's the Difference?</a></h3>
+          <p>One operates on the protocol, the other on the radio itself. A clear, neutral breakdown of how Wi-Fi deauth and RF jamming actually differ &mdash; technically, practically, and legally.</p>
+          <a href="blog-deauth-vs-jamming.html" class="btn btn-small btn-secondary">Read Post</a>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <p>Developed by <a href="https://github.com/jaylikesbunda" target="_blank">Jay Candel</a></p>
+      <a href="https://ko-fi.com/jaylikesbunda" target="_blank" class="support-link">Support on Ko-Fi</a>
+      <div class="footer-links">
+        <a href="https://discord.gg/5cyNmUMgwh" target="_blank" class="icon-link" title="Discord">
+          <i data-lucide="message-circle"></i>
+        </a>
+        <a href="https://github.com/GhostESP-Revival/GhostESP" target="_blank" class="icon-link" title="GitHub">
+          <i data-lucide="github"></i>
+        </a>
+        <a href="https://instagram.com/ghostesprevival" target="_blank" class="icon-link" title="Instagram">
+          <i data-lucide="instagram"></i>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/components.js" defer></script>
+  <script src="js/main.js" defer></script>
+</body>
+</html>
