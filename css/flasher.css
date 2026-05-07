@@ -1,15 +1,20 @@
 :root {
-  --flasher-bg: #000;
+  --flasher-bg: #030303;
   --flasher-surface: #0a0a0a;
-  --flasher-border: rgba(255, 255, 255, 0.1);
+  --flasher-surface-elevated: #111111;
+  --flasher-card: #050505;
+  --flasher-border: rgba(255, 255, 255, 0.08);
+  --flasher-border-light: rgba(255, 255, 255, 0.12);
   --flasher-text: #fff;
   --flasher-text-dim: #888;
+  --flasher-text-muted: #666;
   --flasher-accent: #fff;
   --flasher-success: #00ff80;
   --flasher-warning: #f39c12;
   --flasher-danger: #e74c3c;
   --flasher-info: #3498db;
   --flasher-radius: 12px;
+  --flasher-radius-lg: 16px;
   --flasher-font-mono: 'Share Tech Mono', 'Courier New', monospace;
   --flasher-font-sans: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
@@ -17,37 +22,64 @@
 .flasher-page {
   padding-top: calc(var(--nav-height, 67px) + 1.75rem);
   min-height: 100vh;
+  background: var(--flasher-card);
+}
+
+body:has(.flasher-page) #dotTerrain {
+  display: none;
+}
+
+body:has(.flasher-page) {
+  background: var(--flasher-card);
 }
 
 .flasher-page .container {
-  max-width: 960px;
+  max-width: 1020px;
   margin: 0 auto;
   padding: 0 1rem;
 }
 
+.flasher-card {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 2rem 0;
+  margin-bottom: 2rem;
+  box-shadow: none;
+}
+
+@media (max-width: 768px) {
+  .flasher-card {
+    padding: 1rem 0;
+  }
+}
+
 .flasher-header {
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: 0.85rem;
 }
 
 .flasher-header h2 {
-  font-family: var(--flasher-font-sans);
-  font-weight: 600;
-  font-size: 2rem;
+  font-family: var(--flasher-font-mono);
+  font-weight: 400;
+  font-size: 1.85rem;
   color: var(--flasher-text);
-  margin-bottom: 0.5rem;
-  letter-spacing: -0.5px;
+  margin-bottom: 0.25rem;
+  letter-spacing: 0.03em;
 }
 
 .flasher-header p {
   color: var(--flasher-text-dim);
-  font-size: 0.95rem;
+  font-size: 0.82rem;
+  font-family: var(--flasher-font-mono);
+  letter-spacing: 0.02em;
+  margin-bottom: 0;
 }
 
 /* Stepper */
 .flasher-stepper {
   max-width: 500px;
-  margin: 0 auto 2.5rem auto;
+  margin: 0 auto 1.75rem auto;
 }
 
 .flasher-stepper-track {
@@ -186,6 +218,20 @@ nav ul.flasher-nav-links {
   margin-bottom: 1.5rem;
 }
 
+/* Method selection - now a toggle, not cards */
+.flasher-method-grid {
+  display: none;
+}
+
+.flasher-method-card {
+  display: none;
+}
+
+.flasher-method-name,
+.flasher-method-desc {
+  display: none;
+}
+
 /* Device cards grid */
 .flasher-device-grid {
   display: grid;
@@ -195,7 +241,7 @@ nav ul.flasher-nav-links {
 }
 
 .flasher-device-card {
-  background: var(--flasher-surface);
+  background: rgba(255, 255, 255, 0.04);
   border: 1px solid var(--flasher-border);
   border-radius: var(--flasher-radius);
   padding: 1.25rem;
@@ -238,6 +284,24 @@ nav ul.flasher-nav-links {
   transform: translateX(100%);
 }
 
+.flasher-device-card.selected::after {
+  content: '\2713';
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  width: 24px;
+  height: 24px;
+  background: var(--flasher-success);
+  color: #000;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: bold;
+  z-index: 2;
+}
+
 .flasher-device-name {
   font-weight: 600;
   font-size: 1rem;
@@ -268,21 +332,52 @@ nav ul.flasher-nav-links {
   font-family: var(--flasher-font-mono);
 }
 
+/* Brand cards specific styling */
+#brandSelectionContainer .flasher-device-card {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+#brandSelectionContainer .flasher-device-name {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+#brandSelectionContainer .flasher-device-card.selected::before {
+  background: linear-gradient(45deg, rgba(0, 255, 128, 0.08), rgba(52, 152, 219, 0.06), rgba(0, 255, 128, 0.08));
+}
+
 /* Connection section */
 .flasher-connection {
-  max-width: 500px;
   margin-bottom: 1.5rem;
+}
+
+.flasher-connect-row {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.flasher-connect-status {
+  flex: 1;
+  min-width: 0;
+}
+
+.flasher-connect-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-shrink: 0;
 }
 
 .flasher-status-bar {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  padding: 1rem;
-  background: var(--flasher-surface);
+  padding: 0.75rem 1rem;
+  background: rgba(255, 255, 255, 0.04);
   border: 1px solid var(--flasher-border);
   border-radius: var(--flasher-radius);
-  margin-bottom: 1rem;
 }
 
 .flasher-status-bar.connected {
@@ -314,8 +409,364 @@ nav ul.flasher-nav-links {
   color: var(--flasher-text-dim);
 }
 
+.flasher-status-sub {
+  font-size: 0.78rem;
+  color: var(--flasher-text-muted);
+  font-family: var(--flasher-font-mono);
+  margin-left: 0.25rem;
+}
+
 .flasher-status-bar.connected .flasher-status-label {
   color: var(--flasher-success);
+}
+
+/* Inline device insights */
+.flasher-device-insights {
+  display: none;
+  grid-template-columns: minmax(0, 180px) minmax(0, 1fr);
+  gap: 0.9rem;
+  align-items: start;
+  max-width: 100%;
+  min-width: 0;
+  overflow: visible;
+  box-sizing: border-box;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+  margin-top: 1.25rem;
+}
+
+.flasher-device-insights.visible {
+  display: grid;
+  animation: flasherFadeIn 0.3s ease-in-out;
+}
+
+/* Chip Info Panel */
+.flasher-chip-info {
+  display: none;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.flasher-chip-info.visible {
+  display: block;
+}
+
+.flasher-chip-info-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--flasher-border);
+}
+
+.flasher-manual-select-heading {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  margin: 1.25rem 0 0.75rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--flasher-border);
+}
+
+.flasher-manual-select-heading span {
+  color: var(--flasher-text);
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.flasher-manual-select-heading small {
+  color: var(--flasher-text-dim);
+  font-family: var(--flasher-font-mono);
+  font-size: 0.75rem;
+}
+
+.flasher-chip-info-header h4 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin: 0;
+  color: var(--flasher-text);
+}
+
+.flasher-chip-info-header i {
+  color: var(--flasher-success);
+  font-size: 1.1rem;
+}
+
+.flasher-chip-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(105px, 1fr));
+  gap: 0.35rem;
+  min-width: 0;
+  max-width: 560px;
+  padding-bottom: 0.5rem;
+}
+
+.flasher-chip-stat {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--flasher-border);
+  border-radius: 6px;
+  padding: 0.3rem 0.45rem;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.flasher-chip-stat-label {
+  font-size: 0.5rem;
+  color: var(--flasher-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-family: var(--flasher-font-mono);
+  margin-bottom: 0.1rem;
+  overflow-wrap: anywhere;
+}
+
+.flasher-chip-stat-value {
+  font-size: 0.62rem;
+  color: var(--flasher-text);
+  font-weight: 500;
+  font-family: var(--flasher-font-mono);
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.flasher-chip-stat-value.highlight {
+  color: var(--flasher-success);
+}
+
+/* Screen Display */
+.flasher-screen-display {
+  display: none;
+  align-self: start;
+  min-width: 0;
+  max-width: 100%;
+  overflow: visible;
+}
+
+.flasher-screen-display.visible {
+  display: block;
+}
+
+.flasher-screen-display-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--flasher-border);
+}
+
+.flasher-screen-display-header h4 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin: 0;
+  color: var(--flasher-text);
+}
+
+.flasher-screen-display-header i {
+  color: var(--flasher-info);
+  font-size: 1.1rem;
+}
+
+.flasher-screen-preview {
+  background: #000;
+  border: 2px solid var(--flasher-border-light);
+  border-radius: 8px;
+  padding: 1rem;
+  text-align: center;
+  min-height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--flasher-font-mono);
+  color: var(--flasher-success);
+  font-size: 0.85rem;
+}
+
+.flasher-screen-meta {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.flasher-screen-meta-item {
+  font-size: 0.75rem;
+  color: var(--flasher-text-dim);
+  font-family: var(--flasher-font-mono);
+}
+
+.flasher-screen-meta-item span {
+  color: var(--flasher-text);
+}
+
+/* Screen Mirror Integration */
+.flasher-mirror-wrapper {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 100%;
+  min-width: 0;
+  overflow: visible;
+}
+
+.flasher-mirror-wrapper canvas {
+  max-width: 100%;
+  border-radius: 4px;
+  display: block;
+}
+
+.mirror-compact {
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+}
+
+.mirror-compact-container {
+  width: min(180px, 100%);
+  max-width: 100%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mirror-compact-display {
+  position: relative;
+  width: min(180px, 100%) !important;
+  max-width: 100% !important;
+  aspect-ratio: 4 / 3;
+  height: auto !important;
+  min-height: 0;
+  flex: 0 0 auto !important;
+  padding: 0;
+  background: #000;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.mirror-compact canvas {
+  background: #000;
+  max-height: min(190px, 32vh);
+  width: auto;
+}
+
+.mirror-compact-display canvas {
+  width: 100% !important;
+  max-width: 100% !important;
+  height: 100% !important;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+
+.mirror-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.8);
+  color: var(--flasher-text-dim);
+  font-size: 0.85rem;
+  font-family: var(--flasher-font-mono);
+  border-radius: 4px;
+}
+
+.mirror-overlay.hidden {
+  display: none;
+}
+
+.mirror-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  color: var(--flasher-text-dim);
+  font-size: 0.85rem;
+  gap: 0.5rem;
+}
+
+.mirror-placeholder i {
+  font-size: 2rem;
+  opacity: 0.5;
+}
+
+/* Chip Info Raw Output */
+.flasher-chip-output {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--flasher-border-light);
+  border-radius: var(--flasher-radius);
+  padding: 1.25rem;
+  margin-top: 1rem;
+  display: none;
+}
+
+.flasher-chip-output.visible {
+  display: block;
+  animation: flasherFadeIn 0.3s ease-in-out;
+}
+
+.flasher-chip-output-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--flasher-border);
+}
+
+.flasher-chip-output-header h4 {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin: 0;
+  color: var(--flasher-text);
+}
+
+.flasher-chip-output-header i {
+  color: var(--flasher-warning);
+  font-size: 1rem;
+}
+
+.flasher-chip-output-content {
+  background: #000;
+  border: 1px solid var(--flasher-border);
+  border-radius: 8px;
+  padding: 0.75rem;
+  font-family: var(--flasher-font-mono);
+  font-size: 0.75rem;
+  color: var(--flasher-success);
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-break: break-all;
+  max-height: 200px;
+  overflow-y: auto;
+  margin: 0;
+}
+
+.flasher-chip-output-content::-webkit-scrollbar {
+  width: 4px;
+}
+
+.flasher-chip-output-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.flasher-chip-output-content::-webkit-scrollbar-thumb {
+  background: var(--flasher-border);
+  border-radius: 2px;
 }
 
 /* Buttons */
@@ -420,7 +871,7 @@ nav ul.flasher-nav-links {
   display: flex;
   gap: 0.5rem;
   padding: 0.25rem;
-  background: var(--flasher-surface);
+  background: rgba(255, 255, 255, 0.04);
   border-radius: 2rem;
   border: 1px solid var(--flasher-border);
   margin-bottom: 1rem;
@@ -458,11 +909,42 @@ nav ul.flasher-nav-links {
   color: var(--flasher-success);
 }
 
+.flasher-toggle-btn {  flex: 1;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 2rem;
+  background: transparent;
+  color: var(--flasher-text-dim);
+  font-size: 0.85rem;
+  font-weight: 500;
+  font-family: var(--flasher-font-sans);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+}
+
+.flasher-toggle-btn:hover {
+  color: var(--flasher-text);
+}
+
+.flasher-toggle-btn.active {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--flasher-text);
+}
+
+.flasher-toggle-btn.active-source {
+  background: rgba(0, 255, 128, 0.1);
+  color: var(--flasher-success);
+}
+
 /* Form elements */
 .flasher-form-select,
 .flasher-form-input {
   width: 100%;
-  background: var(--flasher-surface);
+  background: rgba(255, 255, 255, 0.04);
   border: 1px solid var(--flasher-border);
   border-radius: var(--flasher-radius);
   color: var(--flasher-text);
@@ -486,7 +968,7 @@ nav ul.flasher-nav-links {
 }
 
 .flasher-form-select option {
-  background: var(--flasher-surface);
+  background: var(--flasher-card);
   color: var(--flasher-text);
 }
 
@@ -515,6 +997,8 @@ nav ul.flasher-nav-links {
 /* Firmware section */
 .flasher-firmware-section {
   margin-bottom: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--flasher-border);
 }
 
 .flasher-option-row {
@@ -586,26 +1070,29 @@ nav ul.flasher-nav-links {
   box-shadow: 0 0 5px var(--flasher-success);
 }
 
-/* Settings card */
+/* Settings */
 .flasher-settings {
-  background: var(--flasher-surface);
-  border: 1px solid var(--flasher-border);
-  border-radius: var(--flasher-radius);
-  padding: 1.25rem;
+  border-top: 1px solid var(--flasher-border);
+  padding-top: 1rem;
+  margin-top: 1.25rem;
   margin-bottom: 1rem;
 }
 
 .flasher-settings-header {
-  display: flex;
-  justify-content: space-between;
+  display: inline-flex;
   align-items: center;
+  gap: 0.75rem;
   margin-bottom: 0;
 }
 
 .flasher-settings-header h4 {
-  font-size: 0.95rem;
+  font-size: 0.85rem;
   font-weight: 500;
   margin: 0;
+  color: var(--flasher-text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-family: var(--flasher-font-mono);
 }
 
 .flasher-settings-grid {
@@ -651,11 +1138,48 @@ nav ul.flasher-nav-links {
 
 /* Flash summary */
 .flasher-summary {
-  background: var(--flasher-surface);
-  border: 1px solid var(--flasher-border);
   border-radius: var(--flasher-radius);
-  padding: 1.25rem;
-  margin-bottom: 1rem;
+  padding: 0;
+}
+
+.flasher-summary.flash-summary-box {
+  padding: 1rem 1.25rem;
+}
+
+.flash-summary-box .summary-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.5rem 0;
+  font-size: 0.85rem;
+  color: var(--flasher-text);
+  border-bottom: 1px solid var(--flasher-border);
+  font-family: var(--flasher-font-mono);
+}
+
+.flash-summary-box .summary-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.flash-summary-box .summary-item:first-child {
+  padding-top: 0;
+}
+
+.flash-summary-box .summary-item i {
+  color: var(--flasher-text-dim);
+  font-size: 0.95rem;
+  width: 18px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.flash-summary-box .summary-item .text-warning {
+  color: var(--flasher-warning);
+}
+
+.flash-summary-box .summary-item .text-warning i {
+  color: var(--flasher-warning);
 }
 
 .flasher-summary-item {
@@ -677,7 +1201,7 @@ nav ul.flasher-nav-links {
 /* Progress bar */
 .flasher-progress {
   height: 6px;
-  background: var(--flasher-surface);
+  background: rgba(255, 255, 255, 0.08);
   border-radius: 3px;
   overflow: hidden;
   margin-bottom: 0.5rem;
@@ -721,7 +1245,7 @@ nav ul.flasher-nav-links {
   width: 100%;
   text-align: left;
   padding: 0.75rem 1rem;
-  background: var(--flasher-surface);
+  background: rgba(255, 255, 255, 0.04);
   border: 1px solid var(--flasher-border);
   border-radius: var(--flasher-radius);
   color: var(--flasher-text-dim);
@@ -805,7 +1329,7 @@ nav ul.flasher-nav-links {
   gap: 0.5rem;
   margin-bottom: 1.25rem;
   padding: 0.25rem;
-  background: var(--flasher-surface);
+  background: rgba(255, 255, 255, 0.04);
   border-radius: 2rem;
   border: 1px solid var(--flasher-border);
 }
@@ -858,6 +1382,38 @@ nav ul.flasher-nav-links {
 
 /* Responsive */
 @media (max-width: 768px) {
+  .flasher-device-insights {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+    margin-top: 1rem;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .flasher-chip-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .flasher-chip-stat {
+    padding: 0.45rem 0.5rem;
+  }
+
+  .flasher-chip-stat-label {
+    font-size: 0.58rem;
+  }
+
+  .flasher-chip-stat-value {
+    font-size: 0.72rem;
+  }
+
+  .mirror-compact-container,
+  .mirror-compact-display {
+    width: min(220px, 100%) !important;
+    max-width: 100% !important;
+  }
+
   .flasher-device-grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -895,9 +1451,23 @@ nav ul.flasher-nav-links {
   .flasher-header h2 {
     font-size: 1.5rem;
   }
+
+  #deviceMethodToggle {
+    max-width: 100% !important;
+  }
 }
 
 @media (max-width: 480px) {
+  .flasher-chip-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .mirror-compact-container,
+  .mirror-compact-display {
+    width: min(200px, 100%) !important;
+    max-width: 100% !important;
+  }
+
   .flasher-device-grid {
     grid-template-columns: 1fr;
   }
@@ -993,4 +1563,126 @@ nav ul.flasher-nav-links {
   font-size: 1.2rem;
   color: var(--flasher-text-dim);
   flex-shrink: 0;
+}
+
+/* ====== New Layout Styles ====== */
+
+.flasher-section-label {
+  font-size: 0.75rem;
+  color: var(--flasher-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 500;
+  font-family: var(--flasher-font-mono);
+  margin-bottom: 0.5rem;
+}
+
+.flasher-toggle-sm {
+  margin-bottom: 0;
+}
+
+.flasher-toggle-sm .flasher-toggle-btn {
+  padding: 0.35rem 0.85rem;
+  font-size: 0.8rem;
+}
+
+.flasher-form-row {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.flasher-form-row .flasher-form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.flasher-form-row .flasher-form-field:first-child {
+  flex: 0 0 auto;
+}
+
+.flasher-form-row .flasher-form-field:last-child {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Step 3: Flash layout */
+.flasher-flash-layout {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.flasher-flash-summary-col {
+  min-width: 0;
+}
+
+.flasher-flash-summary-col .flasher-summary {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--flasher-border);
+  border-radius: var(--flasher-radius);
+}
+
+.flasher-flash-actions-col {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 1rem;
+  min-width: 200px;
+}
+
+.flasher-btn-flash {
+  padding: 0.85rem 2.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  justify-content: center;
+  white-space: nowrap;
+}
+
+.flasher-flash-progress-area {
+  display: block;
+}
+
+.flasher-secondary-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.flasher-btn-sm {
+  padding: 0.45rem 0.85rem;
+  font-size: 0.8rem;
+  flex: 1;
+  justify-content: center;
+}
+
+/* Responsive for new layout */
+@media (max-width: 768px) {
+  .flasher-connect-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .flasher-connect-actions {
+    justify-content: flex-start;
+  }
+
+  .flasher-form-row {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .flasher-flash-layout {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .flasher-flash-actions-col {
+    min-width: 0;
+  }
+
+  .flasher-btn-flash {
+    width: 100%;
+  }
 }

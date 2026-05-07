@@ -40,6 +40,245 @@ document.addEventListener('DOMContentLoaded', () => {
             return element;
         }
 
+        // Chipinfo parsing regex patterns
+        const chipInfoRegex = {
+            CHIP_FIRMWARE:   /Firmware:\s*([^\n]+)/,
+            CHIP_GIT_COMMIT: /Git Commit:\s*([^\n]+)/,
+            CHIP_MODEL:      /Model:\s*([^\n]+)/,
+            CHIP_REVISION:   /Revision:\s*v?(\d+(?:\.\d+)+)/,
+            CHIP_CORES:      /CPU Cores:\s*(\d+)/,
+            CHIP_FEATURES:   /Features:\s*([^\n]+)/,
+            CHIP_FREE_HEAP:  /Free Heap:\s*(\d+)/,
+            CHIP_MIN_HEAP:   /Min Free Heap:\s*(\d+)/,
+            CHIP_IDF:        /IDF Version:\s*([^\n]+)/,
+            CHIP_BUILD_TEMPLATE: /Build Config:\s*([^\n]+)/i,
+            CHIP_BUILD_CFG:  /Build Config:\s*([^\n]+)/,
+            CHIP_SCREEN:     /Screen:\s*([^\n]+)/,
+            CHIP_SCREEN_W:   /Width:\s*(\d+)/,
+            CHIP_SCREEN_H:   /Height:\s*(\d+)/,
+            CHIP_SCREEN_TYPE:/Screen Type:\s*([^\n]+)/
+        };
+
+        function parseChipInfo(text) {
+            let parseText = text;
+            const startIdx = text.indexOf('[CHIPINFO_START]');
+            const endIdx = text.indexOf('[CHIPINFO_END]');
+            if (startIdx !== -1 && endIdx !== -1) {
+                parseText = text.substring(startIdx, endIdx);
+            }
+            const info = {};
+            for (const [key, regex] of Object.entries(chipInfoRegex)) {
+                const match = parseText.match(regex);
+                if (match) {
+                    info[key] = match[1].trim();
+                }
+            }
+
+            if (!info.CHIP_BUILD_TEMPLATE && info.CHIP_BUILD_CFG) {
+                info.CHIP_BUILD_TEMPLATE = info.CHIP_BUILD_CFG;
+            }
+            return info;
+        }
+
+        function displayChipInfo(info) {
+            const insights = getElementById('deviceInsights');
+            const panel = getElementById('chipInfoPanel');
+            const statsContainer = getElementById('chipStats');
+            const screenDisplay = getElementById('screenDisplay');
+            const screenPreview = getElementById('screenPreview');
+            const screenMeta = getElementById('screenMeta');
+
+            if (!panel || !statsContainer) return;
+
+            // Build chip stats
+            const stats = [];
+            
+            if (info.CHIP_FIRMWARE) {
+                stats.push({ label: 'Firmware', value: info.CHIP_FIRMWARE, highlight: true });
+            }
+            if (info.CHIP_MODEL) {
+                stats.push({ label: 'Model', value: info.CHIP_MODEL, highlight: true });
+            }
+            if (info.CHIP_REVISION) {
+                stats.push({ label: 'Revision', value: `v${info.CHIP_REVISION}` });
+            }
+            if (info.CHIP_CORES) {
+                stats.push({ label: 'Cores', value: info.CHIP_CORES });
+            }
+            if (info.CHIP_FEATURES) {
+                stats.push({ label: 'Features', value: info.CHIP_FEATURES });
+            }
+            if (info.CHIP_FREE_HEAP) {
+                const heapKB = (parseInt(info.CHIP_FREE_HEAP) / 1024).toFixed(1);
+                stats.push({ label: 'Free Heap', value: `${heapKB} KB`, highlight: true });
+            }
+            if (info.CHIP_IDF) {
+                stats.push({ label: 'IDF', value: info.CHIP_IDF });
+            }
+            if (info.CHIP_BUILD_TEMPLATE) {
+                stats.push({ label: 'Build', value: info.CHIP_BUILD_TEMPLATE, highlight: true });
+            } else if (info.CHIP_BUILD_CFG) {
+                stats.push({ label: 'Build', value: info.CHIP_BUILD_CFG });
+            }
+            if (info.CHIP_GIT_COMMIT) {
+                stats.push({ label: 'Git', value: info.CHIP_GIT_COMMIT });
+            }
+
+            if (stats.length > 0) {
+                statsContainer.innerHTML = stats.map(stat => `
+                    <div class="flasher-chip-stat">
+                        <div class="flasher-chip-stat-label">${stat.label}</div>
+                        <div class="flasher-chip-stat-value ${stat.highlight ? 'highlight' : ''}">${stat.value}</div>
+                    </div>
+                `).join('');
+                panel.classList.add('visible');
+                if (insights) insights.classList.add('visible');
+            }
+
+            if (info.CHIP_BUILD_TEMPLATE) {
+                detectedBuildTemplate = info.CHIP_BUILD_TEMPLATE;
+                applyBuildTemplateMatch();
+            }
+
+            const inferredDevice = inferDeviceFromChipModel(info.CHIP_MODEL);
+            if (inferredDevice && deviceOptions[inferredDevice]) {
+                selectedDevice = inferredDevice;
+                selectedSide = selectedBrand ? `${selectedBrand} (${selectedDevice})` : selectedDevice;
+                updateDefaultAddresses();
+                document.querySelectorAll('.flasher-device-card').forEach(card => {
+                    card.classList.toggle('selected', card.dataset.device === inferredDevice && !card.dataset.brand);
+                });
+                if (continueToStep2Btn) continueToStep2Btn.disabled = false;
+            }
+
+            // Handle screen display
+            if (info.CHIP_SCREEN || info.CHIP_SCREEN_TYPE) {
+                if (screenPreview) {
+                    screenPreview.textContent = info.CHIP_SCREEN || 'Screen detected';
+                }
+                
+                const metaItems = [];
+                if (info.CHIP_SCREEN_TYPE) {
+                    metaItems.push(`Type: <span>${info.CHIP_SCREEN_TYPE}</span>`);
+                }
+                if (info.CHIP_SCREEN_W && info.CHIP_SCREEN_H) {
+                    metaItems.push(`Resolution: <span>${info.CHIP_SCREEN_W}x${info.CHIP_SCREEN_H}</span>`);
+                }
+                
+                if (screenMeta) {
+                    screenMeta.innerHTML = metaItems.map(item => 
+                        `<div class="flasher-screen-meta-item">${item}</div>`
+                    ).join('');
+                }
+                
+                if (screenDisplay) {
+                    screenDisplay.classList.add('visible');
+                }
+            } else {
+                if (screenDisplay) {
+                    screenDisplay.classList.remove('visible');
+                }
+            }
+        }
+
+        function clearChipInfoDisplay() {
+            const panel = getElementById('chipInfoPanel');
+            const insights = getElementById('deviceInsights');
+            const screenDisplay = getElementById('screenDisplay');
+            if (panel) panel.classList.remove('visible');
+            if (screenDisplay) screenDisplay.classList.remove('visible');
+            if (insights) insights.classList.remove('visible');
+        }
+
+        let flasherMirrorInstance = null;
+
+        async function initFlasherMirror() {
+            const mirrorRoot = getElementById('mirrorRoot');
+            const screenDisplay = getElementById('screenDisplay');
+            const insights = getElementById('deviceInsights');
+            if (!mirrorRoot || !screenDisplay) return;
+
+            // Create compact mirror UI with hidden controls for SerialMirror compatibility
+            mirrorRoot.innerHTML = `
+                <div class="mirror-compact-container">
+                    <div class="mirror-display-wrapper mirror-compact-display">
+                        <canvas id="mirrorDisplay" width="320" height="240"></canvas>
+                        <div class="mirror-overlay" id="mirrorOverlay">Disconnected</div>
+                    </div>
+                    <!-- Hidden elements SerialMirror expects -->
+                    <div style="display:none">
+                        <span id="mirrorResolution">320×240</span>
+                        <span id="mirrorFps">0</span>
+                        <span id="mirrorFrameCount">0</span>
+                        <span id="mirrorBaudRate">115200</span>
+                        <div class="mirror-status-dot" id="mirrorStatusDot"></div>
+                        <button id="mirrorConnectBtn"></button>
+                        <button id="mirrorDisconnectBtn"></button>
+                        <button id="mirrorSwapBtn"></button>
+                        <button id="mirrorScreenshotBtn"></button>
+                        <button id="mirrorScaleDown"></button>
+                        <button id="mirrorScaleUp"></button>
+                        <span id="mirrorScaleValue">1x</span>
+                        <select id="mirrorBaudSelect"><option value="115200">115200</option></select>
+                        <div id="mirror8BitNote"></div>
+                    </div>
+                </div>
+            `;
+
+            // Try to use serial-mirror.js if available
+            if (typeof SerialMirror === 'function') {
+                try {
+                    flasherMirrorInstance = new SerialMirror(mirrorRoot);
+                    if (normalSerialPort && flasherMirrorInstance) {
+                        flasherMirrorInstance.port = normalSerialPort;
+                        flasherMirrorInstance.writer = normalSerialPort.writable.getWriter();
+                        flasherMirrorInstance.reader = normalSerialPort.readable.getReader();
+                        flasherMirrorInstance.connected = true;
+                        flasherMirrorInstance.running = true;
+                        flasherMirrorInstance.updateConnectionUI();
+                        flasherMirrorInstance.updateBaudDisplay(115200);
+                        await flasherMirrorInstance.sendCommand('mirror on');
+                        flasherMirrorInstance.readLoop();
+                    }
+                    screenDisplay.classList.add('visible');
+                    if (insights) insights.classList.add('visible');
+                    espLoaderTerminal.writeLine("Screen mirror initialized");
+                } catch (e) {
+                    espLoaderTerminal.writeLine(`Screen mirror init error: ${e.message}`);
+                }
+            } else {
+                espLoaderTerminal.writeLine("Screen mirror library not loaded");
+            }
+        }
+
+        async function stopFlasherMirror() {
+            if (!flasherMirrorInstance) return;
+
+            try {
+                flasherMirrorInstance.running = false;
+                try { await flasherMirrorInstance.sendCommand('mirror off'); } catch (_) { }
+                if (flasherMirrorInstance.reader) {
+                    try { await flasherMirrorInstance.reader.cancel(); } catch (_) { }
+                    try { flasherMirrorInstance.reader.releaseLock(); } catch (_) { }
+                    flasherMirrorInstance.reader = null;
+                }
+                if (flasherMirrorInstance.writer) {
+                    try { flasherMirrorInstance.writer.releaseLock(); } catch (_) { }
+                    flasherMirrorInstance.writer = null;
+                }
+                if (flasherMirrorInstance.resizeObserver) {
+                    flasherMirrorInstance.resizeObserver.disconnect();
+                    flasherMirrorInstance.resizeObserver = null;
+                }
+                if (flasherMirrorInstance.fpsInterval) {
+                    clearInterval(flasherMirrorInstance.fpsInterval);
+                    flasherMirrorInstance.fpsInterval = null;
+                }
+            } finally {
+                flasherMirrorInstance = null;
+            }
+        }
+
         const continueToStep2Btn = getElementById('continueToStep2');
         const backToStep1Btn = getElementById('backToStep1');
         const continueToStep3Btn = getElementById('continueToStep3');
@@ -72,6 +311,41 @@ document.addEventListener('DOMContentLoaded', () => {
         const resetMethodSelect = getElementById('resetMethod');
         const eraseAllCheckbox = getElementById('eraseAll');
         const binaryTypeButtons = document.querySelectorAll('[data-binary]');
+
+        const step3Pairs = [
+            ['flashMode', 'flashMode3'],
+            ['flashFreq', 'flashFreq3'],
+            ['flashSize', 'flashSize3'],
+            ['baudrate', 'baudrate3'],
+            ['resetMethod', 'resetMethod3'],
+        ];
+        step3Pairs.forEach(([s2, s3]) => {
+            const el2 = getElementById(s2);
+            const el3 = getElementById(s3);
+            if (el2 && el3) {
+                el3.value = el2.value;
+                el2.addEventListener('change', () => {
+                    el3.value = el2.value;
+                    updateFlashSummary();
+                });
+                el3.addEventListener('change', () => {
+                    el2.value = el3.value;
+                    updateFlashSummary();
+                });
+            }
+        });
+        const eraseAll3 = getElementById('eraseAll3');
+        if (eraseAllCheckbox && eraseAll3) {
+            eraseAll3.checked = eraseAllCheckbox.checked;
+            eraseAllCheckbox.addEventListener('change', () => {
+                eraseAll3.checked = eraseAllCheckbox.checked;
+                updateFlashSummary();
+            });
+            eraseAll3.addEventListener('change', () => {
+                eraseAllCheckbox.checked = eraseAll3.checked;
+                updateFlashSummary();
+            });
+        }
         const appFirmwareSection = getElementById('appFirmware');
         const bootloaderFirmwareSection = getElementById('bootloaderFirmware');
         const partitionFirmwareSection = getElementById('partitionFirmware');
@@ -87,14 +361,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
         let espLoader = null;
         let transport = null;
+        let normalSerialPort = null;
+        let normalSerialReader = null;
+        let normalSerialWriter = null;
         let connected = false;
         let chipType = '';
         let selectedDevice = null;
+        let selectedBrand = null;
         let selectedSide = '';
         let currentStep = 1;
         let extractedGhostEspFiles = null;
         let selectedFirmwareMethod = null;
         let ghostEspReleaseType = 'stable';
+        let selectedDeviceMethod = 'chip';
+        let inBootloaderMode = false;
+        let detectedBuildTemplate = null;
         
         let ghostEspStableReleases = null;
         let ghostEspPrereleases = null;
@@ -215,66 +496,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 appAddress: '0x10000',
                 bootloaderAddress: '0x2000',
                 partitionAddress: '0x8000'
-            },
-            'ESP32-H2': {
-                filters: [
-                    { usbVendorId: 0x303A, usbProductId: 0x1001 },
-                    { usbVendorId: 0x10C4, usbProductId: 0xEA60 },
-                    { usbVendorId: 0x0403, usbProductId: 0x6001 },
-                    { usbVendorId: 0x303A, usbProductId: 0x1011 },
-                    { usbVendorId: 0x1A86, usbProductId: 0x55D4 }
-                ],
-                defaultFlashMode: 'dio',
-                defaultFlashFreq: '40m',
-                defaultFlashSize: '4MB',
-                appAddress: '0x10000',
-                bootloaderAddress: '0x0',
-                partitionAddress: '0x8000'
-            },
-            'ESP8266': {
-                filters: [
-                    { usbVendorId: 0x10C4, usbProductId: 0xEA60 },
-                    { usbVendorId: 0x1A86, usbProductId: 0x7523 },
-                    { usbVendorId: 0x0403, usbProductId: 0x6001 },
-                    { usbVendorId: 0x303A, usbProductId: 0x1011 },
-                    { usbVendorId: 0x1A86, usbProductId: 0x55D4 }
-                ],
-                defaultFlashMode: 'dio',
-                defaultFlashFreq: '40m',
-                defaultFlashSize: '4MB',
-                appAddress: '0x10000',
-                bootloaderAddress: '0x0',
-                partitionAddress: '0x8000'
-            },
-            'ESP32-C2': {
-                filters: [
-                    { usbVendorId: 0x303A, usbProductId: 0x0005 },
-                    { usbVendorId: 0x10C4, usbProductId: 0xEA60 },
-                    { usbVendorId: 0x0403, usbProductId: 0x6001 },
-                    { usbVendorId: 0x303A, usbProductId: 0x1011 },
-                    { usbVendorId: 0x1A86, usbProductId: 0x55D4 }
-                ],
-                defaultFlashMode: 'dio',
-                defaultFlashFreq: '40m',
-                defaultFlashSize: '4MB',
-                appAddress: '0x10000',
-                bootloaderAddress: '0x0',
-                partitionAddress: '0x8000'
-            },
-            'ESP32-P4': {
-                filters: [
-                    { usbVendorId: 0x303A, usbProductId: 0x1001 },
-                    { usbVendorId: 0x10C4, usbProductId: 0xEA60 },
-                    { usbVendorId: 0x0403, usbProductId: 0x6001 },
-                    { usbVendorId: 0x303A, usbProductId: 0x1011 },
-                    { usbVendorId: 0x1A86, usbProductId: 0x55D4 }
-                ],
-                defaultFlashMode: 'dio',
-                defaultFlashFreq: '80m',
-                defaultFlashSize: '4MB',
-                appAddress: '0x10000',
-                bootloaderAddress: '0x2000',
-                partitionAddress: '0x8000'
             }
         };
 
@@ -335,6 +556,141 @@ document.addEventListener('DOMContentLoaded', () => {
             "esp32c5": "ESP32-C5"
         };
 
+        // Brand to firmware build mapping for filtering
+        const brandToFirmware = {
+            "TheWiredHatters": ["esp32-generic.zip", "MarauderV4_FlipperHub.zip", "Banshee_C5.zip", "Banshee_S3.zip"],
+            "RabbitLabs": ["ghostboard.zip", "RabbitLabs_Minion.zip", "Poltergeist.zip"],
+            "Generic": ["esp32-generic.zip", "esp32s2-generic.zip", "esp32s3-generic.zip", "esp32c3-generic.zip", "esp32c6-generic.zip", "esp32c5-generic.zip", "esp32c5-generic-v01.zip"],
+            "M5Stack": ["ESP32-S3-Cardputer.zip", "CardputerADV.zip"],
+            "CYD": ["CYD2USB.zip", "CYDMicroUSB.zip", "CYDDualUSB.zip", "CYD2USB2.4Inch.zip", "CYD2USB2.4Inch_C.zip", "CYD2432S028R.zip"],
+            "LilyGo": ["LilyGo-T-Deck.zip", "LilyGo-TEmbedC1101.zip", "LilyGo-S3TWatch-2020.zip", "LilyGo-TDisplayS3-Touch.zip"],
+            "Awok": ["AwokMini.zip", "MarauderV4_FlipperHub.zip", "MarauderV6_AwokDual.zip"],
+            "Heltec": ["HeltecV3.zip"],
+            "Waveshare": ["Waveshare_LCD.zip"],
+            "JCMK": ["JCMK_DevBoardPro.zip", "Flipper_JCMK_GPS.zip", "MarauderV4_FlipperHub.zip", "MarauderV6_AwokDual.zip"],
+            "Seeed": ["XIAO_S3_Sense.zip", "XIAO_C5.zip", "XIAO_S3.zip"]
+        };
+
+        // Generic builds that should always show
+        const genericBuilds = ["esp32-generic.zip", "esp32s2-generic.zip", "esp32s3-generic.zip", "esp32c3-generic.zip", "esp32c6-generic.zip", "esp32c5-generic.zip", "esp32c5-generic-v01.zip"];
+
+        const buildTemplateToZip = {
+            "ace_c5": "ACE_C5.zip",
+            "ace_s3": "ACE_S3.zip",
+            "unknown_board": "CYD2432S028R.zip",
+            "cyd2usb": "CYD2USB.zip",
+            "cyd2usb2.4inch": "CYD2USB2.4Inch.zip",
+            "cyd2usb2.4inch_c_varient": "CYD2USB2.4Inch_C.zip",
+            "cyddualusb": "CYDDualUSB.zip",
+            "cydmicrousb": "CYDMicroUSB.zip",
+            "jc3248w535en": "JC3248W535EN_LCD.zip",
+            "jcmk_devboardpro": "JCMK_DevBoardPro.zip",
+            "jcmk devboard pro": "JCMK_DevBoardPro.zip",
+            "s3twatch": "LilyGo-S3TWatch-2020.zip",
+            "tdisplays3-touch": "LilyGo-TDisplayS3-Touch.zip",
+            "lilygo t-display s3": "LilyGo-TDisplayS3-Touch.zip",
+            "tembedc1101": "LilyGo-TEmbedC1101.zip",
+            "lilygo tembedc1101": "LilyGo-TEmbedC1101.zip",
+            "awokmini": "AwokMini.zip",
+            "cardputer": "ESP32-S3-Cardputer.zip",
+            "cardputeradv": "CardputerADV.zip",
+            "cardputer adv": "CardputerADV.zip",
+            "crowtech7inch": "Crowtech_LCD.zip",
+            "default.esp32": "esp32-generic.zip",
+            "default.esp32c3": "esp32c3-generic.zip",
+            "default.esp32c5": "esp32c5-generic.zip",
+            "default.esp32c6": "esp32c6-generic.zip",
+            "default.esp32s2": "esp32s2-generic.zip",
+            "default.esp32s3": "esp32s3-generic.zip",
+            "flipper.jcmk_gps": "Flipper_JCMK_GPS.zip",
+            "ghostboard": "ghostboard.zip",
+            "heltec wifi kit 32 v3": "HeltecV3.zip",
+            "heltecv3": "HeltecV3.zip",
+            "lolins3pro": "Lolin_S3_Pro.zip",
+            "marauderv4": "MarauderV4_FlipperHub.zip",
+            "marauderv6": "MarauderV6_AwokDual.zip",
+            "minion": "RabbitLabs_Minion.zip",
+            "poltergeist": "Poltergeist.zip",
+            "somethingsomething": "Banshee_C5.zip",
+            "somethingsomething2": "Banshee_S3.zip",
+            "sunton7inch": "Sunton_LCD.zip",
+            "tdeck": "LilyGo-T-Deck.zip",
+            "waveshare7inch": "Waveshare_LCD.zip",
+            "xiao_esp32c5": "XIAO_C5.zip",
+            "xiao_esp32s3": "XIAO_S3.zip",
+            "xiao_esp32s3_sense": "XIAO_S3_Sense.zip"
+        };
+
+        function normalizeBuildTemplate(value) {
+            const cleaned = (value || '')
+                .toLowerCase()
+                .replace(/^sdkconfig\./, '')
+                .replace(/^config_build_config_template\s*[=:]\s*/i, '')
+                .replace(/,.*$/, '')
+                .replace(/\s+/g, ' ')
+                .trim();
+
+            return cleaned.replace(/^"|"$/g, '');
+        }
+
+        function inferDeviceFromChipModel(model) {
+            const compact = (model || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
+            if (compact.includes('ESP32S3')) return 'ESP32-S3';
+            if (compact.includes('ESP32S2')) return 'ESP32-S2';
+            if (compact.includes('ESP32C6')) return 'ESP32-C6';
+            if (compact.includes('ESP32C5')) return 'ESP32-C5';
+            if (compact.includes('ESP32C3')) return 'ESP32-C3';
+            if (compact.includes('ESP32')) return 'ESP32';
+            return null;
+        }
+
+        function applyBuildTemplateMatch() {
+            if (!detectedBuildTemplate || !ghostEspVariantSelect) return false;
+
+            const templateKey = normalizeBuildTemplate(detectedBuildTemplate);
+            const targetZip = buildTemplateToZip[templateKey];
+            console.log('[Flasher] build template match:', {
+                detectedBuildTemplate,
+                templateKey,
+                targetZip
+            });
+            if (!targetZip) {
+                if (ghostEspStatusElem) {
+                    ghostEspStatusElem.textContent = `Detected build template: ${detectedBuildTemplate}`;
+                    ghostEspStatusElem.className = 'form-text text-muted mt-2';
+                }
+                return false;
+            }
+
+            const options = Array.from(ghostEspVariantSelect.options);
+            const matchedOption = options.find(option => option.dataset.assetName === targetZip) ||
+                options.find(option => (option.textContent || '').toLowerCase().includes(targetZip.replace(/\.zip$/i, '').toLowerCase()));
+            console.log('[Flasher] build options:', options.map(option => ({
+                text: option.textContent,
+                asset: option.dataset.assetName,
+                selected: option.selected
+            })));
+            if (!matchedOption) {
+                if (ghostEspStatusElem) {
+                    ghostEspStatusElem.textContent = `Detected ${detectedBuildTemplate}, but ${targetZip} is not available in this release/channel.`;
+                    ghostEspStatusElem.className = 'form-text text-warning mt-2 loading';
+                }
+                return false;
+            }
+
+            if (ghostEspVariantSelect.value !== matchedOption.value) {
+                ghostEspVariantSelect.value = matchedOption.value;
+                loadGhostEspZip(matchedOption.value);
+            }
+
+            if (ghostEspStatusElem) {
+                ghostEspStatusElem.textContent = `Auto-selected ${matchedOption.textContent} from build template: ${detectedBuildTemplate}`;
+                ghostEspStatusElem.className = 'form-text text-success mt-2 success';
+            }
+            espLoaderTerminal.writeLine(`Matched build template ${detectedBuildTemplate} to ${targetZip}`);
+            return true;
+        }
+
         const ghostEspZipToTarget = {
             "esp32-generic.zip": "esp32",
             "esp32s2-generic.zip": "esp32s2",
@@ -382,14 +738,14 @@ document.addEventListener('DOMContentLoaded', () => {
         // --- Event Listeners: Step Navigation ---
         if (continueToStep2Btn) {
             continueToStep2Btn.addEventListener('click', () => {
-                if (selectedDevice) {
+                if (connected || selectedDevice) {
                     goToStep(2);
                     if (selectedFirmwareMethod === 'download') {
-                        populateGhostEspDropdown(GHOST_ESP_OWNER, GHOST_ESP_REPO, '.zip', selectedDevice)
+                        populateGhostEspDropdown(GHOST_ESP_OWNER, GHOST_ESP_REPO, '.zip', selectedDevice, selectedBrand)
                             .catch(err => console.error('Error populating GhostESP dropdown:', err));
                     }
                 } else {
-                    espLoaderTerminal.writeLine("Please select a device first");
+                    espLoaderTerminal.writeLine("Please connect a device or choose a manual filter first");
                 }
             });
         }
@@ -425,19 +781,51 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
+        // --- Event Listeners: Device Method Toggle (Chip vs Brand) ---
+        const methodCards = document.querySelectorAll('#deviceMethodToggle .flasher-toggle-btn');
+        const chipSelectionContainer = getElementById('chipSelectionContainer');
+        const brandSelectionContainer = getElementById('brandSelectionContainer');
+
+        methodCards.forEach(card => {
+            card.addEventListener('click', () => {
+                methodCards.forEach(c => c.classList.remove('active'));
+                card.classList.add('active');
+                selectedDeviceMethod = card.dataset.method;
+                
+                // Clear previous selection when switching methods
+                document.querySelectorAll('.flasher-device-card').forEach(c => c.classList.remove('selected'));
+                selectedDevice = null;
+                selectedBrand = null;
+                if (continueToStep2Btn) continueToStep2Btn.disabled = !connected;
+                
+                if (selectedDeviceMethod === 'chip') {
+                    if (chipSelectionContainer) chipSelectionContainer.classList.remove('d-none');
+                    if (brandSelectionContainer) brandSelectionContainer.classList.add('d-none');
+                    espLoaderTerminal.writeLine('Switched to chip model selection');
+                } else {
+                    if (chipSelectionContainer) chipSelectionContainer.classList.add('d-none');
+                    if (brandSelectionContainer) brandSelectionContainer.classList.remove('d-none');
+                    espLoaderTerminal.writeLine('Switched to board brand selection');
+                }
+            });
+        });
+
         // --- Event Listeners: Device Cards ---
         const deviceCards = document.querySelectorAll('.flasher-device-card');
         deviceCards.forEach(card => {
             card.addEventListener('click', () => {
-                deviceCards.forEach(c => c.classList.remove('selected'));
+                // Only deselect cards within the same container
+                const container = card.parentElement;
+                container.querySelectorAll('.flasher-device-card').forEach(c => c.classList.remove('selected'));
                 card.classList.add('selected');
                 selectedDevice = card.dataset.device;
-                selectedSide = selectedDevice;
-                espLoaderTerminal.writeLine(`Selected: ${selectedDevice}`);
+                selectedBrand = card.dataset.brand || null;
+                selectedSide = selectedBrand ? `${selectedBrand} (${selectedDevice})` : selectedDevice;
+                espLoaderTerminal.writeLine(`Selected: ${selectedSide}`);
                 updateDefaultAddresses();
                 if (continueToStep2Btn) continueToStep2Btn.disabled = false;
                 if (selectedFirmwareMethod === 'download') {
-                    populateGhostEspDropdown(GHOST_ESP_OWNER, GHOST_ESP_REPO, '.zip', selectedDevice)
+                    populateGhostEspDropdown(GHOST_ESP_OWNER, GHOST_ESP_REPO, '.zip', selectedDevice, selectedBrand)
                         .catch(err => console.error('Error repopulating GhostESP after device change:', err));
                 }
             });
@@ -478,7 +866,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (ghostEspVariantSelect) ghostEspVariantSelect.selectedIndex = 0;
                     clearExtractedData();
                     if (downloadOptionsContainer && !downloadOptionsContainer.classList.contains('d-none')) {
-                        populateGhostEspDropdown(GHOST_ESP_OWNER, GHOST_ESP_REPO, '.zip', selectedDevice)
+                        populateGhostEspDropdown(GHOST_ESP_OWNER, GHOST_ESP_REPO, '.zip', selectedDevice, selectedBrand)
                             .catch(err => console.error('Error repopulating GhostESP after release toggle:', err));
                     }
                 });
@@ -588,53 +976,91 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         async function connect() {
-            if (!selectedDevice) {
-                espLoaderTerminal.writeLine("Please select a device type first");
-                return;
-            }
             if (connectBtn) connectBtn.disabled = true;
 
             try {
                 espLoaderTerminal.writeLine(`Requesting WebSerial port. Select your device from the popup...`);
 
-                const device = await navigator.serial.requestPort();
-                transport = new window.esptoolJS.Transport(device);
+                // Connect in normal serial mode (not bootloader)
+                normalSerialPort = await navigator.serial.requestPort();
+                await normalSerialPort.open({ baudRate: 115200 });
 
-                espLoaderTerminal.writeLine("Connecting to device...");
-                updateStatusIndicator('flashing', 'Connecting...', '');
-                const baudrate = parseInt(baudrateSelect.value);
-                espLoader = new window.esptoolJS.ESPLoader({
-                    transport: transport,
-                    baudrate: baudrate,
-                    terminal: espLoaderTerminal,
-                    enableTracing: true
-                });
-                chipType = await espLoader.main();
-                espLoaderTerminal.writeLine(`Connected to ${selectedSide} (${chipType})`);
-                chipInfoElem.innerHTML = `<span class="status-indicator status-connected"></span> Connected to ${selectedSide} (${chipType})`;
                 connected = true;
+                inBootloaderMode = false;
+                if (!selectedSide) selectedSide = selectedDevice || 'GhostESP device';
+                
+                espLoaderTerminal.writeLine(`Connected to ${selectedSide} in normal mode`);
+                chipInfoElem.innerHTML = `<span class="status-indicator status-connected"></span> Connected to ${selectedSide} <span class="flasher-status-sub">— Detecting chip info...</span>`;
+                updateStatusIndicator('success', 'Connected', `${selectedSide} (Normal Mode)`);
                 updateButtonStates();
-                try {
-                    const flashSizeBytes = await espLoader.getFlashSize();
-                    if (flashSizeBytes) {
-                        const sizeInMB = flashSizeBytes / (1024 * 1024);
-                        espLoaderTerminal.writeLine(`Flash size: ${sizeInMB} MB`);
+
+                // Fetch chipinfo from device
+                let gotChipInfo = await fetchChipInfoNormal({ detectWrongBaud: true });
+
+                if (gotChipInfo === 'wrong-baud') {
+                    espLoaderTerminal.writeLine("Wrong baud rate detected, switching to 460800...");
+                    if (chipInfoElem) {
+                        const sub = chipInfoElem.querySelector('.flasher-status-sub');
+                        if (sub) sub.textContent = '— Switching to 460800 baud...';
                     }
-                } catch (error) {
-                    espLoaderTerminal.writeLine("Couldn't determine flash size");
-                }
-                if (continueToStep3Btn) continueToStep3Btn.disabled = false;
-                updateStatusIndicator('success', 'Connected', `${selectedSide} (${chipType})`);
-                espLoaderTerminal.writeLine("Device info:");
-                try {
-                    if (device.getInfo) {
-                        const info = device.getInfo();
-                        espLoaderTerminal.writeLine(`USB Vendor ID: 0x${info.usbVendorId.toString(16).padStart(4, '0')}`);
-                        espLoaderTerminal.writeLine(`USB Product ID: 0x${info.usbProductId.toString(16).padStart(4, '0')}`);
+                    try {
+                        await normalSerialPort.close();
+                        await normalSerialPort.open({ baudRate: 460800 });
+                        gotChipInfo = await fetchChipInfoNormal({ detectWrongBaud: false });
+                        if (gotChipInfo === true) {
+                            espLoaderTerminal.writeLine("Chip info received at 460800 baud");
+                        } else if (gotChipInfo === 'got-response' || gotChipInfo === 'wrong-baud') {
+                            espLoaderTerminal.writeLine("Connected at 460800 baud");
+                        } else {
+                            espLoaderTerminal.writeLine("No chip info response at 460800");
+                            if (chipInfoElem) {
+                                const sub = chipInfoElem.querySelector('.flasher-status-sub');
+                                if (sub) sub.textContent = '— Chip info unavailable';
+                            }
+                        }
+                    } catch (retryErr) {
+                        espLoaderTerminal.writeLine(`Retry at 460800 failed: ${retryErr.message}`);
+                        try {
+                            await normalSerialPort.close();
+                            await normalSerialPort.open({ baudRate: 115200 });
+                        } catch (_) {}
                     }
-                } catch (e) {
-                    espLoaderTerminal.writeLine("Could not get device details");
+                } else if (!gotChipInfo) {
+                    espLoaderTerminal.writeLine("No response at 115200 baud, retrying at 460800...");
+                    if (chipInfoElem) {
+                        const sub = chipInfoElem.querySelector('.flasher-status-sub');
+                        if (sub) sub.textContent = '— Retrying at 460800 baud...';
+                    }
+                    try {
+                        await normalSerialPort.close();
+                        await normalSerialPort.open({ baudRate: 460800 });
+                        gotChipInfo = await fetchChipInfoNormal({ detectWrongBaud: false });
+                        if (gotChipInfo === true) {
+                            espLoaderTerminal.writeLine("Chip info received at 460800 baud");
+                        } else {
+                            espLoaderTerminal.writeLine("No chip info response at 460800 either");
+                            if (chipInfoElem) {
+                                const sub = chipInfoElem.querySelector('.flasher-status-sub');
+                                if (sub) sub.textContent = '— Chip info unavailable';
+                            }
+                        }
+                    } catch (retryErr) {
+                        espLoaderTerminal.writeLine(`Retry at 460800 failed: ${retryErr.message}`);
+                        try {
+                            await normalSerialPort.close();
+                            await normalSerialPort.open({ baudRate: 115200 });
+                        } catch (_) {}
+                    }
                 }
+
+                // Initialize screen mirror
+                await initFlasherMirror();
+
+                if (continueToStep2Btn) continueToStep2Btn.disabled = false;
+                if (selectedFirmwareMethod === 'download') {
+                    await populateGhostEspDropdown(GHOST_ESP_OWNER, GHOST_ESP_REPO, '.zip', selectedDevice, selectedBrand);
+                }
+                goToStep(2);
             } catch (error) {
                 console.error("Error during connection:", error);
                 let userMessage = `Error: ${error.message}`;
@@ -672,31 +1098,186 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        async function disconnect() {
-            if (transport && espLoader) {
-                try {
-                    await transport.disconnect();
-                    espLoaderTerminal.writeLine("Disconnected from device");
-                    connected = false;
-                    updateButtonStates();
-                    if (chipInfoElem) chipInfoElem.innerHTML = `<span class="status-indicator status-disconnected"></span> Disconnected`;
-                    if (continueToStep3Btn) continueToStep3Btn.disabled = true;
-                    return true;
-                } catch (error) {
-                    console.error(error);
-                    espLoaderTerminal.writeLine(`Error disconnecting: ${error.message}`);
-                    return false;
+        async function fetchChipInfoNormal({ detectWrongBaud = true } = {}) {
+            if (!normalSerialPort?.readable || !normalSerialPort?.writable) return false;
+
+            let reader = null;
+            let writer = null;
+
+            try {
+                espLoaderTerminal.writeLine("Fetching chipinfo from device...");
+                if (chipInfoElem) {
+                    const sub = chipInfoElem.querySelector('.flasher-status-sub');
+                    if (sub) sub.textContent = '— Requesting chip info...';
                 }
+
+                // Drain stale buffered data
+                try {
+                    const drainReader = normalSerialPort.readable.getReader();
+                    const drainDeadline = Date.now() + 300;
+                    while (Date.now() < drainDeadline) {
+                        const { value, done } = await Promise.race([
+                            drainReader.read(),
+                            new Promise(resolve => setTimeout(() => resolve({ value: null, done: true }), 100))
+                        ]);
+                        if (done || !value) break;
+                    }
+                    drainReader.releaseLock();
+                } catch (_) {}
+
+                let response = '';
+                const encoder = new TextEncoder();
+
+                for (let attempt = 1; attempt <= 2; attempt++) {
+                    response = '';
+                    let rawBytes = 0;
+                    let nonTextBytes = 0;
+
+                    writer = normalSerialPort.writable.getWriter();
+                    await writer.write(encoder.encode(`${attempt === 1 ? '\n' : ''}chipinfo\n`));
+                    writer.releaseLock();
+                    writer = null;
+
+                    reader = normalSerialPort.readable.getReader();
+                    const deadline = Date.now() + 5000;
+
+                    while (Date.now() < deadline) {
+                        const remaining = Math.max(50, deadline - Date.now());
+                        const { value, done } = await Promise.race([
+                            reader.read(),
+                            new Promise(resolve => setTimeout(() => resolve({ value: null, done: true }), remaining))
+                        ]);
+                        if (done) break;
+                        if (value) {
+                            rawBytes += value.length;
+                            let asciiChunk = '';
+                            for (const byte of value) {
+                                const isTextByte = byte === 9 || byte === 10 || byte === 13 || (byte >= 32 && byte <= 126) || byte === 0x1b;
+                                if (!isTextByte) nonTextBytes++;
+                                if (isTextByte) asciiChunk += String.fromCharCode(byte);
+                            }
+                            if (detectWrongBaud && rawBytes > 20 && nonTextBytes / rawBytes > 0.35) {
+                                espLoaderTerminal.writeLine("Garbled response detected (baud rate mismatch)");
+                                reader.releaseLock();
+                                reader = null;
+                                return 'wrong-baud';
+                            }
+                            response += asciiChunk.replace(/\x1b\[[0-9;]*m/g, '');
+                            if (response.includes('[CHIPINFO_END]')) break;
+                            const cleaned = response.replace(/[\x00-\x1f\x7f-\xff\uFFFD]/g, '').trim();
+                            if (detectWrongBaud && rawBytes > 20 && cleaned.length < rawBytes * 0.3) {
+                                espLoaderTerminal.writeLine("Garbled response detected (baud rate mismatch)");
+                                reader.releaseLock();
+                                reader = null;
+                                return 'wrong-baud';
+                            }
+                        }
+                    }
+                    if (reader) { reader.releaseLock(); reader = null; }
+
+                    if (response.includes('[CHIPINFO_END]')) break;
+                    if (attempt < 2 && (/unsupported\s+command|unknown\s+command|not\s+recognized/i.test(response) || !response.includes('[CHIPINFO_START]'))) {
+                        espLoaderTerminal.writeLine("Chipinfo response incomplete, retrying command...");
+                        await new Promise(resolve => setTimeout(resolve, 250));
+                    } else {
+                        break;
+                    }
+                }
+
+                if (response) {
+                    console.log('[Flasher] chipinfo raw response:', response);
+                    const parsed = parseChipInfo(response);
+                    console.log('[Flasher] parsed chipinfo:', parsed);
+                    if (Object.keys(parsed).length > 0) {
+                        displayChipInfo(parsed);
+                        espLoaderTerminal.writeLine("Chip info parsed successfully");
+                        if (chipInfoElem) {
+                            const sub = chipInfoElem.querySelector('.flasher-status-sub');
+                            if (sub) sub.textContent = `— ${parsed.CHIP_MODEL || 'Chip detected'}`;
+                        }
+                        return true;
+                    } else if (/unsupported\s+command|unknown\s+command|not\s+recognized/i.test(response)) {
+                        espLoaderTerminal.writeLine("Device does not support chipinfo command");
+                        if (chipInfoElem) {
+                            const sub = chipInfoElem.querySelector('.flasher-status-sub');
+                            if (sub) sub.textContent = '— chipinfo not supported by firmware';
+                        }
+                        return false;
+                    } else {
+                        espLoaderTerminal.writeLine("Could not parse chip info from response");
+                        if (chipInfoElem) {
+                            const sub = chipInfoElem.querySelector('.flasher-status-sub');
+                            if (sub) sub.textContent = '— Chip info unavailable';
+                        }
+                        return response.trim().length > 0 ? 'got-response' : false;
+                    }
+                } else {
+                    espLoaderTerminal.writeLine("No response to chipinfo command");
+                    if (chipInfoElem) {
+                        const sub = chipInfoElem.querySelector('.flasher-status-sub');
+                        if (sub) sub.textContent = '— No chip info response';
+                    }
+                }
+            } catch (error) {
+                espLoaderTerminal.writeLine(`Error fetching chipinfo: ${error.message}`);
+                if (chipInfoElem) {
+                    const sub = chipInfoElem.querySelector('.flasher-status-sub');
+                    if (sub) sub.textContent = '— Chip info failed';
+                }
+            } finally {
+                try { if (reader) reader.releaseLock(); } catch (_) { }
+                try { if (writer) writer.releaseLock(); } catch (_) { }
             }
-            connected = false;
-            updateButtonStates();
-            if (chipInfoElem) chipInfoElem.innerHTML = `<span class="status-indicator status-disconnected"></span> Disconnected`;
-            if (continueToStep3Btn) continueToStep3Btn.disabled = true;
-            return true;
+            return false;
+        }
+
+        async function disconnect() {
+            try {
+                await stopFlasherMirror();
+
+                // Clean up bootloader connection first because esptool owns the port there.
+                if (transport && espLoader) {
+                    await transport.disconnect();
+                    transport = null;
+                    espLoader = null;
+                }
+
+                // Clean up normal serial connection
+                if (normalSerialReader) {
+                    await normalSerialReader.cancel();
+                    normalSerialReader.releaseLock();
+                    normalSerialReader = null;
+                }
+                if (normalSerialWriter) {
+                    normalSerialWriter.releaseLock();
+                    normalSerialWriter = null;
+                }
+                if (normalSerialPort) {
+                    try { await normalSerialPort.close(); } catch (_) { }
+                    normalSerialPort = null;
+                }
+                
+                espLoaderTerminal.writeLine("Disconnected from device");
+                connected = false;
+                inBootloaderMode = false;
+                updateButtonStates();
+                if (chipInfoElem) chipInfoElem.innerHTML = `<span class="status-indicator status-disconnected"></span> Disconnected`;
+                if (continueToStep3Btn) continueToStep3Btn.disabled = true;
+                clearChipInfoDisplay();
+                
+                return true;
+            } catch (error) {
+                console.error(error);
+                espLoaderTerminal.writeLine(`Error disconnecting: ${error.message}`);
+                connected = false;
+                inBootloaderMode = false;
+                updateButtonStates();
+                return false;
+            }
         }
 
         async function flash() {
-            if (!connected || !espLoader) {
+            if (!connected) {
                 espLoaderTerminal.writeLine("Not connected to a device");
                 return;
             }
@@ -708,8 +1289,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (flashETAElem) flashETAElem.textContent = '';
             const savedDevice = selectedDevice;
             const savedSide = selectedSide;
-            const savedBaudrate = baudrateSelect ? baudrateSelect.value : '115200';
-            const savedResetMethod = resetMethodSelect ? resetMethodSelect.value : 'default';
 
             if (flashBtn) flashBtn.disabled = true;
             if (eraseBtn) eraseBtn.disabled = true;
@@ -722,6 +1301,43 @@ document.addEventListener('DOMContentLoaded', () => {
                 espLoaderTerminal.writeLine("Preparing to flash...");
                 if (chipInfoElem) chipInfoElem.innerHTML = `<span class="status-indicator status-flashing"></span> Preparing Flash...`;
                 updateStatusIndicator('flashing', 'Preparing flash...', '');
+
+                // If in normal mode, switch to bootloader mode
+                if (!inBootloaderMode) {
+                    espLoaderTerminal.writeLine("Switching to bootloader mode...");
+
+                    await stopFlasherMirror();
+
+                    if (normalSerialReader) {
+                        try { await normalSerialReader.cancel(); } catch (_) { }
+                        try { normalSerialReader.releaseLock(); } catch (_) { }
+                        normalSerialReader = null;
+                    }
+                    if (normalSerialWriter) {
+                        try { normalSerialWriter.releaseLock(); } catch (_) { }
+                        normalSerialWriter = null;
+                    }
+                    if (!normalSerialPort) {
+                        throw new Error('Serial port unavailable. Reconnect the device and try again.');
+                    }
+                    try {
+                        await normalSerialPort.close();
+                    } catch (_) { }
+
+                    await new Promise(resolve => setTimeout(resolve, 250));
+
+                    transport = new window.esptoolJS.Transport(normalSerialPort);
+                    espLoader = new window.esptoolJS.ESPLoader({
+                        transport: transport,
+                        baudrate: parseInt(baudrateSelect.value),
+                        terminal: espLoaderTerminal,
+                        enableTracing: true
+                    });
+                    chipType = await espLoader.main();
+                    inBootloaderMode = true;
+                    connected = true;
+                    espLoaderTerminal.writeLine(`Connected in bootloader mode (${chipType})`);
+                }
 
                 let eraseSuccessful = true;
                 if (eraseAllCheckbox && eraseAllCheckbox.checked) {
@@ -1060,15 +1676,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // --- GhostESP Functions ---
 
-        function populateAssets(assets, parentElement, fileExtension, filterChip) {
+        function populateAssets(assets, parentElement, fileExtension, filterChip, filterBrand) {
             let foundFiles = false;
             if (!assets || assets.length === 0) {
                 return false;
             }
 
+            // Build list of allowed builds based on brand filter
+            let allowedBuilds = null;
+            if (filterBrand && brandToFirmware[filterBrand]) {
+                allowedBuilds = new Set(brandToFirmware[filterBrand]);
+            }
+
             assets.forEach(asset => {
                 if (asset.name.endsWith(fileExtension)) {
-                    if (filterChip) {
+                    // Filter by brand if specified
+                    if (allowedBuilds && !allowedBuilds.has(asset.name)) {
+                        return;
+                    }
+
+                    // Filter by chip if specified (and no brand filter)
+                    if (filterChip && !filterBrand) {
                         const assetTarget = ghostEspZipToTarget[asset.name];
                         const mappedChip = ghostEspChipMapping[assetTarget];
                         if (mappedChip !== filterChip) {
@@ -1077,15 +1705,21 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
 
                     if (asset.name === "esp32-generic.zip") {
-                        const option1 = document.createElement('option');
-                        option1.value = asset.browser_download_url;
-                        option1.textContent = "Generic ESP32";
-                        parentElement.appendChild(option1);
+                        if (!filterBrand || filterBrand === 'Generic') {
+                            const option1 = document.createElement('option');
+                            option1.value = asset.browser_download_url;
+                            option1.dataset.assetName = asset.name;
+                            option1.textContent = "Generic ESP32";
+                            parentElement.appendChild(option1);
+                        }
 
-                        const option2 = document.createElement('option');
-                        option2.value = asset.browser_download_url;
-                        option2.textContent = "FlipperHub Rocket";
-                        parentElement.appendChild(option2);
+                        if (!filterBrand || filterBrand === 'TheWiredHatters') {
+                            const option2 = document.createElement('option');
+                            option2.value = asset.browser_download_url;
+                            option2.dataset.assetName = asset.name;
+                            option2.textContent = "FlipperHub Rocket";
+                            parentElement.appendChild(option2);
+                        }
 
                         foundFiles = true;
                         return;
@@ -1094,11 +1728,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (asset.name === "CYD2USB2.4Inch.zip") {
                         const option1 = document.createElement('option');
                         option1.value = asset.browser_download_url;
+                        option1.dataset.assetName = asset.name;
                         option1.textContent = "CYD 2.4 Inch USB (ESP32)";
                         parentElement.appendChild(option1);
 
                         const option2 = document.createElement('option');
                         option2.value = asset.browser_download_url;
+                        option2.dataset.assetName = asset.name;
                         option2.textContent = "Rabbit Labs' Phantom";
                         parentElement.appendChild(option2);
 
@@ -1109,6 +1745,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     foundFiles = true;
                     const option = document.createElement('option');
                     option.value = asset.browser_download_url;
+                    option.dataset.assetName = asset.name;
                     option.textContent = ghostEspNiceNames[asset.name] || asset.name;
                     parentElement.appendChild(option);
                 }
@@ -1116,7 +1753,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return foundFiles;
         }
 
-        async function populateGhostEspDropdown(owner, repo, fileExtension = '.zip', filterChip = null) {
+        async function populateGhostEspDropdown(owner, repo, fileExtension = '.zip', filterChip = null, filterBrand = null) {
             const selectElement = ghostEspVariantSelect;
             if (!selectElement) {
                 console.error('GhostESP select element not found');
@@ -1128,7 +1765,7 @@ document.addEventListener('DOMContentLoaded', () => {
             selectElement.disabled = true;
 
             try {
-                await populateGhostEspFromGitHub(selectElement, owner, repo, fileExtension, filterChip, requestId);
+                await populateGhostEspFromGitHub(selectElement, owner, repo, fileExtension, filterChip, filterBrand, requestId);
 
                 if (requestId !== ghostEspPopulateRequestId) {
                     return;
@@ -1142,7 +1779,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         
 
-        async function populateGhostEspFromGitHub(selectElement, owner, repo, fileExtension, filterChip, requestId) {
+        async function populateGhostEspFromGitHub(selectElement, owner, repo, fileExtension, filterChip, filterBrand, requestId) {
             if (!ghostEspStableReleases || !ghostEspPrereleases) {
                 const apiUrl = `https://api.github.com/repos/${owner}/${repo}/releases`;
                 espLoaderTerminal.writeLine(`Fetching releases from ${owner}/${repo}...`);
@@ -1180,13 +1817,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const targetRelease = ghostEspReleaseType === 'stable' ? ghostEspStableReleases : ghostEspPrereleases;
 
             if (targetRelease) {
-                if (populateAssets(targetRelease.assets, selectElement, fileExtension, filterChip)) {
+                if (populateAssets(targetRelease.assets, selectElement, fileExtension, filterChip, filterBrand)) {
                     selectElement.disabled = false;
                     espLoaderTerminal.writeLine(`Loaded ${ghostEspReleaseType} release from GitHub: ${targetRelease.tag_name}`);
                     if (ghostEspStatusElem) {
                         ghostEspStatusElem.textContent = `GitHub ${ghostEspReleaseType}: ${targetRelease.tag_name}`;
                         ghostEspStatusElem.className = 'form-text text-success mt-2 success';
                     }
+                    applyBuildTemplateMatch();
                 } else {
                     espLoaderTerminal.writeLine(`${ghostEspReleaseType} release ${targetRelease.tag_name} found, but no matching assets.`);
                     selectElement.innerHTML = `<option value="">No matching assets found</option>`;
@@ -1337,6 +1975,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (baudrateSelect) baudrateSelect.disabled = connected;
 
+            if (continueToStep2Btn) continueToStep2Btn.disabled = !connected && !selectedDevice;
             if (continueToStep3Btn) continueToStep3Btn.disabled = !connected || !hasFirmwareFilesSelected();
         }
 
@@ -1460,7 +2099,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     ghostEspStatusElem.textContent = 'Select a variant to begin loading firmware files.';
                     ghostEspStatusElem.className = 'form-text text-muted mt-2';
                 }
-                populateGhostEspDropdown(GHOST_ESP_OWNER, GHOST_ESP_REPO, '.zip', selectedDevice)
+                populateGhostEspDropdown(GHOST_ESP_OWNER, GHOST_ESP_REPO, '.zip', selectedDevice, selectedBrand)
                     .catch(err => {
                         console.error('Error populating GhostESP dropdown:', err);
                         if (ghostEspStatusElem) {
