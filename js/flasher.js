@@ -1056,11 +1056,31 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Initialize screen mirror
                 await initFlasherMirror();
 
-                if (continueToStep2Btn) continueToStep2Btn.disabled = false;
-                if (selectedFirmwareMethod === 'download') {
-                    await populateGhostEspDropdown(GHOST_ESP_OWNER, GHOST_ESP_REPO, '.zip', selectedDevice, selectedBrand);
+                const mirrorWorking = screenDisplay && screenDisplay.classList.contains('visible');
+
+                if (gotChipInfo === true || mirrorWorking) {
+                    if (chipInfoElem) {
+                        const sub = chipInfoElem.querySelector('.flasher-status-sub');
+                        if (sub && gotChipInfo === true && mirrorWorking) {
+                            sub.textContent = '— Mirror & chip info OK';
+                        } else if (sub && gotChipInfo === true) {
+                            sub.textContent = `— ${detectedBuildTemplate || 'Chip detected'}`;
+                        } else if (sub) {
+                            sub.textContent = '— Mirror active, no chip info';
+                        }
+                    }
+                    if (continueToStep2Btn) continueToStep2Btn.disabled = false;
+                    if (selectedFirmwareMethod === 'download') {
+                        await populateGhostEspDropdown(GHOST_ESP_OWNER, GHOST_ESP_REPO, '.zip', selectedDevice, selectedBrand);
+                    }
+                    goToStep(2);
+                } else {
+                    if (chipInfoElem) {
+                        chipInfoElem.innerHTML = `<span class="status-indicator status-connected"></span> Connected <span class="flasher-status-sub">— Couldn't detect device, select manually below</span>`;
+                    }
+                    espLoaderTerminal.writeLine("No chip info or screen mirror. Please select your device manually.");
+                    if (connectBtn) connectBtn.disabled = false;
                 }
-                goToStep(2);
             } catch (error) {
                 console.error("Error during connection:", error);
                 let userMessage = `Error: ${error.message}`;
