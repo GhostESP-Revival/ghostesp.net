@@ -948,6 +948,9 @@ class SerialMirror {
     this.height = h;
     this.canvas.width = w;
     this.canvas.height = h;
+    if (this.displayWrapper) {
+      this.displayWrapper.style.aspectRatio = `${w} / ${h}`;
+    }
     this.pixelData = new Uint8ClampedArray(w * h * 4);
     this.initPixelData();
     this.updateScale();
@@ -960,6 +963,14 @@ class SerialMirror {
     const r3 = (pixel8 >> 5) & 0x07;
     const g3 = (pixel8 >> 2) & 0x07;
     const b2 = pixel8 & 0x03;
+
+    // RGB332 has only 2 blue bits, which can make neutral grays look purple.
+    // If the packed channels are close enough to gray, render them as neutral.
+    const bAs3 = b2 * 7 / 3;
+    if (Math.abs(r3 - g3) <= 1 && Math.abs(((r3 + g3) / 2) - bAs3) <= 1.25) {
+      const gray = Math.round(((r3 / 7) + (g3 / 7) + (b2 / 3)) / 3 * 255);
+      return { r: gray, g: gray, b: gray };
+    }
 
     return {
       r: Math.round(r3 * 255 / 7),
