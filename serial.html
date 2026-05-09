@@ -3,149 +3,230 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#0a0a0f" />
-    <title>GESP: Revival | Serial Console</title>
+    <meta name="theme-color" content="#000000" />
+    <title>GhostESP: Serial Tools</title>
+    <meta name="description" content="Connect to your GhostESP device via serial. Console, screen mirror, file browser, and crash decoder.">
 
-    <!-- Google Fonts -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Chakra+Petch:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+    <link rel="manifest" href="images/site.webmanifest">
 
-    <!-- Custom styles -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/main.css" />
     <link rel="stylesheet" href="css/serial.css" />
     <link rel="stylesheet" href="css/serial-mirror.css" />
     <link rel="stylesheet" href="css/serial-files.css" />
     <link rel="stylesheet" href="css/serial-crash.css" />
   </head>
-  
+
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-MS2T2178R5"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-
     gtag('config', 'G-MS2T2178R5');
   </script>
 
   <body>
-    <div class="serial-container">
-      <div class="header">
-        <h1>Serial Tools</h1>
-        <div class="status-bar">
-          <div class="status-indicator">
-            <div class="status-dot" id="connectionDot"></div>
-            <span id="connectionStatus">Disconnected</span>
+    <canvas id="dotTerrain"></canvas>
+    <nav id="nav"></nav>
+
+    <main class="serial-page">
+      <div class="serial-container">
+        <!-- Welcome Card (shown when disconnected) -->
+        <div class="welcome-card" id="welcomeCard">
+          <div class="welcome-icon">
+            <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+              <path d="M2 17l10 5 10-5"/>
+              <path d="M2 12l10 5 10-5"/>
+            </svg>
           </div>
-          <div class="status-indicator">
-            <span id="baudRate">Baud Rate: 115200</span>
+          <h2>Connect Your Device</h2>
+          <p class="welcome-desc">Plug in your GhostESP device and click connect to get started.</p>
+          <div class="welcome-steps">
+            <div class="welcome-step">
+              <span class="step-num">1</span>
+              <span>Plug in your device via USB</span>
+            </div>
+            <div class="welcome-step">
+              <span class="step-num">2</span>
+              <span>Click the button below</span>
+            </div>
+            <div class="welcome-step">
+              <span class="step-num">3</span>
+              <span>Select your device from the popup</span>
+            </div>
+          </div>
+          <button class="btn btn-primary btn-lg" id="welcomeConnect">
+            <i class="bi bi-usb-symbol"></i> Connect Device
+          </button>
+          <div class="welcome-hint">
+            <i class="bi bi-info-circle"></i>
+            Requires a Chromium-based browser (Chrome, Edge, Opera)
+          </div>
+        </div>
+
+        <!-- Console Main (shown when connected) -->
+        <div class="console-main hidden" id="consoleMain">
+          <div class="tab-bar">
+            <button class="tab-btn active" data-tab="console">
+              <i class="bi bi-terminal"></i>
+              <span>Console</span>
+            </button>
+            <button class="tab-btn" data-tab="mirror">
+              <i class="bi bi-display"></i>
+              <span>Mirror</span>
+            </button>
+            <button class="tab-btn" data-tab="files">
+              <i class="bi bi-folder2-open"></i>
+              <span>Files</span>
+            </button>
+            <button class="tab-btn" data-tab="crash">
+              <i class="bi bi-bug"></i>
+              <span>Crash</span>
+            </button>
+          </div>
+
+          <div class="tab-content active" id="tab-console">
+            <div class="console" id="console">
+              <div class="console-output" id="output"></div>
+            </div>
+
+            <div class="controls-container">
+              <div class="quick-commands">
+                <span class="quick-label">Quick:</span>
+                <button class="quick-cmd" data-cmd="help" title="Show available commands">help</button>
+                <button class="quick-cmd" data-cmd="scan" title="Scan WiFi networks">scan</button>
+                <button class="quick-cmd" data-cmd="stop" title="Stop current operation">stop</button>
+                <button class="quick-cmd" data-cmd="info" title="Show device info">info</button>
+              </div>
+
+              <div class="control-panel">
+                <button class="btn btn-primary" id="connectButton">Disconnect</button>
+                <button class="btn" id="clearButton">Clear</button>
+                <button class="btn" id="exportButton">Export</button>
+                <select class="btn" id="baudSelect">
+                  <option value="9600">9600</option>
+                  <option value="19200">19200</option>
+                  <option value="38400">38400</option>
+                  <option value="57600">57600</option>
+                  <option value="115200" selected>115200</option>
+                  <option value="230400">230400</option>
+                  <option value="460800">460800</option>
+                  <option value="921600">921600</option>
+                </select>
+              </div>
+
+              <div class="input-group">
+                <input type="text" class="serial-input" id="serialInput" placeholder="Type a command and press Enter..." />
+                <button class="btn btn-send" id="sendButton">
+                  <i class="bi bi-send-fill"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="tab-content" id="tab-mirror">
+            <div class="mirror-root" id="mirrorRoot"></div>
+          </div>
+
+          <div class="tab-content" id="tab-files">
+            <div class="files-root" id="filesRoot"></div>
+          </div>
+
+          <div class="tab-content" id="tab-crash">
+            <div class="crash-root" id="crashRoot"></div>
           </div>
         </div>
       </div>
-
-      <div class="tab-bar">
-        <button class="tab-btn active" data-tab="console">Console</button>
-        <button class="tab-btn" data-tab="mirror">Screen Mirror</button>
-        <button class="tab-btn" data-tab="files">Files</button>
-        <button class="tab-btn" data-tab="crash">Crash Decode</button>
-      </div>
-
-      <div class="tab-content active" id="tab-console">
-        <div class="console" id="console">
-          <div class="console-output" id="output"></div>
-        </div>
-
-        <div class="controls-container">
-          <div class="control-panel">
-            <button class="btn btn-primary" id="connectButton">Connect</button>
-            <button class="btn" id="clearButton">Clear Console</button>
-            <button class="btn" id="exportButton">Export Log</button>
-            <select class="btn" id="baudSelect">
-              <option value="9600">9600 baud</option>
-              <option value="19200">19200 baud</option>
-              <option value="38400">38400 baud</option>
-              <option value="57600">57600 baud</option>
-              <option value="115200" selected>115200 baud</option>
-              <option value="230400">230400 baud</option>
-              <option value="460800">460800 baud</option>
-              <option value="921600">921600 baud</option>
-            </select>
-          </div>
-
-          <div class="input-group">
-            <input
-              type="text"
-              class="serial-input"
-              id="serialInput"
-              placeholder="Type a command and press Enter..."
-            />
-            <button class="btn" id="sendButton">Send</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="tab-content" id="tab-mirror">
-        <div class="mirror-root" id="mirrorRoot"></div>
-      </div>
-
-      <div class="tab-content" id="tab-files">
-        <div class="files-root" id="filesRoot"></div>
-      </div>
-
-      <div class="tab-content" id="tab-crash">
-        <div class="crash-root" id="crashRoot"></div>
-      </div>
-    </div>
+    </main>
 
     <!-- Browser Support Dialog -->
     <div class="dialog-overlay" id="browserDialog">
       <div class="dialog">
         <h2>Browser Not Supported</h2>
-        <p>
-          Web Serial API is only supported in Chromium-based browsers (Chrome,
-          Edge, Opera). Please use a supported browser to access this feature.
-        </p>
-        <button
-          class="btn btn-primary"
-          onclick="document.getElementById('browserDialog').style.display = 'none'"
-        >
-          Close
-        </button>
+        <p>Web Serial API is only supported in Chromium-based browsers (Chrome, Edge, Opera). Please use a supported browser.</p>
+        <button class="btn btn-primary" onclick="document.getElementById('browserDialog').style.display = 'none'">Close</button>
       </div>
     </div>
 
     <!-- Permission Dialog -->
     <div class="dialog-overlay" id="permissionDialog">
       <div class="dialog">
-        <h2>Permission Required</h2>
-        <p>
-          Please select your device from the popup and click "Connect" to
-          establish a serial connection.
-        </p>
-        <button
-          class="btn btn-primary"
-          onclick="document.getElementById('permissionDialog').style.display = 'none'"
-        >
-          OK
-        </button>
+        <h2>Select Device</h2>
+        <p>Choose your device from the browser popup and click "Connect" to establish a serial connection.</p>
+        <button class="btn btn-primary" onclick="document.getElementById('permissionDialog').style.display = 'none'">OK</button>
       </div>
     </div>
 
-    <footer class="footer">
-      <button id="footerClose" class="footer-close">x</button>
-      <a href="https://ko-fi.com/jaylikesbunda" target="_blank" rel="noopener noreferrer">if you enjoy using this please consider supporting me on ko-fi :)</a>
-    </footer>
+    <script src="js/components.js"></script>
+    <script>
+      // Dot terrain canvas background (lightweight)
+      (function() {
+        var canvas = document.getElementById('dotTerrain');
+        if (!canvas) return;
+        var ctx = canvas.getContext('2d');
+        var SPACING = 32;
+        var dots = [];
+        var mouseX = -9999, mouseY = -9999;
 
+        function init() {
+          canvas.width = window.innerWidth;
+          canvas.height = window.innerHeight;
+          dots = [];
+          var cols = Math.ceil(canvas.width / SPACING) + 1;
+          var rows = Math.ceil(canvas.height / SPACING) + 1;
+          for (var r = 0; r < rows; r++) {
+            for (var c = 0; c < cols; c++) {
+              dots.push({ x: c * SPACING, y: r * SPACING, brightness: 0.12 });
+            }
+          }
+        }
+
+        document.addEventListener('mousemove', function(e) { mouseX = e.clientX; mouseY = e.clientY; });
+        window.addEventListener('resize', init);
+        init();
+
+        function draw() {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          for (var i = 0; i < dots.length; i++) {
+            var d = dots[i];
+            var dx = d.x - mouseX, dy = d.y - mouseY;
+            var dist = Math.sqrt(dx * dx + dy * dy);
+            var b = d.brightness;
+            if (dist < 150) b = 0.12 + (1 - dist / 150) * 0.25;
+            ctx.beginPath();
+            ctx.arc(d.x, d.y, 1.2, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(255,255,255,' + b + ')';
+            ctx.fill();
+          }
+          requestAnimationFrame(draw);
+        }
+        draw();
+      })();
+    </script>
     <script src="js/serial.js"></script>
     <script src="js/serial-mirror.js"></script>
     <script src="js/serial-files.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
     <script src="js/serial-crash.js?v=20260304j"></script>
     <script>
-      document.getElementById("footerClose").addEventListener("click", () => {
-        const footer = document.querySelector(".footer");
-        if (footer) footer.style.display = "none";
+      // Quick command buttons
+      document.querySelectorAll('.quick-cmd').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          var cmd = btn.dataset.cmd;
+          if (window.serialConsole && window.serialConsole.isConnected) {
+            window.serialConsole.sendCommand(cmd).catch(function() {});
+            window.serialConsole.log('> ' + cmd + '\n');
+          }
+        });
       });
     </script>
   </body>

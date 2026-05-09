@@ -64,16 +64,28 @@ class FileBrowser {
     document.getElementById("filesUpload")?.addEventListener("click", () => this.showUploadDialog());
     document.getElementById("filesMkdir")?.addEventListener("click", () => this.showMkdirDialog());
     document.getElementById("filesUploadInput")?.addEventListener("change", (e) => this.handleFileSelect(e));
-    
+
     document.addEventListener("click", () => this.hideContextMenu());
-    
+
     const tabBtn = document.querySelector('[data-tab="files"]');
     tabBtn?.addEventListener("click", () => {
       if (window.serialConsole?.isConnected) {
         this.debouncedRefresh();
       }
     });
-    
+
+    this._unsubscribeData = window.serialConsole?.addDataListener?.((text) => {
+      this.processSerialData(text);
+    });
+
+    document.addEventListener("serial-connection-change", (e) => {
+      if (!e.detail.connected) {
+        this.showNotConnected();
+        const dot = document.getElementById("filesStatusDot");
+        dot?.classList.remove("mounted");
+      }
+    });
+
     this.setupDragDrop();
   }
 
@@ -186,7 +198,7 @@ class FileBrowser {
 
     return new Promise(async (resolve, reject) => {
       this.commandResolve = resolve;
-      
+
       this.commandTimeout = setTimeout(() => {
         this.commandResolve = null;
         this.pendingCommand = null;
@@ -196,9 +208,7 @@ class FileBrowser {
       }, timeout);
 
       try {
-        const writer = window.serialConsole.port.writable.getWriter();
-        await writer.write(window.serialConsole.encoder.encode(cmd + "\n"));
-        await writer.releaseLock();
+        await window.serialConsole.sendCommand(cmd);
       } catch (error) {
         clearTimeout(this.commandTimeout);
         this.commandResolve = null;
@@ -878,23 +888,3 @@ class FileBrowser {
     document.getElementById("filesProgress")?.remove();
   }
 }
-
-const fileBrowser = new FileBrowser();
-window.fileBrowser = fileBrowser;
-
-const originalLog = SerialConsole.prototype.log;
-SerialConsole.prototype.log = function(text) {
-  originalLog.call(this, text);
-  fileBrowser.processSerialData(text);
-};
-
-const originalUpdateConnectionStatus = SerialConsole.prototype.updateConnectionStatus;
-SerialConsole.prototype.updateConnectionStatus = function(connected) {
-  originalUpdateConnectionStatus.call(this, connected);
-  
-  if (!connected) {
-    fileBrowser.showNotConnected();
-    const dot = document.getElementById("filesStatusDot");
-    dot?.classList.remove("mounted");
-  }
-};

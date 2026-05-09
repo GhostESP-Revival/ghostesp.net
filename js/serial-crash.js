@@ -591,9 +591,7 @@ class CrashDecoderTab {
       };
 
       try {
-        const writer = window.serialConsole.port.writable.getWriter();
-        await writer.write(this.encoder.encode(command + "\n"));
-        await writer.releaseLock();
+        await window.serialConsole.sendCommand(command);
       } catch (error) {
         this.failPendingCommand(error);
       }
@@ -3042,9 +3040,4 @@ class CrashDecoderTab {
   }
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  const root = document.getElementById("crashRoot");
-  if (!root) return;
 
-  window.crashDecoderTab = new CrashDecoderTab(root);
-});

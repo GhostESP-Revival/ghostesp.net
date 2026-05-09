@@ -99,9 +99,19 @@
   transition: background 0.3s, box-shadow 0.3s;
 }
 
+.mirror-status-dot-wrap {
+  display: flex;
+  align-items: center;
+}
+
 .mirror-status-dot.connected {
   background: var(--success-color);
   box-shadow: 0 0 8px rgba(0, 204, 0, 0.6);
+}
+
+.mirror-status-dot.device-connected {
+  background: var(--warning-color, #ffa500);
+  box-shadow: 0 0 8px rgba(255, 165, 0, 0.4);
 }
 
 .mirror-main {
@@ -230,6 +240,16 @@
   box-shadow: 0 0 0 1px rgba(255, 107, 0, 0.5);
 }
 
+.mirror-action-row {
+  display: flex;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.mirror-action-row .mirror-action-btn {
+  flex: 1;
+}
+
 .mirror-action-btn {
   padding: 0.5rem 0.75rem;
   border-radius: 6px;
@@ -252,6 +272,16 @@
 }
 
 .mirror-action-btn.disconnect:hover {
+  background: var(--error-color);
+  color: var(--background-color);
+}
+
+.mirror-action-btn.start:hover {
+  background: var(--success-color);
+  color: var(--background-color);
+}
+
+.mirror-action-btn.stop:hover {
   background: var(--error-color);
   color: var(--background-color);
 }
