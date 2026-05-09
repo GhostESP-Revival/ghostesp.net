@@ -80,6 +80,18 @@ document.addEventListener('DOMContentLoaded', () => {
             return info;
         }
 
+        function checkChipMismatch(detectedModel) {
+            if (!selectedDevice || !detectedModel || !chipMismatchWarningElem) return;
+            const selectedNorm = selectedDevice.replace(/ESP32[-_]?/i, '').toLowerCase();
+            const detectedNorm = detectedModel.replace(/ESP32[-_]?/i, '').toLowerCase();
+            if (selectedNorm !== detectedNorm) {
+                chipMismatchWarningElem.style.display = 'inline-flex';
+                espLoaderTerminal.writeLine(`WARNING: Chip mismatch! Selected ${selectedDevice} but detected ${detectedModel}`);
+            } else {
+                chipMismatchWarningElem.style.display = 'none';
+            }
+        }
+
         function displayChipInfo(info) {
             const insights = getElementById('deviceInsights');
             const panel = getElementById('chipInfoPanel');
@@ -292,6 +304,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const terminalElem = getElementById('terminal');
         const terminalToggleBtn = getElementById('terminalToggle');
         const chipInfoElem = getElementById('chipInfo');
+        const detectedChipInfoElem = getElementById('detectedChipInfo');
+        const detectedChipModelElem = getElementById('detectedChipModel');
+        const chipMismatchWarningElem = getElementById('chipMismatchWarning');
         const flashProgressElem = getElementById('flashProgress');
         const flashSummaryElem = getElementById('flashSummary');
         const flashETAElem = getElementById('flashETA');
@@ -366,6 +381,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let normalSerialWriter = null;
         let connected = false;
         let chipType = '';
+        let lastDetectedChipModel = '';
         let selectedDevice = null;
         let selectedBrand = null;
         let selectedSide = '';
@@ -525,6 +541,7 @@ document.addEventListener('DOMContentLoaded', () => {
             "CYDDualUSB.zip": "CYD Dual USB",
             "CYD2USB2.4Inch.zip": "CYD 2.4 Inch USB",
             "CYD2USB2.4Inch_C.zip": "CYD 2.4 Inch USB-C",
+            "NM-CYD-C5.zip": "NM-CYD-C5",
             "CYD2432S028R.zip": "CYD2432S028R",
             "Waveshare_LCD.zip": "Waveshare 7\" LCD",
             "Crowtech_LCD.zip": "Crowtech 7\" LCD",
@@ -562,7 +579,7 @@ document.addEventListener('DOMContentLoaded', () => {
             "RabbitLabs": ["ghostboard.zip", "RabbitLabs_Minion.zip", "Poltergeist.zip"],
             "Generic": ["esp32-generic.zip", "esp32s2-generic.zip", "esp32s3-generic.zip", "esp32c3-generic.zip", "esp32c6-generic.zip", "esp32c5-generic.zip", "esp32c5-generic-v01.zip"],
             "M5Stack": ["ESP32-S3-Cardputer.zip", "CardputerADV.zip"],
-            "CYD": ["CYD2USB.zip", "CYDMicroUSB.zip", "CYDDualUSB.zip", "CYD2USB2.4Inch.zip", "CYD2USB2.4Inch_C.zip", "CYD2432S028R.zip"],
+            "CYD": ["CYD2USB.zip", "CYDMicroUSB.zip", "CYDDualUSB.zip", "CYD2USB2.4Inch.zip", "CYD2USB2.4Inch_C.zip", "NM-CYD-C5.zip", "CYD2432S028R.zip"],
             "LilyGo": ["LilyGo-T-Deck.zip", "LilyGo-TEmbedC1101.zip", "LilyGo-S3TWatch-2020.zip", "LilyGo-TDisplayS3-Touch.zip"],
             "Awok": ["AwokMini.zip", "MarauderV4_FlipperHub.zip", "MarauderV6_AwokDual.zip"],
             "Heltec": ["HeltecV3.zip"],
@@ -581,6 +598,7 @@ document.addEventListener('DOMContentLoaded', () => {
             "cyd2usb": "CYD2USB.zip",
             "cyd2usb2.4inch": "CYD2USB2.4Inch.zip",
             "cyd2usb2.4inch_c_varient": "CYD2USB2.4Inch_C.zip",
+            "nm-cyd-c5": "NM-CYD-C5.zip",
             "cyddualusb": "CYDDualUSB.zip",
             "cydmicrousb": "CYDMicroUSB.zip",
             "jc3248w535en": "JC3248W535EN_LCD.zip",
@@ -713,6 +731,7 @@ document.addEventListener('DOMContentLoaded', () => {
             "CYDDualUSB.zip": "esp32",
             "CYD2USB2.4Inch.zip": "esp32",
             "CYD2USB2.4Inch_C.zip": "esp32",
+            "NM-CYD-C5.zip": "esp32c5",
             "CYD2432S028R.zip": "esp32",
             "Waveshare_LCD.zip": "esp32s3",
             "Crowtech_LCD.zip": "esp32s3",
@@ -827,6 +846,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (selectedFirmwareMethod === 'download') {
                     populateGhostEspDropdown(GHOST_ESP_OWNER, GHOST_ESP_REPO, '.zip', selectedDevice, selectedBrand)
                         .catch(err => console.error('Error repopulating GhostESP after device change:', err));
+                }
+                if (connected && lastDetectedChipModel) {
+                    checkChipMismatch(lastDetectedChipModel);
                 }
             });
         });
@@ -1215,6 +1237,12 @@ document.addEventListener('DOMContentLoaded', () => {
                             const sub = chipInfoElem.querySelector('.flasher-status-sub');
                             if (sub) sub.textContent = `— ${parsed.CHIP_MODEL || 'Chip detected'}`;
                         }
+                        // Show detected chip model
+                        lastDetectedChipModel = parsed.CHIP_MODEL || '';
+                        if (detectedChipInfoElem) detectedChipInfoElem.style.display = 'flex';
+                        if (detectedChipModelElem) detectedChipModelElem.textContent = lastDetectedChipModel || 'Unknown';
+                        // Check for mismatch
+                        checkChipMismatch(lastDetectedChipModel);
                         return true;
                     } else if (/unsupported\s+command|unknown\s+command|not\s+recognized/i.test(response)) {
                         espLoaderTerminal.writeLine("Device does not support chipinfo command");
@@ -1282,6 +1310,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 inBootloaderMode = false;
                 updateButtonStates();
                 if (chipInfoElem) chipInfoElem.innerHTML = `<span class="status-indicator status-disconnected"></span> Disconnected`;
+                if (detectedChipInfoElem) detectedChipInfoElem.style.display = 'none';
+                if (chipMismatchWarningElem) chipMismatchWarningElem.style.display = 'none';
+                lastDetectedChipModel = '';
                 if (continueToStep3Btn) continueToStep3Btn.disabled = true;
                 clearChipInfoDisplay();
                 

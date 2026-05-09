@@ -4,6 +4,7 @@ const components = {
     // check if we're on index page or not
     const isIndex = window.location.pathname.endsWith('index.html') || window.location.pathname.endsWith('/') || window.location.pathname.endsWith('/v2');
     const isFlasher = window.location.pathname.endsWith('flasher.html');
+    const isSerial = window.location.pathname.endsWith('serial.html');
     const prefix = isIndex ? '' : 'index.html';
     const navLinksClass = isFlasher ? 'nav-links flasher-nav-links' : 'nav-links';
     
@@ -22,6 +23,7 @@ const components = {
           <li><a href="${prefix}#features">Features</a></li>
           <li><a href="boards.html">Boards</a></li>
           <li><a href="flasher.html">Flasher</a></li>
+          <li><a href="serial.html">Serial</a></li>
           <li><a href="irdb.html">IRDB</a></li>
           <li><a href="openwd.html">WDMap</a></li>
           <li><a href="companion.html">App</a></li>

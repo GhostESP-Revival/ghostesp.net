@@ -169,6 +169,9 @@
             <div id="chipInfo" class="flasher-status-bar">
               <span class="flasher-status-dot disconnected"></span>
               <span class="flasher-status-label">Disconnected</span>
+              <span class="flasher-chip-warning" id="chipMismatchWarning" style="display:none;">
+                <i class="bi bi-exclamation-triangle-fill"></i> Mismatch!
+              </span>
             </div>
           </div>
           <div class="flasher-connect-actions">
@@ -526,9 +529,11 @@
             <button class="flasher-btn flasher-btn-help" data-step="2" data-bs-toggle="modal" data-bs-target="#stuckModalStep2">
               <i class="bi bi-question-circle"></i> Help
             </button>
-            <button id="continueToStep3" class="flasher-btn flasher-btn-primary" disabled>
-              Continue <i class="bi bi-arrow-right"></i>
-            </button>
+            <span class="d-inline-block" tabindex="0" data-bs-toggle="tooltip" title="Please connect your device on Step 1 first">
+              <button id="continueToStep3" class="flasher-btn flasher-btn-primary" disabled>
+                Continue <i class="bi bi-arrow-right"></i>
+              </button>
+            </span>
           </div>
         </div>
       </div>

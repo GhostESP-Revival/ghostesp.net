@@ -151,42 +151,45 @@ body:has(.flasher-page) {
   letter-spacing: 0.02em;
 }
 
-nav ul.flasher-nav-links {
-  margin: 0 !important;
-  margin-top: 0 !important;
-  margin-bottom: 0 !important;
-  padding: 0 !important;
-  list-style: none;
-  display: flex;
-  align-items: center;
-  height: auto;
+/* Flasher nav overrides - desktop only */
+@media (min-width: 769px) {
+  nav ul.flasher-nav-links {
+    margin: 0 !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    padding: 0 !important;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    height: auto;
+  }
+
+  nav ul.flasher-nav-links li {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+  }
+
+  nav ul.flasher-nav-links a {
+    display: flex;
+    align-items: center;
+    line-height: 1;
+  }
+
+  nav ul.flasher-nav-links,
+  nav ul.flasher-nav-links li,
+  nav ul.flasher-nav-links a {
+    transform: none;
+  }
 }
 
-nav ul.flasher-nav-links li {
-  display: flex;
-  align-items: center;
-  margin: 0;
-  padding: 0;
+nav ul.flasher-nav-links {
+  list-style: none;
 }
 
 nav ul.flasher-nav-links li::marker {
   content: '';
-}
-
-nav ul.flasher-nav-links a {
-  display: flex;
-  align-items: center;
-  line-height: 1;
-}
-
-nav ul.flasher-nav-links,
-nav ul.flasher-nav-links li,
-nav ul.flasher-nav-links a {
-  transform: none;
-}
-
-nav ul.flasher-nav-links {
-  padding: 0 !important;
 }
 
 /* Step containers */
@@ -418,6 +421,43 @@ nav ul.flasher-nav-links {
 
 .flasher-status-bar.connected .flasher-status-label {
   color: var(--flasher-success);
+}
+
+/* Detected chip info */
+.flasher-detected-chip {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  padding: 0.4rem 0.75rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--flasher-border);
+  border-radius: var(--flasher-radius);
+  font-size: 0.85rem;
+}
+
+.flasher-detected-label {
+  color: var(--flasher-text-muted);
+}
+
+.flasher-detected-model {
+  font-family: var(--flasher-font-mono);
+  color: var(--flasher-text);
+  font-weight: 600;
+}
+
+.flasher-chip-warning {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin-left: auto;
+  padding: 0.2rem 0.5rem;
+  background: rgba(255, 80, 80, 0.1);
+  border: 1px solid rgba(255, 80, 80, 0.3);
+  border-radius: 6px;
+  color: #ff5050;
+  font-size: 0.78rem;
+  font-weight: 600;
 }
 
 /* Inline device insights */
