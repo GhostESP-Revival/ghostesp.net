@@ -121,6 +121,24 @@ nav { position: relative; z-index: 2000; }
   flex-shrink: 0;
 }
 
+.welcome-baud-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  max-width: 300px;
+}
+
+.welcome-baud-label {
+  font-size: 0.85rem;
+  color: var(--serial-text-dim);
+  white-space: nowrap;
+}
+
+.welcome-baud-row select.btn {
+  flex: 1;
+}
+
 .welcome-hint {
   display: flex;
   align-items: center;
@@ -190,6 +208,11 @@ select.btn {
   background-position: right 0.6rem center;
   background-size: 0.9em;
   cursor: pointer;
+}
+
+select.btn option {
+  background: #1a1a1a;
+  color: #fff;
 }
 
 /* Tabs */

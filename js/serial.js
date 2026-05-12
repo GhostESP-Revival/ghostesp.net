@@ -30,6 +30,7 @@ class SerialConsole {
     this.output = document.getElementById("output");
     this.console = document.getElementById("console");
     this.baudSelect = document.getElementById("baudSelect");
+    this.welcomeBaud = document.getElementById("welcomeBaud");
     this.autoConnectButton = document.getElementById("autoConnectButton");
     this.baudRateDisplay = document.getElementById("baudRate");
     this.connectionStatus = document.getElementById("connectionStatus");
@@ -80,9 +81,16 @@ class SerialConsole {
     if (this.baudSelect) {
       this.baudSelect.addEventListener("change", async () => {
         this.updateBaudRateDisplay();
+        if (this.welcomeBaud) this.welcomeBaud.value = this.baudSelect.value;
         if (this.isConnected) {
           await this.reconnectWithNewBaudRate();
         }
+      });
+    }
+    if (this.welcomeBaud) {
+      this.welcomeBaud.addEventListener("change", () => {
+        if (this.baudSelect) this.baudSelect.value = this.welcomeBaud.value;
+        this.updateBaudRateDisplay();
       });
     }
   }
