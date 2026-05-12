@@ -482,6 +482,10 @@ nav ul.flasher-nav-links li::marker {
   animation: flasherFadeIn 0.3s ease-in-out;
 }
 
+.flasher-device-insights.visible.no-screen {
+  grid-template-columns: 1fr;
+}
+
 /* Chip Info Panel */
 .flasher-chip-info {
   display: none;

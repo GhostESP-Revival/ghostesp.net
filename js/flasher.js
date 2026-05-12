@@ -97,7 +97,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const panel = getElementById('chipInfoPanel');
             const statsContainer = getElementById('chipStats');
             const screenDisplay = getElementById('screenDisplay');
-            const screenPreview = getElementById('screenPreview');
             const screenMeta = getElementById('screenMeta');
 
             if (!panel || !statsContainer) return;
@@ -164,11 +163,9 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             // Handle screen display
-            if (info.CHIP_SCREEN || info.CHIP_SCREEN_TYPE) {
-                if (screenPreview) {
-                    screenPreview.textContent = info.CHIP_SCREEN || 'Screen detected';
-                }
-                
+            const hasScreen = !!(info.CHIP_SCREEN || info.CHIP_SCREEN_TYPE);
+
+            if (hasScreen) {
                 const metaItems = [];
                 if (info.CHIP_SCREEN_TYPE) {
                     metaItems.push(`Type: <span>${info.CHIP_SCREEN_TYPE}</span>`);
@@ -191,6 +188,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     screenDisplay.classList.remove('visible');
                 }
             }
+            deviceHasMirrorCapableDisplay = hasScreen ? true : false;
+            if (flasherMirrorInstance) {
+                flasherMirrorInstance.hasDisplay = deviceHasMirrorCapableDisplay;
+            }
+            if (insights) {
+                insights.classList.toggle('no-screen', !hasScreen);
+            }
         }
 
         function clearChipInfoDisplay() {
@@ -199,16 +203,27 @@ document.addEventListener('DOMContentLoaded', () => {
             const screenDisplay = getElementById('screenDisplay');
             if (panel) panel.classList.remove('visible');
             if (screenDisplay) screenDisplay.classList.remove('visible');
-            if (insights) insights.classList.remove('visible');
+            if (insights) {
+                insights.classList.remove('visible');
+                insights.classList.remove('no-screen');
+            }
+            deviceHasMirrorCapableDisplay = null;
         }
 
         let flasherMirrorInstance = null;
+        let deviceHasMirrorCapableDisplay = null;
 
         async function initFlasherMirror() {
             const mirrorRoot = getElementById('mirrorRoot');
             const screenDisplay = getElementById('screenDisplay');
             const insights = getElementById('deviceInsights');
             if (!mirrorRoot || !screenDisplay) return;
+
+            // Skip mirror for devices without a frame-capable display
+            if (deviceHasMirrorCapableDisplay === false) {
+                espLoaderTerminal.writeLine("Device has status OLED only — screen mirroring skipped");
+                return;
+            }
 
             // Create compact mirror UI with hidden controls for SerialMirror compatibility
             mirrorRoot.innerHTML = `
@@ -219,7 +234,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                     <!-- Hidden elements SerialMirror expects -->
                     <div style="display:none">
-                        <span id="mirrorResolution">320×240</span>
+                        <span id="mirrorResolution">320\u00d7240</span>
                         <span id="mirrorFps">0</span>
                         <span id="mirrorFrameCount">0</span>
                         <span id="mirrorBaudRate">115200</span>
