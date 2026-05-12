@@ -43,6 +43,7 @@ class SerialMirror {
     this._lastFrameTime = 0;
     this._lastDataTime = 0;
     this._unsubscribeRaw = null;
+    this.hasDisplay = null;
 
     this.canvas = rootEl.querySelector("#mirrorDisplay");
     this.ctx = this.canvas.getContext("2d", { willReadFrequently: true });
@@ -714,7 +715,13 @@ class SerialMirror {
     const now = performance.now();
     const recentlyReceivedData = this._lastDataTime && (now - this._lastDataTime) < 1500;
     this.overlay.classList.remove("hidden");
-    this.overlay.textContent = recentlyReceivedData ? "Receiving data, waiting for first frame..." : "Not receiving data. Try a different baudrate.";
+    if (this.hasDisplay === false) {
+      this.overlay.textContent = "No display detected on this device — screen mirroring is unavailable";
+    } else if (recentlyReceivedData) {
+      this.overlay.textContent = "Receiving data, waiting for first frame...";
+    } else {
+      this.overlay.textContent = "Not receiving data. Try a different baudrate.";
+    }
   }
 }
 
