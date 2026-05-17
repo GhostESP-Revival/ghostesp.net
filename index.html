@@ -8,8 +8,8 @@
   
   <!-- SEO Meta Tags -->
   <title>GhostESP: Revival - ESP32 Wireless Security Testing Platform</title>
-  <meta name="description" content="Transform your ESP32 into a powerful wireless testing platform. WiFi deauth, BLE scanning, NFC support, GPS wardriving, and more. Open-source firmware for security research.">
-  <meta name="keywords" content="GhostESP, Ghost ESP, ESP32, WiFi testing, wireless security, penetration testing, BLE scanning, deauth detection, WiFi analysis, ESP32-C5, ESP32-S3, ESP32-C3, ESP32-C6, security research, NFC, wardriving">
+   <meta name="description" content="An open-source wireless platform for ESP32 devices. WiFi, BLE, NFC, GPS wardriving, and more. Firmware, web tools, companion app &mdash; everything you need for wireless security research.">
+   <meta name="keywords" content="GhostESP, Ghost ESP, ESP32, wireless platform, WiFi testing, wireless security, penetration testing, BLE scanning, deauth detection, WiFi analysis, ESP32-C5, ESP32-S3, ESP32-C3, ESP32-C6, security research, NFC, wardriving">
   <meta name="author" content="Jay Candel">
   <meta name="robots" content="index, follow">
   <meta name="language" content="English">
@@ -17,7 +17,7 @@
   <!-- Open Graph Tags -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="GhostESP: Revival">
-  <meta property="og:description" content="Open-source firmware transforming ESP32 devices into penetration testing devices.">
+   <meta property="og:description" content="An open-source wireless platform for ESP32 devices. Firmware, web tools, companion app, and more for wireless security research.">
   <meta property="og:url" content="https://ghostesp.net">
   <meta property="og:site_name" content="GhostESP">
   <meta property="og:image" content="https://ghostesp.net/images/IMG_1178.webp">
@@ -28,7 +28,7 @@
   <!-- Twitter Card Tags -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="GhostESP: Revival">
-  <meta name="twitter:description" content="Transform your ESP32 into a penetration testing device.">
+   <meta name="twitter:description" content="An open-source wireless platform for ESP32 devices.">
   <meta name="twitter:image" content="https://ghostesp.net/images/IMG_1178.webp">
   
   <!-- Canonical URL -->
@@ -193,7 +193,8 @@
   <section class="hero" style="background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.75)), url('images/IMG_1178.webp') center/cover no-repeat;">
     <div class="container" data-aos="fade-up" data-aos-duration="1000">
       <img src="images/ghostespdotnet.png" alt="GhostESP" class="hero-logo">
-      <p class="hero-tagline">Turn your ESP32 into a penetration testing device.</p>
+      <p class="hero-tagline">An open-source wireless platform for ESP32 devices.</p>
+      <p class="hero-subtitle">Firmware &middot; Web Flasher &middot; Serial Console &middot; Companion App &middot; IR Database &middot; Wardriving Map</p>
       <div class="hero-actions">
         <a href="#getting-started" class="btn btn-primary">Get Started</a>
         <a href="https://github.com/GhostESP-Revival/GhostESP" class="btn btn-secondary" target="_blank">GitHub</a>
@@ -245,7 +246,7 @@
         <div class="card card-primary" data-aos="fade-up" data-aos-delay="100">
           <div class="card-step-number">1</div>
           <h3>Pick a Board</h3>
-          <p>Browse tested ESP32 boards that work great with Ghost ESP</p>
+           <p>Browse tested ESP32 boards that work great with GhostESP</p>
           <a href="boards.html" class="btn btn-primary">View Boards</a>
         </div>
         <div class="card card-primary" data-aos="fade-up" data-aos-delay="200">
@@ -258,7 +259,7 @@
           <div class="card-step-number">3</div>
           <h3>Serial Console</h3>
           <p>Configure your device with console, file manager, and screen mirror</p>
-          <a href="https://ghostesp.net/serial" target="_blank" class="btn btn-primary">Open Tools</a>
+           <a href="https://ghostesp.net/serial" target="_blank" class="btn btn-primary">Open Console</a>
         </div>
       </div>
 
@@ -298,74 +299,44 @@
       <h2 data-aos="fade-up">Features</h2>
       <div class="grid">
         <div class="card" data-aos="fade-up" data-aos-delay="50">
-          <div class="card-icon"><i data-lucide="rss"></i></div>
-          <h3>NFC</h3>
-          <p>Read and write NTAG tags, read MIFARE Classic with dictionary attacks</p>
+          <div class="card-icon"><i data-lucide="wifi"></i></div>
+          <h3>WiFi Suite</h3>
+          <p>2.4 &amp; 5 GHz wireless testing &mdash; deauth, beacon spam, EAPOL/PMKID capture, karma attacks, evil portals, WPA3 testing, PCAP logging, and live Wireshark streaming over USB</p>
         </div>
         <div class="card" data-aos="fade-up" data-aos-delay="100">
-          <div class="card-icon"><i data-lucide="shield-alert"></i></div>
-          <h3>Evil Portal</h3>
-          <p>Captive portal attacks with domain spoofing and credential harvesting</p>
-        </div>
-        <div class="card" data-aos="fade-up" data-aos-delay="150">
-          <div class="card-icon"><i data-lucide="wifi"></i></div>
-          <h3>WiFi</h3>
-          <p>Deauth, beacon spam, packet capture, karma attack, and PCAP logging</p>
-        </div>
-        <div class="card" data-aos="fade-up" data-aos-delay="200">
           <div class="card-icon"><i data-lucide="bluetooth"></i></div>
           <h3>Bluetooth LE</h3>
-          <p>Scan, capture, spam, wardriving, and AirTag spoofing</p>
+          <p>Scan, capture, and spam BLE devices; GPS wardriving with WiGLE CSV export; AirTag spoofing and Flipper Zero detection</p>
+        </div>
+        <div class="card" data-aos="fade-up" data-aos-delay="150">
+          <div class="card-icon"><i data-lucide="scan-line"></i></div>
+          <h3>NFC &amp; Infrared</h3>
+          <p>Read/write NTAG tags with MIFARE Classic dictionary attacks; IR signal learning and transmission with Flipper Zero file compatibility</p>
+        </div>
+        <div class="card" data-aos="fade-up" data-aos-delay="200">
+          <div class="card-icon"><i data-lucide="radio"></i></div>
+          <h3>SubGHz Radio</h3>
+          <p>CC1101 frequency analysis, capture/replay across 315&ndash;915 MHz, NRF24 sniffing, and Zigbee/802.15.4 packet capture</p>
         </div>
         <div class="card" data-aos="fade-up" data-aos-delay="250">
-          <div class="card-icon"><i data-lucide="link-2"></i></div>
-          <h3>GhostLink</h3>
-          <p>Connect two Ghost ESP devices for dual communication and control</p>
+          <div class="card-icon"><i data-lucide="network"></i></div>
+          <h3>Network Analysis</h3>
+          <p>Ethernet/W5500 support with ARP poisoning, DNS interception, TLS SNI/HTTP/FTP credential capture, DIAL/Chromecast testing</p>
         </div>
         <div class="card" data-aos="fade-up" data-aos-delay="300">
-          <div class="card-icon"><i data-lucide="nfc"></i></div>
-          <h3>Infrared</h3>
-          <p>Learn and transmit IR signals with Flipper Zero file support</p>
+          <div class="card-icon"><i data-lucide="shield-alert"></i></div>
+          <h3>Threat Detection</h3>
+          <p>Detect Wi-Fi Pineapples, evil twin APs, AirTags, card skimmers, and passive 2.4 GHz jamming signatures</p>
         </div>
         <div class="card" data-aos="fade-up" data-aos-delay="350">
-          <div class="card-icon"><i data-lucide="eye"></i></div>
-          <h3>Threat Detection</h3>
-          <p>Detect Pineapples, evil twins, AirTags, card skimmers, and passive 2.4GHz jamming signatures</p>
+          <div class="card-icon"><i data-lucide="monitor-smartphone"></i></div>
+          <h3>Touch &amp; Web UI</h3>
+          <p>Full LVGL graphical interface with touch, keyboard, and encoder input; web dashboard for remote configuration, file management, and wired screen mirroring</p>
         </div>
         <div class="card" data-aos="fade-up" data-aos-delay="400">
-          <div class="card-icon"><i data-lucide="eye"></i></div>
-          <h3>Threat Detection</h3>
-          <p>Detect Pineapples, evil twins, AirTags, and card skimmers</p>
-        </div>
-        <div class="card" data-aos="fade-up" data-aos-delay="450">
-          <div class="card-icon"><i data-lucide="smartphone"></i></div>
-          <h3>Web Interface</h3>
-          <p>Configure device, manage files, and run commands from your browser</p>
-        </div>
-        <div class="card" data-aos="fade-up" data-aos-delay="500">
-          <div class="card-icon"><i data-lucide="monitor"></i></div>
-          <h3>Display Support</h3>
-          <p>Touch screens, keyboards, encoders, and custom UI themes</p>
-        </div>
-        <div class="card" data-aos="fade-up" data-aos-delay="550">
-          <div class="card-icon"><i data-lucide="network"></i></div>
-          <h3>Ethernet</h3>
-          <p>ARP poisoning, DNS interception, host discovery, and network fingerprinting over wired connections</p>
-        </div>
-        <div class="card" data-aos="fade-up" data-aos-delay="600">
-          <div class="card-icon"><i data-lucide="radio"></i></div>
-          <h3>SubGHz (CC1101)</h3>
-          <p>Frequency analyzer, capture/replay, and multi-band scanning across 315–915 MHz</p>
-        </div>
-        <div class="card" data-aos="fade-up" data-aos-delay="650">
-          <div class="card-icon"><i data-lucide="video"></i></div>
-          <h3>Camera Streaming</h3>
-          <p>Live MJPEG streaming, motion detection with Discord webhooks, and SD card snapshots</p>
-        </div>
-        <div class="card" data-aos="fade-up" data-aos-delay="700">
-          <div class="card-icon"><i data-lucide="battery-charging"></i></div>
-          <h3>Power Modes</h3>
-          <p>RGB effects, power saving mode, and customizable LED feedback</p>
+          <div class="card-icon"><i data-lucide="layers"></i></div>
+          <h3>Platform Ecosystem</h3>
+          <p>GhostLink dual-device communication, Android companion app, Flipper Zero companion, camera streaming with motion detection and Discord webhook alerts</p>
         </div>
       </div>
     </div>
