@@ -23,6 +23,7 @@ const components = {
           <li><a href="${prefix}#features">Features</a></li>
           <li><a href="boards.html">Boards</a></li>
           <li><a href="flasher.html">Flasher</a></li>
+          <li><a href="marketplace.html">Marketplace</a></li>
           <li><a href="serial.html">Serial</a></li>
           <li><a href="irdb.html">IRDB</a></li>
           <li><a href="openwd.html">WDMap</a></li>
