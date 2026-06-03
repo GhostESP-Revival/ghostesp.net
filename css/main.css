@@ -208,8 +208,7 @@ nav .container {
   height: 0.75rem;
 }
 
-.nav-dropdown:hover .nav-dropdown-menu,
-.nav-dropdown:focus-within .nav-dropdown-menu {
+.nav-dropdown:hover .nav-dropdown-menu {
   opacity: 1;
   pointer-events: auto;
   transform: translate(-50%, 0);
@@ -238,8 +237,7 @@ nav .container {
 }
 
 .nav-links a:hover,
-.nav-dropdown-toggle:hover,
-.nav-dropdown:focus-within .nav-dropdown-toggle {
+.nav-dropdown-toggle:hover {
   color: var(--text);
   transform: translateY(-1px);
 }
