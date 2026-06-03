@@ -1,0 +1,106 @@
+{
+  "app_icon": "GESPAppGallery",
+  "bg_tile": "bg_tile.gimg",
+  "colors": {
+    "accent": "0xC93DFF",
+    "background": "0x000000",
+    "surface": "0x111111",
+    "surface_alt": "0x1A1A1A",
+    "text": "0xFFFFFF",
+    "text_muted": "0x888888"
+  },
+  "format": "ghostesp_asset_pack",
+  "icons": {
+    "GESPAppGallery": {
+      "l": "icons/GESPAppGallery_l.gimg",
+      "s": "icons/GESPAppGallery_s.gimg"
+    },
+    "Map": {
+      "l": "icons/Map_l.gimg",
+      "s": "icons/Map_s.gimg"
+    },
+    "accelerometer_icon": {
+      "l": "icons/accelerometer_icon_l.gimg",
+      "s": "icons/accelerometer_icon_s.gimg"
+    },
+    "bluetooth": {
+      "l": "icons/bluetooth_l.gimg",
+      "s": "icons/bluetooth_s.gimg"
+    },
+    "clock_icon": {
+      "l": "icons/clock_icon_l.gimg",
+      "s": "icons/clock_icon_s.gimg"
+    },
+    "compass": {
+      "l": "icons/compass_l.gimg",
+      "s": "icons/compass_s.gimg"
+    },
+    "dualcomm": {
+      "l": "icons/dualcomm_l.gimg",
+      "s": "icons/dualcomm_s.gimg"
+    },
+    "enviii": {
+      "l": "icons/enviii_l.gimg",
+      "s": "icons/enviii_s.gimg"
+    },
+    "ethernet": {
+      "l": "icons/ethernet_l.gimg",
+      "s": "icons/ethernet_s.gimg"
+    },
+    "ghost": {
+      "l": "icons/ghost_l.gimg",
+      "s": "icons/ghost_s.gimg"
+    },
+    "infrared": {
+      "l": "icons/infrared_l.gimg",
+      "s": "icons/infrared_s.gimg"
+    },
+    "lan_50dp_FFFFFF_FILL0_wght400_GRAD0_opsz48": {
+      "l": "icons/lan_50dp_FFFFFF_FILL0_wght400_GRAD0_opsz48_l.gimg",
+      "s": "icons/lan_50dp_FFFFFF_FILL0_wght400_GRAD0_opsz48_s.gimg"
+    },
+    "lock": {
+      "l": "icons/lock_l.gimg",
+      "s": "icons/lock_s.gimg"
+    },
+    "nfc_icon": {
+      "l": "icons/nfc_icon_l.gimg",
+      "s": "icons/nfc_icon_s.gimg"
+    },
+    "nrf24": {
+      "l": "icons/nrf24_l.gimg",
+      "s": "icons/nrf24_s.gimg"
+    },
+    "rave": {
+      "l": "icons/rave_l.gimg",
+      "s": "icons/rave_s.gimg"
+    },
+    "settings_icon": {
+      "l": "icons/settings_icon_l.gimg",
+      "s": "icons/settings_icon_s.gimg"
+    },
+    "speaker_50dp_FFFFFF_FILL0_wght400_GRAD0_opsz48": {
+      "l": "icons/speaker_50dp_FFFFFF_FILL0_wght400_GRAD0_opsz48_l.gimg",
+      "s": "icons/speaker_50dp_FFFFFF_FILL0_wght400_GRAD0_opsz48_s.gimg"
+    },
+    "subghz": {
+      "l": "icons/subghz_l.gimg",
+      "s": "icons/subghz_s.gimg"
+    },
+    "terminal_icon": {
+      "l": "icons/terminal_icon_l.gimg",
+      "s": "icons/terminal_icon_s.gimg"
+    },
+    "usb": {
+      "l": "icons/usb_l.gimg",
+      "s": "icons/usb_s.gimg"
+    },
+    "wifi": {
+      "l": "icons/wifi_l.gimg",
+      "s": "icons/wifi_s.gimg"
+    }
+  },
+  "id": "dedsec",
+  "name": "Dedsec",
+  "version": 1
+}

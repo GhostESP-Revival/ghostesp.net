@@ -19,19 +19,40 @@ const components = {
           <span></span>
         </button>
         <ul class="${navLinksClass}">
-          <li><a href="${prefix}#getting-started">Get Started</a></li>
-          <li><a href="${prefix}#features">Features</a></li>
-          <li><a href="boards.html">Boards</a></li>
-          <li><a href="flasher.html">Flasher</a></li>
-          <li><a href="marketplace.html">Marketplace</a></li>
-          <li><a href="serial.html">Serial</a></li>
-          <li><a href="irdb.html">IRDB</a></li>
-          <li><a href="openwd.html">WDMap</a></li>
-          <li><a href="companion.html">App</a></li>
-          <li><a href="https://docs.ghostesp.net" target="_blank">Docs</a></li>
-          <li><a href="https://shop.ghostesp.net" target="_blank">Merch</a></li>
-          <li><a href="blog.html">Blog</a></li>
-          <li><a href="feedback.html">Feedback</a></li>
+          <li class="nav-dropdown">
+            <button class="nav-dropdown-toggle" type="button" aria-haspopup="true">Getting Started</button>
+            <ul class="nav-dropdown-menu">
+              <li><a href="${prefix}#getting-started">Get Started</a></li>
+              <li><a href="${prefix}#features">Features</a></li>
+              <li><a href="boards.html">Boards</a></li>
+            </ul>
+          </li>
+          <li class="nav-dropdown">
+            <button class="nav-dropdown-toggle" type="button" aria-haspopup="true">Utilities</button>
+            <ul class="nav-dropdown-menu">
+              <li><a href="flasher.html">Flasher</a></li>
+              <li><a href="serial.html">Serial</a></li>
+              <li><a href="openwd.html">WDMap</a></li>
+              <li><a href="companion.html">Companion App</a></li>
+            </ul>
+          </li>
+          <li class="nav-dropdown">
+            <button class="nav-dropdown-toggle" type="button" aria-haspopup="true">Downloads</button>
+            <ul class="nav-dropdown-menu">
+              <li><a href="marketplace.html">Apps</a></li>
+              <li><a href="asset-marketplace.html">Assets</a></li>
+              <li><a href="irdb.html">IRDB</a></li>
+            </ul>
+          </li>
+          <li class="nav-dropdown">
+            <button class="nav-dropdown-toggle" type="button" aria-haspopup="true">Resources</button>
+            <ul class="nav-dropdown-menu">
+              <li><a href="https://docs.ghostesp.net" target="_blank">Docs</a></li>
+              <li><a href="https://shop.ghostesp.net" target="_blank">Merch</a></li>
+              <li><a href="blog.html">Blog</a></li>
+              <li><a href="feedback.html">Feedback</a></li>
+            </ul>
+          </li>
         </ul>
       </div>
     `;

@@ -164,22 +164,24 @@ body:has(.flasher-page) {
     height: auto;
   }
 
-  nav ul.flasher-nav-links li {
+  nav ul.flasher-nav-links > li {
     display: flex;
     align-items: center;
     margin: 0;
     padding: 0;
   }
 
-  nav ul.flasher-nav-links a {
+  nav ul.flasher-nav-links > li > a,
+  nav ul.flasher-nav-links > li > .nav-dropdown-toggle {
     display: flex;
     align-items: center;
     line-height: 1;
   }
 
   nav ul.flasher-nav-links,
-  nav ul.flasher-nav-links li,
-  nav ul.flasher-nav-links a {
+  nav ul.flasher-nav-links > li,
+  nav ul.flasher-nav-links > li > a,
+  nav ul.flasher-nav-links > li > .nav-dropdown-toggle {
     transform: none;
   }
 }

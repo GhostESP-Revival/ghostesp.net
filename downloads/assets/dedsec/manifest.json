@@ -1,0 +1,47 @@
+{
+  "id": "dedsec",
+  "name": "Dedsec",
+  "version": 1,
+  "app_icon": "GESPAppGallery",
+  "colors": {
+    "accent": "0xC93DFF",
+    "background": "0x000000",
+    "surface": "0x111111",
+    "surface_alt": "0x1A1A1A",
+    "text": "0xFFFFFF",
+    "text_muted": "0x888888"
+  },
+  "icon_variants": [32, 64],
+  "icon_sources": {
+    "accelerometer_icon": "skull.png",
+    "bluetooth": "skull.png",
+    "clock_icon": "skull.png",
+    "compass": "skull.png",
+    "dualcomm": "skull.png",
+    "ethernet": "skull.png",
+    "enviii": "skull.png",
+    "GESPAppGallery": "skull.png",
+    "ghost": "skull.png",
+    "infrared": "skull.png",
+    "lan_50dp_FFFFFF_FILL0_wght400_GRAD0_opsz48": "skull.png",
+    "lock": "skull.png",
+    "Map": "skull.png",
+    "nfc_icon": "skull.png",
+    "nrf24": "skull.png",
+    "rave": "skull.png",
+    "settings_icon": "skull.png",
+    "speaker_50dp_FFFFFF_FILL0_wght400_GRAD0_opsz48": "skull.png",
+    "subghz": "skull.png",
+    "terminal_icon": "skull.png",
+    "usb": "skull.png",
+    "wifi": "skull.png"
+  },
+  "background_sources": {
+    "bg_tile": {
+      "source": "background.png",
+      "width": 240,
+      "height": 320,
+      "format": "rgb565"
+    }
+  }
+}
