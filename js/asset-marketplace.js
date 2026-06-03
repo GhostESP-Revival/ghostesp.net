@@ -12,7 +12,7 @@
       contents: ['Icons', 'Background', 'Colors'],
       preview: 'downloads/assets/dedsec/screenshot.png',
       file: 'dedsec.gtheme',
-      size: '488.6 KB',
+      size: '503.3 KB',
       url: 'downloads/assets/dedsec/dist/dedsec.gtheme'
     }
   ];

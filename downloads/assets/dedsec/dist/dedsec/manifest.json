@@ -1,6 +1,11 @@
 {
   "app_icon": "GESPAppGallery",
-  "bg_tile": "bg_tile.gimg",
+  "backgrounds": {
+    "full": "bg/bg_full.gimg",
+    "half": "bg/bg_half.gimg",
+    "tile": "bg/bg_tile.gimg",
+    "tiny": "bg/bg_tiny.gimg"
+  },
   "colors": {
     "accent": "0xC93DFF",
     "background": "0x000000",

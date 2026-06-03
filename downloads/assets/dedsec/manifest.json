@@ -37,11 +37,9 @@
     "wifi": "skull.png"
   },
   "background_sources": {
-    "bg_tile": {
+    "background": {
       "source": "background.png",
-      "width": 240,
-      "height": 320,
-      "format": "rgb565"
+      "variants": true
     }
   }
 }
