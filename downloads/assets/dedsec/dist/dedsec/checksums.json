@@ -1,5 +1,8 @@
 {
-  "bg_tile.gimg": "680c1a7f96d63826",
+  "bg/bg_full.gimg": "680c1a7f96d63826",
+  "bg/bg_half.gimg": "9098fea3e79d5432",
+  "bg/bg_tile.gimg": "0098853f42c3f463",
+  "bg/bg_tiny.gimg": "04c99e480b4b82de",
   "icons/GESPAppGallery_l.gimg": "3a11dc66058780e8",
   "icons/GESPAppGallery_s.gimg": "23c458e163f03734",
   "icons/Map_l.gimg": "3a11dc66058780e8",
@@ -44,5 +47,5 @@
   "icons/usb_s.gimg": "23c458e163f03734",
   "icons/wifi_l.gimg": "3a11dc66058780e8",
   "icons/wifi_s.gimg": "23c458e163f03734",
-  "manifest.json": "e3a9fe9507120dbe"
+  "manifest.json": "c7043eb43bd01b78"
 }
