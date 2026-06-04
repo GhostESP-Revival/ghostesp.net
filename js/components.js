@@ -50,6 +50,8 @@ const components = {
               <li><a href="https://docs.ghostesp.net" target="_blank">Docs</a></li>
               <li><a href="https://shop.ghostesp.net" target="_blank">Merch</a></li>
               <li><a href="blog.html">Blog</a></li>
+              <li><a href="brand-assets.html">Brand Assets</a></li>
+              <li><a href="brand-guidelines.html">Brand Guidelines</a></li>
               <li><a href="feedback.html">Feedback</a></li>
             </ul>
           </li>

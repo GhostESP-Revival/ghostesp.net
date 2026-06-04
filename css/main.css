@@ -1204,7 +1204,7 @@ h3 {
     box-shadow: none;
     opacity: 1;
     pointer-events: auto;
-    transform: none;
+    transform: none !important;
   }
 
   .nav-dropdown-menu::before {
@@ -1219,6 +1219,21 @@ h3 {
     display: block;
     padding: 0.25rem 0;
     font-size: 0.95rem;
+    transform: none !important;
+    transition: none !important;
+    overflow: hidden;
+  }
+
+  .nav-links a:hover,
+  .nav-dropdown-toggle:hover {
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .nav-links a::after,
+  .nav-links > li > a::after {
+    display: none !important;
+    width: 0 !important;
   }
 
   .hero {
