@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#000000">
+
+  <title>Brand Usage Guidelines - GhostESP</title>
+  <meta name="description" content="GhostESP brand usage guidelines. Rules for using the GhostESP name, logo, and assets in your products and content.">
+  <meta name="author" content="Jay Candel">
+  <meta name="robots" content="index, follow">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Brand Usage Guidelines - GhostESP">
+  <meta property="og:description" content="Rules for using the GhostESP name, logo, and assets in your products and content.">
+  <meta property="og:url" content="https://ghostesp.net/brand-guidelines.html">
+  <meta property="og:site_name" content="GhostESP">
+  <meta property="og:image" content="https://ghostesp.net/images/IMG_1178.webp">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Brand Usage Guidelines - GhostESP">
+  <meta name="twitter:description" content="Rules for using the GhostESP name, logo, and assets.">
+  <meta name="twitter:image" content="https://ghostesp.net/images/IMG_1178.webp">
+
+  <link rel="canonical" href="https://ghostesp.net/brand-guidelines.html">
+
+  <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="css/main.css">
+  <script src="https://unpkg.com/lucide@latest" defer></script>
+  <style>
+    .guidelines-hero {
+      text-align: center;
+      padding: 6rem 1rem 2rem;
+      position: relative;
+      z-index: 1;
+    }
+    .guidelines-hero p {
+      color: var(--text-dim);
+      max-width: 600px;
+      margin: 0 auto;
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+    .guidelines-content {
+      max-width: 800px;
+      margin: 0 auto;
+      padding-bottom: 4rem;
+    }
+    .guidelines-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2.5rem;
+    }
+    .guidelines-content h3 {
+      margin-top: 2.5rem;
+      margin-bottom: 0.75rem;
+      font-size: 1.2rem;
+    }
+    .guidelines-content h3:first-of-type {
+      margin-top: 0;
+    }
+    .guidelines-content p {
+      color: var(--text-dim);
+      font-size: 0.95rem;
+      line-height: 1.7;
+      margin-bottom: 0.75rem;
+    }
+    .guidelines-content ul {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 0.75rem;
+    }
+    .guidelines-content li {
+      color: var(--text-dim);
+      font-size: 0.95rem;
+      padding: 0.35rem 0;
+      padding-left: 1.5rem;
+      position: relative;
+    }
+    .guidelines-content li::before {
+      content: '\2713';
+      position: absolute;
+      left: 0;
+      color: #00ff80;
+      font-weight: bold;
+    }
+    .guidelines-content li.dont::before {
+      content: '\2717';
+      color: #ff4444;
+    }
+    .guidelines-content code {
+      background: rgba(255, 255, 255, 0.06);
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+      font-size: 0.85em;
+      font-family: var(--font-mono);
+    }
+    .guidelines-content hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+    .guidelines-content a {
+      color: var(--accent);
+    }
+    .short-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 1rem;
+    }
+    .short-list li::before {
+      content: '\2022';
+      color: #00ff80;
+    }
+    .example-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin: 1rem 0;
+    }
+    .example-col h5 {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 0.5rem;
+      font-family: var(--font-mono);
+    }
+    .example-col.allowed h5 { color: #00ff80; }
+    .example-col.not-allowed h5 { color: #ff4444; }
+    .example-col ul { margin: 0; }
+    .example-col li {
+      padding: 0.25rem 0;
+      padding-left: 0;
+    }
+    .example-col li::before { display: none; }
+    .updated {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.35);
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+    @media (max-width: 600px) {
+      .example-grid {
+        grid-template-columns: 1fr;
+      }
+      .guidelines-card {
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="dotTerrain"></canvas>
+  <script>
+    (function() {
+      var canvas = document.getElementById('dotTerrain');
+      if (!canvas) return;
+      var ctx = canvas.getContext('2d');
+      var SPACING = 28;
+      var dots = [];
+      var ripples = [];
+      var mouseX = -9999, mouseY = -9999;
+      var lastX = 0, lastY = 0;
+      var smoothMouseX = -9999, smoothMouseY = -9999;
+      function init() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        dots = [];
+        var cols = Math.ceil(canvas.width / SPACING) + 1;
+        var rows = Math.ceil(canvas.height / SPACING) + 1;
+        for (var r = 0; r < rows; r++) {
+          for (var c = 0; c < cols; c++) {
+            dots.push({ baseX: c * SPACING, baseY: r * SPACING, x: 0, y: 0, brightness: 0.15, targetBrightness: 0.15, radius: 1.5, targetRadius: 1.5 });
+          }
+        }
+      }
+      document.addEventListener('mousemove', function(e) {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        var dx = e.clientX - lastX;
+        var dy = e.clientY - lastY;
+        var dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist > 30) {
+          ripples.push({ x: e.clientX, y: e.clientY, radius: 0, strength: 1 });
+          lastX = e.clientX;
+          lastY = e.clientY;
+        }
+      });
+      function animate() {
+        smoothMouseX += (mouseX - smoothMouseX) * 0.2;
+        smoothMouseY += (mouseY - smoothMouseY) * 0.2;
+        for (var i = ripples.length - 1; i >= 0; i--) {
+          ripples[i].radius += 7;
+          ripples[i].strength *= 0.97;
+          if (ripples[i].strength < 0.01) ripples.splice(i, 1);
+        }
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        for (var d = 0; d < dots.length; d++) {
+          var dot = dots[d];
+          var bx = dot.baseX + SPACING / 2;
+          var by = dot.baseY + SPACING / 2;
+          dot.targetBrightness = 0.2;
+          dot.targetRadius = 1.8;
+          var mdx = bx - smoothMouseX;
+          var mdy = by - smoothMouseY;
+          var mdist = Math.sqrt(mdx * mdx + mdy * mdy);
+          if (mdist < 220) {
+            var factor = 1 - mdist / 220;
+            factor = factor * factor;
+            dot.targetBrightness = 0.2 + factor * 0.6;
+            dot.targetRadius = 1.8 + factor * 3;
+          }
+          for (var r = 0; r < ripples.length; r++) {
+            var rip = ripples[r];
+            var rdx = bx - rip.x;
+            var rdy = by - rip.y;
+            var rdist = Math.sqrt(rdx * rdx + rdy * rdy);
+            var wavePos = rdist - rip.radius;
+            var waveWidth = 120;
+            if (wavePos > -40 && wavePos < waveWidth) {
+              var falloff = 1 - Math.max(0, wavePos) / waveWidth;
+              falloff = falloff * falloff;
+              var edgeFactor = 1 - Math.abs(wavePos + 20) / 60;
+              edgeFactor = Math.max(0, edgeFactor);
+              var bump = (falloff * 0.5 + edgeFactor * 0.5) * rip.strength * 0.6;
+              dot.targetBrightness = Math.max(dot.targetBrightness, 0.2 + bump);
+              dot.targetRadius = Math.max(dot.targetRadius, 1.8 + bump * 3);
+            }
+          }
+          dot.brightness += (dot.targetBrightness - dot.brightness) * 0.3;
+          dot.radius += (dot.targetRadius - dot.radius) * 0.3;
+          ctx.beginPath();
+          ctx.arc(bx, by, dot.radius, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(255,255,255,' + dot.brightness + ')';
+          ctx.fill();
+        }
+        requestAnimationFrame(animate);
+      }
+      window.addEventListener('resize', init);
+      init();
+      animate();
+    })();
+  </script>
+  <nav id="nav"></nav>
+
+  <section class="guidelines-hero">
+    <div class="container">
+      <h1>Brand Usage Guidelines</h1>
+      <p>Rules for using the GhostESP name, logo, and assets in your products and content.</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 0;">
+    <div class="container guidelines-content">
+      <div class="guidelines-card">
+
+      <p>GhostESP: Revival is the actively maintained continuation of the original Ghost ESP project. We adopted and continued the name as <strong>GhostESP</strong> (also referred to as <strong>GhostESP: Revival</strong>) when we forked and revived the project.</p>
+      <p>The GhostESP logo, the "GhostESP: Revival" identity, and all original artwork in this repository are the intellectual property of the current project maintainers. The underlying firmware is licensed under GPL-3.0.</p>
+      <p>These guidelines exist to keep things fair and honest. We're a community-driven open-source project and we want people to build cool things with GhostESP, including selling hardware, but we need to protect the project's identity.</p>
+
+      <hr>
+
+      <h3>The Short Version</h3>
+      <ul class="short-list">
+        <li><strong>Use the name and logo freely</strong> to describe compatibility (e.g., "runs GhostESP").</li>
+        <li><strong>Do NOT name your product "GhostESP".</strong> You must not use our name as your product name.</li>
+        <li><strong>Don't pretend to be us.</strong> Make it clear you're a third-party seller.</li>
+        <li><strong>Don't use our branding on something that isn't actually running GhostESP.</strong></li>
+      </ul>
+
+      <hr>
+
+      <h3>Selling Hardware: Naming Rules</h3>
+      <p>We love that people are selling boards, but <strong>you cannot name your product "GhostESP"</strong>. This confuses users into thinking it is an official product.</p>
+
+      <div class="example-grid">
+        <div class="example-col allowed">
+          <h5>Allowed (Compatibility)</h5>
+          <ul>
+            <li>"DevBoard <strong>running GhostESP</strong>"</li>
+            <li>"WiFi Board <strong>for GhostESP</strong>"</li>
+            <li>"GhostESP <strong>Compatible</strong> Stick"</li>
+            <li>"Pre-flashed with <strong>GhostESP</strong>"</li>
+          </ul>
+        </div>
+        <div class="example-col not-allowed">
+          <h5>Not Allowed (Product Name)</h5>
+          <ul>
+            <li>"<strong>GhostESP</strong> Board"</li>
+            <li>"<strong>GhostESP</strong> Stick"</li>
+            <li>"<strong>GhostESP</strong> V2"</li>
+            <li>"The <strong>GhostESP</strong>"</li>
+          </ul>
+        </div>
+      </div>
+
+      <p>If you sell hardware, you must make it clear that your product is <em>compatible with</em> our software, not <em>produced by</em> us.</p>
+
+      <hr>
+
+      <h3>Using the Logo and Wordmarks</h3>
+      <p>The GhostESP logo, the "GhostESP" handwriting wordmarks, and associated artwork are our copyrighted assets. You may use them <strong>only</strong> if you follow these rules:</p>
+      <ul>
+        <li><strong>Non-Primary:</strong> The logo/wordmark cannot be the largest or most prominent element on your packaging or board branding. Your own brand/logo should be primary.</li>
+        <li><strong>No Modifications:</strong> Do not alter, stretch, or recolor the designs.</li>
+        <li class="dont"><strong>No Confusion:</strong> Use of the assets must not imply that your product is the "official" GhostESP hardware.</li>
+      </ul>
+
+      <hr>
+
+      <h3>Content Creators &amp; Press</h3>
+      <p>Cover GhostESP however you like. Tutorials, reviews, teardowns, comparisons &mdash; no worries. Credit "GhostESP: Revival" and link to <a href="https://ghostesp.net">ghostesp.net</a>.</p>
+
+      <hr>
+
+      <h3>Community Projects &amp; Forks</h3>
+      <p>Forks are encouraged under the GPL-3.0 license. However, if you fork the project, <strong>you may not use the GhostESP name or Logo</strong> for your fork's branding if it diverges significantly. You should choose a new name and state "Based on GhostESP".</p>
+
+      <hr>
+
+      <h3>What We Will Enforce</h3>
+      <p>We reserve the right to take action (including copyright takedowns) against:</p>
+      <ul>
+        <li class="dont"><strong>Impersonation:</strong> Pretending to be an official GhostESP store or maintainer.</li>
+        <li class="dont"><strong>Passing Off:</strong> Using "GhostESP" as a product name in a way that misleads consumers.</li>
+        <li class="dont"><strong>GPL Violations:</strong> Selling the firmware without providing source code.</li>
+        <li class="dont"><strong>Copyright Infringement:</strong> Using our logo or artwork on unauthorized merchandise or unrelated products.</li>
+      </ul>
+
+      <hr>
+
+      <h3>Legal Ownership</h3>
+      <ul>
+        <li><strong>Code:</strong> Licensed under GPL-3.0.</li>
+        <li><strong>Artwork &amp; Logo:</strong> Copyright &copy; 2024&ndash;2026 GhostESP Maintainers. All Rights Reserved.</li>
+        <li><strong>Brand Name:</strong> The "GhostESP" name represents the identity of the GhostESP: Revival project.</li>
+        <li><strong>Trademark:</strong> GhostESP is a trademark of the GhostESP: Revival project maintainers.</li>
+      </ul>
+
+      <hr>
+
+      <h3>Become an Official Partner</h3>
+      <p>We offer an <strong>Official Hardware Partner</strong> program for vendors who support the project. Partners receive:</p>
+      <ul>
+        <li>Written permission to use the "GhostESP" name and official logo on products.</li>
+        <li>Listing on our official website.</li>
+        <li>Priority support and updates.</li>
+      </ul>
+      <p>Interested? Reach out on <a href="https://discord.gg/5cyNmUMgwh" target="_blank">Discord</a> or email <a href="mailto:partners@ghostesp.net">partners@ghostesp.net</a>.</p>
+
+      <hr>
+
+      <h3>Questions?</h3>
+      <p>If you're unsure about something, just ask. Reach out on <a href="https://discord.gg/5cyNmUMgwh" target="_blank">Discord</a> or email <a href="mailto:partners@ghostesp.net">partners@ghostesp.net</a>.</p>
+
+      <p class="updated">Last updated: February 2026</p>
+
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <p>Developed by <a href="https://github.com/jaylikesbunda" target="_blank">Jay Candel</a></p>
+      <a href="https://ko-fi.com/jaylikesbunda" target="_blank" class="support-link">Support on Ko-Fi</a>
+      <div class="footer-links">
+        <a href="https://discord.gg/5cyNmUMgwh" target="_blank" class="icon-link" title="Discord">
+          <i class="bi bi-discord"></i>
+        </a>
+        <a href="https://github.com/GhostESP-Revival/GhostESP" target="_blank" class="icon-link" title="GitHub">
+          <i class="bi bi-github"></i>
+        </a>
+        <a href="https://instagram.com/ghostesprevival" target="_blank" class="icon-link" title="Instagram">
+          <i class="bi bi-instagram"></i>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/components.js" defer></script>
+  <script src="js/main.js" defer></script>
+</body>
+</html>

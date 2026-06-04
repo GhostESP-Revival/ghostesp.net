@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#000000">
+
+  <!-- SEO Meta Tags -->
+  <title>Brand Assets - GhostESP</title>
+  <meta name="description" content="Download official GhostESP brand assets including logos, mascots, compatibility badges, and social media graphics.">
+  <meta name="keywords" content="GhostESP brand assets, GhostESP logo, GhostESP mascot, brand kit, press kit">
+  <meta name="author" content="Jay Candel">
+  <meta name="robots" content="index, follow">
+
+  <!-- Open Graph Tags -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Brand Assets - GhostESP">
+  <meta property="og:description" content="Download official GhostESP logos, mascots, badges, and social media graphics.">
+  <meta property="og:url" content="https://ghostesp.net/brand-assets.html">
+  <meta property="og:site_name" content="GhostESP">
+  <meta property="og:image" content="https://ghostesp.net/images/IMG_1178.webp">
+
+  <!-- Twitter Card Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Brand Assets - GhostESP">
+  <meta name="twitter:description" content="Download official GhostESP logos, mascots, badges, and social media graphics.">
+  <meta name="twitter:image" content="https://ghostesp.net/images/IMG_1178.webp">
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://ghostesp.net/brand-assets.html">
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+
+  <!-- Fonts and Styles -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="css/main.css">
+  <script src="https://unpkg.com/lucide@latest" defer></script>
+  <style>
+    .brand-hero {
+      text-align: center;
+      padding: 6rem 1rem 2rem;
+      position: relative;
+      z-index: 1;
+    }
+    .brand-hero p {
+      color: var(--text-dim);
+      max-width: 600px;
+      margin: 0 auto 1.5rem;
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+    .brand-hero .btn {
+      margin: 0 0.5rem;
+    }
+    .asset-section {
+      margin-bottom: 4rem;
+    }
+    .asset-section-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.5rem;
+    }
+    .asset-section-header h3 {
+      font-size: 1.3rem;
+      margin: 0;
+    }
+    .asset-section-desc {
+      color: var(--text-dim);
+      font-size: 0.9rem;
+      margin-bottom: 1.5rem;
+    }
+    .asset-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1.25rem;
+    }
+    .asset-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s, box-shadow 0.3s;
+      display: flex;
+      flex-direction: column;
+    }
+    .asset-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(255, 255, 255, 0.25);
+      box-shadow: 0 8px 24px rgba(255, 255, 255, 0.08);
+    }
+    .asset-preview {
+      width: 100%;
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      background: #0d0d0d;
+      border-bottom: 1px solid var(--border);
+    }
+    .asset-preview img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+    .asset-info {
+      padding: 1rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .asset-name {
+      font-size: 0.8rem;
+      font-family: var(--font-mono);
+      color: var(--text);
+      word-break: break-all;
+      margin-bottom: 0.75rem;
+      flex: 1;
+    }
+    .asset-download {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      padding: 0.5rem 1rem;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .asset-download:hover {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+    .asset-download-group {
+      display: flex;
+      gap: 0.5rem;
+    }
+    .asset-download-group .asset-download {
+      flex: 1;
+      text-align: center;
+    }
+    .download-all-bar {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+    .guidelines-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      margin-bottom: 3rem;
+    }
+    @media (max-width: 768px) {
+      .asset-grid {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 1rem;
+      }
+      .asset-preview {
+        padding: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="dotTerrain"></canvas>
+  <script>
+    (function() {
+      var canvas = document.getElementById('dotTerrain');
+      if (!canvas) return;
+      var ctx = canvas.getContext('2d');
+      var SPACING = 28;
+      var dots = [];
+      var ripples = [];
+      var mouseX = -9999, mouseY = -9999;
+      var lastX = 0, lastY = 0;
+      var smoothMouseX = -9999, smoothMouseY = -9999;
+      function init() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        dots = [];
+        var cols = Math.ceil(canvas.width / SPACING) + 1;
+        var rows = Math.ceil(canvas.height / SPACING) + 1;
+        for (var r = 0; r < rows; r++) {
+          for (var c = 0; c < cols; c++) {
+            dots.push({ baseX: c * SPACING, baseY: r * SPACING, x: 0, y: 0, brightness: 0.15, targetBrightness: 0.15, radius: 1.5, targetRadius: 1.5 });
+          }
+        }
+      }
+      document.addEventListener('mousemove', function(e) {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        var dx = e.clientX - lastX;
+        var dy = e.clientY - lastY;
+        var dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist > 30) {
+          ripples.push({ x: e.clientX, y: e.clientY, radius: 0, strength: 1 });
+          lastX = e.clientX;
+          lastY = e.clientY;
+        }
+      });
+      function animate() {
+        smoothMouseX += (mouseX - smoothMouseX) * 0.2;
+        smoothMouseY += (mouseY - smoothMouseY) * 0.2;
+        for (var i = ripples.length - 1; i >= 0; i--) {
+          ripples[i].radius += 7;
+          ripples[i].strength *= 0.97;
+          if (ripples[i].strength < 0.01) ripples.splice(i, 1);
+        }
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        for (var d = 0; d < dots.length; d++) {
+          var dot = dots[d];
+          var bx = dot.baseX + SPACING / 2;
+          var by = dot.baseY + SPACING / 2;
+          dot.targetBrightness = 0.2;
+          dot.targetRadius = 1.8;
+          var mdx = bx - smoothMouseX;
+          var mdy = by - smoothMouseY;
+          var mdist = Math.sqrt(mdx * mdx + mdy * mdy);
+          if (mdist < 220) {
+            var factor = 1 - mdist / 220;
+            factor = factor * factor;
+            dot.targetBrightness = 0.2 + factor * 0.6;
+            dot.targetRadius = 1.8 + factor * 3;
+          }
+          for (var r = 0; r < ripples.length; r++) {
+            var rip = ripples[r];
+            var rdx = bx - rip.x;
+            var rdy = by - rip.y;
+            var rdist = Math.sqrt(rdx * rdx + rdy * rdy);
+            var wavePos = rdist - rip.radius;
+            var waveWidth = 120;
+            if (wavePos > -40 && wavePos < waveWidth) {
+              var falloff = 1 - Math.max(0, wavePos) / waveWidth;
+              falloff = falloff * falloff;
+              var edgeFactor = 1 - Math.abs(wavePos + 20) / 60;
+              edgeFactor = Math.max(0, edgeFactor);
+              var bump = (falloff * 0.5 + edgeFactor * 0.5) * rip.strength * 0.6;
+              dot.targetBrightness = Math.max(dot.targetBrightness, 0.2 + bump);
+              dot.targetRadius = Math.max(dot.targetRadius, 1.8 + bump * 3);
+            }
+          }
+          dot.brightness += (dot.targetBrightness - dot.brightness) * 0.3;
+          dot.radius += (dot.targetRadius - dot.radius) * 0.3;
+          ctx.beginPath();
+          ctx.arc(bx, by, dot.radius, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(255,255,255,' + dot.brightness + ')';
+          ctx.fill();
+        }
+        requestAnimationFrame(animate);
+      }
+      window.addEventListener('resize', init);
+      init();
+      animate();
+    })();
+  </script>
+  <nav id="nav"></nav>
+
+  <section class="brand-hero">
+    <div class="container">
+      <h2>Brand Assets</h2>
+      <p>Official GhostESP logos, mascots, badges, and graphics. Use these assets when building integrations, creating content, or representing the GhostESP project.</p>
+      <a href="downloads/assets/GhostESP_Brand_Assets" class="btn btn-primary" download>Download All Assets</a>
+      <a href="https://github.com/GhostESP-Revival/GhostESP" class="btn btn-secondary" target="_blank">GitHub Repo</a>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 0;">
+    <div class="container">
+
+      <div class="guidelines-box" style="text-align: center;">
+        <h3 style="margin-bottom: 0.75rem;">Brand Usage Guidelines</h3>
+        <p style="color: var(--text-dim); max-width: 600px; margin: 0 auto 1.25rem; font-size: 0.9rem; line-height: 1.6;">Use the name and logo freely to describe compatibility. Do NOT name your product "GhostESP". Don't pretend to be us. Don't use our branding on something that isn't actually running GhostESP.</p>
+        <a href="brand-guidelines.html" class="btn btn-secondary">Read Full Guidelines</a>
+      </div>
+
+      <!-- Logos -->
+      <div class="asset-section">
+        <div class="asset-section-header">
+          <i class="bi bi-image" style="color: var(--accent);"></i>
+          <h3>Logos</h3>
+        </div>
+        <p class="asset-section-desc">Primary GhostESP wordmarks and logo marks in various formats.</p>
+        <div class="asset-grid">
+          <div class="asset-card">
+            <div class="asset-preview">
+              <img src="downloads/assets/GhostESP_Brand_Assets/01_logo/png/ghostesp_logo_white_transparent.png" alt="GhostESP Logo White Transparent" loading="lazy">
+            </div>
+            <div class="asset-info">
+              <span class="asset-name">ghostesp_logo_white_transparent.png</span>
+              <div class="asset-download-group">
+                <a href="downloads/assets/GhostESP_Brand_Assets/01_logo/png/ghostesp_logo_white_transparent.png" class="asset-download" download="ghostesp_logo_white_transparent.png">1x</a>
+                <a href="downloads/assets/GhostESP_Brand_Assets/01_logo/png/ghostesp_logo_white_transparent_2x.png" class="asset-download" download="ghostesp_logo_white_transparent_2x.png">2x</a>
+              </div>
+            </div>
+          </div>
+          <div class="asset-card">
+            <div class="asset-preview">
+              <img src="downloads/assets/GhostESP_Brand_Assets/01_logo/png/ghostesp_logo_black_transparent.png" alt="GhostESP Logo Black Transparent" loading="lazy">
+            </div>
+            <div class="asset-info">
+              <span class="asset-name">ghostesp_logo_black_transparent.png</span>
+              <div class="asset-download-group">
+                <a href="downloads/assets/GhostESP_Brand_Assets/01_logo/png/ghostesp_logo_black_transparent.png" class="asset-download" download="ghostesp_logo_black_transparent.png">1x</a>
+                <a href="downloads/assets/GhostESP_Brand_Assets/01_logo/png/ghostesp_logo_black_transparent_2x.png" class="asset-download" download="ghostesp_logo_black_transparent_2x.png">2x</a>
+              </div>
+            </div>
+          </div>
+          <div class="asset-card">
+            <div class="asset-preview">
+              <img src="downloads/assets/GhostESP_Brand_Assets/01_logo/png/ghostesp_logo_white_on_black.png" alt="GhostESP Logo White on Black" loading="lazy">
+            </div>
+            <div class="asset-info">
+              <span class="asset-name">ghostesp_logo_white_on_black.png</span>
+              <a href="downloads/assets/GhostESP_Brand_Assets/01_logo/png/ghostesp_logo_white_on_black.png" class="asset-download" download="ghostesp_logo_white_on_black.png">Download</a>
+            </div>
+          </div>
+          <div class="asset-card">
+            <div class="asset-preview">
+              <img src="downloads/assets/GhostESP_Brand_Assets/01_logo/png/ghostesp_logo_black_on_white.png" alt="GhostESP Logo Black on White" loading="lazy">
+            </div>
+            <div class="asset-info">
+              <span class="asset-name">ghostesp_logo_black_on_white.png</span>
+              <a href="downloads/assets/GhostESP_Brand_Assets/01_logo/png/ghostesp_logo_black_on_white.png" class="asset-download" download="ghostesp_logo_black_on_white.png">Download</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mascots -->
+      <div class="asset-section">
+        <div class="asset-section-header">
+          <i class="bi bi-emoji-smile" style="color: var(--accent);"></i>
+          <h3>Mascots</h3>
+        </div>
+        <p class="asset-section-desc">The GhostESP ghost mascot in various expressions and moods.</p>
+        <div class="asset-grid">
+          <div class="asset-card">
+            <div class="asset-preview">
+              <img src="downloads/assets/GhostESP_Brand_Assets/02_mascots/png/happy_50x50.png" alt="Happy Ghost" loading="lazy">
+            </div>
+            <div class="asset-info">
+              <span class="asset-name">happy_50x50.png</span>
+              <a href="downloads/assets/GhostESP_Brand_Assets/02_mascots/png/happy_50x50.png" class="asset-download" download="happy_50x50.png">Download</a>
+            </div>
+          </div>
+          <div class="asset-card">
+            <div class="asset-preview">
+              <img src="downloads/assets/GhostESP_Brand_Assets/02_mascots/png/angry_50x50.png" alt="Angry Ghost" loading="lazy">
+            </div>
+            <div class="asset-info">
+              <span class="asset-name">angry_50x50.png</span>
+              <a href="downloads/assets/GhostESP_Brand_Assets/02_mascots/png/angry_50x50.png" class="asset-download" download="angry_50x50.png">Download</a>
+            </div>
+          </div>
+          <div class="asset-card">
+            <div class="asset-preview">
+              <img src="downloads/assets/GhostESP_Brand_Assets/02_mascots/png/evil_50x50.png" alt="Evil Ghost" loading="lazy">
+            </div>
+            <div class="asset-info">
+              <span class="asset-name">evil_50x50.png</span>
+              <a href="downloads/assets/GhostESP_Brand_Assets/02_mascots/png/evil_50x50.png" class="asset-download" download="evil_50x50.png">Download</a>
+            </div>
+          </div>
+          <div class="asset-card">
+            <div class="asset-preview">
+              <img src="downloads/assets/GhostESP_Brand_Assets/02_mascots/png/love_50x50.png" alt="Love Ghost" loading="lazy">
+            </div>
+            <div class="asset-info">
+              <span class="asset-name">love_50x50.png</span>
+              <a href="downloads/assets/GhostESP_Brand_Assets/02_mascots/png/love_50x50.png" class="asset-download" download="love_50x50.png">Download</a>
+            </div>
+          </div>
+          <div class="asset-card">
+            <div class="asset-preview">
+              <img src="downloads/assets/GhostESP_Brand_Assets/02_mascots/png/sleep_50x50.png" alt="Sleep Ghost" loading="lazy">
+            </div>
+            <div class="asset-info">
+              <span class="asset-name">sleep_50x50.png</span>
+              <a href="downloads/assets/GhostESP_Brand_Assets/02_mascots/png/sleep_50x50.png" class="asset-download" download="sleep_50x50.png">Download</a>
+            </div>
+          </div>
+          <div class="asset-card">
+            <div class="asset-preview">
+              <img src="downloads/assets/GhostESP_Brand_Assets/02_mascots/png/tired_50x50.png" alt="Tired Ghost" loading="lazy">
+            </div>
+            <div class="asset-info">
+              <span class="asset-name">tired_50x50.png</span>
+              <a href="downloads/assets/GhostESP_Brand_Assets/02_mascots/png/tired_50x50.png" class="asset-download" download="tired_50x50.png">Download</a>
+            </div>
+          </div>
+          <div class="asset-card">
+            <div class="asset-preview">
+              <img src="downloads/assets/GhostESP_Brand_Assets/02_mascots/png/surpised_50x50.png" alt="Surprised Ghost" loading="lazy">
+            </div>
+            <div class="asset-info">
+              <span class="asset-name">surpised_50x50.png</span>
+              <a href="downloads/assets/GhostESP_Brand_Assets/02_mascots/png/surpised_50x50.png" class="asset-download" download="surpised_50x50.png">Download</a>
+            </div>
+          </div>
+          <div class="asset-card">
+            <div class="asset-preview">
+              <img src="downloads/assets/GhostESP_Brand_Assets/02_mascots/png/what2_50x50.png" alt="What Ghost" loading="lazy">
+            </div>
+            <div class="asset-info">
+              <span class="asset-name">what2_50x50.png</span>
+              <a href="downloads/assets/GhostESP_Brand_Assets/02_mascots/png/what2_50x50.png" class="asset-download" download="what2_50x50.png">Download</a>
+            </div>
+          </div>
+          <div class="asset-card">
+            <div class="asset-preview">
+              <img src="downloads/assets/GhostESP_Brand_Assets/02_mascots/png/cake_50x50.png" alt="Cake Ghost" loading="lazy">
+            </div>
+            <div class="asset-info">
+              <span class="asset-name">cake_50x50.png</span>
+              <a href="downloads/assets/GhostESP_Brand_Assets/02_mascots/png/cake_50x50.png" class="asset-download" download="cake_50x50.png">Download</a>
+            </div>
+          </div>
+          <div class="asset-card">
+            <div class="asset-preview">
+              <img src="downloads/assets/GhostESP_Brand_Assets/02_mascots/png/banshee_50x50.png" alt="Banshee Ghost" loading="lazy">
+            </div>
+            <div class="asset-info">
+              <span class="asset-name">banshee_50x50.png</span>
+              <a href="downloads/assets/GhostESP_Brand_Assets/02_mascots/png/banshee_50x50.png" class="asset-download" download="banshee_50x50.png">Download</a>
+            </div>
+          </div>
+          <div class="asset-card">
+            <div class="asset-preview">
+              <img src="downloads/assets/GhostESP_Brand_Assets/02_mascots/png/subghz_50x50.png" alt="Sub-GHz Ghost" loading="lazy">
+            </div>
+            <div class="asset-info">
+              <span class="asset-name">subghz_50x50.png</span>
+              <a href="downloads/assets/GhostESP_Brand_Assets/02_mascots/png/subghz_50x50.png" class="asset-download" download="subghz_50x50.png">Download</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Badges -->
+      <div class="asset-section">
+        <div class="asset-section-header">
+          <i class="bi bi-patch-check" style="color: var(--accent);"></i>
+          <h3>Compatibility Badges</h3>
+        </div>
+        <p class="asset-section-desc">Badges to show GhostESP compatibility in your projects, product pages, or documentation.</p>
+        <div class="asset-grid">
+          <div class="asset-card">
+            <div class="asset-preview">
+              <img src="downloads/assets/GhostESP_Brand_Assets/03_badges/png/GhostESP_works_with_circle_blackbg_whiteborder.png" alt="Works With GhostESP Badge" loading="lazy">
+            </div>
+            <div class="asset-info">
+              <span class="asset-name">works_with_circle_blackbg_whiteborder.png</span>
+              <div class="asset-download-group">
+                <a href="downloads/assets/GhostESP_Brand_Assets/03_badges/png/GhostESP_works_with_circle_blackbg_whiteborder.png" class="asset-download" download="GhostESP_works_with_circle_blackbg_whiteborder.png">1x</a>
+                <a href="downloads/assets/GhostESP_Brand_Assets/03_badges/png/GhostESP_works_with_circle_blackbg_whiteborder_2x.png" class="asset-download" download="GhostESP_works_with_circle_blackbg_whiteborder_2x.png">2x</a>
+              </div>
+            </div>
+          </div>
+          <div class="asset-card">
+            <div class="asset-preview">
+              <img src="downloads/assets/GhostESP_Brand_Assets/03_badges/png/GhostESP_works_with_circle_blackbg_greenborder.png" alt="Works With GhostESP Green Badge" loading="lazy">
+            </div>
+            <div class="asset-info">
+              <span class="asset-name">works_with_circle_blackbg_greenborder.png</span>
+              <a href="downloads/assets/GhostESP_Brand_Assets/03_badges/png/GhostESP_works_with_circle_blackbg_greenborder.png" class="asset-download" download="GhostESP_works_with_circle_blackbg_greenborder.png">Download</a>
+            </div>
+          </div>
+          <div class="asset-card">
+            <div class="asset-preview">
+              <img src="downloads/assets/GhostESP_Brand_Assets/03_badges/png/GhostESP_compatiblegreen_blackbg_whiteborder_with_bottomdetails.png" alt="Compatible Green Badge" loading="lazy">
+            </div>
+            <div class="asset-info">
+              <span class="asset-name">compatiblegreen_with_bottomdetails.png</span>
+              <div class="asset-download-group">
+                <a href="downloads/assets/GhostESP_Brand_Assets/03_badges/png/GhostESP_compatiblegreen_blackbg_whiteborder_with_bottomdetails.png" class="asset-download" download="GhostESP_compatiblegreen_blackbg_whiteborder_with_bottomdetails.png">1x</a>
+                <a href="downloads/assets/GhostESP_Brand_Assets/03_badges/png/GhostESP_compatiblegreen_blackbg_whiteborder_with_bottomdetails_2x.png" class="asset-download" download="GhostESP_compatiblegreen_blackbg_whiteborder_with_bottomdetails_2x.png">2x</a>
+              </div>
+            </div>
+          </div>
+          <div class="asset-card">
+            <div class="asset-preview">
+              <img src="downloads/assets/GhostESP_Brand_Assets/03_badges/png/GhostESP_compatiblewhite_blackbg_whiteborder_withline.png" alt="Compatible White Badge" loading="lazy">
+            </div>
+            <div class="asset-info">
+              <span class="asset-name">compatiblewhite_withline.png</span>
+              <a href="downloads/assets/GhostESP_Brand_Assets/03_badges/png/GhostESP_compatiblewhite_blackbg_whiteborder_withline.png" class="asset-download" download="GhostESP_compatiblewhite_blackbg_whiteborder_withline.png">Download</a>
+            </div>
+          </div>
+          <div class="asset-card">
+            <div class="asset-preview">
+              <img src="downloads/assets/GhostESP_Brand_Assets/03_badges/png/GhostESP_compatiblewhite_blackbg_whiteborder_withline_inverted.png" alt="Compatible White Inverted Badge" loading="lazy">
+            </div>
+            <div class="asset-info">
+              <span class="asset-name">compatiblewhite_withline_inverted.png</span>
+              <a href="downloads/assets/GhostESP_Brand_Assets/03_badges/png/GhostESP_compatiblewhite_blackbg_whiteborder_withline_inverted.png" class="asset-download" download="GhostESP_compatiblewhite_blackbg_whiteborder_withline_inverted.png">Download</a>
+            </div>
+          </div>
+          <div class="asset-card">
+            <div class="asset-preview">
+              <img src="downloads/assets/GhostESP_Brand_Assets/03_badges/png/GhostESP_compatible_blackbg_whiteborder.png" alt="Compatible Badge" loading="lazy">
+            </div>
+            <div class="asset-info">
+              <span class="asset-name">compatible_blackbg_whiteborder.png</span>
+              <a href="downloads/assets/GhostESP_Brand_Assets/03_badges/png/GhostESP_compatible_blackbg_whiteborder.png" class="asset-download" download="GhostESP_compatible_blackbg_whiteborder.png">Download</a>
+            </div>
+          </div>
+          <div class="asset-card">
+            <div class="asset-preview">
+              <img src="downloads/assets/GhostESP_Brand_Assets/03_badges/png/GhostESP_compatible_blackbg_whiteborder_inverted.png" alt="Compatible Inverted Badge" loading="lazy">
+            </div>
+            <div class="asset-info">
+              <span class="asset-name">compatible_blackbg_whiteborder_inverted.png</span>
+              <a href="downloads/assets/GhostESP_Brand_Assets/03_badges/png/GhostESP_compatible_blackbg_whiteborder_inverted.png" class="asset-download" download="GhostESP_compatible_blackbg_whiteborder_inverted.png">Download</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>Developed by <a href="https://github.com/jaylikesbunda" target="_blank">Jay Candel</a></p>
+      <a href="https://ko-fi.com/jaylikesbunda" target="_blank" class="support-link">Support on Ko-Fi</a>
+      <div class="footer-links">
+        <a href="https://discord.gg/5cyNmUMgwh" target="_blank" class="icon-link" title="Discord">
+          <i class="bi bi-discord"></i>
+        </a>
+        <a href="https://github.com/GhostESP-Revival/GhostESP" target="_blank" class="icon-link" title="GitHub">
+          <i class="bi bi-github"></i>
+        </a>
+        <a href="https://instagram.com/ghostesprevival" target="_blank" class="icon-link" title="Instagram">
+          <i class="bi bi-instagram"></i>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/components.js" defer></script>
+  <script src="js/main.js" defer></script>
+</body>
+</html>

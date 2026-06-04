@@ -1,0 +1,261 @@
+Connected to device
+> scan
+> lll
+Disconnected from device
+Connected to device
+x8�Xck#ca!��bacc!BacccBcgcc�bckmirror off
+Screen mirror disabled
+ghost-cli> scanap
+Stopping Wi-Fi...
+WiFi Scan started
+Please wait ~5 Seconds...
+Found 7 access points
+[0] SSID: DIRECT-4d-HP M130f LaserJet,
+     BSSID: 76:40:BB:8C:9A:4D,
+     RSSI: -61,
+     Channel: 6,
+     Band: 2.4GHz,
+     Security: WPA2
+[1] SSID: Bellefleur AP 2.4 GHz,
+     BSSID: 3C:37:86:8A:EB:49,
+     RSSI: -63,
+     Channel: 3,
+     Band: 2.4GHz,
+     Security: WPA2
+
+     Vendor: Netgear
+[2] SSID: Bellefleur AP 5 GHz,
+     BSSID: 3C:37:86:8A:EB:48,
+     RSSI: -70,
+     Channel: 44,
+     Band: 5GHz,
+     Security: WPA2
+     Vendor: Netgear
+[3] SSID: Bellefleur internet ,
+
+     BSSID: D4:1A:D1:1C:53:2E,
+
+     RSSI: -78,
+     Channel: 36,
+     Band: 5GHz,
+     Security: WPA2/WPA3
+     PMF: Required (WPA3)
+[4] SSID: AISBelleFleur,
+     BSSID: 60:09:C3:25:67:29,
+     RSSI: -79,
+     Channel: 6,
+     Band: 2.4GHz,
+     Security: WPA2
+[5] SSID: (Hidden),
+     BSSID: D6:1A:D1:1C:53:2E,
+     RSSI: -79,
+     Channel: 36,
+     Band: 5GHz,
+     Security: WPA2
+[6] SSID: Bellefleur internet ,
+
+     BSSID: D4:1A:D1:1C:53:2D,
+
+     RSSI: -92,
+     Channel: 1,
+     Band: 2.4GHz,
+     Security: WPA2/WPA3
+     PMF: Required (WPA3)
+ghost-cli> sd status
+SD:STATUS:mounted=false
+ghost-cli> sd list /mnt/ghostesp
+SD:ERR:not_mounted
+ghost-cli> chipinfo
+[CHIPINFO_START]
+Chip Information:
+  Firmware: GhostESP Revival v1.9.8
+  Git Commit: b40401d
+
+  Model: ESP32-C5
+  Revision: v1.0
+  CPU Cores: 1
+  Features: WiFi/BLE/802.15.4
+  Free Heap: 44660 bytes
+  Min Free Heap: 39276 bytes
+  IDF Version: v6.0-dirty
+  Build Config: default.esp32c5
+
+  Enabled Features:
+    NFC
+    SD Card (SPI)
+    Core Dump
+[CHIPINFO_END]
+ghost-cli> sd list /mnt/ghostesp/logs/coredumps
+SD:ERR:not_mounted
+ghost-cli> select -a 6
+Selected Access Point: SSID: Bellefleur internet , BSSID: D4:1A:D1:1C:53:2D
+Selected Access Point Successfully
+ghost-cli> chipinfo
+[CHIPINFO_START]
+Chip Information:
+  Firmware: GhostESP Revival v1.9.8
+  Git Commit: b40401d
+
+  Model: ESP32-C5
+  Revision: v1.0
+  CPU Cores: 1
+  Features: WiFi/BLE/802.15.4
+  Free Heap: 44560 bytes
+  Min Free Heap: 39276 bytes
+  IDF Version: v6.0-dirty
+  Build Config: default.esp32c5
+
+  Enabled Features:
+    NFC
+    SD Card (SPI)
+    Core Dump
+[CHIPINFO_END]
+ghost-cli> sd list /mnt/ghostesp/logs/coredumps
+SD:ERR:not_mounted
+ghost-cli> > info
+info
+Unsupported command: info
+ghost-cli> > scan
+scan
+Unsupported command: scan
+ghost-cli> saeflood K
+Starting SAE flood attack...
+AP_manager: AP stopped
+WiFi capture started.
+Type: monitor
+Channel: 6
+Filter: all
+SAE flood started on ch 1
+Target: d4:1a:d1:1c:53:2d
+Rate: 60 fps
+Guru Meditation Error: Core  0 panic'ed (Stack protection fault). 
+
+Detected in task "sae_displ" at 0x40801ea8
+Stack pointer: 0x40839c00
+Stack bounds: 0x40839c14 - 0x4083a410
+
+
+Core  0 register dump:
+MEPC    : 0x40801f0a  RA      : 0x40801f08  SP      : 0x40839c00  GP      : 0x4081ed04  
+TP      : 0x4083a410  T0      : 0x4002685e  T1      : 0x40839d9c  T2      : 0x00000000  
+S0/FP   : 0x40837b08  S1      : 0x00000004  A0      : 0x00000002  A1      : 0xffffffff  
+A2      : 0x00000004  A3      : 0x0000000a  A4      : 0x00000000  A5      : 0x00000001  
+A6      : 0x00000010  A7      : 0x00000000  S2      : 0x0000004b  S3      : 0xffffffff  
+S4      : 0x40839da4  S5      : 0x40839d90  S6      : 0x4083a160  S7      : 0x00000000  
+S8      : 0x0000004b  S9      : 0x00000000  S10     : 0x0000004b  S11     : 0x00000073  
+T3      : 0x00000000  T4      : 0x00000000  T5      : 0x00000000  T6      : 0x00000000  
+MSTATUS : 0x00001881  MTVEC   : 0x40800003  MCAUSE  : 0x0000001b  MTVAL   : 0x00000000  
+MHARTID : 0x00000000  
+
+Stack memory:
+40839c00: 0x00000000 0x00000000 0x00000000 0x00000000 0x00000800 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5
+40839c20: 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0x40856204 0x0000004b 0x40856204 0x40837974 0x408020fe
+40839c40: 0xa5a5a5a5 0xa5a5a5a5 0x40837b08 0x40837b08 0x40836000 0x00000000 0x40837b08 0x4002686a
+40839c60: 0x0000004b 0x40856204 0x40837974 0x40038058 0xa5a5a5a5 0x00000004 0x40837b08 0x40801f2e
+40839c80: 0xa5a5a5a5 0x0000004b 0x40837974 0x4219cdfa 0x00000001 0x421d15de 0x00000001 0x00000073
+40839ca0: 0x0000004b 0x00000000 0x00000000 0x00000000 0x421e8dea 0x40839da4 0x00000001 0x00000000
+40839cc0: 0x0000004b 0x4083a160 0x40839d90 0x4219c152 0x00000001 0x00000000 0x00000000 0x4219bb9e
+40839ce0: 0x00000000 0xa5a5a5a5 0x00000000 0x40837974 0x40856204 0x00000000 0x00000000 0x00000000
+40839d00: 0x00000000 0x00000000 0x0000004b 0x00000001 0x0000004b 0x00000000 0x421e29e0 0x00000000
+40839d20: 0x00000000 0x00a5a5a5 0x00000000 0x422e6ee8 0x00000000 0x00000000 0x422e6d7c 0xa5a5a5a5
+40839d40: 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0x40839d5c 0x00000000 0x00000000 0x4083a128
+40839d60: 0x00000001 0x00839dff 0x00000001 0x00000001 0x00000000 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5
+40839d80: 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0x40839d9c 0x00000001 0x0000004b 0x4083a160
+40839da0: 0x0000004b 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5
+40839dc0: 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5
+40839de0: 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0x30a5a5a5
+40839e00: 0xffffffff 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5
+40839e20: 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5
+40839e40: 0xffffffff 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5
+40839e60: 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5
+40839e80: 0x00000000 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0x00000000 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5
+
+40839ea0: 0x00000000 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0x00000000 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5
+40839ec0: 0x4083a160 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0x00000000 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5
+40839ee0: 0x00000000 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0x00000000 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5
+40839f00: 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5
+40839f20: 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5
+40839f40: 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5
+40839f60: 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5
+40839f80: 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5
+40839fa0: 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5
+40839fc0: 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5
+40839fe0: 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5
+
+
+
+ELF file SHA256: 28bfa5557
+
+Rebooting...
+ESP-ROM:esp32c5-eco2-20250121
+Build:Jan 21 2025
+rst:0xc (SW_CPU),boot:0x18 (SPI_FAST_FLASH_BOOT)
+Core0 Saved PC:0x408122c4
+SPI mode:DIO, clock div:1
+load:0x408556c0,len:0x119c
+load:0x4084bba0,len:0xb48
+load:0x4084e5a0,len:0x2fc4
+entry 0x4084bba0
+[0;33mW (725) spi_flash: Detected size(16384k) larger than the size in the binary image header(4096k). Using the size in the binary image header.[0m
+[0;33mW (742) spi_flash: CPU freque��Serial Started...
+ghost-cli> Global CA certificate store initialized successfully.
+
+Registered Commands
+Settings loaded from NVS.
+Settings loaded successfully.
+NVS Storage: 201/882 entries used (22.8%)
+No saved WiFi credentials found
+ESP Comm Manager initialized as 'ESP_E2CA8C' on TX:6 RX:7 at 115200 baud - Auto-listening for peers
+
+[0;33mW (1493) WIFI_MONITOR: Peer GPS stream task create failed[0m
+Wi-Fi already initialized, skipping Wi-Fi init.
+DHCP server configured successfully.
+Wi-Fi Access Point started with SSID: GhostNet
+ESP32 AP IP Address: 
+192.168.4.1
+[0;31mE (1728) ap_manager: failed to alloc log buffer in psram, trying internal ram[0m
+NVS namespace 'sd_config' not found. Using default SD pins.
+SD Card Pin Configuration:
+MMC Mode:
+  CLK: GPIO19
+  CMD: GPIO18
+  D0:  GPIO20
+  D1:  GPIO21
+  D2:  GPIO22
+  D3:  GPIO23
+SPI Mode:
+  CS:   GPIO5
+  CLK:  GPIO14
+  MISO: GPIO9
+  MOSI: GPIO23
+Initializing SD card in SPI mode using configured pins...
+[0;31mE (1975) sdmmc_sd: sdmmc_init_sd_if_cond: send_if_cond (1) returned 0x108[0m
+[0;31mE (1975) vfs_fat_sdmmc: sdmmc_card_init failed (0x108).[0m
+[0;31mE (1990) vfs_fat_sdmmc: esp_vfs_fat_sdspi_sdcard_init failed (0x108).[0m
+[0;33mW (1990) SD_Card_Manager: First SD probe failed (ESP_ERR_INVALID_RESPONSE), retrying at lower SPI frequency[0m
+[0;31mE (2239) sdmmc_sd: sdmmc_init_sd_if_cond: send_if_cond (1) returned 0x108[0m
+[0;31mE (2239) vfs_fat_sdmmc: sdmmc_card_init failed (0x108).[0m
+[0;31mE (2253) vfs_fat_sdmmc: esp_vfs_fat_sdspi_sdcard_init failed (0x108).[0m
+Failed to mount filesystem: ESP_ERR_INVALID_RESPONSE
+[0;31mE (2469) sdmmc_sd: sdmmc_init_sd_if_cond: send_if_cond (1) returned 0x108[0m
+[0;31mE (2469) vfs_fat_sdmmc: sdmmc_card_init failed (0x108).[0m
+[0;31mE (2483) vfs_fat_sdmmc: esp_vfs_fat_sdspi_sdcard_init failed (0x108).[0m
+[0;31mE (2726) sdmmc_sd: sdmmc_init_sd_if_cond: send_if_cond (1) returned 0x108[0m
+[0;31mE (2726) vfs_fat_sdmmc: sdmmc_card_init failed (0x108).[0m
+[0;31mE (2740) vfs_fat_sdmmc: esp_vfs_fat_sdspi_sdcard_init failed (0x108).[0m
+[0;33mW (2741) Main.c: Coredump present but SD unavailable for autosave[0m
+Build Name: default.esp32c5
+Git branch: prod, commit: b40401d
+Free heap after init: 40592 / 180684 bytes (22.5% free)
+Free INTERNAL RAM after init: 40592 / 180684 bytes (22.5% free)
+           (`-').->            (`-').->(`-')          (`-')  _ (`-').-> _  (`-') 
+    .->    (OO )__      .->    ( OO)_  ( OO).->       ( OO).-/ ( OO)_   \-.(OO ) 
+ ,---(`-'),--. ,'-'(`-')----. (_)--\_) /    '._      (,------.(_)--\_)  _.'    \ 
+'  .-(OO )|  | |  |( OO).-.  '/    _ / |'--...__)     |  .---'/    _ / (_...--'' 
+|  | .-, \|  `-'  |( _) | |  |\_..`--. `--.  .--'    (|  '--. \_..`--. |  |_.' | 
+|  | '.(_/|  .-.  | \|  |)|  |.-._)   \   |  |        |  .--' .-._)   \|  .___.' 
+|  '-'  | |  | |  |  '  '-'  '\       /   |  |        |  `---.\       /|  |      
+ `-----'  `--' `--'   `-----'  `-----'    `--'        `------' `-----' `--'      
+
+
+ghostcli> Type 'help' for available commands
