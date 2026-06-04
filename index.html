@@ -194,7 +194,7 @@
     <div class="container" data-aos="fade-up" data-aos-duration="1000">
       <img src="images/ghostespdotnet.png" alt="GhostESP" class="hero-logo">
       <p class="hero-tagline">An open-source wireless platform for ESP32 devices.</p>
-      <p class="hero-subtitle">Firmware &middot; Web Flasher &middot; Serial Console &middot; Companion App &middot; IR Database &middot; Wardriving Map</p>
+      <p class="hero-subtitle">40+ boards &middot; LVGL UI &middot; Web Dashboard &middot; WiFi &middot; BLE &middot; NFC &middot; IR &middot; SubGHz &middot; Ethernet &middot; Companion Apps</p>
       <div class="hero-actions">
         <a href="#getting-started" class="btn btn-primary">Get Started</a>
         <a href="https://github.com/GhostESP-Revival/GhostESP" class="btn btn-secondary" target="_blank">GitHub</a>
@@ -293,6 +293,22 @@
     </div>
   </section>
 
+  <!-- Auditable by Design -->
+  <section id="auditable" class="section" style="padding-top: 0;">
+    <div class="container">
+      <div class="auditable-card" data-aos="fade-up">
+        <div class="auditable-card-icon"><i data-lucide="lock-open"></i></div>
+        <h3>Auditable by Design</h3>
+        <p class="auditable-text">GhostESP is GPL-licensed and built in public. You can inspect the firmware, tools, companion apps, docs, and even this website's source instead of trusting a black-box gadget.</p>
+        <div class="auditable-links">
+          <a href="https://github.com/GhostESP-Revival/GhostESP" class="btn btn-secondary btn-small" target="_blank">Firmware Source</a>
+          <a href="https://github.com/GhostESP-Revival" class="btn btn-secondary btn-small" target="_blank">All Repos</a>
+          <a href="https://docs.ghostesp.net" class="btn btn-secondary btn-small" target="_blank">Docs</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Features -->
   <section id="features" class="section">
     <div class="container">
@@ -345,13 +361,23 @@
   <!-- Firmware Comparison -->
   <section id="comparison" class="section section-alt">
     <div class="container">
-      <h2 data-aos="fade-up">ESP32 Firmware Comparison</h2>
+      <h2 data-aos="fade-up">GhostESP vs The Rest</h2>
+      <div class="comparison-summary" data-aos="fade-up">
+        <div class="comparison-summary-item">
+          <i data-lucide="layers"></i>
+          <span>40+ boards, full wireless suite, LVGL UI, and companion apps</span>
+        </div>
+        <div class="comparison-summary-item">
+          <i data-lucide="code-2"></i>
+          <span>Built on ESP-IDF, not Arduino or PlatformIO</span>
+        </div>
+        <div class="comparison-summary-item">
+          <i data-lucide="lock-open"></i>
+          <span>GPL-licensed and fully auditable, firmware, tools, and this website</span>
+        </div>
+      </div>
       <p class="comparison-disclaimer" data-aos="fade-up">Based on GhostESP's feature set and publicly available source for listed projects. Not a complete feature list for every firmware. HaleHound and nyanBOX are compared against the latest public source available.</p>
-      <button class="comparison-toggle" data-aos="fade-up" onclick="toggleComparison()">
-        <span>View comparison table</span>
-        <i data-lucide="chevron-down"></i>
-      </button>
-      <div class="comparison-container" id="comparisonContainer" data-aos="fade-up">
+      <div class="comparison-container visible" data-aos="fade-up">
         <table class="comparison-table">
           <thead>
             <tr>
@@ -1015,6 +1041,9 @@
   <!-- Footer -->
   <footer class="footer">
     <div class="container">
+      <div class="legal-banner">
+        <p><strong>Authorized use only.</strong> GhostESP is built for security testing on networks you own, lab research, education, and defensive analysis. Do not use it on networks or devices you do not own or have explicit permission to test.</p>
+      </div>
       <p>Developed by <a href="https://github.com/jaylikesbunda" target="_blank">Jay Candel</a></p>
       <a href="https://ko-fi.com/jaylikesbunda" target="_blank" class="support-link">Support on Ko-Fi</a>
       <div class="footer-links">
@@ -1044,22 +1073,6 @@
         once: true,
         offset: 100
       });
-
-      // Comparison table toggle
-      window.toggleComparison = function() {
-        var container = document.getElementById('comparisonContainer');
-        var toggle = document.querySelector('.comparison-toggle');
-        if (container.classList.contains('visible')) {
-          container.classList.remove('visible');
-          toggle.classList.remove('active');
-        } else {
-          container.classList.add('visible');
-          toggle.classList.add('active');
-          if (typeof lucide !== 'undefined') {
-            lucide.createIcons();
-          }
-        }
-      };
 
       // Partner marquee - JS-driven RAF scroll for reliability
       var marquee = document.querySelector('.partner-marquee');
