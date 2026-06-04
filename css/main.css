@@ -1131,6 +1131,98 @@ h3 {
   font-weight: 500;
 }
 
+/* legal banner */
+.legal-banner {
+  max-width: 700px;
+  margin: 0 auto 1.5rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: var(--radius);
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  line-height: 1.5;
+  text-align: center;
+}
+
+.legal-banner strong {
+  color: var(--text);
+}
+
+/* auditable section */
+.auditable-card {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 2rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  text-align: center;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.auditable-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 8px 24px rgba(255, 255, 255, 0.08);
+}
+
+.auditable-card-icon {
+  margin-bottom: 1rem;
+  color: #00ff80;
+}
+
+.auditable-card-icon i {
+  width: 28px;
+  height: 28px;
+}
+
+.auditable-card h3 {
+  font-size: 1.25rem;
+  margin-bottom: 0.75rem;
+}
+
+.auditable-text {
+  color: var(--text-dim);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin-bottom: 1.25rem;
+}
+
+.auditable-links {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+/* comparison summary */
+.comparison-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 0.75rem;
+  max-width: 900px;
+  margin: 0 auto 2rem;
+}
+
+.comparison-summary-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.6rem 0.85rem;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 0.85rem;
+  color: var(--text);
+}
+
+.comparison-summary-item i {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  color: #00ff80;
+}
+
 /* responsive */
 @media (max-width: 768px) {
   .mobile-menu-toggle {
@@ -1285,6 +1377,14 @@ h3 {
 
   .footer-links {
     flex-wrap: wrap;
+  }
+
+  .legal-banner {
+    font-size: 0.75rem;
+  }
+
+  .comparison-summary {
+    grid-template-columns: 1fr;
   }
 }
 
