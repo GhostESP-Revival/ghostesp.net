@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#000000">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com https://cdn.jsdelivr.net; img-src 'self' data:; font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self';">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com https://cdn.jsdelivr.net; img-src 'self' https://raw.githubusercontent.com https://gesp.fuckyourcdn.com data:; font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net; connect-src 'self' https://raw.githubusercontent.com https://gesp.fuckyourcdn.com; object-src 'none'; base-uri 'self'; form-action 'self';">
 
   <title>GhostESP App Marketplace Beta</title>
   <meta name="description" content="Beta marketplace for manually reviewed GhostESP native SD apps and locally hosted .gapp downloads.">
@@ -165,6 +165,8 @@
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
       gap: 1.25rem;
+      justify-content: center;
+      justify-items: center;
     }
 
     .market-app-card {
@@ -176,6 +178,7 @@
       border-radius: 18px;
       background: rgba(10, 10, 10, 0.9);
       transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+      max-width: 420px;
     }
 
     .market-app-card:hover {
@@ -365,6 +368,7 @@
           <a href="#marketplace" class="btn btn-primary">Browse Apps</a>
           <a href="asset-marketplace.html" class="btn btn-secondary">Asset Packs</a>
           <a href="https://docs.ghostesp.net" class="btn btn-secondary" target="_blank" rel="noopener">App Docs</a>
+          <a href="https://github.com/GhostESP-Revival/GhostESP-Apps" class="btn btn-secondary" target="_blank" rel="noopener">Submit App</a>
         </div>
 
       </div>

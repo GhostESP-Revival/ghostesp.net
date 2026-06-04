@@ -1,21 +1,35 @@
 (function () {
-  const assetPacks = [
-    {
-      id: 'dedsec',
-      name: 'DedSec',
-      version: '1',
-      authors: ['GhostESP'],
-      category: 'Theme',
-      type: 'GTheme',
-      description: 'Dark DedSec-inspired GhostESP theme with purple accents, skull app icons, and a full-screen menu background.',
-      reviewed: 'Approved',
-      contents: ['Icons', 'Background', 'Colors'],
-      preview: 'downloads/assets/dedsec/screenshot.png',
-      file: 'dedsec.gtheme',
-      size: '503.3 KB',
-      url: 'downloads/assets/dedsec/dist/dedsec.gtheme'
+  const ASSETS_CATALOG_URL = 'https://raw.githubusercontent.com/GhostESP-Revival/GhostESP-AssetPacks/main/catalog.json';
+  const CACHE_KEY = 'ghostesp-assets-catalog';
+  const CACHE_TTL = 5 * 60 * 1000;
+
+  let assetPacks = [];
+
+  const state = {
+    loading: true,
+    error: null
+  };
+
+  async function fetchCatalog() {
+    const cached = sessionStorage.getItem(CACHE_KEY);
+    if (cached) {
+      try {
+        const { data, timestamp } = JSON.parse(cached);
+        if (Date.now() - timestamp < CACHE_TTL) return data;
+      } catch (e) {}
     }
-  ];
+
+    const response = await fetch(ASSETS_CATALOG_URL);
+    if (!response.ok) throw new Error('Failed to load catalog');
+    const catalog = await response.json();
+
+    sessionStorage.setItem(CACHE_KEY, JSON.stringify({
+      data: catalog,
+      timestamp: Date.now()
+    }));
+
+    return catalog;
+  }
 
   function escapeHtml(value) {
     return String(value || '')
@@ -37,7 +51,7 @@
           <div class="market-app-id">${escapeHtml(pack.id)} v${escapeHtml(pack.version)}</div>
           <div class="market-app-authors"><span>Authors:</span> ${escapeHtml(authors.join(', '))}</div>
         </div>
-        <span class="market-reviewed">${escapeHtml(pack.reviewed || 'Approved')}</span>
+        <span class="market-reviewed">${escapeHtml(pack.reviewed ? 'Approved' : 'Pending')}</span>
       </div>
       <p class="market-app-description">${escapeHtml(pack.description)}</p>
       <div class="market-downloads">
@@ -54,6 +68,18 @@
     const meta = document.getElementById('asset-market-meta');
     if (!grid || !meta) return;
 
+    if (state.loading) {
+      grid.innerHTML = '<div class="market-empty">Loading asset packs...</div>';
+      meta.textContent = '';
+      return;
+    }
+
+    if (state.error) {
+      grid.innerHTML = `<div class="market-empty">${escapeHtml(state.error)}</div>`;
+      meta.textContent = '';
+      return;
+    }
+
     meta.textContent = `${assetPacks.length} asset pack${assetPacks.length === 1 ? '' : 's'} available`;
 
     if (!assetPacks.length) {
@@ -64,7 +90,18 @@
     grid.innerHTML = assetPacks.map(renderPack).join('');
   }
 
-  document.addEventListener('DOMContentLoaded', () => {
+  document.addEventListener('DOMContentLoaded', async () => {
     render();
+
+    try {
+      const catalog = await fetchCatalog();
+      assetPacks = (catalog.assets || []).filter((asset) => asset.reviewed);
+    } catch (err) {
+      state.error = 'Failed to load asset packs. Please try again later.';
+      console.error('Catalog fetch error:', err);
+    } finally {
+      state.loading = false;
+      render();
+    }
   });
 })();
