@@ -51,167 +51,39 @@
   <link rel="preload" href="images/IMG_1178.webp" as="image">
 </head>
 <body>
+  <a href="#main-content" class="skip-link">Skip to content</a>
   <!-- Dot terrain canvas background -->
   <canvas id="dotTerrain"></canvas>
-  <script>
-    (function() {
-      var canvas = document.getElementById('dotTerrain');
-      if (!canvas) return;
-      var ctx = canvas.getContext('2d');
-      
-      // Config
-      var SPACING = 28;
-      var dots = [];
-      var ripples = [];
-      var mouseX = -9999, mouseY = -9999;
-      var lastX = 0, lastY = 0;
-      var smoothMouseX = -9999, smoothMouseY = -9999;
-      
-      function init() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        dots = [];
-        
-        var cols = Math.ceil(canvas.width / SPACING) + 1;
-        var rows = Math.ceil(canvas.height / SPACING) + 1;
-        
-        for (var r = 0; r < rows; r++) {
-          for (var c = 0; c < cols; c++) {
-            dots.push({
-              baseX: c * SPACING,
-              baseY: r * SPACING,
-              x: 0, y: 0,
-              brightness: 0.15,
-              targetBrightness: 0.15,
-              radius: 1.5,
-              targetRadius: 1.5
-            });
-          }
-        }
-      }
-      
-      document.addEventListener('mousemove', function(e) {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-        
-        // Create ripple on movement
-        var dx = e.clientX - lastX;
-        var dy = e.clientY - lastY;
-        var dist = Math.sqrt(dx * dx + dy * dy);
-        
-        if (dist > 30) {
-          ripples.push({ x: e.clientX, y: e.clientY, radius: 0, strength: 1 });
-          lastX = e.clientX;
-          lastY = e.clientY;
-        }
-      });
-      
-      function animate() {
-        // Smooth mouse tracking
-        smoothMouseX += (mouseX - smoothMouseX) * 0.2;
-        smoothMouseY += (mouseY - smoothMouseY) * 0.2;
-        
-        // Update ripples
-        for (var i = ripples.length - 1; i >= 0; i--) {
-          ripples[i].radius += 7;
-          ripples[i].strength *= 0.97;
-          if (ripples[i].strength < 0.01) ripples.splice(i, 1);
-        }
-        
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        
-        // Update and draw dots
-        for (var d = 0; d < dots.length; d++) {
-          var dot = dots[d];
-          var bx = dot.baseX + SPACING / 2;
-          var by = dot.baseY + SPACING / 2;
-          
-          // Start with base values
-          dot.targetBrightness = 0.2;
-          dot.targetRadius = 1.8;
-          
-          // Mouse proximity - strong glow
-          var mdx = bx - smoothMouseX;
-          var mdy = by - smoothMouseY;
-          var mdist = Math.sqrt(mdx * mdx + mdy * mdy);
-          
-          if (mdist < 220) {
-            var factor = 1 - mdist / 220;
-            factor = factor * factor;
-            dot.targetBrightness = 0.2 + factor * 0.6;
-            dot.targetRadius = 1.8 + factor * 3;
-          }
-          
-          // Ripple effects - visible wave
-          for (var r = 0; r < ripples.length; r++) {
-            var rip = ripples[r];
-            var rdx = bx - rip.x;
-            var rdy = by - rip.y;
-            var rdist = Math.sqrt(rdx * rdx + rdy * rdy);
-            var wavePos = rdist - rip.radius;
-            
-            // Wave front - brighter ring
-            var waveWidth = 120;
-            if (wavePos > -40 && wavePos < waveWidth) {
-              var falloff = 1 - Math.max(0, wavePos) / waveWidth;
-              falloff = falloff * falloff;
-              
-              // Front edge is brightest
-              var edgeFactor = 1 - Math.abs(wavePos + 20) / 60;
-              edgeFactor = Math.max(0, edgeFactor);
-              
-              var bump = (falloff * 0.5 + edgeFactor * 0.5) * rip.strength * 0.6;
-              dot.targetBrightness = Math.max(dot.targetBrightness, 0.2 + bump);
-              dot.targetRadius = Math.max(dot.targetRadius, 1.8 + bump * 3);
-            }
-          }
-          
-          // Smooth interpolation
-          dot.brightness += (dot.targetBrightness - dot.brightness) * 0.3;
-          dot.radius += (dot.targetRadius - dot.radius) * 0.3;
-          
-          // Draw
-          ctx.beginPath();
-          ctx.arc(bx, by, dot.radius, 0, Math.PI * 2);
-          ctx.fillStyle = 'rgba(255,255,255,' + dot.brightness + ')';
-          ctx.fill();
-        }
-        
-        requestAnimationFrame(animate);
-      }
-      
-      window.addEventListener('resize', init);
-      init();
-      animate();
-    })();
-  </script>
+  <script src="js/dot-terrain.js"></script>
+
+  <h1 class="sr-only">GhostESP: Revival - ESP32 Wireless Security Testing Platform</h1>
 
   <!-- Navigation -->
   <nav id="nav"></nav>
 
   <!-- Hero Section -->
-  <section class="hero" style="background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.75)), url('images/IMG_1178.webp') center/cover no-repeat;">
+  <section id="main-content" class="hero" style="background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.75)), url('images/IMG_1178.webp') center/cover no-repeat;">
     <div class="container" data-aos="fade-up" data-aos-duration="1000">
       <img src="images/ghostespdotnet.png" alt="GhostESP" class="hero-logo">
       <p class="hero-tagline">An open-source wireless platform for ESP32 devices.</p>
       <p class="hero-subtitle">40+ boards &middot; LVGL UI &middot; Web Dashboard &middot; WiFi &middot; BLE &middot; NFC &middot; IR &middot; SubGHz &middot; Ethernet &middot; Companion Apps</p>
       <div class="hero-actions">
         <a href="#getting-started" class="btn btn-primary">Get Started</a>
-        <a href="https://github.com/GhostESP-Revival/GhostESP" class="btn btn-secondary" target="_blank">GitHub</a>
-        <a href="https://docs.ghostesp.net" class="btn btn-secondary" target="_blank">Docs</a>
+        <a href="https://github.com/GhostESP-Revival/GhostESP" class="btn btn-secondary" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://docs.ghostesp.net" class="btn btn-secondary" target="_blank" rel="noopener">Docs</a>
       </div>
     </div>
     <div class="partner-strip">
       <div class="partner-marquee">
         <div class="partner-marquee-content" aria-hidden="false">
           <span class="partner-label">Official Hardware Partners</span>
-          <a href="https://www.wiredhatters.com/" target="_blank" class="partner-link">
+          <a href="https://www.wiredhatters.com/" target="_blank" rel="noopener" class="partner-link">
             <img src="https://static.wixstatic.com/media/35ea10_4e3676aadd454004b37123f8af4128de~mv2.jpg/v1/fill/w_500,h_500,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/logo%20black%20BG%20clean_edited.jpg" alt="The Wired Hatters" class="partner-logo">
             <span class="partner-name">Wired Hatters<sup class="partner-tm">™</sup></span>
             <i data-lucide="arrow-up-right" style="width:14px;height:14px;opacity:0.4;"></i>
           </a>
           <span class="partner-separator">·</span>
-          <a href="https://rabbit-labs.com/" target="_blank" class="partner-link">
+          <a href="https://rabbit-labs.com/" target="_blank" rel="noopener" class="partner-link">
             <img src="images/rabbitlabs.png" alt="Rabbit Labs" class="partner-logo partner-logo--sm">
             <span class="partner-name">Rabbit-Labs<sup class="partner-tm">™</sup></span>
             <i data-lucide="arrow-up-right" style="width:14px;height:14px;opacity:0.4;"></i>
@@ -220,13 +92,13 @@
         </div>
         <div class="partner-marquee-content" aria-hidden="true">
           <span class="partner-label">Official Hardware Partners</span>
-          <a href="https://www.wiredhatters.com/" target="_blank" class="partner-link" tabindex="-1">
+          <a href="https://www.wiredhatters.com/" target="_blank" rel="noopener" class="partner-link" tabindex="-1">
             <img src="https://static.wixstatic.com/media/35ea10_4e3676aadd454004b37123f8af4128de~mv2.jpg/v1/fill/w_500,h_500,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/logo%20black%20BG%20clean_edited.jpg" alt="" class="partner-logo">
             <span class="partner-name">Wired Hatters<sup class="partner-tm">™</sup></span>
             <i data-lucide="arrow-up-right" style="width:14px;height:14px;opacity:0.4;"></i>
           </a>
           <span class="partner-separator">·</span>
-          <a href="https://rabbit-labs.com/" target="_blank" class="partner-link" tabindex="-1">
+          <a href="https://rabbit-labs.com/" target="_blank" rel="noopener" class="partner-link" tabindex="-1">
             <img src="images/rabbitlabs.png" alt="" class="partner-logo partner-logo--sm">
             <span class="partner-name">Rabbit-Labs<sup class="partner-tm">™</sup></span>
             <i data-lucide="arrow-up-right" style="width:14px;height:14px;opacity:0.4;"></i>
@@ -259,7 +131,7 @@
           <div class="card-step-number">3</div>
           <h3>Serial Console</h3>
           <p>Configure your device with console, file manager, and screen mirror</p>
-           <a href="https://ghostesp.net/serial" target="_blank" class="btn btn-primary">Open Console</a>
+           <a href="https://ghostesp.net/serial" target="_blank" rel="noopener" class="btn btn-primary">Open Console</a>
         </div>
       </div>
 
@@ -279,7 +151,7 @@
             <h3>Read the Docs</h3>
             <p>Learn every feature and customize your setup</p>
           </div>
-          <a href="https://docs.ghostesp.net" target="_blank" class="btn btn-secondary btn-small">Docs</a>
+          <a href="https://docs.ghostesp.net" target="_blank" rel="noopener" class="btn btn-secondary btn-small">Docs</a>
         </div>
         <div class="card card-secondary" data-aos="fade-up" data-aos-delay="450">
           <div class="card-icon"><i data-lucide="message-square"></i></div>
@@ -287,7 +159,7 @@
             <h3>Join Discord</h3>
             <p>Get help and share projects with the community</p>
           </div>
-          <a href="https://discord.gg/5cyNmUMgwh" target="_blank" class="btn btn-secondary btn-small">Join</a>
+          <a href="https://discord.gg/5cyNmUMgwh" target="_blank" rel="noopener" class="btn btn-secondary btn-small">Join</a>
         </div>
       </div>
     </div>
@@ -301,9 +173,9 @@
         <h3>Auditable by Design</h3>
         <p class="auditable-text">GhostESP is GPL-licensed and built in public. You can inspect the firmware, tools, companion apps, docs, and even this website's source instead of trusting a black-box gadget.</p>
         <div class="auditable-links">
-          <a href="https://github.com/GhostESP-Revival/GhostESP" class="btn btn-secondary btn-small" target="_blank">Firmware Source</a>
-          <a href="https://github.com/GhostESP-Revival" class="btn btn-secondary btn-small" target="_blank">All Repos</a>
-          <a href="https://docs.ghostesp.net" class="btn btn-secondary btn-small" target="_blank">Docs</a>
+          <a href="https://github.com/GhostESP-Revival/GhostESP" class="btn btn-secondary btn-small" target="_blank" rel="noopener">Firmware Source</a>
+          <a href="https://github.com/GhostESP-Revival" class="btn btn-secondary btn-small" target="_blank" rel="noopener">All Repos</a>
+          <a href="https://docs.ghostesp.net" class="btn btn-secondary btn-small" target="_blank" rel="noopener">Docs</a>
         </div>
       </div>
     </div>
@@ -1004,7 +876,7 @@
           <p>How to get the T-Watch S3 into bootloader mode and flash GhostESP</p>
         </div>
         <div class="card" data-aos="fade-up" data-aos-delay="600">
-          <a href="https://github.com/GhostESP-Revival/GhostESP/blob/Development-deki/presskit.zip" target="_blank" style="text-decoration: none; color: inherit;">
+          <a href="https://github.com/GhostESP-Revival/GhostESP/blob/Development-deki/presskit.zip" target="_blank" rel="noopener" style="text-decoration: none; color: inherit;">
             <div style="width: 100%; height: 200px; border-radius: 8px; margin-bottom: 1rem; background: linear-gradient(45deg, #ff149322, #00ff8022); border: 1px solid var(--border); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; transition: all 0.3s ease;" class="presskit-placeholder">
               <i data-lucide="download-cloud" style="width: 48px; height: 48px; color: var(--accent);"></i>
               <span style="font-family: var(--font-mono); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px;">Download Press Kit</span>
@@ -1030,7 +902,7 @@
     <div class="container">
       <h2 data-aos="fade-up">Flipper Zero App</h2>
       <p style="text-align: center; color: var(--text-dim); margin-bottom: 1.5rem;" data-aos="fade-up">
-        <a href="https://lab.flipper.net/apps/ghost_esp" target="_blank" class="btn btn-secondary" style="display: inline-block;">
+        <a href="https://lab.flipper.net/apps/ghost_esp" target="_blank" rel="noopener" class="btn btn-secondary" style="display: inline-block;">
           View on Flipper App Catalog
         </a>
       </p>
@@ -1044,16 +916,16 @@
       <div class="legal-banner">
         <p><strong>Authorized use only.</strong> GhostESP is built for security testing on networks you own, lab research, education, and defensive analysis. Do not use it on networks or devices you do not own or have explicit permission to test.</p>
       </div>
-      <p>Developed by <a href="https://github.com/jaylikesbunda" target="_blank">Jay Candel</a></p>
-      <a href="https://ko-fi.com/jaylikesbunda" target="_blank" class="support-link">Support on Ko-Fi</a>
+      <p>Developed by <a href="https://github.com/jaylikesbunda" target="_blank" rel="noopener">Jay Candel</a></p>
+      <a href="https://ko-fi.com/jaylikesbunda" target="_blank" rel="noopener" class="support-link">Support on Ko-Fi</a>
       <div class="footer-links">
-        <a href="https://discord.gg/5cyNmUMgwh" target="_blank" class="icon-link" title="Discord">
+        <a href="https://discord.gg/5cyNmUMgwh" target="_blank" rel="noopener" class="icon-link" title="Discord">
           <i class="bi bi-discord"></i>
         </a>
-        <a href="https://github.com/GhostESP-Revival/GhostESP" target="_blank" class="icon-link" title="GitHub">
+        <a href="https://github.com/GhostESP-Revival/GhostESP" target="_blank" rel="noopener" class="icon-link" title="GitHub">
           <i class="bi bi-github"></i>
         </a>
-        <a href="https://instagram.com/ghostesprevival" target="_blank" class="icon-link" title="Instagram">
+        <a href="https://instagram.com/ghostesprevival" target="_blank" rel="noopener" class="icon-link" title="Instagram">
           <i class="bi bi-instagram"></i>
         </a>
       </div>
@@ -1061,7 +933,7 @@
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js" defer></script>
-  <script src="https://unpkg.com/lucide@latest" defer></script>
+  <script src="https://unpkg.com/lucide@0.344.0" defer></script>
   <script src="js/components.js" defer></script>
   <script src="js/github.js" defer></script>
   <script src="js/main.js" defer></script>

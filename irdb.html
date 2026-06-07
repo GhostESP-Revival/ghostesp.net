@@ -7,6 +7,21 @@
   <title>GhostESP IRDB - Infrared Remote Database</title>
   <meta name="description" content="Search and download infrared remote files for your GhostESP device. The largest collection of IR files with direct device upload support.">
   <meta name="keywords" content="GhostESP, ESP32, IR database, infrared database, remote control, IR files">
+  <meta name="robots" content="index, follow">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="GhostESP IRDB - Infrared Remote Database">
+  <meta property="og:description" content="Search and download infrared remote files for your GhostESP device. The largest collection of IR files with direct device upload support.">
+  <meta property="og:url" content="https://ghostesp.net/irdb.html">
+  <meta property="og:site_name" content="GhostESP">
+  <meta property="og:image" content="https://ghostesp.net/images/IMG_1178.webp">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="GhostESP IRDB - Infrared Remote Database">
+  <meta name="twitter:description" content="Search and download infrared remote files for your GhostESP device.">
+  <meta name="twitter:image" content="https://ghostesp.net/images/IMG_1178.webp">
+
+  <link rel="canonical" href="https://ghostesp.net/irdb.html">
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,97 +33,9 @@
   <link rel="icon" type="image/x-icon" href="images/favicon.ico">
 </head>
 <body>
+  <a href="#main-content" class="skip-link">Skip to content</a>
   <canvas id="dotTerrain"></canvas>
-  <script>
-    (function() {
-      var canvas = document.getElementById('dotTerrain');
-      if (!canvas) return;
-      var ctx = canvas.getContext('2d');
-      var SPACING = 28;
-      var dots = [];
-      var ripples = [];
-      var mouseX = -9999, mouseY = -9999;
-      var lastX = 0, lastY = 0;
-      var smoothMouseX = -9999, smoothMouseY = -9999;
-      function init() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        dots = [];
-        var cols = Math.ceil(canvas.width / SPACING) + 1;
-        var rows = Math.ceil(canvas.height / SPACING) + 1;
-        for (var r = 0; r < rows; r++) {
-          for (var c = 0; c < cols; c++) {
-            dots.push({ baseX: c * SPACING, baseY: r * SPACING, x: 0, y: 0, brightness: 0.15, targetBrightness: 0.15, radius: 1.5, targetRadius: 1.5 });
-          }
-        }
-      }
-      document.addEventListener('mousemove', function(e) {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-        var dx = e.clientX - lastX;
-        var dy = e.clientY - lastY;
-        var dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist > 30) {
-          ripples.push({ x: e.clientX, y: e.clientY, radius: 0, strength: 1 });
-          lastX = e.clientX;
-          lastY = e.clientY;
-        }
-      });
-      function animate() {
-        smoothMouseX += (mouseX - smoothMouseX) * 0.2;
-        smoothMouseY += (mouseY - smoothMouseY) * 0.2;
-        for (var i = ripples.length - 1; i >= 0; i--) {
-          ripples[i].radius += 7;
-          ripples[i].strength *= 0.97;
-          if (ripples[i].strength < 0.01) ripples.splice(i, 1);
-        }
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        for (var d = 0; d < dots.length; d++) {
-          var dot = dots[d];
-          var bx = dot.baseX + SPACING / 2;
-          var by = dot.baseY + SPACING / 2;
-          dot.targetBrightness = 0.2;
-          dot.targetRadius = 1.8;
-          var mdx = bx - smoothMouseX;
-          var mdy = by - smoothMouseY;
-          var mdist = Math.sqrt(mdx * mdx + mdy * mdy);
-          if (mdist < 220) {
-            var factor = 1 - mdist / 220;
-            factor = factor * factor;
-            dot.targetBrightness = 0.2 + factor * 0.6;
-            dot.targetRadius = 1.8 + factor * 3;
-          }
-          for (var r = 0; r < ripples.length; r++) {
-            var rip = ripples[r];
-            var rdx = bx - rip.x;
-            var rdy = by - rip.y;
-            var rdist = Math.sqrt(rdx * rdx + rdy * rdy);
-            var wavePos = rdist - rip.radius;
-            var waveWidth = 120;
-            if (wavePos > -40 && wavePos < waveWidth) {
-              var falloff = 1 - Math.max(0, wavePos) / waveWidth;
-              falloff = falloff * falloff;
-              var edgeFactor = 1 - Math.abs(wavePos + 20) / 60;
-              edgeFactor = Math.max(0, edgeFactor);
-              var bump = (falloff * 0.5 + edgeFactor * 0.5) * rip.strength * 0.6;
-              dot.targetBrightness = Math.max(dot.targetBrightness, 0.2 + bump);
-              dot.targetRadius = Math.max(dot.targetRadius, 1.8 + bump * 3);
-            }
-          }
-          dot.brightness += (dot.targetBrightness - dot.brightness) * 0.3;
-          dot.radius += (dot.targetRadius - dot.radius) * 0.3;
-          ctx.beginPath();
-          ctx.arc(bx, by, dot.radius, 0, Math.PI * 2);
-          ctx.fillStyle = 'rgba(255,255,255,' + dot.brightness + ')';
-          ctx.fill();
-        }
-        requestAnimationFrame(animate);
-      }
-      window.addEventListener('resize', init);
-      init();
-      animate();
-    })();
-  </script>
+  <script src="js/dot-terrain.js"></script>
   <nav id="nav"></nav>
 
   <div class="irdb-container">
@@ -117,7 +44,7 @@
       <p class="header-description">Search and manage IR files for your GhostESP device</p>
     </header>
 
-    <main class="irdb-main">
+    <main id="main-content" class="irdb-main">
       <div class="search-section">
         <div class="search-bar">
           <input type="text" id="searchInput" placeholder="Search by brand, model, or device type...">
@@ -174,13 +101,47 @@
 
   <footer class="footer">
     <div class="container">
-      <p>Data from <a href="https://github.com/Lucaslhm/Flipper-IRDB" target="_blank">Flipper-IRDB</a></p>
-      <p>Developed by <a href="https://github.com/jaylikesbunda" target="_blank">Jay Candel</a></p>
+      <p>Data from <a href="https://github.com/Lucaslhm/Flipper-IRDB" target="_blank" rel="noopener">Flipper-IRDB</a></p>
+      <p>Developed by <a href="https://github.com/jaylikesbunda" target="_blank" rel="noopener">Jay Candel</a></p>
     </div>
   </footer>
 
-  <script src="https://unpkg.com/lucide@latest" defer></script>
+  <script src="https://unpkg.com/lucide@0.344.0" defer></script>
   <script src="js/components.js" defer></script>
+  <script src="js/main.js" defer></script>
   <script src="js/irdb.js" defer></script>
+  <script>
+    (function(){
+      var GA_ID = 'G-MS2T2178R5';
+      var loaded = false;
+      function loadGtag(){
+        if(loaded) return; loaded = true;
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+        s.onload = function(){
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          window.gtag = gtag;
+          gtag('js', new Date());
+          gtag('config', GA_ID);
+        };
+        document.head.appendChild(s);
+      }
+      function whenInteracted(){
+        loadGtag();
+        removeListeners();
+      }
+      function removeListeners(){
+        ['click','scroll','keydown','pointerdown','touchstart'].forEach(function(e){
+          window.removeEventListener(e, whenInteracted, {passive:true});
+        });
+      }
+      ['click','scroll','keydown','pointerdown','touchstart'].forEach(function(e){
+        window.addEventListener(e, whenInteracted, {passive:true});
+      });
+      setTimeout(function(){ if(!loaded) loadGtag(); }, 5000);
+    })();
+  </script>
 </body>
 </html>

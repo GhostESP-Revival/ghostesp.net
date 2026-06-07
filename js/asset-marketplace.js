@@ -31,14 +31,7 @@
     return catalog;
   }
 
-  function escapeHtml(value) {
-    return String(value || '')
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#039;');
-  }
+  const escapeHtml = components.escapeHtml.bind(components);
 
   function renderPack(pack) {
     const authors = Array.isArray(pack.authors) && pack.authors.length ? pack.authors : ['Unknown'];

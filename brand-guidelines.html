@@ -34,7 +34,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
   <link rel="stylesheet" href="css/main.css">
-  <script src="https://unpkg.com/lucide@latest" defer></script>
+  <script src="https://unpkg.com/lucide@0.344.0" defer></script>
   <style>
     .guidelines-hero {
       text-align: center;
@@ -160,100 +160,12 @@
   </style>
 </head>
 <body>
+  <a href="#main-content" class="skip-link">Skip to content</a>
   <canvas id="dotTerrain"></canvas>
-  <script>
-    (function() {
-      var canvas = document.getElementById('dotTerrain');
-      if (!canvas) return;
-      var ctx = canvas.getContext('2d');
-      var SPACING = 28;
-      var dots = [];
-      var ripples = [];
-      var mouseX = -9999, mouseY = -9999;
-      var lastX = 0, lastY = 0;
-      var smoothMouseX = -9999, smoothMouseY = -9999;
-      function init() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        dots = [];
-        var cols = Math.ceil(canvas.width / SPACING) + 1;
-        var rows = Math.ceil(canvas.height / SPACING) + 1;
-        for (var r = 0; r < rows; r++) {
-          for (var c = 0; c < cols; c++) {
-            dots.push({ baseX: c * SPACING, baseY: r * SPACING, x: 0, y: 0, brightness: 0.15, targetBrightness: 0.15, radius: 1.5, targetRadius: 1.5 });
-          }
-        }
-      }
-      document.addEventListener('mousemove', function(e) {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-        var dx = e.clientX - lastX;
-        var dy = e.clientY - lastY;
-        var dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist > 30) {
-          ripples.push({ x: e.clientX, y: e.clientY, radius: 0, strength: 1 });
-          lastX = e.clientX;
-          lastY = e.clientY;
-        }
-      });
-      function animate() {
-        smoothMouseX += (mouseX - smoothMouseX) * 0.2;
-        smoothMouseY += (mouseY - smoothMouseY) * 0.2;
-        for (var i = ripples.length - 1; i >= 0; i--) {
-          ripples[i].radius += 7;
-          ripples[i].strength *= 0.97;
-          if (ripples[i].strength < 0.01) ripples.splice(i, 1);
-        }
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        for (var d = 0; d < dots.length; d++) {
-          var dot = dots[d];
-          var bx = dot.baseX + SPACING / 2;
-          var by = dot.baseY + SPACING / 2;
-          dot.targetBrightness = 0.2;
-          dot.targetRadius = 1.8;
-          var mdx = bx - smoothMouseX;
-          var mdy = by - smoothMouseY;
-          var mdist = Math.sqrt(mdx * mdx + mdy * mdy);
-          if (mdist < 220) {
-            var factor = 1 - mdist / 220;
-            factor = factor * factor;
-            dot.targetBrightness = 0.2 + factor * 0.6;
-            dot.targetRadius = 1.8 + factor * 3;
-          }
-          for (var r = 0; r < ripples.length; r++) {
-            var rip = ripples[r];
-            var rdx = bx - rip.x;
-            var rdy = by - rip.y;
-            var rdist = Math.sqrt(rdx * rdx + rdy * rdy);
-            var wavePos = rdist - rip.radius;
-            var waveWidth = 120;
-            if (wavePos > -40 && wavePos < waveWidth) {
-              var falloff = 1 - Math.max(0, wavePos) / waveWidth;
-              falloff = falloff * falloff;
-              var edgeFactor = 1 - Math.abs(wavePos + 20) / 60;
-              edgeFactor = Math.max(0, edgeFactor);
-              var bump = (falloff * 0.5 + edgeFactor * 0.5) * rip.strength * 0.6;
-              dot.targetBrightness = Math.max(dot.targetBrightness, 0.2 + bump);
-              dot.targetRadius = Math.max(dot.targetRadius, 1.8 + bump * 3);
-            }
-          }
-          dot.brightness += (dot.targetBrightness - dot.brightness) * 0.3;
-          dot.radius += (dot.targetRadius - dot.radius) * 0.3;
-          ctx.beginPath();
-          ctx.arc(bx, by, dot.radius, 0, Math.PI * 2);
-          ctx.fillStyle = 'rgba(255,255,255,' + dot.brightness + ')';
-          ctx.fill();
-        }
-        requestAnimationFrame(animate);
-      }
-      window.addEventListener('resize', init);
-      init();
-      animate();
-    })();
-  </script>
+  <script src="js/dot-terrain.js"></script>
   <nav id="nav"></nav>
 
-  <section class="guidelines-hero">
+  <section id="main-content" class="guidelines-hero">
     <div class="container">
       <h1>Brand Usage Guidelines</h1>
       <p>Rules for using the GhostESP name, logo, and assets in your products and content.</p>
@@ -356,12 +268,12 @@
         <li>Listing on our official website.</li>
         <li>Priority support and updates.</li>
       </ul>
-      <p>Interested? Reach out on <a href="https://discord.gg/5cyNmUMgwh" target="_blank">Discord</a> or email <a href="mailto:partners@ghostesp.net">partners@ghostesp.net</a>.</p>
+      <p>Interested? Reach out on <a href="https://discord.gg/5cyNmUMgwh" target="_blank" rel="noopener">Discord</a> or email <a href="mailto:partners@ghostesp.net">partners@ghostesp.net</a>.</p>
 
       <hr>
 
       <h3>Questions?</h3>
-      <p>If you're unsure about something, just ask. Reach out on <a href="https://discord.gg/5cyNmUMgwh" target="_blank">Discord</a> or email <a href="mailto:partners@ghostesp.net">partners@ghostesp.net</a>.</p>
+      <p>If you're unsure about something, just ask. Reach out on <a href="https://discord.gg/5cyNmUMgwh" target="_blank" rel="noopener">Discord</a> or email <a href="mailto:partners@ghostesp.net">partners@ghostesp.net</a>.</p>
 
       <p class="updated">Last updated: February 2026</p>
 
@@ -371,16 +283,16 @@
 
   <footer class="footer">
     <div class="container">
-      <p>Developed by <a href="https://github.com/jaylikesbunda" target="_blank">Jay Candel</a></p>
-      <a href="https://ko-fi.com/jaylikesbunda" target="_blank" class="support-link">Support on Ko-Fi</a>
+      <p>Developed by <a href="https://github.com/jaylikesbunda" target="_blank" rel="noopener">Jay Candel</a></p>
+      <a href="https://ko-fi.com/jaylikesbunda" target="_blank" rel="noopener" class="support-link">Support on Ko-Fi</a>
       <div class="footer-links">
-        <a href="https://discord.gg/5cyNmUMgwh" target="_blank" class="icon-link" title="Discord">
+        <a href="https://discord.gg/5cyNmUMgwh" target="_blank" rel="noopener" class="icon-link" title="Discord">
           <i class="bi bi-discord"></i>
         </a>
-        <a href="https://github.com/GhostESP-Revival/GhostESP" target="_blank" class="icon-link" title="GitHub">
+        <a href="https://github.com/GhostESP-Revival/GhostESP" target="_blank" rel="noopener" class="icon-link" title="GitHub">
           <i class="bi bi-github"></i>
         </a>
-        <a href="https://instagram.com/ghostesprevival" target="_blank" class="icon-link" title="Instagram">
+        <a href="https://instagram.com/ghostesprevival" target="_blank" rel="noopener" class="icon-link" title="Instagram">
           <i class="bi bi-instagram"></i>
         </a>
       </div>
@@ -389,5 +301,38 @@
 
   <script src="js/components.js" defer></script>
   <script src="js/main.js" defer></script>
+  <script>
+    (function(){
+      var GA_ID = 'G-MS2T2178R5';
+      var loaded = false;
+      function loadGtag(){
+        if(loaded) return; loaded = true;
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+        s.onload = function(){
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          window.gtag = gtag;
+          gtag('js', new Date());
+          gtag('config', GA_ID);
+        };
+        document.head.appendChild(s);
+      }
+      function whenInteracted(){
+        loadGtag();
+        removeListeners();
+      }
+      function removeListeners(){
+        ['click','scroll','keydown','pointerdown','touchstart'].forEach(function(e){
+          window.removeEventListener(e, whenInteracted, {passive:true});
+        });
+      }
+      ['click','scroll','keydown','pointerdown','touchstart'].forEach(function(e){
+        window.addEventListener(e, whenInteracted, {passive:true});
+      });
+      setTimeout(function(){ if(!loaded) loadGtag(); }, 5000);
+    })();
+  </script>
 </body>
 </html>
