@@ -6,6 +6,21 @@
     <meta name="theme-color" content="#000000" />
     <title>GhostESP: Serial Console</title>
     <meta name="description" content="Connect to your GhostESP device via serial. Console, screen mirror, file browser, and crash decoder.">
+    <meta name="robots" content="index, follow">
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="GhostESP: Serial Console">
+    <meta property="og:description" content="Connect to your GhostESP device via serial. Console, screen mirror, file browser, and crash decoder.">
+    <meta property="og:url" content="https://ghostesp.net/serial.html">
+    <meta property="og:site_name" content="GhostESP">
+    <meta property="og:image" content="https://ghostesp.net/images/IMG_1178.webp">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="GhostESP: Serial Console">
+    <meta name="twitter:description" content="Connect to your GhostESP device via serial.">
+    <meta name="twitter:image" content="https://ghostesp.net/images/IMG_1178.webp">
+
+    <link rel="canonical" href="https://ghostesp.net/serial.html">
 
     <link rel="icon" type="image/x-icon" href="images/favicon.ico">
     <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
@@ -22,22 +37,23 @@
     <link rel="stylesheet" href="css/serial-mirror.css" />
     <link rel="stylesheet" href="css/serial-files.css" />
     <link rel="stylesheet" href="css/serial-crash.css" />
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MS2T2178R5"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-MS2T2178R5');
+    </script>
   </head>
 
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-MS2T2178R5"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-MS2T2178R5');
-  </script>
-
   <body>
+  <a href="#main-content" class="skip-link">Skip to content</a>
     <canvas id="dotTerrain"></canvas>
     <nav id="nav"></nav>
 
-    <main class="serial-page">
+    <main id="main-content" class="serial-page">
       <div class="serial-container">
         <!-- Welcome Card (shown when disconnected) -->
         <div class="welcome-card" id="welcomeCard">
@@ -48,7 +64,7 @@
               <path d="M2 12l10 5 10-5"/>
             </svg>
           </div>
-          <h2>Connect Your Device</h2>
+          <h1>Connect Your Device</h1>
           <p class="welcome-desc">Plug in your GhostESP device and click connect to get started.</p>
           <div class="welcome-steps">
             <div class="welcome-step">
@@ -180,51 +196,8 @@
     </div>
 
     <script src="js/components.js"></script>
-    <script>
-      // Dot terrain canvas background (lightweight)
-      (function() {
-        var canvas = document.getElementById('dotTerrain');
-        if (!canvas) return;
-        var ctx = canvas.getContext('2d');
-        var SPACING = 32;
-        var dots = [];
-        var mouseX = -9999, mouseY = -9999;
-
-        function init() {
-          canvas.width = window.innerWidth;
-          canvas.height = window.innerHeight;
-          dots = [];
-          var cols = Math.ceil(canvas.width / SPACING) + 1;
-          var rows = Math.ceil(canvas.height / SPACING) + 1;
-          for (var r = 0; r < rows; r++) {
-            for (var c = 0; c < cols; c++) {
-              dots.push({ x: c * SPACING, y: r * SPACING, brightness: 0.12 });
-            }
-          }
-        }
-
-        document.addEventListener('mousemove', function(e) { mouseX = e.clientX; mouseY = e.clientY; });
-        window.addEventListener('resize', init);
-        init();
-
-        function draw() {
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
-          for (var i = 0; i < dots.length; i++) {
-            var d = dots[i];
-            var dx = d.x - mouseX, dy = d.y - mouseY;
-            var dist = Math.sqrt(dx * dx + dy * dy);
-            var b = d.brightness;
-            if (dist < 150) b = 0.12 + (1 - dist / 150) * 0.25;
-            ctx.beginPath();
-            ctx.arc(d.x, d.y, 1.2, 0, Math.PI * 2);
-            ctx.fillStyle = 'rgba(255,255,255,' + b + ')';
-            ctx.fill();
-          }
-          requestAnimationFrame(draw);
-        }
-        draw();
-      })();
-    </script>
+    <script src="js/main.js"></script>
+    <script src="js/dot-terrain.js"></script>
     <script src="js/serial.js"></script>
     <script src="js/serial-mirror.js"></script>
     <script src="js/serial-files.js"></script>

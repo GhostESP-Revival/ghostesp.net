@@ -40,7 +40,7 @@ const components = {
             <button class="nav-dropdown-toggle" type="button" aria-haspopup="true">Downloads</button>
             <ul class="nav-dropdown-menu">
               <li><a href="marketplace.html">Apps</a></li>
-              <li><a href="asset-marketplace.html">Assets</a></li>
+              <li><a href="asset-marketplace.html">Asset Packs</a></li>
               <li><a href="irdb.html">IRDB</a></li>
             </ul>
           </li>
@@ -142,6 +142,15 @@ const components = {
     if (bytes < 1024) return bytes + ' B';
     if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
     return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+  },
+
+  escapeHtml(value) {
+    return String(value || '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
   },
 
   // simple markdown parser for release notes

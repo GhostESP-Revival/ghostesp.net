@@ -36,7 +36,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
   <link rel="stylesheet" href="css/main.css">
-  <script src="https://unpkg.com/lucide@latest" defer></script>
+  <script src="https://unpkg.com/lucide@0.344.0" defer></script>
 
   <style>
     .market-hero {
@@ -308,10 +308,12 @@
   </style>
 </head>
 <body>
+  <a href="#main-content" class="skip-link">Skip to content</a>
   <canvas id="dotTerrain"></canvas>
+  <script src="js/dot-terrain.js"></script>
   <nav id="nav"></nav>
 
-  <header class="market-hero">
+  <header id="main-content" class="market-hero">
     <div class="container">
       <div class="market-hero-copy" data-aos="fade-up">
         <img src="images/ghostespdotnet.png" alt="GhostESP" class="market-hero-logo">
@@ -347,16 +349,16 @@
 
   <footer class="footer">
     <div class="container">
-      <p>Developed by <a href="https://github.com/jaylikesbunda" target="_blank">Jay Candel</a></p>
-      <a href="https://ko-fi.com/jaylikesbunda" target="_blank" class="support-link">Support on Ko-Fi</a>
+      <p>Developed by <a href="https://github.com/jaylikesbunda" target="_blank" rel="noopener">Jay Candel</a></p>
+      <a href="https://ko-fi.com/jaylikesbunda" target="_blank" rel="noopener" class="support-link">Support on Ko-Fi</a>
       <div class="footer-links">
-        <a href="https://discord.gg/5cyNmUMgwh" target="_blank" class="icon-link" title="Discord">
+        <a href="https://discord.gg/5cyNmUMgwh" target="_blank" rel="noopener" class="icon-link" title="Discord">
           <i class="bi bi-discord"></i>
         </a>
-        <a href="https://github.com/GhostESP-Revival/GhostESP" target="_blank" class="icon-link" title="GitHub">
+        <a href="https://github.com/GhostESP-Revival/GhostESP" target="_blank" rel="noopener" class="icon-link" title="GitHub">
           <i class="bi bi-github"></i>
         </a>
-        <a href="https://instagram.com/ghostesprevival" target="_blank" class="icon-link" title="Instagram">
+        <a href="https://instagram.com/ghostesprevival" target="_blank" rel="noopener" class="icon-link" title="Instagram">
           <i class="bi bi-instagram"></i>
         </a>
       </div>
@@ -374,6 +376,39 @@
         AOS.init({ duration: 800, once: true, offset: 100 });
       }
     });
+  </script>
+  <script>
+    (function(){
+      var GA_ID = 'G-MS2T2178R5';
+      var loaded = false;
+      function loadGtag(){
+        if(loaded) return; loaded = true;
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+        s.onload = function(){
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          window.gtag = gtag;
+          gtag('js', new Date());
+          gtag('config', GA_ID);
+        };
+        document.head.appendChild(s);
+      }
+      function whenInteracted(){
+        loadGtag();
+        removeListeners();
+      }
+      function removeListeners(){
+        ['click','scroll','keydown','pointerdown','touchstart'].forEach(function(e){
+          window.removeEventListener(e, whenInteracted, {passive:true});
+        });
+      }
+      ['click','scroll','keydown','pointerdown','touchstart'].forEach(function(e){
+        window.addEventListener(e, whenInteracted, {passive:true});
+      });
+      setTimeout(function(){ if(!loaded) loadGtag(); }, 5000);
+    })();
   </script>
 </body>
 </html>

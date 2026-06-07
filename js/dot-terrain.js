@@ -1,94 +1,118 @@
-/**
- * Dot Terrain - Simple debug version
- */
-console.log('[DT] Script loaded');
+(function() {
+  var canvas = document.getElementById('dotTerrain');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
 
-var dtCanvas = document.getElementById('dotTerrain');
-console.log('[DT] Canvas:', dtCanvas ? 'FOUND' : 'NOT FOUND', dtCanvas);
+  var SPACING = 28;
+  var dots = [];
+  var ripples = [];
+  var mouseX = -9999, mouseY = -9999;
+  var lastX = 0, lastY = 0;
+  var smoothMouseX = -9999, smoothMouseY = -9999;
 
-if (dtCanvas) {
-  var dtCtx = dtCanvas.getContext('2d');
-  console.log('[DT] Context:', dtCtx ? 'OK' : 'FAIL');
-  
-  // Sizing
-  dtCanvas.width = window.innerWidth;
-  dtCanvas.height = window.innerHeight;
-  
-  // Dot config
-  var DT_SPACING = 35;
-  var DT_COLS = Math.ceil(dtCanvas.width / DT_SPACING);
-  var DT_ROWS = Math.ceil(dtCanvas.height / DT_SPACING);
-  
-  console.log('[DT] Grid:', DT_COLS, 'x', DT_ROWS, '=', DT_COLS * DT_ROWS, 'dots');
-  
-  // Mouse state
-  var dtMouseX = -10000;
-  var dtMouseY = -10000;
-  var dtMouseActive = false;
-  
-  // Track mouse
-  document.addEventListener('mousemove', function(e) {
-    dtMouseX = e.clientX;
-    dtMouseY = e.clientY;
-    dtMouseActive = true;
-  });
-  
-  document.addEventListener('mouseleave', function() {
-    dtMouseActive = false;
-  });
-  
-  console.log('[DT] Mouse listener attached');
-  
-  // Animation loop
-  var dtFrame = 0;
-  function dtAnimate() {
-    dtFrame++;
-    
-    // Clear
-    dtCtx.clearRect(0, 0, dtCanvas.width, dtCanvas.height);
-    
-    // Draw dots
-    for (var row = 0; row < DT_ROWS; row++) {
-      for (var col = 0; col < DT_COLS; col++) {
-        var x = col * DT_SPACING + DT_SPACING/2;
-        var y = row * DT_SPACING + DT_SPACING/2;
-        
-        var radius = 1.5;
-        var opacity = 0.15;
-        
-        // Mouse effect
-        if (dtMouseActive) {
-          var dx = x - dtMouseX;
-          var dy = y - dtMouseY;
-          var dist = Math.sqrt(dx*dx + dy*dy);
-          
-          if (dist < 200) {
-            var factor = 1 - (dist / 200);
-            radius = 1.5 + factor * 3;
-            opacity = 0.15 + factor * 0.5;
-          }
-        }
-        
-        // Draw
-        dtCtx.beginPath();
-        dtCtx.arc(x, y, radius, 0, Math.PI * 2);
-        dtCtx.fillStyle = 'rgba(255,255,255,' + opacity + ')';
-        dtCtx.fill();
+  function init() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    dots = [];
+
+    var cols = Math.ceil(canvas.width / SPACING) + 1;
+    var rows = Math.ceil(canvas.height / SPACING) + 1;
+
+    for (var r = 0; r < rows; r++) {
+      for (var c = 0; c < cols; c++) {
+        dots.push({
+          baseX: c * SPACING,
+          baseY: r * SPACING,
+          x: 0, y: 0,
+          brightness: 0.15,
+          targetBrightness: 0.15,
+          radius: 1.5,
+          targetRadius: 1.5
+        });
       }
     }
-    
-    // Log occasionally
-    if (dtFrame % 120 === 0) {
-      console.log('[DT] Frame', dtFrame, 'Mouse:', dtMouseX, dtMouseY, 'Active:', dtMouseActive);
-    }
-    
-    requestAnimationFrame(dtAnimate);
   }
-  
-  // Start
-  dtAnimate();
-  console.log('[DT] STARTED - watching for movement');
-  
-} else {
-  console.error('[DT] ABORT - no canvas element');
-}
+
+  document.addEventListener('mousemove', function(e) {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+
+    var dx = e.clientX - lastX;
+    var dy = e.clientY - lastY;
+    var dist = Math.sqrt(dx * dx + dy * dy);
+
+    if (dist > 30) {
+      ripples.push({ x: e.clientX, y: e.clientY, radius: 0, strength: 1 });
+      lastX = e.clientX;
+      lastY = e.clientY;
+    }
+  });
+
+  function animate() {
+    smoothMouseX += (mouseX - smoothMouseX) * 0.2;
+    smoothMouseY += (mouseY - smoothMouseY) * 0.2;
+
+    for (var i = ripples.length - 1; i >= 0; i--) {
+      ripples[i].radius += 7;
+      ripples[i].strength *= 0.97;
+      if (ripples[i].strength < 0.01) ripples.splice(i, 1);
+    }
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    for (var d = 0; d < dots.length; d++) {
+      var dot = dots[d];
+      var bx = dot.baseX + SPACING / 2;
+      var by = dot.baseY + SPACING / 2;
+
+      dot.targetBrightness = 0.2;
+      dot.targetRadius = 1.8;
+
+      var mdx = bx - smoothMouseX;
+      var mdy = by - smoothMouseY;
+      var mdist = Math.sqrt(mdx * mdx + mdy * mdy);
+
+      if (mdist < 220) {
+        var factor = 1 - mdist / 220;
+        factor = factor * factor;
+        dot.targetBrightness = 0.2 + factor * 0.6;
+        dot.targetRadius = 1.8 + factor * 3;
+      }
+
+      for (var r = 0; r < ripples.length; r++) {
+        var rip = ripples[r];
+        var rdx = bx - rip.x;
+        var rdy = by - rip.y;
+        var rdist = Math.sqrt(rdx * rdx + rdy * rdy);
+        var wavePos = rdist - rip.radius;
+
+        var waveWidth = 120;
+        if (wavePos > -40 && wavePos < waveWidth) {
+          var falloff = 1 - Math.max(0, wavePos) / waveWidth;
+          falloff = falloff * falloff;
+
+          var edgeFactor = 1 - Math.abs(wavePos + 20) / 60;
+          edgeFactor = Math.max(0, edgeFactor);
+
+          var bump = (falloff * 0.5 + edgeFactor * 0.5) * rip.strength * 0.6;
+          dot.targetBrightness = Math.max(dot.targetBrightness, 0.2 + bump);
+          dot.targetRadius = Math.max(dot.targetRadius, 1.8 + bump * 3);
+        }
+      }
+
+      dot.brightness += (dot.targetBrightness - dot.brightness) * 0.3;
+      dot.radius += (dot.targetRadius - dot.radius) * 0.3;
+
+      ctx.beginPath();
+      ctx.arc(bx, by, dot.radius, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(255,255,255,' + dot.brightness + ')';
+      ctx.fill();
+    }
+
+    requestAnimationFrame(animate);
+  }
+
+  window.addEventListener('resize', init);
+  init();
+  animate();
+})();
