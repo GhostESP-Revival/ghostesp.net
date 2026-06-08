@@ -1587,6 +1587,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (chipInfoElem) chipInfoElem.innerHTML = `<span class="status-indicator status-success"></span> Flash Complete`;
                 updateStatusIndicator('success', 'Flash complete!', 'Attempting device reset...');
 
+                if (typeof SocialProof !== 'undefined' && SocialProof.showPostFlashModal) {
+                    SocialProof.showPostFlashModal();
+                }
+
                 try {
                     espLoaderTerminal.writeLine("Attempting soft reset (into app)...");
                     await espLoader.softReset(true);

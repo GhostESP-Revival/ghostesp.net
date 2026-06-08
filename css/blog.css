@@ -21,6 +21,7 @@
   line-height: 1.2;
   margin-bottom: 1rem;
   letter-spacing: -0.5px;
+  text-align: left;
 }
 .post-meta {
   display: flex;

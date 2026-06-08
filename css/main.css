@@ -1146,6 +1146,15 @@ nav .container {
 }
 
 /* typography */
+h1 {
+  font-size: 2.25rem;
+  margin-bottom: 2rem;
+  text-align: center;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  letter-spacing: -0.5px;
+}
+
 h2 {
   font-size: 2rem;
   margin-bottom: 2rem;
@@ -1453,5 +1462,288 @@ h3 {
 
   .card-secondary-content {
     text-align: center;
+  }
+}
+
+/* floating discord button */
+.floating-discord-btn {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 56px;
+  height: 56px;
+  background: #5865F2;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  text-decoration: none;
+  z-index: 1999;
+  box-shadow: 0 4px 16px rgba(88, 101, 242, 0.4);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: floatPulse 3s ease-in-out infinite;
+}
+
+.floating-discord-btn:hover {
+  transform: scale(1.12) translateY(-2px);
+  box-shadow: 0 6px 24px rgba(88, 101, 242, 0.6);
+  color: #fff;
+  animation: none;
+}
+
+@keyframes floatPulse {
+  0%, 100% { box-shadow: 0 4px 16px rgba(88, 101, 242, 0.4); }
+  50% { box-shadow: 0 4px 24px rgba(88, 101, 242, 0.6), 0 0 0 8px rgba(88, 101, 242, 0.1); }
+}
+
+/* nav star button */
+#nav-star-count {
+  display: flex;
+  align-items: center;
+  margin-left: 0.25rem;
+}
+
+.nav-star-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--text-dim);
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-family: var(--font-mono);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  white-space: nowrap;
+  line-height: 1;
+  vertical-align: middle;
+}
+
+.nav-star-btn:hover {
+  color: var(--text);
+  border-color: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.04);
+  transform: translateY(-1px);
+}
+
+.nav-star-btn svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  vertical-align: middle;
+  position: relative;
+  top: -1px;
+}
+
+.nav-star-btn span {
+  line-height: 1;
+  vertical-align: middle;
+}
+
+/* discord widget card */
+.discord-widget-card {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 2rem;
+  background: var(--surface);
+  border: 1px solid rgba(88, 101, 242, 0.2);
+  border-radius: var(--radius);
+  text-align: center;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.discord-widget-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(88, 101, 242, 0.4);
+  box-shadow: 0 8px 24px rgba(88, 101, 242, 0.15);
+}
+
+.discord-widget-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-bottom: 0.75rem;
+}
+
+.discord-widget-header h3 {
+  margin-bottom: 0;
+  font-size: 1.25rem;
+}
+
+.discord-widget-desc {
+  color: var(--text-dim);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.discord-widget-count {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  font-family: var(--font-mono);
+  margin-bottom: 0.5rem;
+}
+
+.discord-online-dot {
+  width: 8px;
+  height: 8px;
+  background: #57F287;
+  border-radius: 50%;
+  display: inline-block;
+  animation: dotPulse 2s ease-in-out infinite;
+}
+
+@keyframes dotPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+/* post-flash modal */
+.post-flash-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3000;
+  animation: fadeIn 0.3s ease;
+}
+
+.post-flash-modal {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 2.5rem 2rem 2rem;
+  max-width: 420px;
+  width: 90%;
+  text-align: center;
+  position: relative;
+  animation: slideUp 0.3s ease;
+}
+
+.post-flash-close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  font-size: 1.5rem;
+  cursor: pointer;
+  line-height: 1;
+  transition: color 0.2s;
+}
+
+.post-flash-close:hover {
+  color: var(--text);
+}
+
+.post-flash-icon {
+  width: 56px;
+  height: 56px;
+  background: rgba(0, 255, 128, 0.1);
+  border: 2px solid #00ff80;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem;
+  font-size: 1.5rem;
+  color: #00ff80;
+}
+
+.post-flash-modal h3 {
+  font-size: 1.3rem;
+  margin-bottom: 0.75rem;
+}
+
+.post-flash-modal p {
+  color: var(--text-dim);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* contextual discord CTA */
+.contextual-discord-cta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  background: rgba(88, 101, 242, 0.06);
+  border: 1px solid rgba(88, 101, 242, 0.15);
+  border-radius: var(--radius);
+  margin-top: 1.5rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.contextual-discord-cta:hover {
+  background: rgba(88, 101, 242, 0.1);
+  border-color: rgba(88, 101, 242, 0.3);
+  transform: translateY(-2px);
+}
+
+.contextual-discord-cta-icon {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  background: rgba(88, 101, 242, 0.15);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #5865F2;
+}
+
+.contextual-discord-cta-content {
+  flex: 1;
+}
+
+.contextual-discord-cta-content h4 {
+  font-size: 0.95rem;
+  margin-bottom: 0.2rem;
+  color: var(--text);
+}
+
+.contextual-discord-cta-content p {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  margin-bottom: 0;
+}
+
+@media (max-width: 768px) {
+  .floating-discord-btn {
+    bottom: 16px;
+    right: 16px;
+    width: 50px;
+    height: 50px;
+  }
+
+  .floating-discord-btn svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .post-flash-modal {
+    padding: 2rem 1.5rem 1.5rem;
   }
 }
