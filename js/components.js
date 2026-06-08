@@ -55,6 +55,7 @@ const components = {
               <li><a href="feedback.html">Feedback</a></li>
             </ul>
           </li>
+          <li id="nav-star-count"></li>
         </ul>
       </div>
     `;
