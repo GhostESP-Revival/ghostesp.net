@@ -42,68 +42,6 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
   <link rel="stylesheet" href="css/main.css">
   <script src="https://unpkg.com/lucide@0.344.0" defer></script>
-  <style>
-    .board-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
-      margin-top: 2rem;
-    }
-    .board-card-full {
-      display: flex;
-      flex-direction: column;
-    }
-    .board-card-full img {
-      width: 100%;
-      height: 220px;
-      object-fit: cover;
-      border-radius: 12px;
-      margin-bottom: 1rem;
-    }
-    .board-tags {
-      display: flex;
-      gap: 0.5rem;
-      flex-wrap: wrap;
-      margin: 0.5rem 0;
-    }
-    .board-tag {
-      font-size: 0.75rem;
-      padding: 0.25rem 0.5rem;
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      font-family: var(--font-mono);
-    }
-    .board-card-full .btn {
-      margin-top: auto;
-    }
-    .tag-filter {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      justify-content: center;
-      margin: 1rem 0 2rem;
-    }
-    .tag-filter-btn {
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      background: transparent;
-      color: var(--text);
-      padding: 0.35rem 0.9rem;
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
-      cursor: pointer;
-      transition: background 0.2s, color 0.2s;
-      max-width: 9rem;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .tag-filter-btn.active {
-      background: var(--text);
-      color: #000;
-    }
-  </style>
 </head>
 <body>
   <a href="#main-content" class="skip-link">Skip to content</a>
@@ -111,8 +49,44 @@
   <script src="js/dot-terrain.js"></script>
   <nav id="nav"></nav>
 
+  <!-- Partner Marquee -->
+  <div class="partner-strip partner-strip--standalone">
+    <div class="partner-marquee">
+      <div class="partner-marquee-content" aria-hidden="false">
+        <span class="partner-label">Official Hardware Partners</span>
+        <a href="https://www.wiredhatters.com/" target="_blank" rel="noopener" class="partner-link">
+          <img src="https://static.wixstatic.com/media/35ea10_4e3676aadd454004b37123f8af4128de~mv2.jpg/v1/fill/w_500,h_500,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/logo%20black%20BG%20clean_edited.jpg" alt="The Wired Hatters" class="partner-logo">
+          <span class="partner-name">Wired Hatters<sup class="partner-tm">™</sup></span>
+          <i data-lucide="arrow-up-right" style="width:14px;height:14px;opacity:0.4;"></i>
+        </a>
+        <span class="partner-separator">·</span>
+        <a href="https://rabbit-labs.com/" target="_blank" rel="noopener" class="partner-link">
+          <img src="images/rabbitlabs.png" alt="Rabbit Labs" class="partner-logo partner-logo--sm">
+          <span class="partner-name">Rabbit-Labs<sup class="partner-tm">™</sup></span>
+          <i data-lucide="arrow-up-right" style="width:14px;height:14px;opacity:0.4;"></i>
+        </a>
+        <span class="partner-separator">·</span>
+      </div>
+      <div class="partner-marquee-content" aria-hidden="true">
+        <span class="partner-label">Official Hardware Partners</span>
+        <a href="https://www.wiredhatters.com/" target="_blank" rel="noopener" class="partner-link" tabindex="-1">
+          <img src="https://static.wixstatic.com/media/35ea10_4e3676aadd454004b37123f8af4128de~mv2.jpg/v1/fill/w_500,h_500,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/logo%20black%20BG%20clean_edited.jpg" alt="" class="partner-logo">
+          <span class="partner-name">Wired Hatters<sup class="partner-tm">™</sup></span>
+          <i data-lucide="arrow-up-right" style="width:14px;height:14px;opacity:0.4;"></i>
+        </a>
+        <span class="partner-separator">·</span>
+        <a href="https://rabbit-labs.com/" target="_blank" rel="noopener" class="partner-link" tabindex="-1">
+          <img src="images/rabbitlabs.png" alt="" class="partner-logo partner-logo--sm">
+          <span class="partner-name">Rabbit-Labs<sup class="partner-tm">™</sup></span>
+          <i data-lucide="arrow-up-right" style="width:14px;height:14px;opacity:0.4;"></i>
+        </a>
+        <span class="partner-separator">·</span>
+      </div>
+    </div>
+  </div>
+
   <!-- Boards Section -->
-  <section id="main-content" class="section" style="padding-top: 8rem;">
+  <section id="main-content" class="section" style="padding-top: 4rem;">
     <div class="container">
       <h1>Supported Boards</h1>
       <p style="text-align: center; color: var(--text-dim); margin-bottom: 3rem; max-width: 800px; margin-left: auto; margin-right: auto;">
@@ -123,7 +97,8 @@
       <div class="board-grid">
         <div class="card board-card-full">
           <img src="images/ghostfront-600x800.jpg" alt="GhostBoard" loading="lazy">
-          <h3>GhostBoard (Rabbit‑Labs)</h3>
+          <span class="board-card-partner board-card-partner--rabbit">Rabbit-Labs</span>
+          <h3>GhostBoard</h3>
           <div class="board-tags">
             <span class="board-tag">Flipper</span>
             <span class="board-tag">SD Card</span>
@@ -158,7 +133,8 @@
 
         <div class="card board-card-full">
           <img src="https://static.wixstatic.com/media/35ea10_c352ea38cf4c4ba0982a44c7b898755d~mv2.jpg/v1/fill/w_500,h_333,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/35ea10_c352ea38cf4c4ba0982a44c7b898755d~mv2.jpg" alt="Ultimate Marauder" loading="lazy">
-          <h3>Ultimate Marauder (TWH)</h3>
+          <span class="board-card-partner board-card-partner--twh">Wired Hatters</span>
+          <h3>Ultimate Marauder</h3>
           <div class="board-tags">
             <span class="board-tag">Flipper</span>
             <span class="board-tag">GPS</span>
@@ -171,16 +147,17 @@
 
         <div class="card board-card-full">
           <img src="https://static.wixstatic.com/media/35ea10_30c1a7ec6ead46d39aef8aea8c2ede48~mv2.jpg/v1/fill/w_498,h_603,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/35ea10_30c1a7ec6ead46d39aef8aea8c2ede48~mv2.jpg" alt="The Banshee" loading="lazy">
-          <h3>The Banshee (TWH)</h3>
+          <span class="board-card-partner board-card-partner--twh">Wired Hatters</span>
+          <h3>The Banshee</h3>
           <div class="board-tags">
-            <span class="board-tag">Dual MCU</span>
             <span class="board-tag">5GHz</span>
             <span class="board-tag">Ethernet</span>
             <span class="board-tag">SD Card</span>
             <span class="board-tag">Infrared</span>
             <span class="board-tag">GPS</span>
             <span class="board-tag">NFC</span>
-            <span class="board-tag">OLED</span>
+            <span class="board-tag">Sub-GHz</span>
+            <span class="board-tag">Display</span>
             <span class="board-tag">Touch</span>
           </div>
           <p>Dual-ESP32 (C5 + S3) GhostESP board with dual-band, SD storage, Ethernet, TFT + OLED displays, RGB lighting, and expansion for sensors and IO.</p>
@@ -189,7 +166,8 @@
 
         <div class="card board-card-full">
           <img src="https://static.wixstatic.com/media/35ea10_b537d4da88a84fddbd67a4029caa690c~mv2.jpg/v1/fill/w_475,h_333,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/35ea10_b537d4da88a84fddbd67a4029caa690c~mv2.jpg" alt="ESP-Rocket" loading="lazy">
-          <h3>ESP‑Rocket (TWH)</h3>
+          <span class="board-card-partner board-card-partner--twh">Wired Hatters</span>
+          <h3>ESP‑Rocket</h3>
           <div class="board-tags">
             <span class="board-tag">Flipper</span>
           </div>
@@ -211,11 +189,11 @@
 
         <div class="card board-card-full">
           <img src="images/pham-600x800.jpg" alt="The Phantom" loading="lazy">
-          <h3>The Phantom (Rabbit-Labs)</h3>
+          <span class="board-card-partner board-card-partner--rabbit">Rabbit-Labs</span>
+          <h3>The Phantom</h3>
           <div class="board-tags">
             <span class="board-tag">Touch</span>
             <span class="board-tag">SD Card</span>
-            <span class="board-tag">Stylus</span>
           </div>
           <p>ESP32-based device with SD card, resistive touch display and stylus.</p>
           <a href="https://rabbit-labs.com/product/the-phantom-by-rabbit-labs/?v=8bcc25c96aa5" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy Now</a>
@@ -271,7 +249,6 @@
           <h3>CYD-2432S024R Resistive</h3>
           <div class="board-tags">
             <span class="board-tag">Touch</span>
-            <span class="board-tag">Resistive</span>
           </div>
           <p>2.4" resistive touch display module (CYD-2432S024R)</p>
           <a href="https://s.click.aliexpress.com/e/_ombDm1D" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy Now</a>
@@ -279,12 +256,13 @@
 
         <div class="card board-card-full">
           <img src="images/p1-scaled.jpg" alt="Rabbit-Labs Poltergeist 5Ghz WiFi Board" loading="lazy">
-          <h3>Rabbit-Labs™ Poltergeist 5Ghz WiFi Board</h3>
+          <span class="board-card-partner board-card-partner--rabbit">Rabbit-Labs</span>
+          <h3>Poltergeist 5GHz WiFi Board</h3>
           <div class="board-tags">
             <span class="board-tag">5GHz</span>
             <span class="board-tag">Flipper</span>
             <span class="board-tag">Infrared</span>
-            <span class="board-tag">OLED</span>
+            <span class="board-tag">Display</span>
             <span class="board-tag">SD Card</span>
           </div>
           <p>ESP32-C5 board built for the Flipper with dual-band WiFi, BLE spam, OLED status screen, SD slot, and a custom IR blaster/receiver designed for GhostESP use.</p>
@@ -305,9 +283,6 @@
           <img src="https://media-cdn.seeedstudio.com/media/catalog/product/cache/bb49d3ec4ee05b6f018e93f896b8a25d/3/-/3-113991115-xiao-esp32-s3-sense.jpg" alt="Seeed XIAO ESP32-S3 Sense" loading="lazy">
           <h3>Seeed XIAO ESP32-S3 Sense</h3>
           <div class="board-tags">
-            <span class="board-tag">Dual Core</span>
-            <span class="board-tag">Camera</span>
-            <span class="board-tag">Microphone</span>
             <span class="board-tag">SD Card</span>
           </div>
           <p>Dual-core ESP32-S3 with built-in camera sensor, digital microphone, 8MB PSRAM, 8MB Flash, and SD card slot. Ideal for embedded ML, intelligent voice and vision AI.</p>
@@ -319,9 +294,6 @@
           <h3>Seeed XIAO ESP32-C5</h3>
           <div class="board-tags">
             <span class="board-tag">5GHz</span>
-            <span class="board-tag">RISC-V</span>
-            <span class="board-tag">Wi-Fi 6</span>
-            <span class="board-tag">Thread</span>
           </div>
           <p>The first XIAO module with 5 GHz Wi-Fi support. RISC-V architecture with dual-band Wi-Fi 6, Bluetooth 5, and IEEE 802.15.4 (Zigbee, Thread). Supports Matter, HomeKit, and MQTT.</p>
           <a href="https://www.seeedstudio.com/Seeed-Studio-XIAO-ESP32C5-p-6609.html" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy Now</a>
@@ -331,9 +303,6 @@
           <img src="https://media-cdn.seeedstudio.com/media/catalog/product/cache/bb49d3ec4ee05b6f018e93f896b8a25d/1/-/1-113991114-xiao-esp32s3-font_1.jpg" alt="Seeed XIAO ESP32S3" loading="lazy">
           <h3>Seeed XIAO ESP32S3</h3>
           <div class="board-tags">
-            <span class="board-tag">Dual Core</span>
-            <span class="board-tag">Wi-Fi</span>
-            <span class="board-tag">BLE 5.0</span>
           </div>
           <p>240MHz Xtensa LX7 dual-core processor with Wi-Fi and BLE 5.0. Ultra-low 14μA deep sleep mode with lithium battery charging management. Ideal for IoT, smart homes, and wearables.</p>
           <a href="https://www.seeedstudio.com/XIAO-ESP32S3-p-5627.html" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy Now</a>
@@ -359,8 +328,6 @@
   <!-- Footer -->
   <footer class="footer">
     <div class="container">
-      <p>Developed by <a href="https://github.com/jaylikesbunda" target="_blank" rel="noopener">Jay Candel</a></p>
-      <a href="https://ko-fi.com/jaylikesbunda" target="_blank" rel="noopener" class="support-link">Support on Ko-Fi</a>
       <div class="footer-links">
         <a href="https://discord.gg/5cyNmUMgwh" target="_blank" rel="noopener" class="icon-link" title="Discord">
           <i class="bi bi-discord"></i>
@@ -372,6 +339,8 @@
           <i class="bi bi-instagram"></i>
         </a>
       </div>
+      <button class="cookie-settings-link" onclick="CookieConsent.showSettings()">Cookie Settings</button>
+      <a href="privacy.html" class="cookie-settings-link">Privacy Policy</a>
     </div>
   </footer>
 
@@ -380,38 +349,70 @@
   <script src="js/main.js" defer></script>
   <script src="js/boards.js" defer></script>
   <script>
-    (function(){
-      var GA_ID = 'G-MS2T2178R5';
-      var loaded = false;
-      function loadGtag(){
-        if(loaded) return; loaded = true;
-        var s = document.createElement('script');
-        s.async = true;
-        s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
-        s.onload = function(){
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          window.gtag = gtag;
-          gtag('js', new Date());
-          gtag('config', GA_ID);
-        };
-        document.head.appendChild(s);
-      }
-      function whenInteracted(){
-        loadGtag();
-        removeListeners();
-      }
-      function removeListeners(){
-        ['click','scroll','keydown','pointerdown','touchstart'].forEach(function(e){
-          window.removeEventListener(e, whenInteracted, {passive:true});
+    document.addEventListener('DOMContentLoaded', function() {
+      var marquee = document.querySelector('.partner-marquee');
+      if (marquee) {
+        var pos = 0;
+        var paused = false;
+        var contentWidth = 0;
+        var strip = marquee.closest('.partner-strip');
+
+        function ensureEnoughContent() {
+          var contents = marquee.querySelectorAll('.partner-marquee-content');
+          if (contents.length === 0) return;
+          var firstContent = contents[0];
+          var singleWidth = firstContent.offsetWidth;
+          var viewportWidth = window.innerWidth;
+          var needed = Math.ceil((viewportWidth * 1.5) / singleWidth) + 1;
+          if (needed % 2 !== 0) needed++;
+          while (marquee.children.length < needed) {
+            var clone = firstContent.cloneNode(true);
+            clone.setAttribute('aria-hidden', 'true');
+            var links = clone.querySelectorAll('a');
+            for (var i = 0; i < links.length; i++) { links[i].setAttribute('tabindex', '-1'); }
+            marquee.appendChild(clone);
+          }
+          contentWidth = singleWidth;
+        }
+
+        function calculateWidth() {
+          var firstContent = marquee.querySelector('.partner-marquee-content');
+          if (firstContent) {
+            contentWidth = firstContent.offsetWidth;
+          }
+        }
+
+        ensureEnoughContent();
+
+        window.addEventListener('resize', function() {
+          var oldWidth = contentWidth;
+          ensureEnoughContent();
+          if (oldWidth > 0 && contentWidth > 0) {
+            pos = pos * (contentWidth / oldWidth);
+          }
         });
+
+        if (strip) {
+          strip.addEventListener('mouseenter', function() { paused = true; });
+          strip.addEventListener('mouseleave', function() { paused = false; });
+        }
+
+        function tickMarquee() {
+          if (!paused && contentWidth > 0) {
+            var baseSpeed = 0.5 + window.innerWidth * 0.0001;
+            pos -= baseSpeed;
+            if (-pos >= contentWidth * (marquee.children.length - 1)) {
+              pos = -contentWidth;
+            }
+            marquee.style.transform = 'translateX(' + pos + 'px)';
+          }
+          requestAnimationFrame(tickMarquee);
+        }
+        requestAnimationFrame(tickMarquee);
       }
-      ['click','scroll','keydown','pointerdown','touchstart'].forEach(function(e){
-        window.addEventListener(e, whenInteracted, {passive:true});
-      });
-      setTimeout(function(){ if(!loaded) loadGtag(); }, 5000);
-    })();
+    });
   </script>
+  <script src="js/cookie-consent.js" defer></script>
 </body>
 </html>
 

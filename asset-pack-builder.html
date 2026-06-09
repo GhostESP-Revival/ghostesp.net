@@ -1,0 +1,1923 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#000000">
+
+  <title>Asset Pack Builder - GhostESP</title>
+  <meta name="description" content="Build custom GhostESP asset packs with icons, colors, and backgrounds. Export .gtheme files for your ESP32 device.">
+  <meta name="keywords" content="GhostESP, asset pack, theme builder, ESP32, custom icons, gtheme">
+  <meta name="author" content="Jay Candel">
+  <meta name="robots" content="index, follow">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Asset Pack Builder - GhostESP">
+  <meta property="og:description" content="Build custom GhostESP asset packs with icons, colors, and backgrounds. Export .gtheme files for your ESP32 device.">
+  <meta property="og:url" content="https://ghostesp.net/asset-pack-builder.html">
+  <meta property="og:site_name" content="GhostESP">
+  <meta property="og:image" content="https://ghostesp.net/images/ghostespdotnet.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Asset Pack Builder - GhostESP">
+  <meta name="twitter:description" content="Build custom GhostESP asset packs with icons, colors, and backgrounds.">
+  <meta name="twitter:image" content="https://ghostesp.net/images/ghostespdotnet.png">
+
+  <link rel="canonical" href="https://ghostesp.net/asset-pack-builder.html">
+
+  <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="css/main.css">
+  <script src="https://unpkg.com/lucide@0.344.0" defer></script>
+
+  <style>
+    .builder-hero {
+      padding: 100px var(--spacing) 32px;
+      text-align: center;
+      background:
+        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(180deg, #050505 0%, #000 100%);
+      background-size: 32px 32px, 32px 32px, 100% 100%;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      z-index: 1;
+    }
+
+    .builder-hero h1 {
+      font-family: var(--font-mono);
+      font-size: clamp(1.5rem, 4vw, 2.2rem);
+      margin-bottom: 0.75rem;
+      color: var(--text);
+    }
+
+    .builder-hero p {
+      color: var(--text-dim);
+      font-size: 1rem;
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    .builder-layout {
+      display: grid;
+      grid-template-columns: 1fr 400px;
+      gap: 1rem;
+      padding: 50px 1.5rem 2rem;
+      position: relative;
+      z-index: 1;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .builder-editor {
+      padding: 0;
+      min-width: 0;
+    }
+
+    .builder-preview {
+      position: sticky;
+      top: 90px;
+      align-self: start;
+      padding: 1.25rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.03),
+        0 8px 32px rgba(0, 0, 0, 0.4);
+    }
+
+    .preview-header {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-dim);
+      margin: 0 0 1rem;
+      padding-bottom: 0.6rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .preview-header i, .preview-header svg {
+      width: 14px;
+      height: 14px;
+      opacity: 0.5;
+    }
+
+    .preview-options {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .preview-option-group {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .preview-option-group label {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-dim);
+    }
+
+    .preview-option-group .builder-select {
+      font-size: 0.75rem;
+      padding: 0.35rem 0.5rem;
+    }
+
+    .carousel-nav {
+      display: none;
+      align-items: center;
+      gap: 0.4rem;
+      margin-top: 0.5rem;
+    }
+
+    .carousel-nav .builder-btn-small {
+      padding: 0.25rem 0.5rem;
+      font-size: 0.75rem;
+      min-width: 28px;
+      text-align: center;
+    }
+
+    .preview-info {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      line-height: 1.5;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    .preview-about {
+      border-top: 1px solid var(--border);
+      padding-top: 0.75rem;
+    }
+
+    .preview-about summary {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: color 0.2s ease;
+      list-style: none;
+    }
+
+    .preview-about summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .preview-about summary::after {
+      content: '';
+      display: inline-block;
+      width: 0.3rem;
+      height: 0.3rem;
+      border-right: 1px solid currentColor;
+      border-bottom: 1px solid currentColor;
+      transform: rotate(-45deg);
+      margin-left: auto;
+      transition: transform 0.2s ease;
+    }
+
+    .preview-about[open] summary::after {
+      transform: rotate(45deg);
+    }
+
+    .preview-about summary:hover {
+      color: var(--text);
+    }
+
+    .preview-about summary i, .preview-about summary svg {
+      width: 12px;
+      height: 12px;
+      opacity: 0.4;
+    }
+
+    .preview-about .about-content {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      line-height: 1.7;
+      padding-top: 0.75rem;
+    }
+
+    .preview-about .about-content p {
+      margin: 0 0 0.5rem;
+    }
+
+    .preview-about .about-content code {
+      background: var(--bg);
+      padding: 0.1rem 0.35rem;
+      border-radius: 3px;
+      font-size: 0.65rem;
+      border: 1px solid var(--border);
+    }
+
+    .builder-section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem 1.25rem;
+      margin-bottom: 1rem;
+    }
+
+    .builder-section h2 {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-dim);
+      margin: 0 0 0.75rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .builder-section h3 {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-dim);
+      margin: 0.75rem 0 0.4rem;
+    }
+
+    .builder-row {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+      margin-bottom: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .builder-row:last-child {
+      margin-bottom: 0;
+    }
+
+    .builder-label {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.35rem;
+    }
+
+    .builder-input {
+      background: var(--bg);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.5rem 0.75rem;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      width: 100%;
+      transition: border-color 0.2s ease;
+    }
+
+    .builder-input:focus {
+      outline: none;
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .builder-select {
+      width: 100%;
+      background: var(--bg);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.5rem 0.75rem;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: border-color 0.2s ease;
+    }
+
+    .builder-select:focus {
+      outline: none;
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    input[type="color"] {
+      width: 36px;
+      height: 36px;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0;
+      cursor: pointer;
+    }
+
+    input[type="file"] {
+      display: none;
+    }
+
+    .file-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 0.85rem;
+      background: var(--bg);
+      color: var(--text-dim);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      user-select: none;
+      transition: all 0.2s ease;
+    }
+
+    .file-btn:hover {
+      border-color: rgba(255, 255, 255, 0.3);
+      color: var(--text);
+    }
+
+    .file-btn.has-file {
+      border-color: rgba(255, 255, 255, 0.25);
+      color: var(--text);
+    }
+
+    .file-btn .x {
+      color: #ff5555;
+      margin-left: 0.25rem;
+      cursor: pointer;
+      font-weight: bold;
+      transition: color 0.2s ease;
+    }
+
+    .file-btn .x:hover {
+      color: #ff8888;
+    }
+
+    .colors-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+
+    .color-field {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    .color-field input[type="text"] {
+      flex: 1;
+      font-family: var(--font-mono);
+    }
+
+    .icons-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 0.5rem;
+    }
+
+    .icon-slot {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .icon-slot .slot-label {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--text-dim);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .bg-section {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .bg-previews {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .bg-preview {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .bg-preview canvas {
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      image-rendering: pixelated;
+      background: #000;
+    }
+
+    .bg-preview .lbl {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--text-dim);
+    }
+
+    .builder-actions {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .builder-btn-primary {
+      background: var(--accent);
+      color: var(--bg);
+      border: 0;
+      border-radius: var(--radius);
+      padding: 0.75rem 1.5rem;
+      font-family: var(--font-sans);
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .builder-btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(255, 255, 255, 0.15);
+    }
+
+    .builder-btn-primary:disabled {
+      background: var(--surface);
+      color: var(--text-dim);
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .builder-btn-secondary {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 0.75rem 1.25rem;
+      font-family: var(--font-sans);
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .builder-btn-secondary:hover {
+      background: var(--surface);
+      border-color: rgba(255, 255, 255, 0.3);
+      transform: translateY(-2px);
+    }
+
+    .builder-btn-small {
+      padding: 0.4rem 0.85rem;
+      font-size: 0.8rem;
+    }
+
+    .status {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--text-dim);
+    }
+
+    .status.error {
+      color: #ff5555;
+    }
+
+    .status.ok {
+      color: #39ff14;
+    }
+
+    .preview-screen {
+      border-radius: 8px;
+      overflow: hidden;
+      line-height: 0;
+    }
+
+    .preview-screen canvas {
+      display: block;
+      width: 100%;
+      height: auto;
+      image-rendering: pixelated;
+      background: #000;
+    }
+
+    .preview-device {
+      background: #0a0a0a;
+      border-radius: 16px;
+      padding: 12px;
+      margin: 0 auto;
+      max-width: 300px;
+      border: 1px solid var(--border);
+      box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.03),
+        0 8px 32px rgba(0, 0, 0, 0.6);
+      position: relative;
+    }
+
+    .preview-device::before {
+      content: '';
+      position: absolute;
+      top: 6px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 36px;
+      height: 3px;
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: 2px;
+      z-index: 2;
+    }
+
+    .preview-device .canvas-wrap {
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .preview-device canvas {
+      display: block;
+      width: 100%;
+      height: auto;
+      image-rendering: pixelated;
+      background: #000;
+    }
+
+
+    .download-link {
+      display: none;
+      margin-top: 1rem;
+      padding: 1rem;
+      background: var(--bg);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: var(--radius);
+      text-align: center;
+      transition: border-color 0.2s ease;
+    }
+
+    .download-link a {
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 600;
+      font-family: var(--font-mono);
+    }
+
+    .download-link a:hover {
+      text-decoration: underline;
+    }
+
+    details summary {
+      cursor: pointer;
+      user-select: none;
+      font-family: var(--font-mono);
+      transition: color 0.2s ease;
+    }
+
+    details summary:hover {
+      color: var(--text);
+    }
+
+    .help {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      margin-top: 0.5rem;
+      line-height: 1.5;
+    }
+
+    .help code {
+      background: var(--bg);
+      padding: 0.1rem 0.4rem;
+      border-radius: 4px;
+      color: var(--text);
+      font-size: 0.75rem;
+      border: 1px solid var(--border);
+    }
+
+    .builder-footer-note {
+      text-align: center;
+      padding: 2rem var(--spacing);
+      border-top: 1px solid var(--border);
+      position: relative;
+      z-index: 1;
+    }
+
+    .builder-footer-note p {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 900px) {
+      .builder-layout {
+        grid-template-columns: 1fr;
+        padding-top: 50px;
+        gap: 1rem;
+      }
+
+      .builder-preview {
+        position: static;
+        border-radius: 16px;
+      }
+
+      .colors-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .builder-hero {
+        padding: 100px var(--spacing) 32px;
+      }
+
+      .builder-layout {
+        padding-left: 1rem;
+        padding-right: 1rem;
+      }
+
+      .builder-preview {
+        padding: 1rem;
+      }
+
+      .builder-section {
+        padding: 1rem;
+      }
+
+      .builder-actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .builder-btn-primary,
+      .builder-btn-secondary {
+        width: 100%;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to content</a>
+  <canvas id="dotTerrain"></canvas>
+  <script src="js/dot-terrain.js"></script>
+  <nav id="nav"></nav>
+
+  <div class="builder-hero">
+    <div class="container">
+      <h1>Asset Pack Builder</h1>
+      <p>Design and export <code style="background:rgba(255,255,255,0.1);padding:0.1rem 0.4rem;border-radius:4px;font-family:var(--font-mono);font-size:0.85rem;">.gtheme</code> packs for your GhostESP device.</p>
+    </div>
+  </div>
+
+  <section id="main-content" class="builder-layout">
+
+    <div class="builder-editor">
+
+      <div class="builder-section">
+        <h2>Pack Info</h2>
+        <div class="builder-row">
+          <div style="flex:1; min-width:160px">
+            <label class="builder-label" for="pack-id">Pack ID (a-z, 0-9, _, -)</label>
+            <input type="text" class="builder-input" id="pack-id" value="my_pack" maxlength="32">
+          </div>
+          <div style="flex:2; min-width:200px">
+            <label class="builder-label" for="pack-name">Display name</label>
+            <input type="text" class="builder-input" id="pack-name" value="My Pack" maxlength="48">
+          </div>
+          <div style="width:80px">
+            <label class="builder-label" for="pack-version">Version</label>
+            <input type="number" class="builder-input" id="pack-version" value="1" min="1" max="255">
+          </div>
+        </div>
+        <div class="builder-row">
+          <div style="flex:1; min-width:200px">
+            <label class="builder-label" for="pack-appicon">App icon key (optional)</label>
+            <select id="pack-appicon" class="builder-select">
+              <option value="">(none)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="builder-section">
+        <h2>Colors</h2>
+        <div class="colors-grid" id="colors-grid"></div>
+        <div class="help">Hex RGB without alpha. Format: <code>0xRRGGBB</code></div>
+      </div>
+
+      <div class="builder-section">
+        <h2>Icons</h2>
+        <p class="help" style="margin-top:0">Drop 32-bit RGBA PNGs. Converted to <code>rgb565a8</code> at 32px &amp; 64px.</p>
+        <div class="builder-row" style="margin-bottom:12px">
+          <label class="file-btn" id="apply-all-icons-btn">
+            <span>Apply one image to all icons</span>
+            <input type="file" id="apply-all-icons-input" accept="image/png">
+          </label>
+          <span class="status" id="apply-all-icons-status"></span>
+        </div>
+        <div class="icons-grid" id="icons-grid"></div>
+      </div>
+
+      <div class="builder-section">
+        <h2>Background</h2>
+        <div class="bg-section">
+          <div>
+            <label class="builder-label">Source PNG (240&times;320+)</label>
+            <div class="builder-row">
+              <label class="file-btn" id="bg-btn">
+                <span>Choose background PNG</span>
+                <input type="file" id="bg-input" accept="image/png">
+              </label>
+              <span class="status" id="bg-status">No file</span>
+            </div>
+          </div>
+          <div>
+            <h3>Variants</h3>
+            <div class="bg-previews" id="bg-previews"></div>
+            <div class="help"><code>full</code> for PSRAM, <code>half</code> for internal RAM, <code>tiny</code>/<code>tile</code> as fallbacks.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="builder-section">
+        <h2>Build</h2>
+        <div class="builder-actions">
+          <button class="builder-btn-primary" id="build-btn"><i data-lucide="download" style="width:16px;height:16px;vertical-align:middle;margin-right:6px;"></i>Build .gtheme</button>
+          <button class="builder-btn-secondary" id="reset-btn">Reset</button>
+          <span class="status" id="build-status"></span>
+        </div>
+        <div class="download-link" id="download-link">
+          <a id="download-anchor" href="#"><i data-lucide="file-down" style="width:18px;height:18px;vertical-align:middle;margin-right:6px;"></i>Download .gtheme</a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="builder-preview">
+
+      <div class="preview-header">
+        <i data-lucide="monitor-smartphone"></i>
+        <span>Preview</span>
+      </div>
+
+      <div class="preview-options">
+        <div class="preview-option-group">
+          <label for="preview-view">View</label>
+          <select id="preview-view" class="builder-select">
+            <option value="grid">Card grid</option>
+            <option value="carousel">Carousel</option>
+            <option value="apps">App gallery</option>
+          </select>
+          <div class="carousel-nav" id="carousel-nav">
+            <button class="builder-btn-secondary builder-btn-small" id="carousel-prev">&larr;</button>
+            <span class="status" id="carousel-pos" style="font-size:0.65rem;"></span>
+            <button class="builder-btn-secondary builder-btn-small" id="carousel-next">&rarr;</button>
+          </div>
+        </div>
+        <div class="preview-option-group">
+          <label for="preview-size">Display</label>
+          <select id="preview-size" class="builder-select">
+            <option value="240x320" selected>240&times;320</option>
+            <option value="320x240">320&times;240</option>
+            <option value="128x128">128&times;128</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="preview-device" id="preview-screen">
+        <div class="preview-screen">
+          <canvas id="preview" width="240" height="320"></canvas>
+        </div>
+      </div>
+
+      <div class="preview-info" id="preview-info" style="margin-top:1.25rem;"></div>
+
+      <details class="preview-about">
+        <summary>
+          <i data-lucide="info"></i>
+          <span>About this tool</span>
+        </summary>
+        <div class="about-content">
+          <p>Produces a <code>.gtheme</code> file matching <code>gbt asset pack</code> output.</p>
+          <p>Copy to <code>/mnt/ghostesp/themes/&lt;id&gt;.gtheme</code> on SD, then select in <strong>Settings &rsaquo; Appearance</strong>.</p>
+          <p>All processing is local &mdash; nothing is uploaded.</p>
+        </div>
+      </details>
+
+    </div>
+
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-links">
+        <a href="https://discord.gg/5cyNmUMgwh" target="_blank" rel="noopener" class="icon-link" title="Discord">
+          <i class="bi bi-discord"></i>
+        </a>
+        <a href="https://github.com/GhostESP-Revival/GhostESP" target="_blank" rel="noopener" class="icon-link" title="GitHub">
+          <i class="bi bi-github"></i>
+        </a>
+        <a href="https://instagram.com/ghostesprevival" target="_blank" rel="noopener" class="icon-link" title="Instagram">
+          <i class="bi bi-instagram"></i>
+        </a>
+      </div>
+      <button class="cookie-settings-link" onclick="CookieConsent.showSettings()">Cookie Settings</button>
+      <a href="privacy.html" class="cookie-settings-link">Privacy Policy</a>
+    </div>
+  </footer>
+
+  <script src="js/components.js" defer></script>
+  <script src="js/social-proof.js" defer></script>
+  <script src="js/main.js" defer></script>
+
+  <script>
+  "use strict";
+
+  /* =========================================================================
+     Constants
+     ========================================================================= */
+
+  const IMAGE_MAGIC = "GIMG";
+  const IMAGE_VERSION = 1;
+  const HEADER_SIZE = 32;
+  const FMT_RGB565 = 1;
+  const FMT_RGB565A8 = 2;
+  const FMT_INDEXED_4BPP = 3;
+  const COMP_NONE = 0;
+
+  const ICON_KEYS = [
+    "wifi", "bluetooth", "Map", "settings_icon", "clock_icon",
+    "GESPAppGallery", "lock", "dualcomm",
+    "lan_50dp_FFFFFF_FILL0_wght400_GRAD0_opsz48",
+    "infrared", "nfc_icon", "nrf24", "subghz", "usb",
+    "compass", "enviii", "accelerometer_icon",
+    "ghost", "terminal_icon", "rave",
+    "speaker_50dp_FFFFFF_FILL0_wght400_GRAD0_opsz48",
+  ];
+
+  const COLOR_KEYS = [
+    ["accent", "Accent"],
+    ["background", "Background"],
+    ["surface", "Surface"],
+    ["surface_alt", "Surface alt"],
+    ["text", "Text"],
+    ["text_muted", "Text muted"],
+  ];
+
+  const DEFAULT_COLORS = {
+    accent: "0x6C8EFF",
+    background: "0x0B0D11",
+    surface: "0x14171E",
+    surface_alt: "0x1C2028",
+    text: "0xE8ECF4",
+    text_muted: "0x7A8299",
+  };
+
+  const COLOR_PRESETS = [
+    ["Arctic",   { accent:"0x5BC0EB", background:"0x0A1628", surface:"0x0F1D30", surface_alt:"0x162A42", text:"0xDCE8F5", text_muted:"0x6A8FAD" }],
+    ["Ember",    { accent:"0xE8945A", background:"0x12090A", surface:"0x1A1012", surface_alt:"0x261818", text:"0xF0E0D8", text_muted:"0xA08070" }],
+    ["Slate",    { accent:"0xC8D0DC", background:"0x0C0C0E", surface:"0x151518", surface_alt:"0x1E1E22", text:"0xDCDCE0", text_muted:"0x707078" }],
+    ["Violet",   { accent:"0xA78BFA", background:"0x0D0A14", surface:"0x15101E", surface_alt:"0x201830", text:"0xE0DAF0", text_muted:"0x8878A8" }],
+    ["Teal",     { accent:"0x5EEAD4", background:"0x081210", surface:"0x0F1A18", surface_alt:"0x182826", text:"0xD8F0EC", text_muted:"0x68A898" }],
+  ];
+
+  const ICON_VARIANT_SIZES = [32, 64];
+  const VARIANT_LABELS = { 32: "s", 64: "l" };
+
+  const BG_VARIANTS = [
+    { name: "full",  w: 240, h: 320, fmt: "rgb565" },
+    { name: "half",  w: 120, h: 160, fmt: "indexed_4bpp" },
+    { name: "tiny",  w: 80,  h: 107, fmt: "indexed_4bpp" },
+    { name: "tile",  w: 32,  h: 32,  fmt: "indexed_4bpp" },
+  ];
+
+  /* =========================================================================
+     State
+     ========================================================================= */
+
+  const state = {
+    pack: {
+      id: "my_pack",
+      name: "My Pack",
+      version: 1,
+      appIcon: "",
+    },
+    colors: { ...DEFAULT_COLORS },
+    iconFiles: {},
+    bgFile: null,
+    decoded: {
+      icons: {},
+      backgrounds: {},
+    },
+    preview: { view: "grid", size: "240x320", carouselIndex: 0 },
+    gthemeUrl: null,
+  };
+
+  const MAIN_MENU_ITEMS = [
+    { key: "wifi",                                       label: "WiFi" },
+    { key: "bluetooth",                                  label: "BLE" },
+    { key: "Map",                                        label: "GPS" },
+    { key: "infrared",                                   label: "Infrared" },
+    { key: "nfc_icon",                                   label: "NFC" },
+    { key: "nrf24",                                      label: "NRF24" },
+    { key: "subghz",                                     label: "SubGHz" },
+    { key: "usb",                                        label: "BadUSB" },
+    { key: "dualcomm",                                   label: "GhostLink" },
+    { key: "lan_50dp_FFFFFF_FILL0_wght400_GRAD0_opsz48", label: "Ethernet" },
+    { key: "GESPAppGallery",                             label: "Apps" },
+    { key: "lock",                                       label: "Lock" },
+    { key: "settings_icon",                              label: "Settings" },
+  ];
+
+  const APP_GALLERY_ITEMS = [
+    { key: "ghost",          label: "Ghost" },
+    { key: "terminal_icon",  label: "Terminal" },
+    { key: "rave",           label: "Rave" },
+    { key: "GESPAppGallery", label: "Apps" },
+    { key: "wifi",           label: "WiFi" },
+    { key: "bluetooth",      label: "BLE" },
+  ];
+
+  /* =========================================================================
+     Utilities
+     ========================================================================= */
+
+  function hexToRgb(hex) {
+    const s = String(hex).replace(/^0x/i, "").replace(/^#/, "");
+    if (!/^[0-9a-fA-F]{6}$/.test(s)) return null;
+    return [
+      parseInt(s.slice(0,2), 16),
+      parseInt(s.slice(2,4), 16),
+      parseInt(s.slice(4,6), 16),
+    ];
+  }
+  function rgbToHex(r,g,b) {
+    return "#" + [r,g,b].map(v => v.toString(16).padStart(2,"0")).join("");
+  }
+  function hexToColorInput(hex) {
+    const c = hexToRgb(hex);
+    return c ? rgbToHex(c[0], c[1], c[2]) : "#000000";
+  }
+  function colorInputToHex(v) {
+    if (!v) return null;
+    const m = v.match(/^#?([0-9a-fA-F]{6})$/);
+    return m ? "0x" + m[1].toUpperCase() : null;
+  }
+
+  function clamp(v, lo, hi) { return v < lo ? lo : v > hi ? hi : v; }
+
+  function fnv1a64(bytes) {
+    let h = 0xCBF29CE484222325n;
+    const prime = 0x100000001B3n;
+    const mask = 0xFFFFFFFFFFFFFFFFn;
+    for (let i = 0; i < bytes.length; i++) {
+      h ^= BigInt(bytes[i]);
+      h = (h * prime) & mask;
+    }
+    return h;
+  }
+  function fnv1a64Hex(bytes) {
+    return fnv1a64(bytes).toString(16).padStart(16, "0");
+  }
+
+  /* =========================================================================
+     PNG decoding via Image + Canvas
+     ========================================================================= */
+
+  function unpremultiplyAlpha(rgba) {
+    for (let i = 0; i < rgba.length; i += 4) {
+      const a = rgba[i + 3];
+      if (a === 0 || a === 255) continue;
+      rgba[i]     = Math.min(255, (rgba[i]     * 255 + a / 2) / a);
+      rgba[i + 1] = Math.min(255, (rgba[i + 1] * 255 + a / 2) / a);
+      rgba[i + 2] = Math.min(255, (rgba[i + 2] * 255 + a / 2) / a);
+    }
+  }
+
+  async function loadPngAsRgba(file) {
+    const url = URL.createObjectURL(file);
+    try {
+      const img = await new Promise((res, rej) => {
+        const i = new Image();
+        i.onload = () => res(i);
+        i.onerror = () => rej(new Error("Failed to decode PNG"));
+        i.src = url;
+      });
+      const w = img.naturalWidth, h = img.naturalHeight;
+      if (w === 0 || h === 0) throw new Error("Image has zero dimensions");
+      const c = document.createElement("canvas");
+      c.width = w; c.height = h;
+      const ctx = c.getContext("2d");
+      ctx.drawImage(img, 0, 0);
+      const imageData = ctx.getImageData(0, 0, w, h);
+      const rgba = new Uint8Array(imageData.data.buffer);
+      unpremultiplyAlpha(rgba);
+      return { w, h, rgba };
+    } finally {
+      URL.revokeObjectURL(url);
+    }
+  }
+
+  /* =========================================================================
+     Image processing
+     ========================================================================= */
+
+  function resizeRgba(src, sw, sh, dw, dh) {
+    const dst = new Uint8Array(dw * dh * 4);
+    for (let y = 0; y < dh; y++) {
+      const sy = Math.min(sh - 1, (y * sh) / dh | 0);
+      for (let x = 0; x < dw; x++) {
+        const sx = Math.min(sw - 1, (x * sw) / dw | 0);
+        const si = (sy * sw + sx) * 4;
+        const di = (y * dw + x) * 4;
+        dst[di]   = src[si];
+        dst[di+1] = src[si+1];
+        dst[di+2] = src[si+2];
+        dst[di+3] = src[si+3];
+      }
+    }
+    return dst;
+  }
+
+  function rgbaToRgb565Bytes(rgba) {
+    const n = rgba.length / 4;
+    const out = new Uint8Array(n * 2);
+    for (let i = 0, j = 0; i < n; i++, j += 2) {
+      let r = rgba[i*4], g = rgba[i*4+1], b = rgba[i*4+2], a = rgba[i*4+3];
+      r = (r * a) / 255 | 0;
+      g = (g * a) / 255 | 0;
+      b = (b * a) / 255 | 0;
+      const v = ((r & 0xF8) << 8) | ((g & 0xFC) << 3) | (b >> 3);
+      out[j]   = v & 0xFF;
+      out[j+1] = (v >> 8) & 0xFF;
+    }
+    return out;
+  }
+
+  function rgbaToRgb565A8Bytes(rgba) {
+    const n = rgba.length / 4;
+    const out = new Uint8Array(n * 3);
+    for (let i = 0, j = 0, aOff = 0; i < n; i++) {
+      const r = rgba[i*4], g = rgba[i*4+1], b = rgba[i*4+2], a = rgba[i*4+3];
+      const v = ((r & 0xF8) << 8) | ((g & 0xFC) << 3) | (b >> 3);
+      out[j]   = v & 0xFF;
+      out[j+1] = (v >> 8) & 0xFF;
+      j += 2;
+      out[n*2 + aOff] = a;
+      aOff++;
+    }
+    return out;
+  }
+
+  function rgbaToIndexed4bpp(rgba, w, h) {
+    const n = w * h;
+    const buckets = new Map();
+    for (let i = 0; i < n; i++) {
+      const r = rgba[i*4], g = rgba[i*4+1], b = rgba[i*4+2], a = rgba[i*4+3];
+      const key = ((r >> 4) << 8) | ((g >> 4) << 4) | (b >> 4) | ((a >= 128) ? 0x1000 : 0);
+      let bk = buckets.get(key);
+      if (!bk) { bk = { count: 0, r: 0, g: 0, b: 0, a: 0, qr: 0, qg: 0, qb: 0, qa: 0 };
+        buckets.set(key, bk); }
+      bk.count++;
+      bk.r += r; bk.g += g; bk.b += b; bk.a += a;
+    }
+    const arr = Array.from(buckets.values());
+    arr.sort((a,b) => b.count - a.count);
+    const pal = arr.slice(0, 16).map(bk => {
+      const r = (bk.r / bk.count) | 0;
+      const g = (bk.g / bk.count) | 0;
+      const b = (bk.b / bk.count) | 0;
+      const a = (bk.a / bk.count) | 0;
+      const qr = (r >> 4) | 0x0F;
+      const qg = (g >> 4) | 0x0F;
+      const qb = (b >> 4) | 0x0F;
+      const qa = a >= 128 ? 0xFF : 0;
+      return { r, g, b, a, qr, qg, qb, qa };
+    });
+    while (pal.length < 16) {
+      pal.push({ r: 0, g: 0, b: 0, a: 0, qr: 0, qg: 0, qb: 0, qa: 0 });
+    }
+    function nearest(r, g, b, a) {
+      const qa = a >= 128 ? 255 : 0;
+      let best = 0, bestD = Infinity;
+      for (let i = 0; i < 16; i++) {
+        const dr = pal[i].r - r, dg = pal[i].g - g, db = pal[i].b - b, da = pal[i].a - qa;
+        const d = dr*dr + dg*dg + db*db + da*da;
+        if (d < bestD) { bestD = d; best = i; if (d === 0) break; }
+      }
+      return best;
+    }
+    const px = new Uint8Array(Math.ceil(n / 2));
+    for (let i = 0; i < n; i++) {
+      const r = rgba[i*4], g = rgba[i*4+1], b = rgba[i*4+2], a = rgba[i*4+3];
+      const idx = nearest(r, g, b, a);
+      if ((i & 1) === 0) px[i >> 1] = idx & 0x0F;
+      else px[i >> 1] |= (idx & 0x0F) << 4;
+    }
+    const palBytes = new Uint8Array(64);
+    for (let i = 0; i < 16; i++) {
+      palBytes[i*4 + 0] = (pal[i].qb << 4) | 0x0F;
+      palBytes[i*4 + 1] = (pal[i].qg << 4) | 0x0F;
+      palBytes[i*4 + 2] = (pal[i].qr << 4) | 0x0F;
+      palBytes[i*4 + 3] = pal[i].qa;
+    }
+    return { palette: palBytes, pixels: px, paletteEntries: pal };
+  }
+
+  function indexedToRgba(result, w, h) {
+    const { palette, pixels } = result;
+    const out = new Uint8ClampedArray(w * h * 4);
+    const n = w * h;
+    for (let i = 0; i < n; i++) {
+      const byte = pixels[i >> 1];
+      const idx = (i & 1) === 0 ? (byte & 0x0F) : ((byte >> 4) & 0x0F);
+      const o = i * 4;
+      out[o]   = palette[idx*4 + 2];
+      out[o+1] = palette[idx*4 + 1];
+      out[o+2] = palette[idx*4 + 0];
+      out[o+3] = palette[idx*4 + 3];
+    }
+    return out;
+  }
+
+  function rgb565BytesToRgba(bytes, w, h) {
+    const n = w * h;
+    const out = new Uint8ClampedArray(n * 4);
+    for (let i = 0, j = 0; i < n; i++, j += 2) {
+      const v = bytes[j] | (bytes[j+1] << 8);
+      const r = (v >> 8) & 0xF8;
+      const g = (v >> 3) & 0xFC;
+      const b = (v << 3) & 0xF8;
+      const o = i * 4;
+      out[o]   = r | (r >> 5);
+      out[o+1] = g | (g >> 6);
+      out[o+2] = b | (b >> 5);
+      out[o+3] = 255;
+    }
+    return out;
+  }
+
+  function rgb565A8BytesToRgba(bytes, w, h) {
+    const n = w * h;
+    const out = new Uint8ClampedArray(n * 4);
+    for (let i = 0, j = 0, ao = n * 2; i < n; i++, j += 2, ao++) {
+      const v = bytes[j] | (bytes[j+1] << 8);
+      const r = (v >> 8) & 0xF8;
+      const g = (v >> 3) & 0xFC;
+      const b = (v << 3) & 0xF8;
+      const o = i * 4;
+      out[o]   = r | (r >> 5);
+      out[o+1] = g | (g >> 6);
+      out[o+2] = b | (b >> 5);
+      out[o+3] = bytes[ao];
+    }
+    return out;
+  }
+
+  /* =========================================================================
+     GIMG encoding
+     ========================================================================= */
+
+  function buildGimg(w, h, fmt, payload) {
+    const hdr = new Uint8Array(HEADER_SIZE);
+    const dv = new DataView(hdr.buffer);
+    for (let i = 0; i < 4; i++) hdr[i] = IMAGE_MAGIC.charCodeAt(i);
+    dv.setUint16(4, IMAGE_VERSION, true);
+    dv.setUint16(6, HEADER_SIZE, true);
+    dv.setUint16(8, w, true);
+    dv.setUint16(10, h, true);
+    hdr[12] = fmt;
+    hdr[13] = COMP_NONE;
+    dv.setUint16(14, 0, true);
+    dv.setUint32(16, payload.length, true);
+    dv.setUint32(20, payload.length, true);
+    const hash = fnv1a64(payload);
+    dv.setBigUint64(24, hash, true);
+    const out = new Uint8Array(HEADER_SIZE + payload.length);
+    out.set(hdr, 0);
+    out.set(payload, HEADER_SIZE);
+    return out;
+  }
+
+  /* =========================================================================
+     GAPP container encoding (.gtheme)
+     ========================================================================= */
+
+  function buildGapp(fileEntries) {
+    const totalHdr = 12;
+    let total = totalHdr;
+    for (const e of fileEntries) {
+      const nameBytes = new TextEncoder().encode(e.name);
+      total += 24 + nameBytes.length + e.data.length;
+    }
+    const out = new Uint8Array(total);
+    const dv = new DataView(out.buffer);
+    let p = 0;
+    for (let i = 0; i < 4; i++) out[p++] = "GAPP".charCodeAt(i);
+    dv.setUint16(p, 1, true); p += 2;
+    dv.setUint16(p, 0, true); p += 2;
+    dv.setUint32(p, fileEntries.length, true); p += 4;
+    for (const e of fileEntries) {
+      const nameBytes = new TextEncoder().encode(e.name);
+      for (let i = 0; i < 4; i++) out[p++] = "FILE".charCodeAt(i);
+      dv.setUint16(p, 0, true); p += 2;
+      dv.setUint16(p, nameBytes.length, true); p += 2;
+      dv.setUint32(p, e.data.length, true); p += 4;
+      dv.setUint32(p, e.data.length, true); p += 4;
+      const hash = fnv1a64(e.data);
+      dv.setBigUint64(p, hash, true); p += 8;
+      out.set(nameBytes, p); p += nameBytes.length;
+      out.set(e.data, p); p += e.data.length;
+    }
+    return out;
+  }
+
+  /* =========================================================================
+     Manifest generation
+     ========================================================================= */
+
+  function buildRuntimeManifest(state, iconGimg, bgGimg) {
+    const m = {
+      id: state.pack.id,
+      name: state.pack.name,
+      version: state.pack.version,
+      format: "ghostesp_asset_pack",
+    };
+    if (state.pack.appIcon) m.app_icon = state.pack.appIcon;
+    m.colors = { ...state.colors };
+    m.icons = {};
+    for (const key of Object.keys(iconGimg).sort()) {
+      const variants = iconGimg[key];
+      const entry = {};
+      for (const sz of Object.keys(variants).sort()) {
+        const label = VARIANT_LABELS[sz] || String(sz);
+        entry[label] = `icons/${key}_${label}.gimg`;
+      }
+      m.icons[key] = entry;
+    }
+    if (Object.keys(bgGimg).length) {
+      m.backgrounds = {};
+      for (const v of Object.keys(bgGimg).sort()) {
+        m.backgrounds[v] = `bg/bg_${v}.gimg`;
+      }
+    }
+    return sortObjectKeys(m);
+  }
+
+  function sortObjectKeys(obj) {
+    if (Array.isArray(obj)) return obj.map(sortObjectKeys);
+    if (obj && typeof obj === "object") {
+      const out = {};
+      for (const k of Object.keys(obj).sort()) out[k] = sortObjectKeys(obj[k]);
+      return out;
+    }
+    return obj;
+  }
+
+  /* =========================================================================
+     UI: Color fields
+     ========================================================================= */
+
+  function buildColorFields() {
+    const grid = document.getElementById("colors-grid");
+    grid.innerHTML = "";
+    for (const [key, label] of COLOR_KEYS) {
+      const wrap = document.createElement("div");
+      wrap.className = "color-field";
+      const id = "color-" + key;
+      wrap.innerHTML = `
+        <input type="color" id="${id}-picker" value="${hexToColorInput(state.colors[key])}" title="${label}">
+        <div style="flex:1">
+          <label class="builder-label" for="${id}-text">${label}</label>
+          <input type="text" class="builder-input" id="${id}-text" value="${state.colors[key]}" maxlength="10">
+        </div>
+      `;
+      grid.appendChild(wrap);
+      const picker = document.getElementById(id + "-picker");
+      const text = document.getElementById(id + "-text");
+      picker.addEventListener("input", () => {
+        const hex = colorInputToHex(picker.value);
+        if (hex) { state.colors[key] = hex; text.value = hex; onStateChange(); }
+      });
+      text.addEventListener("input", () => {
+        const v = text.value.trim();
+        if (/^0x[0-9a-fA-F]{6}$/.test(v) || /^#[0-9a-fA-F]{6}$/.test(v)) {
+          state.colors[key] = colorInputToHex(v);
+          picker.value = hexToColorInput(state.colors[key]);
+          onStateChange();
+        }
+      });
+    }
+    const presetWrap = document.createElement("div");
+    presetWrap.style.gridColumn = "1 / -1";
+    presetWrap.style.marginTop = "0.25rem";
+    presetWrap.innerHTML = `
+      <label class="builder-label" for="preset-sel">Preset</label>
+      <select id="preset-sel" class="builder-select">
+        ${COLOR_PRESETS.map((p,i) => `<option value="${i}">${p[0]}</option>`).join("")}
+      </select>
+    `;
+    grid.appendChild(presetWrap);
+    document.getElementById("preset-sel").addEventListener("change", (e) => {
+      const p = COLOR_PRESETS[parseInt(e.target.value, 10)][1];
+      state.colors = { ...p };
+      buildColorFields();
+      onStateChange();
+    });
+  }
+
+  /* =========================================================================
+     UI: Icon slots
+     ========================================================================= */
+
+  function buildIconSlots() {
+    const grid = document.getElementById("icons-grid");
+    grid.innerHTML = "";
+    for (const key of ICON_KEYS) {
+      const slot = document.createElement("div");
+      slot.className = "icon-slot";
+      const hasFile = !!state.iconFiles[key];
+      slot.innerHTML = `
+        <label class="file-btn ${hasFile ? "has-file" : ""}" data-key="${key}">
+          <span>${hasFile ? truncate(key, 18) : "Choose PNG"}</span>
+          ${hasFile ? `<span class="x" data-clear="${key}">&times;</span>` : ""}
+          <input type="file" accept="image/png" data-key="${key}">
+        </label>
+        <div class="slot-label">${key}</div>
+      `;
+      grid.appendChild(slot);
+    }
+    grid.querySelectorAll('input[type="file"]').forEach(inp => {
+      inp.addEventListener("change", async (e) => {
+        const key = e.target.dataset.key;
+        const file = e.target.files[0];
+        if (!file) return;
+        try {
+          const data = await loadPngAsRgba(file);
+          state.iconFiles[key] = data;
+          state.decoded.icons[key] = null;
+          buildIconSlots();
+          refreshPreview();
+        } catch (err) {
+          alert("Failed to load " + key + ": " + err.message);
+        }
+        inp.value = "";
+      });
+    });
+    grid.querySelectorAll("[data-clear]").forEach(el => {
+      el.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const key = el.dataset.clear;
+        delete state.iconFiles[key];
+        delete state.decoded.icons[key];
+        buildIconSlots();
+        refreshPreview();
+      });
+    });
+  }
+
+  function truncate(s, n) { return s.length > n ? s.slice(0, n-1) + "..." : s; }
+
+  function setupApplyAllIcons() {
+    const inp = document.getElementById("apply-all-icons-input");
+    const status = document.getElementById("apply-all-icons-status");
+    const btn = document.getElementById("apply-all-icons-btn");
+    inp.addEventListener("change", async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      try {
+        const data = await loadPngAsRgba(file);
+        for (const key of ICON_KEYS) {
+          state.iconFiles[key] = { w: data.w, h: data.h, rgba: data.rgba };
+          state.decoded.icons[key] = null;
+        }
+        status.textContent = `Applied ${file.name} (${data.w}x${data.h}) to ${ICON_KEYS.length} icons`;
+        status.className = "status";
+        btn.classList.add("has-file");
+        btn.querySelector("span").firstChild.textContent = truncate(file.name, 24);
+        buildIconSlots();
+        refreshPreview();
+      } catch (err) {
+        alert("Failed to load: " + err.message);
+      }
+      inp.value = "";
+    });
+  }
+
+  /* =========================================================================
+     UI: Background
+     ========================================================================= */
+
+  function setupBackgroundInput() {
+    const inp = document.getElementById("bg-input");
+    const status = document.getElementById("bg-status");
+    const btn = document.getElementById("bg-btn");
+    inp.addEventListener("change", async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      try {
+        const data = await loadPngAsRgba(file);
+        state.bgFile = data;
+        state.decoded.backgrounds = {};
+        status.textContent = `${file.name} (${data.w}x${data.h})`;
+        status.className = "status";
+        btn.classList.add("has-file");
+        btn.querySelector("span").firstChild.textContent = truncate(file.name, 24);
+        refreshBackgroundPreviews();
+        refreshPreview();
+      } catch (err) {
+        console.error("Background load failed:", err);
+        status.textContent = "Failed: " + err.message;
+        status.className = "status error";
+      }
+      inp.value = "";
+    });
+  }
+
+  function refreshBackgroundPreviews() {
+    const wrap = document.getElementById("bg-previews");
+    wrap.innerHTML = "";
+    if (!state.bgFile) {
+      wrap.innerHTML = '<div class="help">No background uploaded. A solid background color will be used.</div>';
+      return;
+    }
+    for (const v of BG_VARIANTS) {
+      try {
+        const div = document.createElement("div");
+        div.className = "bg-preview";
+        const c = document.createElement("canvas");
+        c.width = v.w; c.height = v.h;
+        c.style.width = Math.min(v.w, 80) + "px";
+        c.style.height = "auto";
+        div.appendChild(c);
+        const lbl = document.createElement("div");
+        lbl.className = "lbl";
+        lbl.textContent = `${v.name} ${v.w}x${v.h}`;
+        div.appendChild(lbl);
+        wrap.appendChild(div);
+        const resized = resizeRgba(state.bgFile.rgba, state.bgFile.w, state.bgFile.h, v.w, v.h);
+        let decoded;
+        if (v.fmt === "rgb565") {
+          const bytes = rgbaToRgb565Bytes(resized);
+          decoded = rgb565BytesToRgba(bytes, v.w, v.h);
+        } else {
+          const idx = rgbaToIndexed4bpp(resized, v.w, v.h);
+          decoded = indexedToRgba(idx, v.w, v.h);
+        }
+        state.decoded.backgrounds[v.name] = { rgba: decoded, w: v.w, h: v.h };
+        const ctx = c.getContext("2d");
+        const imgData = new ImageData(decoded, v.w, v.h);
+        ctx.putImageData(imgData, 0, 0);
+      } catch (err) {
+        console.error("BG variant " + v.name + " failed:", err);
+      }
+    }
+  }
+
+  /* =========================================================================
+     Build pipeline
+     ========================================================================= */
+
+  async function buildGtheme() {
+    const status = document.getElementById("build-status");
+    status.className = "status";
+    status.textContent = "Building...";
+
+    if (!/^[A-Za-z0-9_-]+$/.test(state.pack.id)) {
+      status.className = "status error";
+      status.textContent = "Invalid pack id (use a-z, 0-9, _, -)";
+      return;
+    }
+
+    const entries = [];
+    const iconGimg = {};
+    const bgGimg = {};
+
+    for (const key of Object.keys(state.iconFiles).sort()) {
+      const src = state.iconFiles[key];
+      iconGimg[key] = {};
+      for (const sz of ICON_VARIANT_SIZES) {
+        const resized = resizeRgba(src.rgba, src.w, src.h, sz, sz);
+        const payload = rgbaToRgb565A8Bytes(resized);
+        const gimg = buildGimg(sz, sz, FMT_RGB565A8, payload);
+        const label = VARIANT_LABELS[sz];
+        entries.push({ name: `icons/${key}_${label}.gimg`, data: gimg });
+        iconGimg[key][sz] = gimg;
+      }
+    }
+
+    if (state.bgFile) {
+      for (const v of BG_VARIANTS) {
+        const resized = resizeRgba(state.bgFile.rgba, state.bgFile.w, state.bgFile.h, v.w, v.h);
+        let payload, fmt;
+        if (v.fmt === "rgb565") {
+          payload = rgbaToRgb565Bytes(resized);
+          fmt = FMT_RGB565;
+        } else {
+          const idx = rgbaToIndexed4bpp(resized, v.w, v.h);
+          payload = new Uint8Array(idx.palette.length + idx.pixels.length);
+          payload.set(idx.palette, 0);
+          payload.set(idx.pixels, idx.palette.length);
+          fmt = FMT_INDEXED_4BPP;
+        }
+        const gimg = buildGimg(v.w, v.h, fmt, payload);
+        entries.push({ name: `bg/bg_${v.name}.gimg`, data: gimg });
+        bgGimg[v.name] = gimg;
+      }
+    }
+
+    const manifest = buildRuntimeManifest(state, iconGimg, bgGimg);
+    const manifestJson = JSON.stringify(manifest, null, 2) + "\n";
+    const manifestBytes = new TextEncoder().encode(manifestJson);
+    entries.push({ name: "manifest.json", data: manifestBytes });
+
+    const checksums = {};
+    for (const e of entries) {
+      checksums[e.name] = fnv1a64Hex(e.data);
+    }
+    const checksumsJson = JSON.stringify(sortObjectKeys(checksums), null, 2) + "\n";
+    const checksumsBytes = new TextEncoder().encode(checksumsJson);
+    entries.push({ name: "checksums.json", data: checksumsBytes });
+
+    entries.sort((a, b) => a.name < b.name ? -1 : a.name > b.name ? 1 : 0);
+
+    const gapp = buildGapp(entries);
+    const blob = new Blob([gapp], { type: "application/octet-stream" });
+    if (state.gthemeUrl) URL.revokeObjectURL(state.gthemeUrl);
+    state.gthemeUrl = URL.createObjectURL(blob);
+    const a = document.getElementById("download-anchor");
+    a.href = state.gthemeUrl;
+    a.download = state.pack.id + ".gtheme";
+    document.getElementById("download-link").style.display = "block";
+
+    status.className = "status ok";
+    status.textContent = `Built ${state.pack.id}.gtheme (${(gapp.length/1024).toFixed(1)} KB, ${entries.length} files)`;
+  }
+
+  /* =========================================================================
+     Preview rendering (mocked GhostESP main menu)
+     ========================================================================= */
+
+  function refreshPreview() {
+    decodeAllIconsForPreview();
+    const c = document.getElementById("preview");
+    const ctx = c.getContext("2d");
+
+    const [W, H] = state.preview.size.split("x").map(Number);
+    if (c.width !== W || c.height !== H) {
+      c.width = W; c.height = H;
+    }
+
+    const bg = hexToRgb(state.colors.background) || [0,0,0];
+    const surface = hexToRgb(state.colors.surface) || [20,20,28];
+    const surfaceAlt = hexToRgb(state.colors.surface_alt) || [30,30,40];
+    const accent = hexToRgb(state.colors.accent) || [57,255,20];
+    const text = hexToRgb(state.colors.text) || [255,255,255];
+    const muted = hexToRgb(state.colors.text_muted) || [150,150,150];
+
+    ctx.fillStyle = `rgb(${bg[0]},${bg[1]},${bg[2]})`;
+    ctx.fillRect(0, 0, W, H);
+
+    if (state.decoded.backgrounds.full) {
+      const bgImg = state.decoded.backgrounds.full;
+      const tmp = document.createElement("canvas");
+      tmp.width = bgImg.w; tmp.height = bgImg.h;
+      tmp.getContext("2d").putImageData(new ImageData(bgImg.rgba, bgImg.w, bgImg.h), 0, 0);
+      const scale = Math.max(W / bgImg.w, H / bgImg.h);
+      const dw = bgImg.w * scale, dh = bgImg.h * scale;
+      ctx.imageSmoothingEnabled = true;
+      ctx.drawImage(tmp, (W - dw) / 2, (H - dh) / 2, dw, dh);
+    } else if (state.decoded.backgrounds.tile) {
+      const tile = state.decoded.backgrounds.tile;
+      const tmp = document.createElement("canvas");
+      tmp.width = tile.w; tmp.height = tile.h;
+      tmp.getContext("2d").putImageData(new ImageData(tile.rgba, tile.w, tile.h), 0, 0);
+      const pat = ctx.createPattern(tmp, "repeat");
+      ctx.fillStyle = pat;
+      ctx.fillRect(0, 0, W, H);
+    }
+
+    const sbH = H >= 200 ? 24 : (H >= 160 ? 20 : 16);
+    drawStatusBar(ctx, W, sbH, surfaceAlt, accent, text, muted, state.preview.view);
+
+    const contentY = sbH;
+    const contentH = H - sbH;
+    if (state.preview.view === "grid") {
+      drawCardGrid(ctx, W, contentY, contentH, surface, accent, text, muted, MAIN_MENU_ITEMS);
+    } else if (state.preview.view === "carousel") {
+      drawCarousel(ctx, W, contentY, contentH, surface, accent, text, muted, MAIN_MENU_ITEMS);
+    } else {
+      drawCardGrid(ctx, W, contentY, contentH, surface, accent, text, muted, APP_GALLERY_ITEMS);
+    }
+  }
+
+  function drawStatusBar(ctx, W, H, surfaceAlt, accent, text, muted, viewName) {
+    ctx.fillStyle = `rgb(${surfaceAlt[0]},${surfaceAlt[1]},${surfaceAlt[2]})`;
+    ctx.fillRect(0, 0, W, H);
+    ctx.fillStyle = `rgba(${accent[0]},${accent[1]},${accent[2]},0.4)`;
+    ctx.fillRect(0, H - Math.max(1, Math.round(H * 0.06)), W, Math.max(1, Math.round(H * 0.06)));
+    ctx.fillStyle = `rgb(${text[0]},${text[1]},${text[2]})`;
+    ctx.font = `bold ${Math.round(H * 0.42)}px ui-sans-serif, system-ui, sans-serif`;
+    ctx.textBaseline = "middle";
+    const title = W > 128 ? (
+      viewName === "apps" ? "App Gallery" :
+      viewName === "carousel" ? "Main Menu" : "Main Menu"
+    ) : "";
+    ctx.fillText(title, 8, H / 2);
+    ctx.fillStyle = `rgb(${muted[0]},${muted[1]},${muted[2]})`;
+    ctx.font = `${Math.round(H * 0.4)}px ui-sans-serif, system-ui, sans-serif`;
+    ctx.textAlign = "right";
+    const right = `Lv1 \u00B7 SD \u00B7 BT \u00B7 WiFi \u00B7 87%`;
+    ctx.fillText(right, W - 8, H / 2);
+    ctx.textAlign = "left";
+  }
+
+  function drawCardGrid(ctx, W, contentY, contentH, surface, accent, text, muted, items) {
+    const portrait = contentH > W;
+    const cols = W >= 320 ? 4 : W >= 240 ? 3 : 2;
+    const visibleRows = portrait && W >= 200 ? 4 : 2;
+    const margin = (W <= 240 || contentH <= 120) ? 4 : (portrait && W >= 200 ? 6 : 4);
+    const radius = 12;
+    const cardW = (W - (cols + 1) * margin) / cols;
+    const cardH = (contentH - (visibleRows - 1) * margin) / visibleRows;
+
+    const visibleCount = Math.min(items.length, cols * visibleRows);
+    for (let i = 0; i < visibleCount; i++) {
+      const cx = margin + (i % cols) * (cardW + margin);
+      const cy = contentY + margin + Math.floor(i / cols) * (cardH + margin);
+      drawCard(ctx, cx, cy, cardW, cardH, radius, surface, accent, text, muted, items[i]);
+    }
+  }
+
+  function drawCarousel(ctx, W, contentY, contentH, surface, accent, text, muted, items) {
+    const minDim = Math.min(W, contentH);
+    let btnSize = Math.round(minDim * 0.55);
+    btnSize = Math.max(64, Math.min(160, btnSize));
+    const radius = 16;
+    const tileX = (W - btnSize) / 2;
+    const tileY = contentY + (contentH - btnSize) / 2;
+    const item = items[state.preview.carouselIndex % items.length];
+    drawCard(ctx, tileX, tileY, btnSize, btnSize, radius, surface, accent, text, muted, item, { large: true });
+
+    if (items.length > 1) {
+      const navSize = W >= 320 ? 24 : W >= 200 ? 20 : 16;
+      const navMargin = 6;
+      const arrowY = contentY + contentH / 2;
+      ctx.fillStyle = `rgba(${muted[0]},${muted[1]},${muted[2]},0.4)`;
+      ctx.font = `bold ${navSize}px ui-sans-serif, sans-serif`;
+      ctx.textBaseline = "middle";
+      ctx.textAlign = "center";
+      ctx.fillText("\u2039", navMargin + navSize / 2, arrowY);
+      ctx.fillText("\u203A", W - navMargin - navSize / 2, arrowY);
+      ctx.textAlign = "left";
+    }
+  }
+
+  function drawCard(ctx, x, y, w, h, radius, surface, accent, text, muted, item, opts = {}) {
+    const borderW = 2;
+    const shadowW = h <= 50 ? 4 : 8;
+
+    for (let i = shadowW; i > 0; i--) {
+      ctx.fillStyle = `rgba(0,0,0,${0.06 * (1 - i / shadowW)})`;
+      roundRect(ctx, x + i, y + i, w, h, radius);
+      ctx.fill();
+    }
+
+    ctx.fillStyle = `rgb(${surface[0]},${surface[1]},${surface[2]})`;
+    roundRect(ctx, x, y, w, h, radius);
+    ctx.fill();
+
+    ctx.strokeStyle = `rgb(${accent[0]},${accent[1]},${accent[2]})`;
+    ctx.lineWidth = borderW;
+    roundRect(ctx, x + borderW/2, y + borderW/2, w - borderW, h - borderW, radius - borderW/2);
+    ctx.stroke();
+
+    const labelReserved = h <= 50 ? 14 : 20;
+    const iconAreaH = h - labelReserved - (opts.large ? 14 : 6);
+    const iconTarget = opts.large
+      ? Math.max(20, Math.min(56, Math.round(Math.min(w, h) * 0.38)))
+      : Math.max(16, Math.round(Math.min(w, iconAreaH) * 0.7));
+    const ix = x + w / 2;
+    const iy = opts.large
+      ? y + (h - labelReserved) / 2
+      : y + 4 + iconAreaH / 2;
+
+    const icon = state.decoded.icons[item.key];
+    if (icon) {
+      drawDecodedIcon(ctx, icon, w, ix, iy, iconTarget);
+    } else {
+      drawPlaceholderIcon(ctx, ix, iy, Math.round(iconTarget / 2), accent, muted);
+    }
+
+    ctx.fillStyle = `rgb(${text[0]},${text[1]},${text[2]})`;
+    const fontSize = opts.large
+      ? Math.max(10, Math.round(h * 0.085))
+      : Math.max(8, Math.round(w * 0.13));
+    ctx.font = `${fontSize}px ui-sans-serif, system-ui, sans-serif`;
+    ctx.textAlign = "center";
+    ctx.textBaseline = "alphabetic";
+    const lblY = opts.large ? y + h - 8 : y + h - 4;
+    const maxW = w - 8;
+    ctx.fillText(truncate(item.label, Math.floor(maxW / (fontSize * 0.55))), ix, lblY);
+    ctx.textAlign = "left";
+  }
+
+  function drawDecodedIcon(ctx, icon, cardW, cx, cy, targetSize) {
+    const variant = (icon.l && icon.l.length === 64*64*4) ? { rgba: icon.l, w: 64, h: 64 } :
+                    (icon.s && icon.s.length === 32*32*4) ? { rgba: icon.s, w: 32, h: 32 } :
+                    null;
+    if (!variant) return;
+    const tmp = document.createElement("canvas");
+    tmp.width = variant.w; tmp.height = variant.h;
+    tmp.getContext("2d").putImageData(new ImageData(variant.rgba, variant.w, variant.h), 0, 0);
+    ctx.imageSmoothingEnabled = true;
+    const dw = targetSize, dh = targetSize;
+    ctx.drawImage(tmp, cx - dw / 2, cy - dh / 2, dw, dh);
+  }
+
+  function drawPlaceholderIcon(ctx, cx, cy, r, accent, muted) {
+    r = Math.max(6, r);
+    ctx.fillStyle = `rgba(${muted[0]},${muted[1]},${muted[2]},0.25)`;
+    ctx.beginPath();
+    ctx.arc(cx, cy, r, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.strokeStyle = `rgb(${accent[0]},${accent[1]},${accent[2]})`;
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+    ctx.fillStyle = `rgb(${accent[0]},${accent[1]},${accent[2]})`;
+    ctx.font = `bold ${Math.round(r * 1.1)}px ui-sans-serif, system-ui, sans-serif`;
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText("?", cx, cy + 1);
+    ctx.textAlign = "left";
+  }
+
+  function roundRect(ctx, x, y, w, h, r) {
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.arcTo(x + w, y, x + w, y + h, r);
+    ctx.arcTo(x + w, y + h, x, y + h, r);
+    ctx.arcTo(x, y + h, x, y, r);
+    ctx.arcTo(x, y, x + w, y, r);
+    ctx.closePath();
+  }
+
+  /* =========================================================================
+     Wire up
+     ========================================================================= */
+
+  function onStateChange() {
+    if (state.gthemeUrl) {
+      URL.revokeObjectURL(state.gthemeUrl);
+      state.gthemeUrl = null;
+    }
+    document.getElementById("download-link").style.display = "none";
+    document.getElementById("build-status").textContent = "";
+    refreshPreview();
+  }
+
+  function wireUp() {
+    const idEl = document.getElementById("pack-id");
+    const nameEl = document.getElementById("pack-name");
+    const verEl = document.getElementById("pack-version");
+    const appEl = document.getElementById("pack-appicon");
+    for (const k of ICON_KEYS) {
+      const o = document.createElement("option");
+      o.value = k; o.textContent = k;
+      appEl.appendChild(o);
+    }
+    idEl.addEventListener("input", () => { state.pack.id = idEl.value.trim(); onStateChange(); });
+    nameEl.addEventListener("input", () => { state.pack.name = nameEl.value; onStateChange(); });
+    verEl.addEventListener("input", () => {
+      const n = parseInt(verEl.value, 10);
+      if (!isNaN(n)) { state.pack.version = n; onStateChange(); }
+    });
+    appEl.addEventListener("change", () => { state.pack.appIcon = appEl.value; onStateChange(); });
+
+    const viewEl = document.getElementById("preview-view");
+    const sizeEl = document.getElementById("preview-size");
+    const navEl = document.getElementById("carousel-nav");
+    const posEl = document.getElementById("carousel-pos");
+    const updateCarouselNav = () => {
+      if (state.preview.view === "carousel") {
+        navEl.style.display = "flex";
+        navEl.style.alignItems = "center";
+        posEl.textContent = `${state.preview.carouselIndex + 1} / ${MAIN_MENU_ITEMS.length}`;
+      } else {
+        navEl.style.display = "none";
+      }
+    };
+    viewEl.addEventListener("change", () => {
+      state.preview.view = viewEl.value;
+      state.preview.carouselIndex = 0;
+      updateCarouselNav();
+      onStateChange();
+    });
+    sizeEl.addEventListener("change", () => {
+      state.preview.size = sizeEl.value;
+      onStateChange();
+    });
+    document.getElementById("carousel-prev").addEventListener("click", () => {
+      state.preview.carouselIndex = (state.preview.carouselIndex - 1 + MAIN_MENU_ITEMS.length) % MAIN_MENU_ITEMS.length;
+      updateCarouselNav();
+      onStateChange();
+    });
+    document.getElementById("carousel-next").addEventListener("click", () => {
+      state.preview.carouselIndex = (state.preview.carouselIndex + 1) % MAIN_MENU_ITEMS.length;
+      updateCarouselNav();
+      onStateChange();
+    });
+
+    buildColorFields();
+    buildIconSlots();
+    setupApplyAllIcons();
+    setupBackgroundInput();
+
+    document.getElementById("build-btn").addEventListener("click", async () => {
+      const btn = document.getElementById("build-btn");
+      btn.disabled = true;
+      try {
+        await buildGtheme();
+      } catch (err) {
+        console.error(err);
+        const status = document.getElementById("build-status");
+        status.className = "status error";
+        status.textContent = "Build failed: " + err.message;
+      } finally {
+        btn.disabled = false;
+      }
+    });
+
+    document.getElementById("reset-btn").addEventListener("click", () => {
+      if (!confirm("Reset all fields and uploaded images?")) return;
+      state.pack = { id: "my_pack", name: "My Pack", version: 1, appIcon: "" };
+      state.colors = { ...DEFAULT_COLORS };
+      state.iconFiles = {};
+      state.bgFile = null;
+      state.decoded = { icons: {}, backgrounds: {} };
+      idEl.value = state.pack.id;
+      nameEl.value = state.pack.name;
+      verEl.value = state.pack.version;
+      appEl.value = "";
+      document.getElementById("bg-input").value = "";
+      document.getElementById("bg-status").textContent = "No file";
+      document.getElementById("bg-btn").classList.remove("has-file");
+      document.getElementById("bg-btn").querySelector("span").firstChild.textContent = "Choose background PNG";
+      buildColorFields();
+      buildIconSlots();
+      refreshBackgroundPreviews();
+      onStateChange();
+    });
+
+    refreshBackgroundPreviews();
+    updateCarouselNav();
+    onStateChange();
+  }
+
+  function decodeAllIconsForPreview() {
+    state.decoded.icons = {};
+    for (const key of Object.keys(state.iconFiles)) {
+      const src = state.iconFiles[key];
+      const r32 = resizeRgba(src.rgba, src.w, src.h, 32, 32);
+      const payload32 = rgbaToRgb565A8Bytes(r32);
+      const r32decoded = rgb565A8BytesToRgba(payload32, 32, 32);
+      const r64 = resizeRgba(src.rgba, src.w, src.h, 64, 64);
+      const payload64 = rgbaToRgb565A8Bytes(r64);
+      const r64decoded = rgb565A8BytesToRgba(payload64, 64, 64);
+      state.decoded.icons[key] = { s: r32decoded, l: r64decoded };
+    }
+  }
+
+  wireUp();
+  </script>
+
+  <script src="js/cookie-consent.js" defer></script>
+</body>
+</html>

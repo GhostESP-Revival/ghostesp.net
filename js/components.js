@@ -41,6 +41,7 @@ const components = {
             <ul class="nav-dropdown-menu">
               <li><a href="marketplace.html">Apps</a></li>
               <li><a href="asset-marketplace.html">Asset Packs</a></li>
+              <li><a href="asset-pack-builder.html">Pack Builder</a></li>
               <li><a href="irdb.html">IRDB</a></li>
             </ul>
           </li>
