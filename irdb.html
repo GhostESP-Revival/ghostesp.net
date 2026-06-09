@@ -102,7 +102,8 @@
   <footer class="footer">
     <div class="container">
       <p>Data from <a href="https://github.com/Lucaslhm/Flipper-IRDB" target="_blank" rel="noopener">Flipper-IRDB</a></p>
-      <p>Developed by <a href="https://github.com/jaylikesbunda" target="_blank" rel="noopener">Jay Candel</a></p>
+      <button class="cookie-settings-link" onclick="CookieConsent.showSettings()">Cookie Settings</button>
+      <a href="privacy.html" class="cookie-settings-link">Privacy Policy</a>
     </div>
   </footer>
 
@@ -111,38 +112,6 @@
   <script src="js/social-proof.js" defer></script>
   <script src="js/main.js" defer></script>
   <script src="js/irdb.js" defer></script>
-  <script>
-    (function(){
-      var GA_ID = 'G-MS2T2178R5';
-      var loaded = false;
-      function loadGtag(){
-        if(loaded) return; loaded = true;
-        var s = document.createElement('script');
-        s.async = true;
-        s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
-        s.onload = function(){
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          window.gtag = gtag;
-          gtag('js', new Date());
-          gtag('config', GA_ID);
-        };
-        document.head.appendChild(s);
-      }
-      function whenInteracted(){
-        loadGtag();
-        removeListeners();
-      }
-      function removeListeners(){
-        ['click','scroll','keydown','pointerdown','touchstart'].forEach(function(e){
-          window.removeEventListener(e, whenInteracted, {passive:true});
-        });
-      }
-      ['click','scroll','keydown','pointerdown','touchstart'].forEach(function(e){
-        window.addEventListener(e, whenInteracted, {passive:true});
-      });
-      setTimeout(function(){ if(!loaded) loadGtag(); }, 5000);
-    })();
-  </script>
+  <script src="js/cookie-consent.js" defer></script>
 </body>
 </html>
