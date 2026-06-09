@@ -1314,15 +1314,25 @@ h3 {
   color: var(--text);
 }
 
+/* trust grid - community & auditable */
+.trust-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
 /* auditable section */
 .auditable-card {
-  max-width: 600px;
-  margin: 0 auto;
   padding: 2rem;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -1352,6 +1362,7 @@ h3 {
   font-size: 0.9rem;
   line-height: 1.6;
   margin-bottom: 1.25rem;
+  flex: 1;
 }
 
 .auditable-links {
@@ -1526,6 +1537,10 @@ h3 {
   }
 
   .getting-started-secondary {
+    grid-template-columns: 1fr;
+  }
+
+  .trust-grid {
     grid-template-columns: 1fr;
   }
 
@@ -1732,13 +1747,14 @@ h3 {
 
 /* discord widget card */
 .discord-widget-card {
-  max-width: 500px;
-  margin: 0 auto;
   padding: 2rem;
   background: var(--surface);
   border: 1px solid rgba(88, 101, 242, 0.2);
   border-radius: var(--radius);
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -1766,6 +1782,7 @@ h3 {
   font-size: 0.9rem;
   line-height: 1.6;
   margin-bottom: 1rem;
+  flex: 1;
 }
 
 .discord-widget-count {
