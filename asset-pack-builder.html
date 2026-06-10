@@ -36,6 +36,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
   <link rel="stylesheet" href="css/main.css">
   <script src="https://unpkg.com/lucide@0.344.0" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js" defer></script>
 
   <style>
     .builder-hero {
@@ -617,6 +618,73 @@
       border: 1px solid var(--border);
     }
 
+    .extract-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      margin-top: 0.5rem;
+    }
+
+    .extract-row {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 0.6rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+    }
+
+    .extract-row .path {
+      flex: 1;
+      color: var(--text);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .extract-row .size {
+      color: var(--text-dim);
+      font-size: 0.7rem;
+    }
+
+    .extract-row a {
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 0.7rem;
+    }
+
+    .extract-row a:hover {
+      text-decoration: underline;
+    }
+
+    .extract-meta {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      margin-top: 0.5rem;
+      line-height: 1.5;
+    }
+
+    .dropzone {
+      border: 1px dashed var(--border);
+      border-radius: 8px;
+      padding: 1rem;
+      text-align: center;
+      color: var(--text-dim);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      margin-top: 0.5rem;
+      transition: border-color 0.2s ease, color 0.2s ease;
+    }
+
+    .dropzone.drag-over {
+      border-color: var(--accent);
+      color: var(--text);
+    }
+
     .builder-footer-note {
       text-align: center;
       padding: 2rem var(--spacing);
@@ -769,12 +837,30 @@
         <h2>Build</h2>
         <div class="builder-actions">
           <button class="builder-btn-primary" id="build-btn"><i data-lucide="download" style="width:16px;height:16px;vertical-align:middle;margin-right:6px;"></i>Build .gtheme</button>
+          <button class="builder-btn-secondary" id="source-zip-btn"><i data-lucide="archive" style="width:16px;height:16px;vertical-align:middle;margin-right:6px;"></i>Download source pack (.zip)</button>
           <button class="builder-btn-secondary" id="reset-btn">Reset</button>
           <span class="status" id="build-status"></span>
         </div>
         <div class="download-link" id="download-link">
           <a id="download-anchor" href="#"><i data-lucide="file-down" style="width:18px;height:18px;vertical-align:middle;margin-right:6px;"></i>Download .gtheme</a>
         </div>
+        <div class="download-link" id="source-zip-link">
+          <a id="source-zip-anchor" href="#"><i data-lucide="file-down" style="width:18px;height:18px;vertical-align:middle;margin-right:6px;"></i>Download source pack (.zip)</a>
+        </div>
+        <p class="help">Source pack includes the original PNGs, a <code>manifest.json</code>, and the built <code>.gtheme</code> &mdash; ready to PR into <code>downloads/assets/&lt;id&gt;/</code>.</p>
+      </div>
+
+      <div class="builder-section">
+        <h2>Extract .gtheme</h2>
+        <p class="help" style="margin-top:0">Drop a <code>.gtheme</code> (GAPP container) to inspect its entries and download the raw files.</p>
+        <div class="builder-row" style="margin-bottom:12px; margin-top:8px">
+          <label class="file-btn" id="extract-btn">
+            <span>Choose .gtheme</span>
+            <input type="file" id="extract-input" accept=".gtheme,.gapp,application/octet-stream">
+          </label>
+          <span class="status" id="extract-status">No file</span>
+        </div>
+        <div id="extract-output"></div>
       </div>
 
     </div>
@@ -937,6 +1023,7 @@
     },
     preview: { view: "grid", size: "240x320", carouselIndex: 0 },
     gthemeUrl: null,
+    sourceZipUrl: null,
   };
 
   const MAIN_MENU_ITEMS = [
@@ -1380,7 +1467,7 @@
         if (!file) return;
         try {
           const data = await loadPngAsRgba(file);
-          state.iconFiles[key] = data;
+          state.iconFiles[key] = { ...data, sourceName: file.name, sourceFile: file };
           state.decoded.icons[key] = null;
           buildIconSlots();
           refreshPreview();
@@ -1415,7 +1502,7 @@
       try {
         const data = await loadPngAsRgba(file);
         for (const key of ICON_KEYS) {
-          state.iconFiles[key] = { w: data.w, h: data.h, rgba: data.rgba };
+          state.iconFiles[key] = { w: data.w, h: data.h, rgba: data.rgba, sourceName: file.name, sourceFile: file };
           state.decoded.icons[key] = null;
         }
         status.textContent = `Applied ${file.name} (${data.w}x${data.h}) to ${ICON_KEYS.length} icons`;
@@ -1444,7 +1531,7 @@
       if (!file) return;
       try {
         const data = await loadPngAsRgba(file);
-        state.bgFile = data;
+        state.bgFile = { ...data, sourceName: file.name, sourceFile: file };
         state.decoded.backgrounds = {};
         status.textContent = `${file.name} (${data.w}x${data.h})`;
         status.className = "status";
@@ -1579,6 +1666,389 @@
 
     status.className = "status ok";
     status.textContent = `Built ${state.pack.id}.gtheme (${(gapp.length/1024).toFixed(1)} KB, ${entries.length} files)`;
+  }
+
+  /* =========================================================================
+     GAPP / GIMG extractor
+     ========================================================================= */
+
+  function parseGapp(bytes) {
+    if (bytes.length < 12) throw new Error("File too small to be GAPP");
+    if (String.fromCharCode(bytes[0], bytes[1], bytes[2], bytes[3]) !== "GAPP") {
+      throw new Error("Not a GAPP file (missing magic)");
+    }
+    const dv = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
+    const version = dv.getUint16(4, true);
+    const reserved = dv.getUint16(6, true);
+    const fileCount = dv.getUint32(8, true);
+    const entries = [];
+    let p = 12;
+    for (let i = 0; i < fileCount; i++) {
+      if (p + 24 > bytes.length) throw new Error("Truncated GAPP header");
+      const tag = String.fromCharCode(bytes[p], bytes[p+1], bytes[p+2], bytes[p+3]);
+      if (tag !== "FILE") throw new Error(`Expected FILE tag at offset ${p}, got ${tag}`);
+      const entryRes = dv.getUint16(p + 4, true);
+      const nameLen = dv.getUint16(p + 6, true);
+      const dataLen = dv.getUint32(p + 8, true);
+      const dataLenDup = dv.getUint32(p + 12, true);
+      const hash = dv.getBigUint64(p + 16, true);
+      const nameStart = p + 24;
+      const dataStart = nameStart + nameLen;
+      if (dataStart + dataLen > bytes.length) throw new Error(`Truncated entry ${i} (${nameLen + dataLen} bytes needed)`);
+      const name = new TextDecoder("utf-8").decode(bytes.subarray(nameStart, nameStart + nameLen));
+      const data = bytes.subarray(dataStart, dataStart + dataLen);
+      entries.push({
+        name, data, hash,
+        entryRes, dataLenDup,
+        index: i,
+      });
+      p = dataStart + dataLen;
+    }
+    return { version, reserved, fileCount, entries, bytes };
+  }
+
+  function parseGimgHeader(bytes) {
+    if (bytes.length < 32) return null;
+    if (String.fromCharCode(bytes[0], bytes[1], bytes[2], bytes[3]) !== "GIMG") return null;
+    const dv = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
+    return {
+      version: dv.getUint16(4, true),
+      headerSize: dv.getUint16(6, true),
+      width: dv.getUint16(8, true),
+      height: dv.getUint16(10, true),
+      format: bytes[12],
+      compression: bytes[13],
+      reserved: dv.getUint16(14, true),
+      payloadSize: dv.getUint32(16, true),
+      payloadSizeDup: dv.getUint32(20, true),
+      hash: dv.getBigUint64(24, true),
+      fmtName: ["?", "rgb565", "rgb565a8", "indexed_4bpp"][bytes[12]] || `fmt${bytes[12]}`,
+    };
+  }
+
+  function formatBytes(n) {
+    if (n < 1024) return `${n} B`;
+    if (n < 1024 * 1024) return `${(n/1024).toFixed(1)} KB`;
+    return `${(n/1024/1024).toFixed(2)} MB`;
+  }
+
+  function renderExtractList(parsed) {
+    const wrap = document.getElementById("extract-output");
+    wrap.innerHTML = "";
+    const meta = document.createElement("div");
+    meta.className = "extract-meta";
+    meta.textContent = `GAPP v${parsed.version} • ${parsed.fileCount} files • total ${formatBytes(parsed.bytes.length)}`;
+    wrap.appendChild(meta);
+
+    const list = document.createElement("div");
+    list.className = "extract-list";
+    for (const e of parsed.entries) {
+      const row = document.createElement("div");
+      row.className = "extract-row";
+      const path = document.createElement("span");
+      path.className = "path";
+      path.textContent = e.name;
+      path.title = e.name;
+      const size = document.createElement("span");
+      size.className = "size";
+      let extra = formatBytes(e.data.length);
+      if (e.name.endsWith(".gimg")) {
+        const hdr = parseGimgHeader(e.data);
+        if (hdr) extra = `${hdr.width}x${hdr.height} ${hdr.fmtName} • ${extra}`;
+      }
+      size.textContent = extra;
+      const a = document.createElement("a");
+      a.href = "#";
+      a.textContent = "save";
+      a.addEventListener("click", (ev) => {
+        ev.preventDefault();
+        downloadBytes(e.data, e.name.split("/").pop());
+      });
+      row.appendChild(path);
+      row.appendChild(size);
+      row.appendChild(a);
+      list.appendChild(row);
+    }
+    wrap.appendChild(list);
+
+    const actions = document.createElement("div");
+    actions.className = "builder-actions";
+    actions.style.marginTop = "0.75rem";
+    const dlAll = document.createElement("button");
+    dlAll.className = "builder-btn-secondary builder-btn-small";
+    dlAll.textContent = "Download all (folder)";
+    dlAll.addEventListener("click", () => downloadAllAsFolder(parsed));
+    actions.appendChild(dlAll);
+    wrap.appendChild(actions);
+  }
+
+  function downloadBytes(bytes, name) {
+    const blob = new Blob([bytes], { type: "application/octet-stream" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }
+
+  async function downloadAllAsFolder(parsed) {
+    if (typeof JSZip === "undefined") {
+      alert("JSZip failed to load. Refresh and try again.");
+      return;
+    }
+    const zip = new JSZip();
+    for (const e of parsed.entries) zip.file(e.name, e.data);
+    const blob = await zip.generateAsync({ type: "blob" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = (parsed.entries[0]?.name.split("/")[0] || "gtheme") + "_extracted.zip";
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }
+
+  function setupExtractor() {
+    const input = document.getElementById("extract-input");
+    const status = document.getElementById("extract-status");
+    const out = document.getElementById("extract-output");
+
+    const drop = document.createElement("div");
+    drop.className = "dropzone";
+    drop.textContent = "...or drop a .gtheme file here";
+    out.parentNode.insertBefore(drop, out);
+
+    drop.addEventListener("dragover", (e) => {
+      e.preventDefault();
+      drop.classList.add("drag-over");
+    });
+    drop.addEventListener("dragleave", () => drop.classList.remove("drag-over"));
+    drop.addEventListener("drop", async (e) => {
+      e.preventDefault();
+      drop.classList.remove("drag-over");
+      const f = e.dataTransfer.files[0];
+      if (f) handleFile(f);
+    });
+
+    input.addEventListener("change", (e) => {
+      const f = e.target.files[0];
+      if (f) handleFile(f);
+      e.target.value = "";
+    });
+
+    async function handleFile(file) {
+      try {
+        const buf = new Uint8Array(await file.arrayBuffer());
+        status.className = "status";
+        status.textContent = `${file.name} (${formatBytes(buf.length)})`;
+        const parsed = parseGapp(buf);
+        renderExtractList(parsed);
+      } catch (err) {
+        status.className = "status error";
+        status.textContent = "Parse failed: " + err.message;
+        out.innerHTML = "";
+      }
+    }
+  }
+
+  /* =========================================================================
+     Source pack (.zip) export
+     ========================================================================= */
+
+  function sha1Hex(bytes) {
+    // tiny inline SHA-1 to dedup identical source PNGs without external deps
+    function rotl(x, n) { return (x << n) | (x >>> (32 - n)); }
+    const words = new Uint32Array(((bytes.length + 9 + 63) >> 6) * 16);
+    for (let i = 0; i < bytes.length; i++) words[i >> 2] |= bytes[i] << (24 - (i & 3) * 8);
+    words[words.length - 2] = bytes.length * 8;
+    const w = new DataView(words.buffer);
+    let h0 = 0x67452301, h1 = 0xEFCDAB89, h2 = 0x98BADCFE, h3 = 0x10325476, h4 = 0xC3D2E1F0;
+    for (let i = 0; i < words.length; i += 16) {
+      const a = h0, b = h1, c = h2, d = h3, e = h4;
+      const W = new Uint32Array(80);
+      for (let j = 0; j < 16; j++) W[j] = w.getUint32(i + j, false);
+      for (let j = 16; j < 80; j++) W[j] = rotl(W[j-3] ^ W[j-8] ^ W[j-14] ^ W[j-16], 1);
+      for (let j = 0; j < 80; j++) {
+        let f, k;
+        if (j < 20)      { f = (b & c) | ((~b) & d);           k = 0x5A827999; }
+        else if (j < 40) { f = b ^ c ^ d;                       k = 0x6ED9EBA1; }
+        else if (j < 60) { f = (b & c) | (b & d) | (c & d);     k = 0x8F1BBCDC; }
+        else             { f = b ^ c ^ d;                       k = 0xCA62C1D6; }
+        const t = (rotl(a, 5) + f + e + k + W[j]) | 0;
+        e = d; d = c; c = rotl(b, 30); b = a; a = t;
+      }
+      h0 = (h0 + a) | 0; h1 = (h1 + b) | 0; h2 = (h2 + c) | 0; h3 = (h3 + d) | 0; h4 = (h4 + e) | 0;
+    }
+    return [h0, h1, h2, h3, h4].map(v => (v >>> 0).toString(16).padStart(8, "0")).join("");
+  }
+
+  async function buildSourcePack() {
+    if (typeof JSZip === "undefined") {
+      throw new Error("JSZip failed to load. Refresh and try again.");
+    }
+    if (!/^[A-Za-z0-9_-]+$/.test(state.pack.id)) {
+      throw new Error("Invalid pack id (use a-z, 0-9, _, -)");
+    }
+    const id = state.pack.id;
+    const iconKeys = Object.keys(state.iconFiles).sort();
+    if (!iconKeys.length) throw new Error("Add at least one icon first.");
+
+    // 1. Re-encode each source PNG so the zip contains the original files unchanged
+    //    (we re-read the underlying File rather than re-encoding from RGBA, to
+    //    preserve the original bit depth / metadata of the user's PNGs).
+    const zip = new JSZip();
+    const folder = zip.folder(id);
+
+    // Build a name table: dedup identical source PNGs by sha1(content).
+    //   hash -> first basename used
+    const nameByHash = new Map();
+    //   iconSources[key] = chosen basename
+    const iconSources = {};
+    const usedNames = new Set();
+
+    function pickName(originalName, hash) {
+      if (nameByHash.has(hash)) return nameByHash.get(hash);
+      // sanitize, ensure not already used
+      const dot = originalName.lastIndexOf(".");
+      const base = (dot > 0 ? originalName.slice(0, dot) : originalName)
+        .replace(/[^A-Za-z0-9_-]+/g, "_").replace(/^_+|_+$/g, "") || "image";
+      const ext = (dot > 0 ? originalName.slice(dot) : ".png").toLowerCase();
+      let candidate = base + ext;
+      let n = 1;
+      while (usedNames.has(candidate)) candidate = `${base}_${n++}${ext}`;
+      usedNames.add(candidate);
+      nameByHash.set(hash, candidate);
+      return candidate;
+    }
+
+    for (const key of iconKeys) {
+      const f = state.iconFiles[key].sourceFile;
+      if (!f) {
+        throw new Error(`Missing source file for icon "${key}". Re-upload it and try again.`);
+      }
+      const bytes = new Uint8Array(await f.arrayBuffer());
+      const hash = sha1Hex(bytes);
+      const name = pickName(f.name, hash);
+      iconSources[key] = name;
+      if (!nameByHash.has(hash) || nameByHash.get(hash) === name) {
+        if (!folder.file(name)) folder.file(name, bytes);
+      }
+    }
+
+    // 2. Background
+    let backgroundSources = null;
+    if (state.bgFile && state.bgFile.sourceFile) {
+      const f = state.bgFile.sourceFile;
+      const bytes = new Uint8Array(await f.arrayBuffer());
+      const hash = sha1Hex(bytes);
+      const name = pickName(f.name, hash);
+      backgroundSources = { source: name, variants: true };
+      if (!folder.file(name)) folder.file(name, bytes);
+    }
+
+    // 3. Build the .gtheme (same code path the primary build button uses)
+    const gappBytes = buildGappBytes(id);
+
+    // 4. Source manifest (matches downloads/assets/<id>/manifest.json schema)
+    const sourceManifest = {
+      id,
+      name: state.pack.name,
+      version: state.pack.version,
+      colors: { ...state.colors },
+      icon_variants: [32, 64],
+      icon_sources: iconSources,
+    };
+    if (state.pack.appIcon) sourceManifest.app_icon = state.pack.appIcon;
+    if (backgroundSources) sourceManifest.background_sources = { background: backgroundSources };
+
+    folder.file("manifest.json", JSON.stringify(sourceManifest, null, 2) + "\n");
+
+    // 5. Pre-built .gtheme so reviewers can test without rebuilding
+    const distFolder = folder.folder("dist");
+    distFolder.file(`${id}.gtheme`, gappBytes);
+
+    // 6. README pointing to PR instructions
+    const readme = [
+      `# ${state.pack.name} (${id})`,
+      ``,
+      `Asset pack generated with the GhostESP Asset Pack Builder.`,
+      ``,
+      `## Submitting`,
+      ``,
+      `1. Drop the contents of this zip into \`downloads/assets/${id}/\` in the website repo.`,
+      `2. Add an entry to \`js/asset-marketplace.js\` (the \`assetPacks\` array) once the pack is reviewed.`,
+      `3. Open a PR.`,
+      ``,
+      `## Layout`,
+      ``,
+      `\`\`\``,
+      `${id}/`,
+      `  manifest.json         source manifest (icon_sources, background_sources, colors)`,
+      `  *.png                 original source PNGs (deduped by content hash)`,
+      `  dist/${id}.gtheme     pre-built pack for testing`,
+      `\`\`\``,
+    ].join("\n");
+    folder.file("README.md", readme);
+
+    // 7. Bundle and trigger download
+    const blob = await zip.generateAsync({ type: "blob" });
+    if (state.sourceZipUrl) URL.revokeObjectURL(state.sourceZipUrl);
+    state.sourceZipUrl = URL.createObjectURL(blob);
+    const a = document.getElementById("source-zip-anchor");
+    a.href = state.sourceZipUrl;
+    a.download = `${id}_source.zip`;
+    document.getElementById("source-zip-link").style.display = "block";
+  }
+
+  // Internal: re-implement the GAPP assembly from buildGtheme() so the
+  // source-zip and the main build can run independently.
+  function buildGappBytes(idForLog) {
+    const entries = [];
+    const iconGimg = {};
+    const bgGimg = {};
+
+    for (const key of Object.keys(state.iconFiles).sort()) {
+      const src = state.iconFiles[key];
+      iconGimg[key] = {};
+      for (const sz of ICON_VARIANT_SIZES) {
+        const resized = resizeRgba(src.rgba, src.w, src.h, sz, sz);
+        const payload = rgbaToRgb565A8Bytes(resized);
+        const gimg = buildGimg(sz, sz, FMT_RGB565A8, payload);
+        const label = VARIANT_LABELS[sz];
+        entries.push({ name: `icons/${key}_${label}.gimg`, data: gimg });
+        iconGimg[key][sz] = gimg;
+      }
+    }
+    if (state.bgFile) {
+      for (const v of BG_VARIANTS) {
+        const resized = resizeRgba(state.bgFile.rgba, state.bgFile.w, state.bgFile.h, v.w, v.h);
+        let payload, fmt;
+        if (v.fmt === "rgb565") {
+          payload = rgbaToRgb565Bytes(resized);
+          fmt = FMT_RGB565;
+        } else {
+          const idx = rgbaToIndexed4bpp(resized, v.w, v.h);
+          payload = new Uint8Array(idx.palette.length + idx.pixels.length);
+          payload.set(idx.palette, 0);
+          payload.set(idx.pixels, idx.palette.length);
+          fmt = FMT_INDEXED_4BPP;
+        }
+        const gimg = buildGimg(v.w, v.h, fmt, payload);
+        entries.push({ name: `bg/bg_${v.name}.gimg`, data: gimg });
+        bgGimg[v.name] = gimg;
+      }
+    }
+
+    const manifest = buildRuntimeManifest(state, iconGimg, bgGimg);
+    const manifestJson = JSON.stringify(manifest, null, 2) + "\n";
+    entries.push({ name: "manifest.json", data: new TextEncoder().encode(manifestJson) });
+
+    const checksums = {};
+    for (const e of entries) checksums[e.name] = fnv1a64Hex(e.data);
+    const checksumsJson = JSON.stringify(sortObjectKeys(checksums), null, 2) + "\n";
+    entries.push({ name: "checksums.json", data: new TextEncoder().encode(checksumsJson) });
+
+    entries.sort((a, b) => a.name < b.name ? -1 : a.name > b.name ? 1 : 0);
+    return buildGapp(entries);
   }
 
   /* =========================================================================
@@ -1798,7 +2268,12 @@
       URL.revokeObjectURL(state.gthemeUrl);
       state.gthemeUrl = null;
     }
+    if (state.sourceZipUrl) {
+      URL.revokeObjectURL(state.sourceZipUrl);
+      state.sourceZipUrl = null;
+    }
     document.getElementById("download-link").style.display = "none";
+    document.getElementById("source-zip-link").style.display = "none";
     document.getElementById("build-status").textContent = "";
     refreshPreview();
   }
@@ -1859,6 +2334,7 @@
     buildIconSlots();
     setupApplyAllIcons();
     setupBackgroundInput();
+    setupExtractor();
 
     document.getElementById("build-btn").addEventListener("click", async () => {
       const btn = document.getElementById("build-btn");
@@ -1870,6 +2346,25 @@
         const status = document.getElementById("build-status");
         status.className = "status error";
         status.textContent = "Build failed: " + err.message;
+      } finally {
+        btn.disabled = false;
+      }
+    });
+
+    document.getElementById("source-zip-btn").addEventListener("click", async () => {
+      const btn = document.getElementById("source-zip-btn");
+      const status = document.getElementById("build-status");
+      btn.disabled = true;
+      status.className = "status";
+      status.textContent = "Bundling source pack...";
+      try {
+        await buildSourcePack();
+        status.className = "status ok";
+        status.textContent = `Source pack ready (${state.pack.id}_source.zip)`;
+      } catch (err) {
+        console.error(err);
+        status.className = "status error";
+        status.textContent = "Source pack failed: " + err.message;
       } finally {
         btn.disabled = false;
       }
