@@ -1,6 +1,6 @@
 (function () {
   const ASSETS_CATALOG_URL = 'https://raw.githubusercontent.com/GhostESP-Revival/GhostESP-AssetPacks/main/catalog.json';
-  const CACHE_KEY = 'ghostesp-assets-catalog';
+  const CACHE_KEY = 'ghostesp-assets-catalog-v2';
   const CACHE_TTL = 5 * 60 * 1000;
 
   let assetPacks = [];
@@ -88,7 +88,7 @@
 
     try {
       const catalog = await fetchCatalog();
-      assetPacks = (catalog.assets || []).filter((asset) => asset.reviewed);
+      assetPacks = catalog.assets || [];
     } catch (err) {
       state.error = 'Failed to load asset packs. Please try again later.';
       console.error('Catalog fetch error:', err);
