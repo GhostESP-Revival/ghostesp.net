@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#000000">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com; img-src 'self' data:; font-src 'self' https://fonts.gstatic.com; connect-src 'self'; object-src 'none'; base-uri 'self';">
+
+  <!-- SEO Meta Tags -->
+  <title>404 - Page Not Found | GhostESP</title>
+  <meta name="description" content="The page you are looking for cannot be found. Return to the GhostESP homepage.">
+  <meta name="robots" content="noindex, nofollow">
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://ghostesp.net/404.html">
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+
+  <!-- Fonts and Styles -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+  <script src="https://unpkg.com/lucide@0.344.0" defer></script>
+  <style>
+    .error-section {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 120px var(--spacing) 60px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .error-container {
+      max-width: 600px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .error-code {
+      font-family: var(--font-mono);
+      font-size: clamp(6rem, 20vw, 10rem);
+      font-weight: 700;
+      line-height: 1;
+      margin: 0 0 1rem;
+      color: var(--text);
+      letter-spacing: -2px;
+      position: relative;
+      display: inline-block;
+    }
+
+    .error-code::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      animation: errorUnderline 1.2s 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+
+    @keyframes errorUnderline {
+      to { transform: scaleX(1); }
+    }
+
+    .error-label {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      color: var(--text-dim);
+      margin-bottom: 1.5rem;
+      display: block;
+    }
+
+    .error-title {
+      font-size: 1.75rem;
+      margin-bottom: 1rem;
+      font-weight: 600;
+      letter-spacing: -0.5px;
+    }
+
+    .error-description {
+      color: var(--text-dim);
+      font-size: 1rem;
+      line-height: 1.6;
+      margin-bottom: 2.5rem;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .error-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 3rem;
+    }
+
+    .error-links {
+      border-top: 1px solid var(--border);
+      padding-top: 2rem;
+    }
+
+    .error-links-label {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--text-dim);
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .error-links-list {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .error-links-list a {
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      display: inline-block;
+    }
+
+    .error-links-list a:hover {
+      opacity: 0.7;
+      transform: translateY(-1px);
+    }
+
+    .terminal-cursor {
+      display: inline-block;
+      width: 0.6em;
+      height: 1em;
+      background: var(--accent);
+      vertical-align: text-bottom;
+      margin-left: 0.1em;
+      animation: blink 1s steps(2) infinite;
+    }
+
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+
+    @media (max-width: 480px) {
+      .error-actions {
+        flex-direction: column;
+        width: 100%;
+      }
+
+      .error-actions .btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="dotTerrain"></canvas>
+  <script src="js/dot-terrain.js"></script>
+
+  <nav id="nav"></nav>
+  <script src="js/components.js" defer></script>
+
+  <main>
+    <section class="error-section">
+      <div class="error-container">
+        <h1 class="error-code" data-text="404">404</h1>
+        <span class="error-label">Page not found<span class="terminal-cursor"></span></span>
+
+        <p class="error-description">
+          The page you are looking for has been deauthenticated, jammed, or never existed in the first place.
+        </p>
+
+        <div class="error-actions">
+          <a href="/" class="btn btn-primary">Back to Home</a>
+          <a href="boards.html" class="btn btn-secondary">View Boards</a>
+        </div>
+
+        <div class="error-links">
+          <span class="error-links-label">Quick Links</span>
+          <div class="error-links-list">
+            <a href="flasher.html">Flasher</a>
+            <a href="docs.ghostesp.net">Docs</a>
+            <a href="https://github.com/GhostESP-Revival/GhostESP" target="_blank" rel="noopener">GitHub</a>
+            <a href="https://discord.gg/5cyNmUMgwh" target="_blank" rel="noopener">Discord</a>
+            <a href="blog.html">Blog</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="legal-banner">
+        <p><strong>Authorized use only.</strong> GhostESP is built for security testing on networks you own, lab research, education, and defensive analysis. Do not use it on networks or devices you do not own or have explicit permission to test.</p>
+      </div>
+      <div class="footer-links">
+        <a href="https://discord.gg/5cyNmUMgwh" target="_blank" rel="noopener" class="icon-link" title="Discord">
+          <i class="bi bi-discord"></i>
+        </a>
+        <a href="https://github.com/GhostESP-Revival/GhostESP" target="_blank" rel="noopener" class="icon-link" title="GitHub">
+          <i class="bi bi-github"></i>
+        </a>
+        <a href="https://instagram.com/ghostesprevival" target="_blank" rel="noopener" class="icon-link" title="Instagram">
+          <i class="bi bi-instagram"></i>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js" defer></script>
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      if (window.lucide && typeof window.lucide.createIcons === 'function') {
+        window.lucide.createIcons();
+      }
+    });
+  </script>
+</body>
+</html>

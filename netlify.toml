@@ -1,0 +1,21 @@
+# Netlify configuration for GhostESP website
+# https://docs.netlify.com/configure-builds/file-based-configuration/
+
+[build]
+  publish = "."
+
+# Pretty URLs - automatically strip .html from URLs
+# /page  -> /page.html
+# /page.html -> 301 redirect to /page
+[[redirects]]
+  from = "/:url"
+  to = "/:url.html"
+  status = 200
+  force = false
+  conditions = { Role = "pretty"}
+
+# Custom 404 page
+[[redirects]]
+  from = "/*"
+  to = "/404.html"
+  status = 404
