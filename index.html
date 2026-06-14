@@ -262,7 +262,7 @@
           <span>GPL-licensed and fully auditable, firmware, tools, and this website</span>
         </div>
       </div>
-      <p class="comparison-disclaimer" data-aos="fade-up">Based on GhostESP's feature set and publicly available source for listed projects. Not a complete feature list for every firmware. HaleHound and nyanBOX are compared against the latest public source available.</p>
+      <p class="comparison-disclaimer" data-aos="fade-up">Based on GhostESP's feature set and publicly available source for listed projects. Not a complete feature list for every firmware. nyanBOX is compared against the latest public source available.</p>
       <div class="comparison-container visible" data-aos="fade-up">
         <table class="comparison-table">
           <thead>
@@ -280,8 +280,8 @@
               <td>Current source available for audit</td>
               <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
               <td><span class="check-yes">&#10003;</span></td>
-              <td><span class="check-partial">Limited</span></td>
-              <td><span class="check-partial">Limited</span></td>
+              <td><span class="check-partial">Limited / older public source</span></td>
+              <td><span class="check-partial">Limited / older public source</span></td>
             </tr>
             <tr>
               <td>ESP-IDF-native architecture</td>
@@ -357,6 +357,13 @@
               <td><span class="check-no">&#8212;</span></td>
             </tr>
             <tr>
+              <td>WPA3 compliance checker</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
               <td>EAPOL logoff attack</td>
               <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
               <td><span class="check-no">&#8212;</span></td>
@@ -392,6 +399,34 @@
               <td><span class="check-no">&#8212;</span></td>
             </tr>
             <tr>
+              <td>mDNS discovery</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>NetBIOS scanner</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>HTTP banner scanner</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>SNMP probe</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
               <td>WiFi OUI vendor lookup</td>
               <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
               <td><span class="check-yes">&#10003;</span></td>
@@ -399,7 +434,7 @@
               <td><span class="check-no">&#8212;</span></td>
             </tr>
             <tr>
-              <td>PineAP detection</td>
+              <td>PineAP / Evil Twin detection</td>
               <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
               <td><span class="check-no">&#8212;</span></td>
               <td><span class="check-no">&#8212;</span></td>
@@ -413,7 +448,7 @@
               <td><span class="check-no">&#8212;</span></td>
             </tr>
             <tr>
-              <td>Pwnagotchi-style automated capture</td>
+              <td>Pwnagotchi-style automated capture mode</td>
               <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
               <td><span class="check-yes">&#10003;</span></td>
               <td><span class="check-no">&#8212;</span></td>
@@ -425,6 +460,27 @@
               <td><span class="check-yes">&#10003;</span></td>
               <td><span class="check-no">&#8212;</span></td>
               <td><span class="check-yes">&#10003;</span></td>
+            </tr>
+            <tr>
+              <td>Channel congestion analysis</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>WiFi Airspace Monitor</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>DNS sinkhole / blocklist NXDOMAIN</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
             </tr>
             <tr>
               <td>GPS WiFi wardriving</td>
@@ -462,6 +518,20 @@
               <td><span class="check-no">&#8212;</span></td>
             </tr>
             <tr>
+              <td>Split-channel wardriving helper</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>GhostLink remote radio support</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
               <td>Drone / OpenDroneID detect</td>
               <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
               <td><span class="check-no">&#8212;</span></td>
@@ -477,6 +547,34 @@
             </tr>
 
             <tr class="category-row"><td colspan="5">Bluetooth LE</td></tr>
+            <tr>
+              <td>BLE scanning</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+            </tr>
+            <tr>
+              <td>Raw BLE scanner</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>BLE spam modes</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+            </tr>
+            <tr>
+              <td>AirTag scan / spoof</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+            </tr>
             <tr>
               <td>Flipper Zero finder</td>
               <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
@@ -513,7 +611,14 @@
               <td><span class="check-yes">&#10003;</span></td>
             </tr>
             <tr>
-              <td>BLE HID injection / DuckyScript</td>
+              <td>BLE HID injection / DuckyScript over BLE</td>
+              <td class="ghostesp-col"><span class="check-no">&#8212;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>BLE keyboard mode</td>
               <td class="ghostesp-col"><span class="check-no">&#8212;</span></td>
               <td><span class="check-yes">&#10003;</span></td>
               <td><span class="check-no">&#8212;</span></td>
@@ -524,18 +629,18 @@
               <td class="ghostesp-col"><span class="check-no">&#8212;</span></td>
               <td><span class="check-no">&#8212;</span></td>
               <td><span class="check-yes">&#10003;</span></td>
-              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
             </tr>
             <tr>
               <td>BLE vulnerability profiling</td>
               <td class="ghostesp-col"><span class="check-no">&#8212;</span></td>
               <td><span class="check-yes">&#10003;</span></td>
-              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
               <td><span class="check-no">&#8212;</span></td>
             </tr>
             <tr>
               <td>Flock / surveillance detector</td>
-              <td class="ghostesp-col"><span class="check-yes">&#10003;</span> (WIFI ONLY)</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
               <td><span class="check-no">&#8212;</span></td>
               <td><span class="check-yes">&#10003;</span></td>
               <td><span class="check-yes">&#10003;</span></td>
@@ -564,14 +669,14 @@
               <td><span class="check-no">&#8212;</span></td>
             </tr>
             <tr>
-              <td>Flipper .nfc import/export</td>
+              <td>Flipper `.nfc` import/export</td>
               <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
               <td><span class="check-no">&#8212;</span></td>
               <td><span class="check-no">&#8212;</span></td>
               <td><span class="check-no">&#8212;</span></td>
             </tr>
             <tr>
-              <td>NFC parser set</td>
+              <td>Flipper NFC parser set</td>
               <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
               <td><span class="check-no">&#8212;</span></td>
               <td><span class="check-no">&#8212;</span></td>
@@ -645,7 +750,7 @@
               <td><span class="check-no">&#8212;</span></td>
             </tr>
             <tr>
-              <td>Flipper .ir file support</td>
+              <td>Flipper `.ir` file support</td>
               <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
               <td><span class="check-yes">&#10003;</span></td>
               <td><span class="check-no">&#8212;</span></td>
@@ -675,11 +780,11 @@
               <td><span class="check-no">&#8212;</span></td>
             </tr>
             <tr>
-              <td>Flipper .sub compatibility</td>
+              <td>Flipper `.sub` compatibility</td>
               <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
               <td><span class="check-yes">&#10003;</span></td>
-              <td><span class="check-yes">&#10003;</span></td>
               <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
             </tr>
             <tr>
               <td>SubGHz protocol decoders</td>
@@ -740,7 +845,7 @@
               <td><span class="check-no">&#8212;</span></td>
             </tr>
             <tr>
-              <td>TLS SNI / HTTP / FTP credential capture</td>
+              <td>TLS SNI / HTTP / FTP credential capture over Ethernet</td>
               <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
               <td><span class="check-no">&#8212;</span></td>
               <td><span class="check-no">&#8212;</span></td>
@@ -833,13 +938,6 @@
               <td><span class="check-no">&#8212;</span></td>
             </tr>
             <tr>
-              <td>JavaScript app engine</td>
-              <td class="ghostesp-col"><span class="check-no">&#8212;</span></td>
-              <td><span class="check-yes">&#10003;</span></td>
-              <td><span class="check-no">&#8212;</span></td>
-              <td><span class="check-no">&#8212;</span></td>
-            </tr>
-            <tr>
               <td>LoRa support</td>
               <td class="ghostesp-col"><span class="check-no">&#8212;</span></td>
               <td><span class="check-yes">&#10003;</span></td>
@@ -890,14 +988,14 @@
           <p>How to get the T-Watch S3 into bootloader mode and flash GhostESP</p>
         </div>
         <div class="card" data-aos="fade-up" data-aos-delay="600">
-          <a href="https://github.com/GhostESP-Revival/GhostESP/blob/Development-deki/presskit.zip" target="_blank" rel="noopener" style="text-decoration: none; color: inherit;">
-            <div style="width: 100%; height: 200px; border-radius: 8px; margin-bottom: 1rem; background: linear-gradient(45deg, #ff149322, #00ff8022); border: 1px solid var(--border); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; transition: all 0.3s ease;" class="presskit-placeholder">
-              <i data-lucide="download-cloud" style="width: 48px; height: 48px; color: var(--accent);"></i>
-              <span style="font-family: var(--font-mono); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px;">Download Press Kit</span>
+          <a href="brand-assets.html" style="text-decoration: none; color: inherit;">
+            <div style="width: 100%; height: 200px; border-radius: 8px; margin-bottom: 1rem; background: var(--surface); border: 1px solid var(--border); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; transition: all 0.3s ease;" class="presskit-placeholder">
+              <i data-lucide="palette" style="width: 48px; height: 48px; color: var(--accent);"></i>
+              <span style="font-family: var(--font-mono); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px;">Brand Assets</span>
             </div>
           </a>
-          <h3>Press Kit</h3>
-          <p>Download official GhostESP assets, logos, and high-resolution images for media use</p>
+          <h3>Brand Assets</h3>
+          <p>Official logos, color schemes, and design resources for media and creators</p>
         </div>
       </div>
     </div>
