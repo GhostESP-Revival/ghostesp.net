@@ -8,7 +8,7 @@
   
   <!-- SEO Meta Tags -->
   <title>GhostESP: Revival - ESP32 Wireless Security Testing Platform</title>
-   <meta name="description" content="An open-source wireless platform for ESP32 devices. WiFi, BLE, NFC, GPS wardriving, and more. Firmware, web tools, companion app &mdash; everything you need for wireless security research.">
+   <meta name="description" content="Open-source ESP32 wireless security testing platform with WiFi, BLE, NFC, IR, SubGHz, wardriving, web flashing tools, companion apps, and tested board support.">
    <meta name="keywords" content="GhostESP, Ghost ESP, ESP32, wireless platform, WiFi testing, wireless security, penetration testing, BLE scanning, deauth detection, WiFi analysis, ESP32-C5, ESP32-S3, ESP32-C3, ESP32-C6, security research, NFC, wardriving">
   <meta name="author" content="Jay Candel">
   <meta name="robots" content="index, follow">
@@ -49,6 +49,43 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
   <link rel="stylesheet" href="css/main.css">
   <link rel="preload" href="images/IMG_1178.webp" as="image">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://ghostesp.net/#organization",
+        "name": "GhostESP",
+        "url": "https://ghostesp.net/",
+        "logo": "https://ghostesp.net/images/ghostespdotnet.png",
+        "sameAs": [
+          "https://github.com/GhostESP-Revival",
+          "https://docs.ghostesp.net"
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://ghostesp.net/#website",
+        "url": "https://ghostesp.net/",
+        "name": "GhostESP",
+        "publisher": { "@id": "https://ghostesp.net/#organization" }
+      },
+      {
+        "@type": "SoftwareApplication",
+        "@id": "https://ghostesp.net/#software",
+        "name": "GhostESP",
+        "url": "https://ghostesp.net/",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "ESP32",
+        "description": "Open-source ESP32 wireless security testing platform with firmware, web tools, companion apps, and supported board resources.",
+        "isAccessibleForFree": true,
+        "license": "https://www.gnu.org/licenses/gpl-3.0.en.html",
+        "publisher": { "@id": "https://ghostesp.net/#organization" }
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
   <a href="#main-content" class="skip-link">Skip to content</a>
@@ -59,7 +96,7 @@
   <h1 class="sr-only">GhostESP: Revival - ESP32 Wireless Security Testing Platform</h1>
 
   <!-- Navigation -->
-  <nav id="nav"></nav>
+  <nav id="nav"><noscript><a href="/">Home</a> <a href="boards.html">Boards</a> <a href="flasher.html">Flasher</a> <a href="serial.html">Serial Console</a> <a href="marketplace.html">Apps</a> <a href="asset-marketplace.html">Asset Packs</a> <a href="irdb.html">IRDB</a> <a href="blog.html">Blog</a> <a href="https://docs.ghostesp.net">Docs</a></noscript></nav>
 
   <!-- Hero Section -->
   <section id="main-content" class="hero" style="background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.75)), url('images/IMG_1178.webp') center/cover no-repeat;">
