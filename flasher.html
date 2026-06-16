@@ -5,21 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#000000">
 
-  <title>Flasher - GhostESP</title>
-  <meta name="description" content="Flash GhostESP firmware directly from your browser. Web Serial API powered ESP32 flasher for GhostESP.">
+  <title>GhostESP Web Flasher for ESP32 Firmware</title>
+  <meta name="description" content="Flash GhostESP firmware directly from your browser with a Web Serial ESP32 flasher. Supports bootloader flashing, chip detection, and GhostESP builds.">
   <meta name="keywords" content="GhostESP flasher, ESP32 flash, web serial, GhostESP firmware, ESP32-S3, ESP32-C6">
   <meta name="author" content="Jay Candel">
   <meta name="robots" content="index, follow">
 
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Flasher - GhostESP">
-  <meta property="og:description" content="Flash GhostESP firmware directly from your browser.">
+  <meta property="og:title" content="GhostESP Web Flasher for ESP32 Firmware">
+  <meta property="og:description" content="Flash GhostESP firmware directly from your browser with a Web Serial ESP32 flasher.">
   <meta property="og:url" content="https://ghostesp.net/flasher.html">
   <meta property="og:site_name" content="GhostESP">
 
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Flasher - GhostESP">
-  <meta name="twitter:description" content="Flash GhostESP firmware directly from your browser.">
+  <meta name="twitter:title" content="GhostESP Web Flasher for ESP32 Firmware">
+  <meta name="twitter:description" content="Flash GhostESP firmware directly from your browser with Web Serial.">
 
   <link rel="canonical" href="https://ghostesp.net/flasher.html">
 
@@ -37,6 +37,23 @@
   <link rel="stylesheet" href="css/flasher.css">
   <link rel="stylesheet" href="css/serial-mirror.css">
   <script src="https://unpkg.com/lucide@0.344.0" defer></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "GhostESP Web Flasher",
+    "url": "https://ghostesp.net/flasher.html",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Web browser",
+    "description": "Browser-based Web Serial tool for flashing GhostESP firmware to ESP32 devices.",
+    "isAccessibleForFree": true,
+    "publisher": {
+      "@type": "Organization",
+      "name": "GhostESP",
+      "url": "https://ghostesp.net/"
+    }
+  }
+  </script>
 
 </head>
 <body>
@@ -44,7 +61,7 @@
   <canvas id="dotTerrain"></canvas>
   <script src="js/dot-terrain.js"></script>
 
-  <nav id="nav"></nav>
+  <nav id="nav"><noscript><a href="/">Home</a> <a href="boards.html">Boards</a> <a href="flasher.html">Flasher</a> <a href="serial.html">Serial Console</a> <a href="marketplace.html">Apps</a> <a href="asset-marketplace.html">Asset Packs</a> <a href="irdb.html">IRDB</a> <a href="blog.html">Blog</a> <a href="https://docs.ghostesp.net">Docs</a></noscript></nav>
 
   <div id="main-content" class="flasher-page" style="position: relative; z-index: 1;">
     <div class="container">
