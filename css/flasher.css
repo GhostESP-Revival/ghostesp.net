@@ -223,6 +223,53 @@ nav ul.flasher-nav-links li::marker {
   margin-bottom: 1.5rem;
 }
 
+.flasher-mode-choice-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.flasher-mode-choice-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--flasher-border);
+  border-radius: var(--flasher-radius-lg);
+  color: var(--flasher-text);
+  cursor: pointer;
+  padding: 1.25rem;
+  text-align: left;
+  transition: all 0.25s ease;
+}
+
+.flasher-mode-choice-card:hover {
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.06);
+}
+
+.flasher-mode-choice-card.selected {
+  border-color: var(--flasher-success);
+  background: rgba(0, 255, 128, 0.05);
+  box-shadow: 0 0 15px rgba(0, 255, 128, 0.1);
+}
+
+.flasher-mode-choice-icon {
+  color: var(--flasher-success);
+  font-size: 1.35rem;
+  margin-bottom: 0.75rem;
+}
+
+.flasher-mode-choice-name {
+  font-weight: 600;
+  margin-bottom: 0.35rem;
+}
+
+.flasher-mode-choice-desc {
+  color: var(--flasher-text-dim);
+  font-size: 0.82rem;
+  line-height: 1.4;
+}
+
 /* Method selection - now a toggle, not cards */
 .flasher-method-grid {
   display: none;
@@ -337,7 +384,7 @@ nav ul.flasher-nav-links li::marker {
   font-family: var(--flasher-font-mono);
 }
 
-/* Brand cards specific styling */
+/* Brand card drill-down transitions */
 #brandSelectionContainer .flasher-device-card {
   background: rgba(255, 255, 255, 0.04);
 }
@@ -351,6 +398,37 @@ nav ul.flasher-nav-links li::marker {
 #brandSelectionContainer .flasher-device-card.selected::before {
   background: linear-gradient(45deg, rgba(0, 255, 128, 0.08), rgba(52, 152, 219, 0.06), rgba(0, 255, 128, 0.08));
 }
+
+.brand-card {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.brand-selected .brand-card {
+  opacity: 0;
+  transform: scale(0.95);
+  pointer-events: none;
+}
+
+.brand-device-grid {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.brand-device-grid.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.brand-back-btn-wrapper {
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 
 /* Connection section */
 .flasher-connection {
@@ -835,6 +913,18 @@ nav ul.flasher-nav-links li::marker {
 .flasher-btn:disabled {
   opacity: 0.4;
   cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.flasher-btn.is-disabled {
+  opacity: 0.45;
+  cursor: help;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.flasher-btn.is-disabled:hover {
   transform: none !important;
   box-shadow: none !important;
 }
@@ -1462,6 +1552,10 @@ nav ul.flasher-nav-links li::marker {
 
   .flasher-device-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .flasher-mode-choice-grid {
+    grid-template-columns: 1fr;
   }
 
   .flasher-settings-grid {
