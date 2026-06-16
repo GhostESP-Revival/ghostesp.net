@@ -80,16 +80,87 @@ document.addEventListener('DOMContentLoaded', () => {
             return info;
         }
 
+        function normalizeChipModelForCompare(model) {
+            const inferred = inferDeviceFromChipModel(model);
+            if (inferred) return inferred.toUpperCase();
+            return (model || '').toUpperCase().replace(/\s*\(.*?\)\s*/g, '').replace(/[^A-Z0-9]/g, '');
+        }
+
+        function chipModelsMismatch(selectedModel, detectedModel) {
+            if (!selectedModel || !detectedModel) return false;
+            return normalizeChipModelForCompare(selectedModel) !== normalizeChipModelForCompare(detectedModel);
+        }
+
+        function escapeHtml(value) {
+            return String(value).replace(/[&<>"]/g, char => ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;'
+            }[char]));
+        }
+
         function checkChipMismatch(detectedModel) {
-            if (!selectedDevice || !detectedModel || !chipMismatchWarningElem) return;
-            const selectedNorm = selectedDevice.replace(/ESP32[-_]?/i, '').toLowerCase();
-            const detectedNorm = detectedModel.replace(/ESP32[-_]?/i, '').toLowerCase();
-            if (selectedNorm !== detectedNorm) {
+            if (!selectedDevice || !detectedModel || !chipMismatchWarningElem) return false;
+            const mismatched = chipModelsMismatch(selectedDevice, detectedModel);
+            if (mismatched) {
                 chipMismatchWarningElem.style.display = 'inline-flex';
                 espLoaderTerminal.writeLine(`WARNING: Chip mismatch! Selected ${selectedDevice} but detected ${detectedModel}`);
             } else {
                 chipMismatchWarningElem.style.display = 'none';
             }
+            return mismatched;
+        }
+
+        function showChipMismatchPopup(selectedModel, detectedModel) {
+            const message = `You selected ${selectedModel}, but the connected chip reports ${detectedModel}. Flashing the wrong build can fail or leave the board unbootable.`;
+            const safeMessage = escapeHtml(message);
+            if (!window.bootstrap?.Modal) {
+                return Promise.resolve(window.confirm(`${message}\n\nContinue anyway?`));
+            }
+
+            return new Promise(resolve => {
+                const existing = document.getElementById('chipMismatchModal');
+                if (existing) existing.remove();
+
+                document.body.insertAdjacentHTML('beforeend', `
+                    <div class="modal fade" id="chipMismatchModal" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Chip Mismatch Detected</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>${safeMessage}</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="flasher-btn flasher-btn-secondary" data-mismatch-action="stay">Stay Here</button>
+                                    <button type="button" class="flasher-btn flasher-btn-primary" data-mismatch-action="continue">Continue Anyway</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `);
+
+                const modalEl = document.getElementById('chipMismatchModal');
+                const modal = new bootstrap.Modal(modalEl);
+                let resolved = false;
+                const finish = (shouldContinue) => {
+                    if (resolved) return;
+                    resolved = true;
+                    modal.hide();
+                    resolve(shouldContinue);
+                };
+
+                modalEl.querySelector('[data-mismatch-action="stay"]').addEventListener('click', () => finish(false));
+                modalEl.querySelector('[data-mismatch-action="continue"]').addEventListener('click', () => finish(true));
+                modalEl.addEventListener('hidden.bs.modal', () => {
+                    if (!resolved) resolve(false);
+                    modalEl.remove();
+                });
+                modal.show();
+            });
         }
 
         function displayChipInfo(info) {
@@ -159,7 +230,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.querySelectorAll('.flasher-device-card').forEach(card => {
                     card.classList.toggle('selected', card.dataset.device === inferredDevice && !card.dataset.brand);
                 });
-                if (continueToStep2Btn) continueToStep2Btn.disabled = false;
+                setContinueToStep2Blocked(false);
             }
 
             // Handle screen display
@@ -404,9 +475,12 @@ document.addEventListener('DOMContentLoaded', () => {
         let extractedGhostEspFiles = null;
         let selectedFirmwareMethod = null;
         let ghostEspReleaseType = 'stable';
+        let selectedConnectionMode = null;
         let selectedDeviceMethod = 'chip';
         let inBootloaderMode = false;
         let detectedBuildTemplate = null;
+        let selectedFirmwareAssetName = null;
+        let selectedFirmwareDisplayName = null;
         
         let ghostEspStableReleases = null;
         let ghostEspPrereleases = null;
@@ -415,6 +489,70 @@ document.addEventListener('DOMContentLoaded', () => {
         if (appFileInfoElem) appFileInfoElem.textContent = 'No file selected';
         if (bootloaderFileInfoElem) bootloaderFileInfoElem.textContent = 'No file selected';
         if (partitionFileInfoElem) partitionFileInfoElem.textContent = 'No file selected';
+
+        const brandDeviceMap = {
+            "TheWiredHatters": [
+                { name: "Banshee C5", chip: "ESP32-C5", firmware: "Banshee_C5.zip" },
+                { name: "Banshee S3", chip: "ESP32-S3", firmware: "Banshee_S3.zip" },
+                { name: "FlipperHub Rocket", chip: "ESP32", firmware: "esp32-generic.zip" },
+                { name: "Marauder V4 / FlipperHub", chip: "ESP32", firmware: "MarauderV4_FlipperHub.zip" }
+            ],
+            "RabbitLabs": [
+                { name: "GhostBoard", chip: "ESP32-C6", firmware: "ghostboard.zip" },
+                { name: "Minion", chip: "ESP32", firmware: "RabbitLabs_Minion.zip" },
+                { name: "Poltergeist", chip: "ESP32-C5", firmware: "Poltergeist.zip" },
+                { name: "Phantom", chip: "ESP32", firmware: "CYD2USB2.4Inch.zip" }
+            ],
+            "Generic": [
+                { name: "Generic ESP32", chip: "ESP32", firmware: "esp32-generic.zip" },
+                { name: "Generic ESP32-S2", chip: "ESP32-S2", firmware: "esp32s2-generic.zip" },
+                { name: "Generic ESP32-S3", chip: "ESP32-S3", firmware: "esp32s3-generic.zip" },
+                { name: "Generic ESP32-C3", chip: "ESP32-C3", firmware: "esp32c3-generic.zip" },
+                { name: "Generic ESP32-C6", chip: "ESP32-C6", firmware: "esp32c6-generic.zip" },
+                { name: "Generic ESP32-C5", chip: "ESP32-C5", firmware: "esp32c5-generic-v01.zip" }
+            ],
+            "M5Stack": [
+                { name: "Cardputer", chip: "ESP32-S3", firmware: "ESP32-S3-Cardputer.zip" },
+                { name: "Cardputer ADV", chip: "ESP32-S3", firmware: "CardputerADV.zip" }
+            ],
+            "CYD": [
+                { name: "CYD2USB", chip: "ESP32", firmware: "CYD2USB.zip" },
+                { name: "CYD MicroUSB", chip: "ESP32", firmware: "CYDMicroUSB.zip" },
+                { name: "CYD Dual USB", chip: "ESP32", firmware: "CYDDualUSB.zip" },
+                { name: "CYD 2.4 Inch USB", chip: "ESP32", firmware: "CYD2USB2.4Inch.zip" },
+                { name: "CYD 2.4 Inch USB-C", chip: "ESP32", firmware: "CYD2USB2.4Inch_C.zip" },
+                { name: "NM-CYD-C5", chip: "ESP32-C5", firmware: "NM-CYD-C5.zip" },
+                { name: "CYD2432S028R", chip: "ESP32", firmware: "CYD2432S028R.zip" }
+            ],
+            "LilyGo": [
+                { name: "T-Deck", chip: "ESP32-S3", firmware: "LilyGo-T-Deck.zip" },
+                { name: "TEmbedC1101", chip: "ESP32-S3", firmware: "LilyGo-TEmbedC1101.zip" },
+                { name: "T-Dongle S3", chip: "ESP32-S3", firmware: "LilyGo-TDongleS3.zip" },
+                { name: "T-Dongle C5", chip: "ESP32-C5", firmware: "LilyGo-TDongleC5.zip" },
+                { name: "S3 T-Watch 2020", chip: "ESP32-S3", firmware: "LilyGo-S3TWatch-2020.zip" },
+                { name: "TDisplay S3 Touch", chip: "ESP32-S3", firmware: "LilyGo-TDisplayS3-Touch.zip" }
+            ],
+            "Awok": [
+                { name: "Awok Mini", chip: "ESP32-S2", firmware: "AwokMini.zip" },
+                { name: "Awok Dual", chip: "ESP32", firmware: "MarauderV6_AwokDual.zip" }
+            ],
+            "Heltec": [
+                { name: "Heltec V3", chip: "ESP32-S3", firmware: "HeltecV3.zip" }
+            ],
+            "Waveshare": [
+                { name: "Waveshare 7\" LCD", chip: "ESP32-S3", firmware: "Waveshare_LCD.zip" }
+            ],
+            "JCMK": [
+                { name: "DevBoard Pro", chip: "ESP32", firmware: "JCMK_DevBoardPro.zip" },
+                { name: "Flipper Dev-Board w/ JCMK GPS", chip: "ESP32-S2", firmware: "Flipper_JCMK_GPS.zip" },
+                { name: "Marauder V4", chip: "ESP32", firmware: "MarauderV4_FlipperHub.zip" }
+            ],
+            "Seeed": [
+                { name: "XIAO S3 Sense", chip: "ESP32-S3", firmware: "XIAO_S3_Sense.zip" },
+                { name: "XIAO C5", chip: "ESP32-C5", firmware: "XIAO_C5.zip" },
+                { name: "XIAO S3", chip: "ESP32-S3", firmware: "XIAO_S3.zip" }
+            ]
+        };
 
         let espLoaderTerminal = {
             clean() {
@@ -593,7 +731,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Brand to firmware build mapping for filtering
         const brandToFirmware = {
             "TheWiredHatters": ["esp32-generic.zip", "MarauderV4_FlipperHub.zip", "Banshee_C5.zip", "Banshee_S3.zip"],
-            "RabbitLabs": ["ghostboard.zip", "RabbitLabs_Minion.zip", "Poltergeist.zip"],
+            "RabbitLabs": ["ghostboard.zip", "RabbitLabs_Minion.zip", "Poltergeist.zip", "CYD2USB2.4Inch.zip"],
             "Generic": ["esp32-generic.zip", "esp32s2-generic.zip", "esp32s3-generic.zip", "esp32c3-generic.zip", "esp32c6-generic.zip", "esp32c5-generic.zip", "esp32c5-generic-v01.zip"],
             "M5Stack": ["ESP32-S3-Cardputer.zip", "CardputerADV.zip"],
             "CYD": ["CYD2USB.zip", "CYDMicroUSB.zip", "CYDDualUSB.zip", "CYD2USB2.4Inch.zip", "CYD2USB2.4Inch_C.zip", "NM-CYD-C5.zip", "CYD2432S028R.zip"],
@@ -639,7 +777,7 @@ document.addEventListener('DOMContentLoaded', () => {
             "crowtech7inch": "Crowtech_LCD.zip",
             "default.esp32": "esp32-generic.zip",
             "default.esp32c3": "esp32c3-generic.zip",
-            "default.esp32c5": "esp32c5-generic.zip",
+            "default.esp32c5": "esp32c5-generic-v01.zip",
             "default.esp32c6": "esp32c6-generic.zip",
             "default.esp32s2": "esp32s2-generic.zip",
             "default.esp32s3": "esp32s3-generic.zip",
@@ -732,6 +870,122 @@ document.addEventListener('DOMContentLoaded', () => {
             return true;
         }
 
+        function applySelectedFirmwareMatch() {
+            if (!selectedFirmwareAssetName || !ghostEspVariantSelect) return false;
+
+            const options = Array.from(ghostEspVariantSelect.options)
+                .filter(option => option.dataset.assetName === selectedFirmwareAssetName);
+            const preferredLabel = (selectedFirmwareDisplayName || '').toLowerCase();
+            const matchedOption = preferredLabel
+                ? options.find(option => (option.textContent || '').toLowerCase().includes(preferredLabel)) || options[0]
+                : options[0];
+
+            if (!matchedOption) {
+                if (ghostEspStatusElem) {
+                    ghostEspStatusElem.textContent = `Selected build ${selectedFirmwareAssetName} is not available in this release/channel.`;
+                    ghostEspStatusElem.className = 'form-text text-warning mt-2 loading';
+                }
+                return false;
+            }
+
+            if (ghostEspVariantSelect.value !== matchedOption.value) {
+                ghostEspVariantSelect.value = matchedOption.value;
+                loadGhostEspZip(matchedOption.value);
+            }
+
+            if (ghostEspStatusElem) {
+                ghostEspStatusElem.textContent = `Auto-selected ${matchedOption.textContent} from your device choice.`;
+                ghostEspStatusElem.className = 'form-text text-success mt-2 success';
+            }
+            espLoaderTerminal.writeLine(`Auto-selected firmware build ${selectedFirmwareAssetName}`);
+            return true;
+        }
+
+        function setContinueToStep2Blocked(blocked) {
+            if (!continueToStep2Btn) return;
+            continueToStep2Btn.disabled = false;
+            continueToStep2Btn.classList.toggle('is-disabled', blocked);
+            continueToStep2Btn.setAttribute('aria-disabled', blocked ? 'true' : 'false');
+        }
+
+        function updateConnectButtonLabel() {
+            if (!connectBtn || connected) return;
+            if (selectedConnectionMode === 'detect') {
+                connectBtn.innerHTML = '<i class="bi bi-usb-symbol"></i> Connect & Detect';
+            } else if (selectedConnectionMode === 'manual') {
+                connectBtn.innerHTML = '<i class="bi bi-usb-symbol"></i> Connect Bootloader';
+            } else {
+                connectBtn.innerHTML = '<i class="bi bi-usb-symbol"></i> Choose Mode First';
+            }
+        }
+
+        function explainStep2Blocked() {
+            let message;
+            if (!selectedConnectionMode) {
+                message = 'Choose Already Running GhostESP or Flash From Bootloader first.';
+            } else if (selectedConnectionMode === 'detect') {
+                message = 'Click Connect & Detect first. This only works if GhostESP is already running on the device.';
+            } else if (!selectedDevice) {
+                message = 'Select a chip or brand device, then click Connect Bootloader before continuing.';
+            } else {
+                message = `Click Connect Bootloader to connect your selected ${selectedDevice} before continuing.`;
+            }
+            espLoaderTerminal.writeLine(message);
+            if (chipInfoElem) {
+                chipInfoElem.innerHTML = `<span class="status-indicator status-disconnected"></span> ${message}`;
+            }
+        }
+
+        function explainConnectBlocked() {
+            let message;
+            if (!selectedConnectionMode) {
+                message = 'Choose a connection mode first.';
+            } else if (selectedConnectionMode === 'manual' && !selectedDevice) {
+                message = 'Select a chip or brand device before connecting in bootloader mode.';
+            } else {
+                return false;
+            }
+            espLoaderTerminal.writeLine(message);
+            if (chipInfoElem) {
+                chipInfoElem.innerHTML = `<span class="status-indicator status-disconnected"></span> ${message}`;
+            }
+            return true;
+        }
+
+        function selectConnectionMode(mode) {
+            selectedConnectionMode = mode;
+            const connectionPanel = document.getElementById('connectionPanel');
+            const manualDeviceSelection = document.getElementById('manualDeviceSelection');
+
+            document.querySelectorAll('[data-connection-mode]').forEach(card => {
+                card.classList.toggle('selected', card.dataset.connectionMode === mode);
+            });
+
+            if (connectionPanel) connectionPanel.classList.remove('d-none');
+            if (manualDeviceSelection) manualDeviceSelection.classList.toggle('d-none', mode !== 'manual');
+
+            if (mode === 'detect') {
+                selectedDevice = null;
+                selectedBrand = null;
+                selectedFirmwareAssetName = null;
+                selectedFirmwareDisplayName = null;
+                document.querySelectorAll('.flasher-device-card').forEach(card => card.classList.remove('selected'));
+                backToBrandCards();
+                espLoaderTerminal.writeLine('Selected Connect & Detect. Use this only when GhostESP is already running on the device.');
+                if (chipInfoElem) {
+                    chipInfoElem.innerHTML = '<span class="status-indicator status-disconnected"></span> Ready to connect to running GhostESP';
+                }
+            } else {
+                espLoaderTerminal.writeLine('Selected bootloader flashing. Choose your chip or board, then connect in bootloader mode.');
+                if (chipInfoElem) {
+                    chipInfoElem.innerHTML = '<span class="status-indicator status-disconnected"></span> Select a chip or board, then connect bootloader';
+                }
+            }
+
+            updateConnectButtonLabel();
+            setContinueToStep2Blocked(!connected);
+        }
+
         const ghostEspZipToTarget = {
             "esp32-generic.zip": "esp32",
             "esp32s2-generic.zip": "esp32s2",
@@ -779,17 +1033,22 @@ document.addEventListener('DOMContentLoaded', () => {
             "XIAO_S3.zip": "esp32s3"
         };
 
+        document.querySelectorAll('[data-connection-mode]').forEach(card => {
+            card.addEventListener('click', () => selectConnectionMode(card.dataset.connectionMode));
+        });
+
         // --- Event Listeners: Step Navigation ---
         if (continueToStep2Btn) {
             continueToStep2Btn.addEventListener('click', () => {
-                if (connected || selectedDevice) {
-                    goToStep(2);
-                    if (selectedFirmwareMethod === 'download') {
-                        populateGhostEspDropdown(GHOST_ESP_OWNER, GHOST_ESP_REPO, '.zip', selectedDevice, selectedBrand)
-                            .catch(err => console.error('Error populating GhostESP dropdown:', err));
-                    }
-                } else {
-                    espLoaderTerminal.writeLine("Please connect a device or choose a manual filter first");
+                if (!connected) {
+                    explainStep2Blocked();
+                    return;
+                }
+
+                goToStep(2);
+                if (selectedFirmwareMethod === 'download') {
+                    populateGhostEspDropdown(GHOST_ESP_OWNER, GHOST_ESP_REPO, '.zip', selectedDevice, selectedBrand)
+                        .catch(err => console.error('Error populating GhostESP dropdown:', err));
                 }
             });
         }
@@ -840,11 +1099,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.querySelectorAll('.flasher-device-card').forEach(c => c.classList.remove('selected'));
                 selectedDevice = null;
                 selectedBrand = null;
-                if (continueToStep2Btn) continueToStep2Btn.disabled = !connected;
+                selectedFirmwareAssetName = null;
+                selectedFirmwareDisplayName = null;
+                updateConnectButtonLabel();
+                setContinueToStep2Blocked(!connected);
                 
                 if (selectedDeviceMethod === 'chip') {
                     if (chipSelectionContainer) chipSelectionContainer.classList.remove('d-none');
                     if (brandSelectionContainer) brandSelectionContainer.classList.add('d-none');
+                    backToBrandCards();
                     espLoaderTerminal.writeLine('Switched to chip model selection');
                 } else {
                     if (chipSelectionContainer) chipSelectionContainer.classList.add('d-none');
@@ -854,20 +1117,132 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
+        // --- Brand Drill-Down Logic ---
+        function showBrandDeviceCards(brand) {
+            const brandCardsGrid = document.getElementById('brandCardsGrid');
+            const brandDeviceGrid = document.getElementById('brandDeviceGrid');
+            const backWrapper = document.getElementById('brandBackBtnWrapper');
+
+            if (!brandCardsGrid || !brandDeviceGrid || !backWrapper) return;
+
+            const devices = brandDeviceMap[brand];
+            if (!devices || devices.length === 0) return;
+
+            // Fade out brand cards
+            brandCardsGrid.style.transition = 'opacity 0.3s ease';
+            brandCardsGrid.style.opacity = '0';
+
+            setTimeout(() => {
+                brandCardsGrid.classList.add('d-none');
+                brandDeviceGrid.innerHTML = '';
+
+                devices.forEach(dev => {
+                    const card = document.createElement('div');
+                    card.className = 'flasher-device-card device-card';
+                    card.dataset.device = dev.chip;
+                    card.dataset.firmware = dev.firmware;
+                    card.innerHTML = `
+                        <div class="flasher-device-name">${dev.name}</div>
+                        <div class="flasher-device-meta">
+                            <span>${dev.chip}</span>
+                        </div>
+                    `;
+                    card.addEventListener('click', () => {
+                        // Deselect all device cards
+                        brandDeviceGrid.querySelectorAll('.flasher-device-card').forEach(c => c.classList.remove('selected'));
+                        card.classList.add('selected');
+                        selectedDevice = dev.chip;
+                        selectedBrand = brand;
+                        selectedSide = `${dev.name} (${dev.chip})`;
+                        selectedFirmwareAssetName = dev.firmware;
+                        selectedFirmwareDisplayName = dev.name;
+                        espLoaderTerminal.writeLine(`Selected: ${selectedSide}`);
+                        updateDefaultAddresses();
+                        updateConnectButtonLabel();
+                        setContinueToStep2Blocked(!connected);
+                        if (selectedFirmwareMethod === 'download') {
+                            populateGhostEspDropdown(GHOST_ESP_OWNER, GHOST_ESP_REPO, '.zip', selectedDevice, selectedBrand)
+                                .catch(err => console.error('Error repopulating GhostESP after device change:', err));
+                        }
+                    });
+                    brandDeviceGrid.appendChild(card);
+                });
+
+                brandDeviceGrid.classList.remove('d-none');
+                brandDeviceGrid.style.opacity = '0';
+                brandDeviceGrid.style.transition = 'opacity 0.3s ease';
+                requestAnimationFrame(() => {
+                    brandDeviceGrid.classList.add('visible');
+                    brandDeviceGrid.style.opacity = '1';
+                });
+
+                backWrapper.style.display = 'block';
+            }, 300);
+        }
+
+        function backToBrandCards() {
+            const brandCardsGrid = document.getElementById('brandCardsGrid');
+            const brandDeviceGrid = document.getElementById('brandDeviceGrid');
+            const backWrapper = document.getElementById('brandBackBtnWrapper');
+
+            if (!brandCardsGrid || !brandDeviceGrid || !backWrapper) return;
+
+            brandDeviceGrid.style.transition = 'opacity 0.3s ease';
+            brandDeviceGrid.style.opacity = '0';
+
+            setTimeout(() => {
+                brandDeviceGrid.classList.remove('visible');
+                brandDeviceGrid.classList.add('d-none');
+                brandDeviceGrid.innerHTML = '';
+
+                brandCardsGrid.classList.remove('d-none');
+                brandCardsGrid.style.opacity = '0';
+                brandCardsGrid.style.transition = 'opacity 0.3s ease';
+                requestAnimationFrame(() => {
+                    brandCardsGrid.style.opacity = '1';
+                });
+
+                backWrapper.style.display = 'none';
+            }, 300);
+        }
+
+        // --- Event Listeners: Back to brands button ---
+        const brandBackBtn = document.getElementById('brandBackBtn');
+        if (brandBackBtn) {
+            brandBackBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                backToBrandCards();
+            });
+        }
+
         // --- Event Listeners: Device Cards ---
         const deviceCards = document.querySelectorAll('.flasher-device-card');
         deviceCards.forEach(card => {
             card.addEventListener('click', () => {
+                // Handle brand card selection (drill down)
+                if (card.classList.contains('brand-card')) {
+                    const brand = card.dataset.brand;
+                    if (brand && brandDeviceMap[brand]) {
+                        showBrandDeviceCards(brand);
+                        return;
+                    }
+                }
+
                 // Only deselect cards within the same container
-                const container = card.parentElement;
-                container.querySelectorAll('.flasher-device-card').forEach(c => c.classList.remove('selected'));
+                const container = card.closest('.flasher-device-grid');
+                if (container) {
+                    container.querySelectorAll('.flasher-device-card').forEach(c => c.classList.remove('selected'));
+                }
                 card.classList.add('selected');
                 selectedDevice = card.dataset.device;
                 selectedBrand = card.dataset.brand || null;
                 selectedSide = selectedBrand ? `${selectedBrand} (${selectedDevice})` : selectedDevice;
+                selectedFirmwareAssetName = card.dataset.firmware || null;
+                selectedFirmwareDisplayName = null;
                 espLoaderTerminal.writeLine(`Selected: ${selectedSide}`);
                 updateDefaultAddresses();
-                if (continueToStep2Btn) continueToStep2Btn.disabled = false;
+                updateConnectButtonLabel();
+                setContinueToStep2Blocked(!connected);
                 if (selectedFirmwareMethod === 'download') {
                     populateGhostEspDropdown(GHOST_ESP_OWNER, GHOST_ESP_REPO, '.zip', selectedDevice, selectedBrand)
                         .catch(err => console.error('Error repopulating GhostESP after device change:', err));
@@ -879,7 +1254,20 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         // --- Event Listeners: Connect / Disconnect ---
-        if (connectBtn) connectBtn.addEventListener('click', connect);
+        if (connectBtn) connectBtn.addEventListener('click', () => {
+            if (explainConnectBlocked()) return;
+
+            if (selectedConnectionMode === 'manual') {
+                espLoaderTerminal.writeLine(`Selected chip: ${selectedDevice}. Connecting in bootloader mode...`);
+                connectBootloader().then(success => {
+                    if (success) espLoaderTerminal.writeLine('Bootloader connection successful.');
+                }).catch(err => {
+                    espLoaderTerminal.writeLine(`Bootloader connection failed: ${err.message}`);
+                });
+            } else if (selectedConnectionMode === 'detect') {
+                connect();
+            }
+        });
         if (disconnectBtn) disconnectBtn.addEventListener('click', disconnect);
 
         // --- Event Listeners: Flash / Erase / Reset ---
@@ -1116,7 +1504,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             sub.textContent = '— Mirror active, no chip info';
                         }
                     }
-                    if (continueToStep2Btn) continueToStep2Btn.disabled = false;
+                    setContinueToStep2Blocked(false);
                     if (selectedFirmwareMethod === 'download') {
                         await populateGhostEspDropdown(GHOST_ESP_OWNER, GHOST_ESP_REPO, '.zip', selectedDevice, selectedBrand);
                     }
@@ -1302,6 +1690,96 @@ document.addEventListener('DOMContentLoaded', () => {
                 try { if (writer) writer.releaseLock(); } catch (_) { }
             }
             return false;
+        }
+
+        async function connectBootloader() {
+            if (connectBtn) connectBtn.disabled = true;
+            try {
+                espLoaderTerminal.writeLine(`Requesting WebSerial port for bootloader mode...`);
+                normalSerialPort = await navigator.serial.requestPort();
+
+                transport = new window.esptoolJS.Transport(normalSerialPort);
+                espLoader = new window.esptoolJS.ESPLoader({
+                    transport: transport,
+                    baudrate: parseInt(baudrateSelect.value),
+                    terminal: espLoaderTerminal,
+                    enableTracing: true
+                });
+
+                chipType = await espLoader.main();
+                inBootloaderMode = true;
+                connected = true;
+                if (!selectedSide) selectedSide = selectedDevice || 'GhostESP device';
+
+                espLoaderTerminal.writeLine(`Connected to ${selectedSide} in bootloader mode (${chipType})`);
+                chipInfoElem.innerHTML = `<span class="status-indicator status-connected"></span> Connected to ${selectedSide} <span class="flasher-status-sub">-- Bootloader mode (${chipType})</span>`;
+                updateStatusIndicator('success', 'Connected', `${selectedSide} (Bootloader Mode)`);
+                updateButtonStates();
+
+                let mismatchConfirmed = true;
+                if (selectedDevice && chipType) {
+                    const mismatched = chipModelsMismatch(selectedDevice, chipType);
+                    if (mismatched) {
+                        chipMismatchWarningElem.style.display = 'inline-flex';
+                        espLoaderTerminal.writeLine(`WARNING: Chip mismatch! Selected ${selectedDevice} but detected ${chipType}`);
+                        if (chipInfoElem) {
+                            const sub = chipInfoElem.querySelector('.flasher-status-sub');
+                            if (sub) sub.textContent = `-- Mismatch: detected ${chipType} (selected ${selectedDevice})`;
+                        }
+                        mismatchConfirmed = await showChipMismatchPopup(selectedDevice, chipType);
+                    } else {
+                        chipMismatchWarningElem.style.display = 'none';
+                    }
+                }
+
+                if (!mismatchConfirmed) {
+                    espLoaderTerminal.writeLine('Stayed on connection step after chip mismatch warning.');
+                    return true;
+                }
+
+                // Proceed to step 2 directly
+                setContinueToStep2Blocked(false);
+                if (selectedFirmwareMethod === 'download') {
+                    await populateGhostEspDropdown(GHOST_ESP_OWNER, GHOST_ESP_REPO, '.zip', selectedDevice, selectedBrand);
+                }
+                goToStep(2);
+                return true;
+            } catch (error) {
+                console.error("Error during bootloader connection:", error);
+                let userMessage = `Error: ${error.message}`;
+                let chipInfoMessage = `<span class="status-indicator status-disconnected"></span> Connection failed`;
+                let statusTitle = 'Connection Failed';
+                let statusDetails = `Error: ${error.message}`;
+                const errorStr = error.message.toLowerCase();
+                if (errorStr.includes("failed to connect") ||
+                    errorStr.includes("timed out waiting for packet") ||
+                    errorStr.includes("invalid head of packet") ||
+                    errorStr.includes("no serial data received")) {
+                    userMessage = `Connection failed. Ensure the device is in bootloader mode (hold BOOT, press RESET) and try again. (Error: ${error.message})`;
+                    chipInfoMessage = `<span class="status-indicator status-disconnected"></span> Failed: Check Bootloader Mode`;
+                    statusTitle = 'Check Bootloader Mode';
+                    statusDetails = 'Hold BOOT/FLASH, press RESET, then try connecting.';
+                } else if (errorStr.includes("access denied") ||
+                    errorStr.includes("port is already open") ||
+                    errorStr.includes("failed to open serial port")) {
+                    userMessage = `Error: Could not open serial port. Is it already open in another program? Close other connections and try again. (Error: ${error.message})`;
+                    chipInfoMessage = `<span class="status-indicator status-disconnected"></span> Failed: Port In Use?`;
+                    statusTitle = 'Port Access Error';
+                    statusDetails = 'Close other serial programs and retry.';
+                } else if (errorStr.includes("the device has been lost")) {
+                    userMessage = `Error: Device disconnected during connection attempt. Check cable and connection. (Error: ${error.message})`;
+                    chipInfoMessage = `<span class="status-indicator status-disconnected"></span> Failed: Device Lost`;
+                    statusTitle = 'Device Disconnected';
+                    statusDetails = 'Check USB cable and connection.';
+                }
+                espLoaderTerminal.writeLine(userMessage);
+                if (chipInfoElem) chipInfoElem.innerHTML = chipInfoMessage;
+                if (connectBtn) connectBtn.disabled = false;
+                connected = false;
+                updateButtonStates();
+                updateStatusIndicator('error', statusTitle, statusDetails);
+                return false;
+            }
         }
 
         async function disconnect() {
@@ -1904,7 +2382,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         ghostEspStatusElem.textContent = `GitHub ${ghostEspReleaseType}: ${targetRelease.tag_name}`;
                         ghostEspStatusElem.className = 'form-text text-success mt-2 success';
                     }
-                    applyBuildTemplateMatch();
+                    if (!applySelectedFirmwareMatch()) {
+                        applyBuildTemplateMatch();
+                    }
                 } else {
                     espLoaderTerminal.writeLine(`${ghostEspReleaseType} release ${targetRelease.tag_name} found, but no matching assets.`);
                     selectElement.innerHTML = `<option value="">No matching assets found</option>`;
@@ -2055,7 +2535,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (baudrateSelect) baudrateSelect.disabled = connected;
 
-            if (continueToStep2Btn) continueToStep2Btn.disabled = !connected && !selectedDevice;
+            setContinueToStep2Blocked(!connected);
+            updateConnectButtonLabel();
             if (continueToStep3Btn) continueToStep3Btn.disabled = !connected || !hasFirmwareFilesSelected();
         }
 
@@ -2334,7 +2815,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const webSerialModal = new bootstrap.Modal(getElementById('webSerialModal'));
             webSerialModal.show();
         } else {
-            espLoaderTerminal.writeLine("GhostESP Flasher ready. Please select your device type.");
+            espLoaderTerminal.writeLine("GhostESP Flasher ready. Choose a connection mode first.");
         }
 
         // --- Initialize ---

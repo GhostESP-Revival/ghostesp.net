@@ -71,12 +71,25 @@
         </div>
       </div>
 
-      <!-- Step 1: Connect & Detect -->
+      <!-- Step 1: Connection Mode -->
       <div class="flasher-step active" id="step1">
-        <h3>Connect & Detect</h3>
-        <p class="flusher-step-desc">Connect your GhostESP device. If detection is unavailable, choose a chip or board manually.</p>
+        <h3>Choose Connection Mode</h3>
+        <p class="flusher-step-desc">Pick how your device is currently running. Connect & Detect only works when GhostESP is already installed and booted.</p>
 
-        <div class="flasher-connect-row">
+        <div class="flasher-mode-choice-grid" id="connectionModeChoice">
+          <button class="flasher-mode-choice-card" type="button" data-connection-mode="detect">
+            <div class="flasher-mode-choice-icon"><i class="bi bi-broadcast-pin"></i></div>
+            <div class="flasher-mode-choice-name">Already Running GhostESP</div>
+            <div class="flasher-mode-choice-desc">Use Connect & Detect to read chip info and auto-match the build.</div>
+          </button>
+          <button class="flasher-mode-choice-card" type="button" data-connection-mode="manual">
+            <div class="flasher-mode-choice-icon"><i class="bi bi-cpu"></i></div>
+            <div class="flasher-mode-choice-name">Flash From Bootloader</div>
+            <div class="flasher-mode-choice-desc">Choose your chip or board, put it in bootloader mode, then connect directly.</div>
+          </button>
+        </div>
+
+        <div class="flasher-connect-row d-none" id="connectionPanel">
           <div class="flasher-connect-status">
             <div id="chipInfo" class="flasher-status-bar">
               <span class="flasher-status-dot disconnected"></span>
@@ -96,9 +109,10 @@
           </div>
         </div>
 
+        <div id="manualDeviceSelection" class="d-none">
         <div class="flasher-manual-select-heading">
           <span>Manual filter</span>
-          <small>Optional, helps narrow firmware choices</small>
+          <small>Required for bootloader connection and firmware filtering</small>
         </div>
 
         <div class="flasher-toggle" id="deviceMethodToggle" style="max-width: 280px;">
@@ -160,78 +174,83 @@
 
         <!-- By Board Brand -->
         <div id="brandSelectionContainer" class="d-none">
-          <div class="flasher-device-grid">
-            <div class="flasher-device-card" data-device="ESP32-C5" data-brand="TheWiredHatters">
+          <div class="brand-back-btn-wrapper" id="brandBackBtnWrapper" style="display:none; margin-bottom: 1rem;">
+            <button id="brandBackBtn" class="flasher-btn flasher-btn-secondary" style="font-size: 0.85rem; padding: 0.5rem 1rem;">
+              <i class="bi bi-arrow-left"></i> Back to Brands
+            </button>
+          </div>
+          <div class="flasher-device-grid" id="brandCardsGrid">
+            <div class="flasher-device-card brand-card" data-device="ESP32-C5" data-brand="TheWiredHatters">
               <div class="flasher-device-name">The Wired Hatters</div>
               <div class="flasher-device-meta">
                 <span>Previously FlipperHub</span>
                 <span>Banshee</span>
               </div>
             </div>
-            <div class="flasher-device-card" data-device="ESP32" data-brand="RabbitLabs">
+            <div class="flasher-device-card brand-card" data-device="ESP32" data-brand="RabbitLabs">
               <div class="flasher-device-name">Rabbit Labs</div>
               <div class="flasher-device-meta">
                 <span>Various</span>
                 <span>Premium</span>
               </div>
             </div>
-            <div class="flasher-device-card" data-device="ESP32" data-brand="Generic">
+            <div class="flasher-device-card brand-card" data-device="ESP32" data-brand="Generic">
               <div class="flasher-device-name">Generic</div>
               <div class="flasher-device-meta">
                 <span>ESP32 family</span>
                 <span>Defaults only</span>
               </div>
             </div>
-            <div class="flasher-device-card" data-device="ESP32-S3" data-brand="M5Stack">
+            <div class="flasher-device-card brand-card" data-device="ESP32-S3" data-brand="M5Stack">
               <div class="flasher-device-name">M5Stack</div>
               <div class="flasher-device-meta">
                 <span>ESP32-S3</span>
                 <span>Popular</span>
               </div>
             </div>
-            <div class="flasher-device-card" data-device="ESP32" data-brand="CYD">
+            <div class="flasher-device-card brand-card" data-device="ESP32" data-brand="CYD">
               <div class="flasher-device-name">CYD Displays</div>
               <div class="flasher-device-meta">
                 <span>ESP32</span>
                 <span>2.4" LCD</span>
               </div>
             </div>
-            <div class="flasher-device-card" data-device="ESP32-S3" data-brand="LilyGo">
+            <div class="flasher-device-card brand-card" data-device="ESP32-S3" data-brand="LilyGo">
               <div class="flasher-device-name">LilyGo</div>
               <div class="flasher-device-meta">
                 <span>ESP32-S3</span>
                 <span>Variety</span>
               </div>
             </div>
-            <div class="flasher-device-card" data-device="ESP32" data-brand="Awok">
+            <div class="flasher-device-card brand-card" data-device="ESP32" data-brand="Awok">
               <div class="flasher-device-name">Awok</div>
               <div class="flasher-device-meta">
                 <span>ESP32/S2</span>
                 <span>Compact</span>
               </div>
             </div>
-            <div class="flasher-device-card" data-device="ESP32-S3" data-brand="Heltec">
+            <div class="flasher-device-card brand-card" data-device="ESP32-S3" data-brand="Heltec">
               <div class="flasher-device-name">Heltec</div>
               <div class="flasher-device-meta">
                 <span>ESP32-S3</span>
                 <span>LoRa</span>
               </div>
             </div>
-            <div class="flasher-device-card" data-device="ESP32-S3" data-brand="Waveshare">
+            <div class="flasher-device-card brand-card" data-device="ESP32-S3" data-brand="Waveshare">
               <div class="flasher-device-name">Waveshare</div>
               <div class="flasher-device-meta">
                 <span>ESP32-S3</span>
                 <span>Large LCD</span>
               </div>
             </div>
-            <div class="flasher-device-card" data-device="ESP32" data-brand="JCMK">
+            <div class="flasher-device-card brand-card" data-device="ESP32" data-brand="JCMK">
               <div class="flasher-device-name">JCMK</div>
               <div class="flasher-device-meta">
                 <span>ESP32</span>
                 <span>Dev Board</span>
               </div>
             </div>
-            <div class="flasher-device-card" data-device="ESP32-S3" data-brand="Seeed">
+            <div class="flasher-device-card brand-card" data-device="ESP32-S3" data-brand="Seeed">
               <div class="flasher-device-name">Seeed Studio</div>
               <div class="flasher-device-meta">
                 <span>ESP32-S3/C5</span>
@@ -239,6 +258,9 @@
               </div>
             </div>
           </div>
+          <!-- Device detail grid (hidden by default, shown via JS) -->
+          <div class="flasher-device-grid brand-device-grid d-none" id="brandDeviceGrid"></div>
+        </div>
         </div>
 
         <div class="flasher-nav">
