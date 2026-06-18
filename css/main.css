@@ -520,14 +520,6 @@ nav .container {
   margin-bottom: 3rem;
 }
 
-.getting-started-secondary {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
-  padding-top: 2rem;
-  border-top: 1px solid var(--border);
-}
-
 /* card step numbers */
 .card-step-number {
   font-size: 3.5rem;
@@ -1516,10 +1508,6 @@ h3 {
     gap: 1rem;
   }
 
-  .getting-started-secondary {
-    grid-template-columns: 1fr;
-  }
-
   .trust-grid {
     grid-template-columns: 1fr;
   }
@@ -1685,7 +1673,6 @@ h3 {
   align-items: center;
   gap: 0.5rem;
   padding: 0.3rem 0.75rem;
-  border: 1px solid var(--border);
   border-radius: 999px;
   color: var(--text-dim);
   text-decoration: none;
@@ -1701,9 +1688,6 @@ h3 {
 .nav-star-btn:focus,
 .nav-star-btn:active {
   color: #fff;
-  border-color: rgba(255, 255, 255, 0.4);
-  background: #1f2328;
-  transform: translateY(-1px);
   text-decoration: none !important;
 }
 
