@@ -478,6 +478,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let selectedConnectionMode = null;
         let selectedDeviceMethod = 'chip';
         let inBootloaderMode = false;
+        let activeBootloaderBaudrate = null;
         let detectedBuildTemplate = null;
         let selectedFirmwareAssetName = null;
         let selectedFirmwareDisplayName = null;
@@ -984,6 +985,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
             updateConnectButtonLabel();
             setContinueToStep2Blocked(!connected);
+        }
+
+        function getSelectedBaudrate() {
+            const selected = parseInt(baudrateSelect?.value || '115200', 10);
+            return Number.isFinite(selected) ? selected : 115200;
+        }
+
+        async function applySelectedBootloaderBaudrate() {
+            if (!espLoader || !inBootloaderMode) return;
+
+            const selectedBaudrate = getSelectedBaudrate();
+            if (activeBootloaderBaudrate === selectedBaudrate) return;
+
+            espLoaderTerminal.writeLine(`Applying selected baud rate: ${selectedBaudrate}`);
+            espLoader.baudrate = selectedBaudrate;
+            await espLoader.changeBaud();
+            activeBootloaderBaudrate = selectedBaudrate;
         }
 
         const ghostEspZipToTarget = {
@@ -1548,6 +1566,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (chipInfoElem) chipInfoElem.innerHTML = chipInfoMessage;
                 if (connectBtn) connectBtn.disabled = false;
                 connected = false;
+                activeBootloaderBaudrate = null;
                 updateButtonStates();
                 updateStatusIndicator('error', statusTitle, statusDetails);
             }
@@ -1701,13 +1720,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 transport = new window.esptoolJS.Transport(normalSerialPort);
                 espLoader = new window.esptoolJS.ESPLoader({
                     transport: transport,
-                    baudrate: parseInt(baudrateSelect.value),
+                    baudrate: getSelectedBaudrate(),
                     terminal: espLoaderTerminal,
                     enableTracing: true
                 });
 
                 chipType = await espLoader.main();
                 inBootloaderMode = true;
+                activeBootloaderBaudrate = getSelectedBaudrate();
                 connected = true;
                 if (!selectedSide) selectedSide = selectedDevice || 'GhostESP device';
 
@@ -1776,6 +1796,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (chipInfoElem) chipInfoElem.innerHTML = chipInfoMessage;
                 if (connectBtn) connectBtn.disabled = false;
                 connected = false;
+                activeBootloaderBaudrate = null;
                 updateButtonStates();
                 updateStatusIndicator('error', statusTitle, statusDetails);
                 return false;
@@ -1811,6 +1832,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 espLoaderTerminal.writeLine("Disconnected from device");
                 connected = false;
                 inBootloaderMode = false;
+                activeBootloaderBaudrate = null;
                 updateButtonStates();
                 if (chipInfoElem) chipInfoElem.innerHTML = `<span class="status-indicator status-disconnected"></span> Disconnected`;
                 if (detectedChipInfoElem) detectedChipInfoElem.style.display = 'none';
@@ -1825,6 +1847,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 espLoaderTerminal.writeLine(`Error disconnecting: ${error.message}`);
                 connected = false;
                 inBootloaderMode = false;
+                activeBootloaderBaudrate = null;
                 updateButtonStates();
                 return false;
             }
@@ -1883,15 +1906,18 @@ document.addEventListener('DOMContentLoaded', () => {
                     transport = new window.esptoolJS.Transport(normalSerialPort);
                     espLoader = new window.esptoolJS.ESPLoader({
                         transport: transport,
-                        baudrate: parseInt(baudrateSelect.value),
+                        baudrate: getSelectedBaudrate(),
                         terminal: espLoaderTerminal,
                         enableTracing: true
                     });
                     chipType = await espLoader.main();
                     inBootloaderMode = true;
+                    activeBootloaderBaudrate = getSelectedBaudrate();
                     connected = true;
                     espLoaderTerminal.writeLine(`Connected in bootloader mode (${chipType})`);
                 }
+
+                await applySelectedBootloaderBaudrate();
 
                 let eraseSuccessful = true;
                 if (eraseAllCheckbox && eraseAllCheckbox.checked) {
@@ -2152,6 +2178,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 espLoaderTerminal.writeLine("Erasing flash (this may take a moment)...");
                 if (chipInfoElem) chipInfoElem.innerHTML = `<span class="status-indicator status-flashing"></span> Erasing...`;
                 updateStatusIndicator('flashing', 'Erasing flash...', 'This may take a moment...');
+
+                await applySelectedBootloaderBaudrate();
 
                 await espLoader.eraseFlash();
 
@@ -2533,8 +2561,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (eraseBtn) eraseBtn.disabled = !connected;
             if (resetBtn) resetBtn.disabled = !connected;
 
-            if (baudrateSelect) baudrateSelect.disabled = connected;
-
             setContinueToStep2Blocked(!connected);
             updateConnectButtonLabel();
             if (continueToStep3Btn) continueToStep3Btn.disabled = !connected || !hasFirmwareFilesSelected();
@@ -2608,7 +2634,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             if (flashModeSelect && flashFreqSelect && flashSizeSelect) {
-                addSummaryItem('bi-gear', `Settings: ${flashModeSelect.value.toUpperCase()}, ${flashFreqSelect.value}, ${flashSizeSelect.value}`);
+                addSummaryItem('bi-gear', `Settings: ${flashModeSelect.value.toUpperCase()}, ${flashFreqSelect.value}, ${flashSizeSelect.value}, ${getSelectedBaudrate()} baud`);
             }
             if (eraseAllCheckbox && eraseAllCheckbox.checked) {
                 addSummaryItem('bi-eraser-fill text-warning', '<strong>Erase all flash before programming</strong>');
