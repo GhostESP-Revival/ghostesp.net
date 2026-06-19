@@ -7,97 +7,97 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://ghostesp.net/boards.html</loc>
+    <loc>https://ghostesp.net/boards</loc>
     <lastmod>2026-06-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://ghostesp.net/flasher.html</loc>
+    <loc>https://ghostesp.net/flasher</loc>
     <lastmod>2026-06-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://ghostesp.net/serial.html</loc>
+    <loc>https://ghostesp.net/serial</loc>
     <lastmod>2026-06-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://ghostesp.net/companion.html</loc>
+    <loc>https://ghostesp.net/companion</loc>
     <lastmod>2026-06-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://ghostesp.net/marketplace.html</loc>
+    <loc>https://ghostesp.net/marketplace</loc>
     <lastmod>2026-06-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://ghostesp.net/asset-marketplace.html</loc>
+    <loc>https://ghostesp.net/asset-marketplace</loc>
     <lastmod>2026-06-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://ghostesp.net/asset-pack-builder.html</loc>
+    <loc>https://ghostesp.net/asset-pack-builder</loc>
     <lastmod>2026-06-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://ghostesp.net/irdb.html</loc>
+    <loc>https://ghostesp.net/irdb</loc>
     <lastmod>2026-06-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://ghostesp.net/openwd.html</loc>
+    <loc>https://ghostesp.net/openwd</loc>
     <lastmod>2026-06-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://ghostesp.net/blog.html</loc>
+    <loc>https://ghostesp.net/blog</loc>
     <lastmod>2026-06-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://ghostesp.net/blog-deauth-vs-jamming.html</loc>
+    <loc>https://ghostesp.net/blog-deauth-vs-jamming</loc>
     <lastmod>2026-06-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://ghostesp.net/blog-esp32-misconceptions.html</loc>
+    <loc>https://ghostesp.net/blog-esp32-misconceptions</loc>
     <lastmod>2026-06-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://ghostesp.net/blog-module-not-problem.html</loc>
+    <loc>https://ghostesp.net/blog-module-not-problem</loc>
     <lastmod>2026-06-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://ghostesp.net/brand-assets.html</loc>
+    <loc>https://ghostesp.net/brand-assets</loc>
     <lastmod>2026-06-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://ghostesp.net/brand-guidelines.html</loc>
+    <loc>https://ghostesp.net/brand-guidelines</loc>
     <lastmod>2026-06-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://ghostesp.net/feedback.html</loc>
+    <loc>https://ghostesp.net/feedback</loc>
     <lastmod>2026-06-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
