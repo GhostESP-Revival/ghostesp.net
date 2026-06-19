@@ -6,14 +6,102 @@
 
 # Canonical URL shape: serve extensionless URLs and redirect legacy .html paths.
 [[redirects]]
-  from = "/:page.html"
-  to = "/:page"
+  from = "/boards.html"
+  to = "/boards"
   status = 301
   force = true
 
-# Pretty URLs - automatically strip .html from URLs
-# /page  -> /page.html
-# /page.html -> 301 redirect to /page
+[[redirects]]
+  from = "/flasher.html"
+  to = "/flasher"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/serial.html"
+  to = "/serial"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/companion.html"
+  to = "/companion"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/marketplace.html"
+  to = "/marketplace"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/asset-marketplace.html"
+  to = "/asset-marketplace"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/asset-pack-builder.html"
+  to = "/asset-pack-builder"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/irdb.html"
+  to = "/irdb"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/openwd.html"
+  to = "/openwd"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog.html"
+  to = "/blog"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog-deauth-vs-jamming.html"
+  to = "/blog-deauth-vs-jamming"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog-esp32-misconceptions.html"
+  to = "/blog-esp32-misconceptions"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog-module-not-problem.html"
+  to = "/blog-module-not-problem"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/brand-assets.html"
+  to = "/brand-assets"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/brand-guidelines.html"
+  to = "/brand-guidelines"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/feedback.html"
+  to = "/feedback"
+  status = 301
+  force = true
+
+# Pretty URLs - serve extensionless URLs from matching .html files.
 [[redirects]]
   from = "/:url"
   to = "/:url.html"
