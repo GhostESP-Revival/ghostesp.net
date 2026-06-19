@@ -3,14 +3,13 @@ const components = {
   nav() {
     // check if we're on index page or not
     const isIndex = window.location.pathname.endsWith('index.html') || window.location.pathname.endsWith('/') || window.location.pathname.endsWith('/v2');
-    const isFlasher = window.location.pathname.endsWith('flasher.html');
-    const isSerial = window.location.pathname.endsWith('serial.html');
-    const prefix = isIndex ? '' : 'index.html';
+    const isFlasher = window.location.pathname.endsWith('/flasher') || window.location.pathname.endsWith('flasher.html');
+    const prefix = isIndex ? '' : '/';
     const navLinksClass = isFlasher ? 'nav-links flasher-nav-links' : 'nav-links';
     
     return `
       <div class="container">
-        <a href="index.html" class="nav-logo">
+        <a href="/" class="nav-logo">
           <img src="images/ghostespdotnet.png" alt="Ghost ESP">
         </a>
         <button class="mobile-menu-toggle" aria-label="Toggle menu">
@@ -24,36 +23,36 @@ const components = {
             <ul class="nav-dropdown-menu">
               <li><a href="${prefix}#getting-started">Get Started</a></li>
               <li><a href="${prefix}#features">Features</a></li>
-              <li><a href="boards.html">Boards</a></li>
+              <li><a href="/boards">Boards</a></li>
             </ul>
           </li>
           <li class="nav-dropdown">
             <button class="nav-dropdown-toggle" type="button" aria-haspopup="true">Utilities</button>
             <ul class="nav-dropdown-menu">
-              <li><a href="flasher.html">Flasher</a></li>
-              <li><a href="serial.html">Serial</a></li>
-              <li><a href="openwd.html">WDMap</a></li>
-              <li><a href="companion.html">Companion App</a></li>
+              <li><a href="/flasher">Flasher</a></li>
+              <li><a href="/serial">Serial</a></li>
+              <li><a href="/openwd">WDMap</a></li>
+              <li><a href="/companion">Companion App</a></li>
             </ul>
           </li>
           <li class="nav-dropdown">
             <button class="nav-dropdown-toggle" type="button" aria-haspopup="true">Downloads</button>
             <ul class="nav-dropdown-menu">
-              <li><a href="marketplace.html">Apps</a></li>
-              <li><a href="asset-marketplace.html">Asset Packs</a></li>
-              <li><a href="asset-pack-builder.html">Pack Builder</a></li>
-              <li><a href="irdb.html">IRDB</a></li>
+              <li><a href="/marketplace">Apps</a></li>
+              <li><a href="/asset-marketplace">Asset Packs</a></li>
+              <li><a href="/asset-pack-builder">Pack Builder</a></li>
+              <li><a href="/irdb">IRDB</a></li>
             </ul>
           </li>
           <li class="nav-dropdown">
             <button class="nav-dropdown-toggle" type="button" aria-haspopup="true">Resources</button>
             <ul class="nav-dropdown-menu">
-              <li><a href="https://docs.ghostesp.net" target="_blank">Docs</a></li>
-              <li><a href="https://shop.ghostesp.net" target="_blank">Merch</a></li>
-              <li><a href="blog.html">Blog</a></li>
-              <li><a href="brand-assets.html">Brand Assets</a></li>
-              <li><a href="brand-guidelines.html">Brand Guidelines</a></li>
-              <li><a href="feedback.html">Feedback</a></li>
+              <li><a href="https://docs.ghostesp.net" target="_blank" rel="noopener">Docs</a></li>
+              <li><a href="https://shop.ghostesp.net" target="_blank" rel="noopener">Merch</a></li>
+              <li><a href="/blog">Blog</a></li>
+              <li><a href="/brand-assets">Brand Assets</a></li>
+              <li><a href="/brand-guidelines">Brand Guidelines</a></li>
+              <li><a href="/feedback">Feedback</a></li>
             </ul>
           </li>
           <li id="nav-star-count"></li>
