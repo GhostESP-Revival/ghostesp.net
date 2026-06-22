@@ -107,7 +107,6 @@
   to = "/:url.html"
   status = 200
   force = false
-  conditions = { Role = "pretty"}
 
 # Custom 404 page
 [[redirects]]
@@ -118,7 +117,7 @@
 [[headers]]
   for = "/*"
   [headers.values]
-    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://unpkg.com https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; img-src 'self' https://ghostesp.net https://raw.githubusercontent.com https://www.youtube.com https://i.ytimg.com https://static.wixstatic.com data:; font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; frame-src https://www.youtube.com; connect-src 'self' https://api.github.com https://cdn.spookytools.com https://www.google-analytics.com https://googleads.g.doubleclick.net https://discord.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://unpkg.com https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; img-src 'self' https://ghostesp.net https://raw.githubusercontent.com https://gesp.fuckyourcdn.com https://www.youtube.com https://i.ytimg.com https://static.wixstatic.com data:; font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; frame-src https://www.youtube.com; connect-src 'self' https://raw.githubusercontent.com https://gesp.fuckyourcdn.com https://api.github.com https://cdn.spookytools.com https://www.google-analytics.com https://googleads.g.doubleclick.net https://discord.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'"
     Referrer-Policy = "strict-origin-when-cross-origin"
     X-Content-Type-Options = "nosniff"
     X-Frame-Options = "SAMEORIGIN"
