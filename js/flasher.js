@@ -719,7 +719,9 @@ document.addEventListener('DOMContentLoaded', () => {
             "Banshee_S3.zip": "The Wired Hatter's Banshee S3",
             "XIAO_S3_Sense.zip": "Seeed XIAO S3 Sense",
             "XIAO_C5.zip": "Seeed XIAO C5",
-            "XIAO_S3.zip": "Seeed XIAO S3"
+            "XIAO_S3.zip": "Seeed XIAO S3",
+            "MarauderV8.zip": "Marauder V8",
+            "MarauderPancake.zip": "Marauder Pancake"
         };
 
         const ghostEspChipMapping = {
@@ -800,7 +802,9 @@ document.addEventListener('DOMContentLoaded', () => {
             "waveshare7inch": "Waveshare_LCD.zip",
             "xiao_esp32c5": "XIAO_C5.zip",
             "xiao_esp32s3": "XIAO_S3.zip",
-            "xiao_esp32s3_sense": "XIAO_S3_Sense.zip"
+            "xiao_esp32s3_sense": "XIAO_S3_Sense.zip",
+            "marauderv8": "MarauderV8.zip",
+            "pancake": "MarauderPancake.zip"
         };
 
         function normalizeBuildTemplate(value) {
