@@ -32,9 +32,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function initializeFlasher() {
-        function getElementById(id) {
+        function getElementById(id, options = {}) {
             const element = document.getElementById(id);
-            if (!element) {
+            if (!element && !options.optional) {
                 console.error(`Element with ID '${id}' not found in the DOM`);
             }
             return element;
@@ -390,8 +390,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const terminalElem = getElementById('terminal');
         const terminalToggleBtn = getElementById('terminalToggle');
         const chipInfoElem = getElementById('chipInfo');
-        const detectedChipInfoElem = getElementById('detectedChipInfo');
-        const detectedChipModelElem = getElementById('detectedChipModel');
+        const detectedChipInfoElem = getElementById('detectedChipInfo', { optional: true });
+        const detectedChipModelElem = getElementById('detectedChipModel', { optional: true });
         const chipMismatchWarningElem = getElementById('chipMismatchWarning');
         const flashProgressElem = getElementById('flashProgress');
         const flashSummaryElem = getElementById('flashSummary');
@@ -671,6 +671,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const GHOST_ESP_OWNER = 'GhostESP-Revival';
         const GHOST_ESP_REPO = 'GhostESP';
+        const GHOST_ESP_ZIP_PROXY_BASE = 'https://super-breeze-c8cd.flavouredjelly.workers.dev/?url=';
+        const GHOST_ESP_API_PROXY_BASE = 'https://fragrant-flower-ba0b.creepersbeast.workers.dev/?url=';
         
 
         const ghostEspNiceNames = {
@@ -2367,7 +2369,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         async function populateGhostEspFromGitHub(selectElement, owner, repo, fileExtension, filterChip, filterBrand, requestId) {
             if (!ghostEspStableReleases || !ghostEspPrereleases) {
-                const apiUrl = `https://api.github.com/repos/${owner}/${repo}/releases`;
+                const apiUrl = `https://api.github.com/repos/${owner}/${repo}/releases?per_page=100`;
                 espLoaderTerminal.writeLine(`Fetching releases from ${owner}/${repo}...`);
 
                 if (ghostEspStatusElem) {
@@ -2375,11 +2377,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     ghostEspStatusElem.className = 'form-text mt-2 loading';
                 }
 
-                const response = await fetch(apiUrl);
-                if (!response.ok) {
-                    throw new Error(`GitHub API Error: ${response.status} ${response.statusText}`);
-                }
-                const releases = await response.json();
+                const releases = await fetchGhostEspReleases(apiUrl);
                 if (requestId !== ghostEspPopulateRequestId) return;
                 if (!releases || releases.length === 0) {
                     espLoaderTerminal.writeLine(`No releases found for ${owner}/${repo}.`);
@@ -2421,6 +2419,30 @@ document.addEventListener('DOMContentLoaded', () => {
                 espLoaderTerminal.writeLine(`No ${ghostEspReleaseType} release found for ${owner}/${repo}.`);
                 selectElement.innerHTML = `<option value="">No ${ghostEspReleaseType} release found</option>`;
             }
+        }
+
+        async function fetchGhostEspReleases(apiUrl) {
+            try {
+                return await fetchJson(apiUrl, 'GitHub API');
+            } catch (error) {
+                console.warn('Direct GitHub release fetch failed, retrying through proxy:', error);
+                espLoaderTerminal.writeLine(`Direct GitHub release fetch failed (${error.message}); retrying through proxy...`);
+                if (ghostEspStatusElem) {
+                    ghostEspStatusElem.textContent = 'GitHub rate limit hit. Retrying through proxy...';
+                    ghostEspStatusElem.className = 'form-text mt-2 loading';
+                }
+                return await fetchJson(GHOST_ESP_API_PROXY_BASE + encodeURIComponent(apiUrl), 'GitHub proxy');
+            }
+        }
+
+        async function fetchJson(url, sourceLabel) {
+            const response = await fetch(url, {
+                headers: { Accept: 'application/vnd.github+json' }
+            });
+            if (!response.ok) {
+                throw new Error(`${sourceLabel} Error: ${response.status} ${response.statusText}`);
+            }
+            return await response.json();
         }
 
         async function loadGhostEspZip(optionValue) {
@@ -2539,7 +2561,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 ghostEspStatusElem.className = 'form-text mt-2 loading';
             }
 
-            const proxyUrl = 'https://super-breeze-c8cd.flavouredjelly.workers.dev/?url=' + encodeURIComponent(zipUrl);
+            const proxyUrl = GHOST_ESP_ZIP_PROXY_BASE + encodeURIComponent(zipUrl);
             espLoaderTerminal.writeLine(`Fetching GhostESP firmware from ${zipUrl}...`);
 
             const response = await fetch(proxyUrl);
