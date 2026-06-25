@@ -508,6 +508,100 @@ nav .container {
   margin-bottom: 1rem;
 }
 
+/* capability spec line */
+.card-spec {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  line-height: 1.7;
+  color: var(--text-dim);
+  position: relative;
+  z-index: 1;
+}
+
+.card-spec .card-sep {
+  color: #555;
+  font-size: 0.6em;
+  margin: 0 0.35em;
+  vertical-align: 0.1em;
+}
+
+.card-spec code {
+  font-family: inherit;
+  font-size: inherit;
+  background: none;
+  padding: 0;
+}
+
+.card:hover .card-spec {
+  color: var(--text);
+}
+
+/* compact feature cards */
+#features .grid {
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(235px, 1fr));
+}
+
+#features .card {
+  padding: 1.1rem 1.25rem;
+}
+
+#features .card-icon {
+  margin-bottom: 0.55rem;
+}
+
+#features .card-icon i {
+  width: 20px;
+  height: 20px;
+}
+
+#features .card h3 {
+  margin-bottom: 0.3rem;
+  font-size: 1.02rem;
+}
+
+#features .card p {
+  font-size: 0.85rem;
+  margin-bottom: 0.55rem;
+}
+
+#features .card-spec {
+  font-size: 0.72rem;
+  line-height: 1.5;
+}
+
+/* marathon-style "sauce": registration brackets */
+#features .card::before,
+#features .card::after {
+  content: "";
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  border-color: #00ff80;
+  border-style: solid;
+  opacity: 0.3;
+  transition: opacity 0.3s ease;
+  z-index: 2;
+  pointer-events: none;
+}
+
+#features .card::before {
+  top: 9px;
+  left: 9px;
+  border-width: 1px 0 0 1px;
+}
+
+#features .card::after {
+  bottom: 9px;
+  right: 9px;
+  border-width: 0 1px 1px 0;
+}
+
+#features .card:hover::before,
+#features .card:hover::after {
+  opacity: 0.85;
+}
+
 .card .btn {
   margin-top: auto;
 }
