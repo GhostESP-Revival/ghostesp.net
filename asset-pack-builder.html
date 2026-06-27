@@ -1201,9 +1201,9 @@
       const g = (bk.g / bk.count) | 0;
       const b = (bk.b / bk.count) | 0;
       const a = (bk.a / bk.count) | 0;
-      const qr = (r >> 4) | 0x0F;
-      const qg = (g >> 4) | 0x0F;
-      const qb = (b >> 4) | 0x0F;
+      const qr = r >> 4;
+      const qg = g >> 4;
+      const qb = b >> 4;
       const qa = a >= 128 ? 0xFF : 0;
       return { r, g, b, a, qr, qg, qb, qa };
     });
