@@ -50,6 +50,7 @@ const components = {
               <li><a href="https://docs.ghostesp.net" target="_blank" rel="noopener">Docs</a></li>
               <li><a href="https://shop.ghostesp.net" target="_blank" rel="noopener">Merch</a></li>
               <li><a href="/blog">Blog</a></li>
+              <li><a href="/changelog">Changelog</a></li>
               <li><a href="/brand-assets">Brand Assets</a></li>
               <li><a href="/brand-guidelines">Brand Guidelines</a></li>
               <li><a href="/feedback">Feedback</a></li>
@@ -59,6 +60,36 @@ const components = {
         </ul>
       </div>
     `;
+  },
+
+  // sitewide dismissible v2.0 launch banner
+  ANNOUNCE_KEY: 'ghostesp_v2_announce_dismissed',
+
+  renderAnnounceBar() {
+    try {
+      if (localStorage.getItem(this.ANNOUNCE_KEY) === '1') return;
+    } catch (e) {}
+    if (document.querySelector('.announce-bar')) return;
+
+    const bar = document.createElement('div');
+    bar.className = 'announce-bar';
+    bar.setAttribute('role', 'region');
+    bar.setAttribute('aria-label', 'Announcement');
+    bar.innerHTML = `
+      <a href="/#whats-new" class="announce-bar-link">
+        <strong>GhostESP v2.0 is here.</strong>
+        <span class="announce-bar-cta">See what's new &rarr;</span>
+      </a>
+      <button class="announce-bar-close" type="button" aria-label="Dismiss announcement">&times;</button>
+    `;
+    document.body.insertBefore(bar, document.body.firstChild);
+
+    bar.querySelector('.announce-bar-close').addEventListener('click', () => {
+      try { localStorage.setItem(this.ANNOUNCE_KEY, '1'); } catch (e) {}
+      bar.remove();
+      document.documentElement.style.setProperty('--announce-height', '0px');
+      window.dispatchEvent(new Event('resize'));
+    });
   },
 
   loading() {
@@ -174,6 +205,8 @@ const components = {
 
 // render components on load
 document.addEventListener('DOMContentLoaded', () => {
+  components.renderAnnounceBar();
+
   const nav = document.getElementById('nav');
   if (nav) {
     nav.innerHTML = components.nav();
@@ -181,7 +214,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const updateNavHeight = () => {
       const navElement = document.querySelector('nav');
       if (!navElement) return;
-      document.documentElement.style.setProperty('--nav-height', `${navElement.offsetHeight}px`);
+      const announceBar = document.querySelector('.announce-bar');
+      const announceHeight = announceBar ? announceBar.offsetHeight : 0;
+      document.documentElement.style.setProperty('--announce-height', `${announceHeight}px`);
+      // --nav-height covers the full fixed header stack so content clears both
+      document.documentElement.style.setProperty('--nav-height', `${announceHeight + navElement.offsetHeight}px`);
     };
 
     updateNavHeight();
