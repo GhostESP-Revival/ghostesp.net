@@ -101,6 +101,12 @@
   status = 301
   force = true
 
+[[redirects]]
+  from = "/changelog.html"
+  to = "/changelog"
+  status = 301
+  force = true
+
 # Pretty URLs - serve extensionless URLs from matching .html files.
 [[redirects]]
   from = "/:url"

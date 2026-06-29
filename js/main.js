@@ -17,19 +17,22 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     requestAnimationFrame(raf);
 
-    // handle anchor clicks
+    // handle in-page anchor clicks (#id, /#id, /path#id on the current page)
     document.addEventListener('click', function(e) {
-      const anchor = e.target.closest('a[href^="#"]');
+      const anchor = e.target.closest('a[href]');
       if (!anchor) return;
-      
+
+      let url;
+      try { url = new URL(anchor.href); } catch (err) { return; }
+      if (url.pathname !== window.location.pathname) return;
+      if (!url.hash || url.hash === '#') return;
+
+      const target = document.getElementById(url.hash.substring(1));
+      if (!target) return;
+
       e.preventDefault();
-      const targetId = anchor.getAttribute('href').substring(1);
-      if (!targetId) return;
-      
-      const target = document.getElementById(targetId);
-      if (target) {
-        lenis.scrollTo(target, { offset: -80 });
-      }
+      const navHeight = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--nav-height')) || 80;
+      lenis.scrollTo(target, { offset: -navHeight });
     });
   }
 
