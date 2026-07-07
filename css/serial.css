@@ -148,6 +148,16 @@ nav { position: relative; z-index: 2000; }
   opacity: 0.6;
 }
 
+.welcome-hint a {
+  color: var(--serial-text);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.welcome-hint a:hover {
+  color: var(--serial-info);
+}
+
 /* Buttons */
 .btn {
   background: var(--serial-surface-2);

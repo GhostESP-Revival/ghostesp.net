@@ -453,6 +453,26 @@ nav ul.flasher-nav-links li::marker {
   flex-shrink: 0;
 }
 
+.flasher-driver-hint {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  color: var(--flasher-text-dim);
+  font-family: var(--flasher-font-mono);
+  font-size: 0.78rem;
+}
+
+.flasher-driver-hint a {
+  color: var(--flasher-text);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.flasher-driver-hint a:hover {
+  color: var(--flasher-success);
+}
+
 .flasher-status-bar {
   display: flex;
   align-items: center;
