@@ -146,52 +146,139 @@
     </div>
   </section>
 
-  <!-- What's New in v2.0 -->
-  <section id="whats-new" class="section section-alt">
+  <!-- Capabilities Explorer -->
+  <section id="capabilities" class="section section-alt">
     <div class="container">
-      <div class="whats-new-head" data-aos="fade-up">
-        <h2>GhostESP v2.0</h2>
-        <p class="whats-new-lead">The largest update in the project's history: a rebuilt UI, a first-class app ecosystem, expanded radio and device workflows, and broad platform hardening. Here are the highlights.</p>
+      <div class="cap-head" data-aos="fade-up">
+        <span class="cap-eyebrow">// what it does</span>
+        <h2>Capabilities</h2>
+        <p class="cap-lead">The largest update in the project's history turns an ESP32 into a full wireless research platform. Pick a band to see what it can do. A <span class="cap-new-inline">NEW</span> tag marks what's new in v2.0.</p>
       </div>
-      <div class="grid">
-        <div class="card whats-new-card" data-aos="fade-up" data-aos-delay="50">
-          <div class="card-icon"><i data-lucide="palette"></i></div>
-          <h3>Redesigned UI</h3>
-          <p>60 FPS rendering, toast notifications, a cleaner status bar, touch-drag scrolling, and a setup wizard with Home WiFi configuration.</p>
-          <p class="card-spec">custom asset packs<span class="card-sep">//</span>17+ themes<span class="card-sep">//</span>accessibility suite<span class="card-sep">//</span>high contrast<span class="card-sep">//</span>reduced motion</p>
+
+      <div class="cap-explorer" data-aos="fade-up">
+        <div class="cap-tabs" role="tablist" aria-label="Capability domains">
+          <button class="cap-tab active" role="tab" aria-selected="true" aria-controls="cap-panel-wifi" id="cap-tab-wifi" data-target="wifi"><i data-lucide="wifi"></i><span>WiFi</span></button>
+          <button class="cap-tab" role="tab" aria-selected="false" aria-controls="cap-panel-ble" id="cap-tab-ble" data-target="ble"><i data-lucide="bluetooth"></i><span>Bluetooth LE</span></button>
+          <button class="cap-tab" role="tab" aria-selected="false" aria-controls="cap-panel-nfc" id="cap-tab-nfc" data-target="nfc"><i data-lucide="scan-line"></i><span>NFC &amp; IR</span></button>
+          <button class="cap-tab" role="tab" aria-selected="false" aria-controls="cap-panel-subghz" id="cap-tab-subghz" data-target="subghz"><i data-lucide="radio"></i><span>SubGHz &amp; RF</span></button>
+          <button class="cap-tab" role="tab" aria-selected="false" aria-controls="cap-panel-network" id="cap-tab-network" data-target="network"><i data-lucide="network"></i><span>Network</span></button>
+          <button class="cap-tab" role="tab" aria-selected="false" aria-controls="cap-panel-badusb" id="cap-tab-badusb" data-target="badusb"><i data-lucide="usb"></i><span>BadUSB &amp; HID</span></button>
+          <button class="cap-tab" role="tab" aria-selected="false" aria-controls="cap-panel-platform" id="cap-tab-platform" data-target="platform"><i data-lucide="layers"></i><span>Platform &amp; UI</span></button>
         </div>
-        <div class="card whats-new-card" data-aos="fade-up" data-aos-delay="100">
-          <div class="card-icon"><i data-lucide="puzzle"></i></div>
-          <h3>Native SD Apps</h3>
-          <p>A first-class app ecosystem. Load tools from SD with permissions, scoped storage, and custom icons; ESP32-C5 runs app code straight from flash.</p>
-          <p class="card-spec">App Gallery<span class="card-sep">//</span>Ghost Build Tool (gbt)<span class="card-sep">//</span>app SDK<span class="card-sep">//</span>example apps<span class="card-sep">//</span>XIP on C5</p>
-        </div>
-        <div class="card whats-new-card" data-aos="fade-up" data-aos-delay="150">
-          <div class="card-icon"><i data-lucide="radar"></i></div>
-          <h3>WiFi Airspace Monitor</h3>
-          <p>Real-time packet and threat insights with a learned baseline that adapts to your local environment.</p>
-          <p class="card-spec">adaptive channel dwell<span class="card-sep">//</span>EWMA baseline<span class="card-sep">//</span>threat &amp; insight engine<span class="card-sep">//</span>packets/sec sparkline<span class="card-sep">//</span>suspect device cards</p>
-        </div>
-        <div class="card whats-new-card" data-aos="fade-up" data-aos-delay="200">
-          <div class="card-icon"><i data-lucide="gamepad-2"></i></div>
-          <h3>Expanded Ghostchi</h3>
-          <p>The on-device companion now has 50 levels, moods, passive and aggressive modes, and a persistent status-bar badge.</p>
-          <p class="card-spec">50 levels<span class="card-sep">//</span>27 XP sources<span class="card-sep">//</span>passive / aggressive<span class="card-sep">//</span>global mood system<span class="card-sep">//</span>level-up toasts</p>
-        </div>
-        <div class="card whats-new-card" data-aos="fade-up" data-aos-delay="250">
-          <div class="card-icon"><i data-lucide="lock"></i></div>
-          <h3>PIN Lockscreen</h3>
-          <p>An overlay lock with auto-lock support, so active captures like wardriving and sniffing keep running while the device is locked.</p>
-          <p class="card-spec">PIN lockscreen<span class="card-sep">//</span>lock on wake<span class="card-sep">//</span>auto-lock<span class="card-sep">//</span>overlay capture mode</p>
-        </div>
-        <div class="card whats-new-card" data-aos="fade-up" data-aos-delay="300">
-          <div class="card-icon"><i data-lucide="usb"></i></div>
-          <h3>BadUSB &amp; Recon</h3>
-          <p>Trackpad cursor control, USB HID keyboard output, a mouse jiggler, and a redesigned WebUI, plus SSH, NetBIOS, HTTP, and SNMP scanners.</p>
-          <p class="card-spec">trackpad &amp; touch<span class="card-sep">//</span>HID output<span class="card-sep">//</span>mouse jiggler<span class="card-sep">//</span>SNMP / SSH / NetBIOS<span class="card-sep">//</span>WPA3 checker</p>
+
+        <div class="cap-panels">
+          <div class="cap-panel active" role="tabpanel" id="cap-panel-wifi" aria-labelledby="cap-tab-wifi" tabindex="0">
+            <div class="cap-panel-head">
+              <div class="cap-panel-icon"><i data-lucide="wifi"></i></div>
+              <div><h3>WiFi Suite</h3><p class="cap-panel-tagline">2.4 &amp; 5 GHz testing, capture, and monitoring.</p></div>
+            </div>
+            <ul class="cap-list">
+              <li>Deauth, beacon spam &amp; karma</li>
+              <li>Evil portal &amp; captive-portal creds</li>
+              <li>WPA3 / SAE testing + compliance checker</li>
+              <li>PCAP logging &amp; live Wireshark over USB</li>
+              <li class="is-new">WiFi airspace monitor <span class="cap-new">NEW</span></li>
+              <li class="is-new">Recon: ARP &middot; SSH &middot; SNMP &middot; NetBIOS &middot; HTTP <span class="cap-new">NEW</span></li>
+              <li>GPS wardriving &amp; WiGLE export</li>
+              <li>mDNS discovery &amp; OUI vendor lookup</li>
+            </ul>
+          </div>
+
+          <div class="cap-panel" role="tabpanel" id="cap-panel-ble" aria-labelledby="cap-tab-ble" tabindex="0" hidden>
+            <div class="cap-panel-head">
+              <div class="cap-panel-icon"><i data-lucide="bluetooth"></i></div>
+              <div><h3>Bluetooth LE</h3><p class="cap-panel-tagline">Scan, capture, and spoof BLE devices.</p></div>
+            </div>
+            <ul class="cap-list">
+              <li>BLE scan &amp; raw scanner</li>
+              <li>Device spam modes</li>
+              <li>AirTag scan / spoof &middot; Flipper Zero finder</li>
+              <li>GATT enumeration &middot; BLE &rarr; Wireshark</li>
+              <li>Skimmer &amp; surveillance (Flock) detection</li>
+              <li>BLE wardriving &amp; WiGLE export</li>
+            </ul>
+          </div>
+
+          <div class="cap-panel" role="tabpanel" id="cap-panel-nfc" aria-labelledby="cap-tab-nfc" tabindex="0" hidden>
+            <div class="cap-panel-head">
+              <div class="cap-panel-icon"><i data-lucide="scan-line"></i></div>
+              <div><h3>NFC &amp; Infrared</h3><p class="cap-panel-tagline">Read, write, and replay NFC and IR signals.</p></div>
+            </div>
+            <ul class="cap-list">
+              <li>PN532 &middot; Chameleon Ultra (BLE control)</li>
+              <li>NTAG read/write</li>
+              <li>MIFARE dictionary + default-key attack</li>
+              <li>Flipper <code>.nfc</code> import/export &amp; parser set</li>
+              <li>IR learn / capture / replay</li>
+              <li>Universal IR library &middot; Flipper <code>.ir</code> support</li>
+            </ul>
+          </div>
+
+          <div class="cap-panel" role="tabpanel" id="cap-panel-subghz" aria-labelledby="cap-tab-subghz" tabindex="0" hidden>
+            <div class="cap-panel-head">
+              <div class="cap-panel-icon"><i data-lucide="radio"></i></div>
+              <div><h3>SubGHz &amp; RF</h3><p class="cap-panel-tagline">Analyze, capture, and replay across the bands.</p></div>
+            </div>
+            <ul class="cap-list">
+              <li>CC1101 scan / replay &middot; 315&ndash;915 MHz</li>
+              <li>Waterfall spectrum analyzer</li>
+              <li>SubGHz protocol decoders &middot; Flipper <code>.sub</code></li>
+              <li>NRF24 spectrum analyzer &amp; sniff</li>
+              <li>Zigbee / 802.15.4 capture</li>
+              <li>Passive jamming detection</li>
+            </ul>
+          </div>
+
+          <div class="cap-panel" role="tabpanel" id="cap-panel-network" aria-labelledby="cap-tab-network" tabindex="0" hidden>
+            <div class="cap-panel-head">
+              <div class="cap-panel-icon"><i data-lucide="network"></i></div>
+              <div><h3>Network &amp; Ethernet</h3><p class="cap-panel-tagline">Wired attacks and live traffic interception.</p></div>
+            </div>
+            <ul class="cap-list">
+              <li>Ethernet / W5500</li>
+              <li>ARP poisoning &amp; MITM tools</li>
+              <li>DNS intercept / sinkhole (NXDOMAIN)</li>
+              <li>Credential capture: TLS SNI &middot; HTTP &middot; FTP</li>
+              <li>DIAL / Chromecast &middot; network printer (PJL)</li>
+              <li>Camera streaming &amp; motion webhooks</li>
+            </ul>
+          </div>
+
+          <div class="cap-panel" role="tabpanel" id="cap-panel-badusb" aria-labelledby="cap-tab-badusb" tabindex="0" hidden>
+            <div class="cap-panel-head">
+              <div class="cap-panel-icon"><i data-lucide="usb"></i></div>
+              <div><h3>BadUSB &amp; HID</h3><p class="cap-panel-tagline">HID payloads and host-side control.</p></div>
+            </div>
+            <ul class="cap-list">
+              <li>BadUSB / DuckyScript</li>
+              <li>VID/PID identity options</li>
+              <li>USB keyboard host mode</li>
+              <li class="is-new">Trackpad cursor &amp; HID output <span class="cap-new">NEW</span></li>
+              <li class="is-new">Mouse jiggler <span class="cap-new">NEW</span></li>
+              <li class="is-new">Redesigned WebUI <span class="cap-new">NEW</span></li>
+            </ul>
+          </div>
+
+          <div class="cap-panel" role="tabpanel" id="cap-panel-platform" aria-labelledby="cap-tab-platform" tabindex="0" hidden>
+            <div class="cap-panel-head">
+              <div class="cap-panel-icon"><i data-lucide="layers"></i></div>
+              <div><h3>Platform &amp; UI</h3><p class="cap-panel-tagline">Control, extend, and theme the whole device.</p></div>
+            </div>
+            <ul class="cap-list">
+              <li class="is-new">LVGL UI &middot; 60 FPS &middot; 17+ themes <span class="cap-new">NEW</span></li>
+              <li>Touch / keyboard / encoder &middot; web dashboard</li>
+              <li>File manager &middot; screen mirroring</li>
+              <li class="is-new">Native SD apps: <code>.gapp</code>, App Gallery, SDK, XIP on C5 <span class="cap-new">NEW</span></li>
+              <li class="is-new">Asset packs: <code>.gtheme</code> live swap <span class="cap-new">NEW</span></li>
+              <li class="is-new">Ghostchi: 50 levels &amp; moods <span class="cap-new">NEW</span></li>
+              <li class="is-new">PIN lockscreen &amp; setup wizard <span class="cap-new">NEW</span></li>
+              <li>GhostLink dual-ESP &middot; Android app &middot; Flipper companion</li>
+            </ul>
+          </div>
         </div>
       </div>
-      <div class="whats-new-actions" data-aos="fade-up">
+
+      <div class="cap-actions" data-aos="fade-up">
         <a href="#releases" class="btn btn-primary">Download v2.0</a>
         <a href="https://github.com/GhostESP-Revival/GhostESP/releases/latest" class="btn btn-secondary" target="_blank" rel="noopener">Full Changelog</a>
       </div>
@@ -271,75 +358,6 @@
             <span id="discord-member-number">--</span> members online
           </div>
           <a href="https://discord.gg/5cyNmUMgwh" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top:1rem;">Join Discord Server</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Features -->
-  <section id="features" class="section">
-    <div class="container">
-      <h2 data-aos="fade-up">Features</h2>
-      <div class="grid">
-        <div class="card" data-aos="fade-up" data-aos-delay="50">
-          <div class="card-icon"><i data-lucide="wifi"></i></div>
-          <h3>WiFi Suite</h3>
-          <p>2.4 &amp; 5 GHz wireless testing and capture.</p>
-          <p class="card-spec">deauth<span class="card-sep">//</span>beacon spam<span class="card-sep">//</span>karma<span class="card-sep">//</span>evil portal<span class="card-sep">//</span>WPA3<span class="card-sep">//</span>PCAP logging<span class="card-sep">//</span>live Wireshark</p>
-        </div>
-        <div class="card" data-aos="fade-up" data-aos-delay="100">
-          <div class="card-icon"><i data-lucide="bluetooth"></i></div>
-          <h3>Bluetooth LE</h3>
-          <p>Scan, capture, and spoof BLE devices.</p>
-          <p class="card-spec">BLE scan<span class="card-sep">//</span>device spam<span class="card-sep">//</span>GPS wardriving<span class="card-sep">//</span>WiGLE export<span class="card-sep">//</span>AirTag spoof<span class="card-sep">//</span>Flipper detect</p>
-        </div>
-        <div class="card" data-aos="fade-up" data-aos-delay="150">
-          <div class="card-icon"><i data-lucide="scan-line"></i></div>
-          <h3>NFC &amp; Infrared</h3>
-          <p>Read, write, and replay NFC and IR signals.</p>
-          <p class="card-spec">NTAG read/write<span class="card-sep">//</span>MIFARE dictionary<span class="card-sep">//</span>IR learn &amp; TX<span class="card-sep">//</span>Flipper file support</p>
-        </div>
-        <div class="card" data-aos="fade-up" data-aos-delay="200">
-          <div class="card-icon"><i data-lucide="radio"></i></div>
-          <h3>SubGHz Radio</h3>
-          <p>Analyze, capture, and replay across the sub-GHz bands.</p>
-          <p class="card-spec">CC1101<span class="card-sep">//</span>315&ndash;915 MHz<span class="card-sep">//</span>capture/replay<span class="card-sep">//</span>NRF24 sniff<span class="card-sep">//</span>Zigbee / 802.15.4</p>
-        </div>
-        <div class="card" data-aos="fade-up" data-aos-delay="250">
-          <div class="card-icon"><i data-lucide="network"></i></div>
-          <h3>Network Analysis</h3>
-          <p>Wired attacks and live traffic interception.</p>
-          <p class="card-spec">Ethernet / W5500<span class="card-sep">//</span>ARP poisoning<span class="card-sep">//</span>DNS intercept<span class="card-sep">//</span>credential capture<span class="card-sep">//</span>DIAL / Chromecast</p>
-        </div>
-        <div class="card" data-aos="fade-up" data-aos-delay="300">
-          <div class="card-icon"><i data-lucide="shield-alert"></i></div>
-          <h3>Threat Detection</h3>
-          <p>Spot hostile devices and attacks nearby.</p>
-          <p class="card-spec">Wi-Fi Pineapple<span class="card-sep">//</span>evil twin<span class="card-sep">//</span>AirTags<span class="card-sep">//</span>card skimmers<span class="card-sep">//</span>jamming signatures</p>
-        </div>
-        <div class="card" data-aos="fade-up" data-aos-delay="350">
-          <div class="card-icon"><i data-lucide="monitor-smartphone"></i></div>
-          <h3>Touch &amp; Web UI</h3>
-          <p>Control GhostESP on-device or from a browser.</p>
-          <p class="card-spec">LVGL UI<span class="card-sep">//</span>touch / keyboard / encoder<span class="card-sep">//</span>web dashboard<span class="card-sep">//</span>file manager<span class="card-sep">//</span>screen mirroring</p>
-        </div>
-        <div class="card" data-aos="fade-up" data-aos-delay="400">
-          <div class="card-icon"><i data-lucide="layers"></i></div>
-          <h3>Platform Ecosystem</h3>
-          <p>Connect devices, apps, and alerts.</p>
-          <p class="card-spec">GhostLink<span class="card-sep">//</span>Android app<span class="card-sep">//</span>Flipper companion<span class="card-sep">//</span>camera streaming<span class="card-sep">//</span>Discord webhooks</p>
-        </div>
-        <div class="card" data-aos="fade-up" data-aos-delay="450">
-          <div class="card-icon"><i data-lucide="puzzle"></i></div>
-          <h3>Native SD Apps</h3>
-          <p>Run sideloaded ESP-IDF apps straight from the SD card.</p>
-          <p class="card-spec"><code>.so</code> apps<span class="card-sep">//</span>stable SDK<span class="card-sep">//</span><code>.gapp</code> packages<span class="card-sep">//</span>App Gallery<span class="card-sep">//</span>PSRAM required</p>
-        </div>
-        <div class="card" data-aos="fade-up" data-aos-delay="500">
-          <div class="card-icon"><i data-lucide="palette"></i></div>
-          <h3>Asset Packs</h3>
-          <p>Restyle the whole UI with swappable theme packs.</p>
-          <p class="card-spec"><code>.gtheme</code> archives<span class="card-sep">//</span>custom colors / icons<span class="card-sep">//</span>live swap<span class="card-sep">//</span>compact variants</p>
         </div>
       </div>
     </div>
@@ -1159,6 +1177,38 @@
         once: true,
         offset: 100
       });
+
+      // Capabilities explorer - tab switching
+      (function () {
+        var tabs = Array.prototype.slice.call(document.querySelectorAll('.cap-tab'));
+        var panels = Array.prototype.slice.call(document.querySelectorAll('.cap-panel'));
+        if (!tabs.length) return;
+
+        function activate(tab) {
+          var target = tab.getAttribute('data-target');
+          tabs.forEach(function (t) {
+            var on = t === tab;
+            t.classList.toggle('active', on);
+            t.setAttribute('aria-selected', on ? 'true' : 'false');
+          });
+          panels.forEach(function (p) {
+            var on = p.id === 'cap-panel-' + target;
+            p.classList.toggle('active', on);
+            if (on) { p.removeAttribute('hidden'); } else { p.setAttribute('hidden', ''); }
+          });
+        }
+
+        tabs.forEach(function (tab, i) {
+          tab.addEventListener('click', function () { activate(tab); });
+          tab.addEventListener('keydown', function (e) {
+            if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+            e.preventDefault();
+            var next = e.key === 'ArrowRight' ? (i + 1) % tabs.length : (i - 1 + tabs.length) % tabs.length;
+            tabs[next].focus();
+            activate(tabs[next]);
+          });
+        });
+      })();
 
       // Partner marquee - JS-driven RAF scroll for reliability
       var marquee = document.querySelector('.partner-marquee');

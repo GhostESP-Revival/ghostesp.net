@@ -493,7 +493,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const brandDeviceMap = {
             "TheWiredHatters": [
-                { name: "Banshee C5", chip: "ESP32-C5", firmware: "Banshee_C5.zip" },
+                { name: "Banshee C5", chip: "ESP32-C5", firmware: "Banshee_C5.zip", flashSize: "8MB" },
                 { name: "Banshee S3", chip: "ESP32-S3", firmware: "Banshee_S3.zip" },
                 { name: "FlipperHub Rocket", chip: "ESP32", firmware: "esp32-generic.zip" },
                 { name: "Marauder V4 / FlipperHub", chip: "ESP32", firmware: "MarauderV4_FlipperHub.zip" }
@@ -1010,6 +1010,30 @@ document.addEventListener('DOMContentLoaded', () => {
             activeBootloaderBaudrate = selectedBaudrate;
         }
 
+        async function syncDetectedFlashSize() {
+            if (!espLoader) return false;
+
+            const flashId = (await espLoader.readFlashId()) & 0xFFFFFF;
+            if (flashId === 0 || flashId === 0xFFFFFF) {
+                espLoaderTerminal.writeLine(`Flash size detection failed; using selected size ${flashSizeSelect?.value || 'unknown'}.`);
+                return false;
+            }
+
+            const sizeId = (flashId >>> 16) & 0xFF;
+            const detectedSize = espLoader.DETECTED_FLASH_SIZES?.[sizeId];
+            if (!detectedSize || !flashSizeSelect?.querySelector(`option[value="${detectedSize}"]`)) {
+                espLoaderTerminal.writeLine(`Flash ID 0x${flashId.toString(16)} has unsupported size code 0x${sizeId.toString(16)}; using selected size ${flashSizeSelect?.value || 'unknown'}.`);
+                return false;
+            }
+
+            flashSizeSelect.value = detectedSize;
+            const step3FlashSize = getElementById('flashSize3');
+            if (step3FlashSize) step3FlashSize.value = detectedSize;
+            espLoaderTerminal.writeLine(`Detected physical flash size: ${detectedSize} (ID 0x${flashId.toString(16)})`);
+            updateFlashSummary();
+            return true;
+        }
+
         const ghostEspZipToTarget = {
             "esp32-generic.zip": "esp32",
             "esp32s2-generic.zip": "esp32s2",
@@ -1182,6 +1206,11 @@ document.addEventListener('DOMContentLoaded', () => {
                         selectedFirmwareDisplayName = dev.name;
                         espLoaderTerminal.writeLine(`Selected: ${selectedSide}`);
                         updateDefaultAddresses();
+                        if (dev.flashSize && flashSizeSelect) {
+                            flashSizeSelect.value = dev.flashSize;
+                            const step3FlashSize = getElementById('flashSize3');
+                            if (step3FlashSize) step3FlashSize.value = dev.flashSize;
+                        }
                         updateConnectButtonLabel();
                         setContinueToStep2Blocked(!connected);
                         if (selectedFirmwareMethod === 'download') {
@@ -1735,6 +1764,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 inBootloaderMode = true;
                 activeBootloaderBaudrate = getSelectedBaudrate();
                 connected = true;
+                await syncDetectedFlashSize();
                 if (!selectedSide) selectedSide = selectedDevice || 'GhostESP device';
 
                 espLoaderTerminal.writeLine(`Connected to ${selectedSide} in bootloader mode (${chipType})`);
@@ -1920,6 +1950,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     inBootloaderMode = true;
                     activeBootloaderBaudrate = getSelectedBaudrate();
                     connected = true;
+                    await syncDetectedFlashSize();
                     espLoaderTerminal.writeLine(`Connected in bootloader mode (${chipType})`);
                 }
 
@@ -1959,12 +1990,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         if (fileInfo.data) {
                             const flashAddress = parseInt(fileInfo.addressInput.value, 16);
                             const uint8Data = new Uint8Array(fileInfo.data);
-                            let binaryString = '';
-                            for (let i = 0; i < uint8Data.length; i++) {
-                                binaryString += String.fromCharCode(uint8Data[i]);
-                            }
                             fileArray.push({
-                                data: binaryString,
+                                data: uint8Data,
                                 address: flashAddress,
                                 name: fileInfo.name,
                                 type: fileInfo.type
@@ -1984,12 +2011,8 @@ document.addEventListener('DOMContentLoaded', () => {
                             const firmware = await file.arrayBuffer();
                             const flashAddress = parseInt(addressInput.value, 16);
                             const uint8Data = new Uint8Array(firmware);
-                            let binaryString = '';
-                            for (let i = 0; i < uint8Data.length; i++) {
-                                binaryString += String.fromCharCode(uint8Data[i]);
-                            }
                             fileArray.push({
-                                data: binaryString,
+                                data: uint8Data,
                                 address: flashAddress,
                                 name: file.name,
                                 type: fileType,
@@ -2045,7 +2068,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 const flashOptions = {
                     fileArray: fileArray.map(item => ({ data: item.data, address: item.address })),
-                    flashSize: "keep",
+                    flashSize: flashSizeSelect ? flashSizeSelect.value : 'keep',
                     flashMode: flashModeSelect ? flashModeSelect.value : 'dio',
                     flashFreq: flashFreqSelect ? flashFreqSelect.value : '40m',
                     eraseAll: false,
@@ -2074,9 +2097,10 @@ document.addEventListener('DOMContentLoaded', () => {
                         } else if (flashETAElem) {
                             flashETAElem.textContent = '';
                         }
-                    },
-                    calculateMD5Hash: calculateMd5Hash
+                    }
                 };
+
+                espLoaderTerminal.writeLine(`Flash size: ${flashOptions.flashSize} (selected: ${flashSizeSelect ? flashSizeSelect.value : 'N/A'})`);
 
                 let flashSuccess = false;
                 let retryCount = 0;
@@ -2090,6 +2114,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         flashSuccess = true;
                         espLoaderTerminal.writeLine("\nFlash write complete!");
                     } catch (flashError) {
+                        if (/doesn't fit in the available flash/i.test(flashError.message)) {
+                            throw flashError;
+                        }
                         retryCount++;
                         if (retryCount <= maxRetries) {
                             espLoaderTerminal.writeLine(`\nFlash write attempt failed: ${flashError.message}. Retrying...`);
@@ -2162,10 +2189,6 @@ document.addEventListener('DOMContentLoaded', () => {
             } finally {
                 updateButtonStates();
             }
-        }
-
-        function calculateMd5Hash(image) {
-            return null;
         }
 
         async function eraseFlashInternal() {
@@ -2462,6 +2485,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
+            const selectedOption = Array.from(ghostEspVariantSelect?.options || [])
+                .find(option => option.value === optionValue);
+            if (selectedOption?.dataset.assetName === 'Banshee_C5.zip' && flashSizeSelect) {
+                flashSizeSelect.value = '8MB';
+                const step3FlashSize = getElementById('flashSize3');
+                if (step3FlashSize) step3FlashSize.value = '8MB';
+                espLoaderTerminal.writeLine('Banshee C5 profile selected: using 8MB flash size.');
+            }
+
             if (ghostEspVariantSelect) ghostEspVariantSelect.disabled = true;
             extractedGhostEspFiles = null;
 
@@ -2523,6 +2555,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 if (foundCount > 0) {
                     extractedGhostEspFiles = filesToExtract;
+                    const requiredEnd = Object.values(filesToExtract).reduce((largestEnd, fileInfo) => {
+                        if (!fileInfo.data) return largestEnd;
+                        const address = parseInt(fileInfo.addressInput.value, 16);
+                        return Math.max(largestEnd, address + fileInfo.data.byteLength);
+                    }, 0);
+                    const selectedFlashBytes = parseInt(flashSizeSelect?.value || '0', 10) * 1024 * 1024;
+                    if (requiredEnd > selectedFlashBytes && flashSizeSelect) {
+                        const fittingOption = Array.from(flashSizeSelect.options).find(option => {
+                            const optionBytes = parseInt(option.value, 10) * 1024 * 1024;
+                            return optionBytes >= requiredEnd;
+                        });
+                        if (fittingOption) {
+                            flashSizeSelect.value = fittingOption.value;
+                            const step3FlashSize = getElementById('flashSize3');
+                            if (step3FlashSize) step3FlashSize.value = fittingOption.value;
+                            espLoaderTerminal.writeLine(`Firmware requires at least ${(requiredEnd / 1024 / 1024).toFixed(2)}MB; using ${fittingOption.value} flash size.`);
+                        }
+                    }
                     espLoaderTerminal.writeLine("Extraction complete. Files ready.");
                     if (ghostEspStatusElem) {
                         ghostEspStatusElem.textContent = `Loaded: ${foundFilesLog.join(', ')}`;
