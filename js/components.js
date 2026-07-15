@@ -40,6 +40,7 @@ const components = {
             <ul class="nav-dropdown-menu">
               <li><a href="/marketplace">Apps</a></li>
               <li><a href="/asset-marketplace">Asset Packs</a></li>
+              <li><a href="/scripts-marketplace">Scripts</a></li>
               <li><a href="/asset-pack-builder">Pack Builder</a></li>
               <li><a href="/irdb">IRDB</a></li>
             </ul>

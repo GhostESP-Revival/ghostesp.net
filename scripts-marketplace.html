@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#000000">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com https://cdn.jsdelivr.net; img-src 'self' https://raw.githubusercontent.com https://gesp.fuckyourcdn.com data:; font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net; connect-src 'self' https://raw.githubusercontent.com https://gesp.fuckyourcdn.com https://api.github.com https://discord.com; object-src 'none'; base-uri 'self'; form-action 'self';">
+
+  <title>GhostESP Scripts Marketplace Beta</title>
+  <meta name="description" content="Beta marketplace for GhostESP GhostScripts. Download Lua scripts for WiFi, BLE, GPS, and more.">
+  <meta name="keywords" content="GhostESP marketplace, GhostESP scripts, GhostScript, Lua, ESP32 scripts">
+  <meta name="author" content="Jay Candel">
+  <meta name="robots" content="index, follow">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="GhostESP Scripts Marketplace Beta">
+  <meta property="og:description" content="Manually reviewed GhostScripts for GhostESP.">
+  <meta property="og:url" content="https://ghostesp.net/scripts-marketplace">
+  <meta property="og:site_name" content="GhostESP">
+  <meta property="og:image" content="https://ghostesp.net/images/ghostespdotnet.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="GhostESP Scripts Marketplace Beta">
+  <meta name="twitter:description" content="Manually reviewed GhostScripts for GhostESP.">
+  <meta name="twitter:image" content="https://ghostesp.net/images/ghostespdotnet.png">
+
+  <link rel="canonical" href="https://ghostesp.net/scripts-marketplace">
+  <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+  <link rel="stylesheet" href="css/main.css">
+  <script src="https://unpkg.com/lucide@0.344.0" defer></script>
+
+  <style>
+    .market-hero {
+      min-height: 90vh;
+      display: flex;
+      align-items: center;
+      text-align: center;
+      padding: 120px var(--spacing) 64px;
+      background:
+        linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+        linear-gradient(180deg, #050505 0%, #000 100%);
+      background-size: 32px 32px, 32px 32px, 100% 100%;
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+      position: relative;
+      z-index: 1;
+    }
+
+    .market-hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.42));
+      pointer-events: none;
+    }
+
+    .market-hero .container {
+      position: relative;
+      z-index: 1;
+    }
+
+    .market-hero-copy {
+      max-width: 760px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .market-hero-logo {
+      width: min(340px, 86vw);
+      height: auto;
+      margin-bottom: 1.5rem;
+    }
+
+    .market-beta-line {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.25rem;
+      padding: 0.28rem 0.65rem;
+      border: 1px solid rgba(0, 255, 128, 0.28);
+      border-radius: 6px;
+      color: #00ff80;
+      background: rgba(0, 255, 128, 0.06);
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .market-hero h1 {
+      display: none;
+      margin-bottom: 1rem;
+      max-width: 680px;
+      font-size: clamp(2.35rem, 6.2vw, 4.75rem);
+      line-height: 0.95;
+      letter-spacing: -2px;
+    }
+
+    .market-hero p {
+      max-width: 640px;
+      color: var(--text-dim);
+      font-size: 1.04rem;
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    .market-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    .market-list-meta {
+      min-height: 1.5rem;
+      margin-bottom: 1rem;
+      text-align: center;
+      color: var(--text-dim);
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+    }
+
+    .market-app-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 1.25rem;
+      justify-content: center;
+      justify-items: center;
+    }
+
+    .market-app-card {
+      display: flex;
+      flex-direction: column;
+      min-height: 100%;
+      padding: 1.35rem;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background: rgba(10, 10, 10, 0.9);
+      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+      max-width: 420px;
+    }
+
+    .market-app-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(255, 255, 255, 0.24);
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.35);
+    }
+
+    .market-app-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 0.9rem;
+    }
+
+    .market-app-title {
+      margin: 0 0 0.2rem;
+      font-size: 1.15rem;
+    }
+
+    .market-app-id {
+      color: var(--text-dim);
+      font-family: var(--font-mono);
+      font-size: 0.76rem;
+    }
+
+    .market-app-authors {
+      margin-top: 0.35rem;
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.84rem;
+    }
+
+    .market-app-authors span {
+      color: var(--text-dim);
+    }
+
+    .market-reviewed {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      height: max-content;
+      color: #00ff80;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .market-reviewed::before {
+      content: '\2713';
+      font-size: 0.85rem;
+    }
+
+    .market-app-description {
+      flex: 1;
+      color: var(--text-dim);
+      font-size: 0.92rem;
+      margin-bottom: 1rem;
+    }
+
+    .market-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 1rem;
+    }
+
+    .market-chip {
+      display: inline-block;
+      padding: 0.2rem 0.55rem;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 6px;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .market-chip--perm {
+      border-color: rgba(0, 255, 128, 0.2);
+      color: #00ff80;
+    }
+
+    .market-downloads {
+      display: grid;
+      gap: 0.5rem;
+      margin-top: auto;
+    }
+
+    .market-download {
+      display: flex;
+      justify-content: space-between;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 10px;
+      color: #000;
+      text-decoration: none;
+      background: var(--text);
+      font-weight: 600;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .market-download:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(255, 255, 255, 0.14);
+    }
+
+    .market-download span:last-child {
+      opacity: 0.62;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      white-space: nowrap;
+    }
+
+    .market-empty {
+      padding: 2rem;
+      border: 1px dashed var(--border);
+      border-radius: var(--radius);
+      text-align: center;
+      color: var(--text-dim);
+      background: rgba(10, 10, 10, 0.7);
+    }
+
+    .market-install {
+      max-width: 680px;
+      margin: 0 auto;
+      color: var(--text-dim);
+      text-align: center;
+      font-size: 1rem;
+      line-height: 1.7;
+    }
+
+    .market-install code {
+      color: var(--text);
+      font-size: 0.85rem;
+    }
+
+    @media (max-width: 768px) {
+      .market-hero-logo {
+        width: min(260px, 82vw);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .market-hero {
+        min-height: auto;
+        padding-top: 96px;
+      }
+
+      .market-actions .btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to content</a>
+  <canvas id="dotTerrain"></canvas>
+  <script src="js/dot-terrain.js"></script>
+  <nav id="nav"><noscript><a href="/">Home</a> <a href="boards.html">Boards</a> <a href="flasher.html">Flasher</a> <a href="serial.html">Serial Console</a> <a href="marketplace.html">Apps</a> <a href="asset-marketplace.html">Asset Packs</a> <a href="scripts-marketplace.html">Scripts</a> <a href="irdb.html">IRDB</a> <a href="blog.html">Blog</a> <a href="https://docs.ghostesp.net">Docs</a></noscript></nav>
+
+  <header id="main-content" class="market-hero">
+    <div class="container">
+      <div class="market-hero-copy" data-aos="fade-up">
+        <img src="images/ghostespdotnet.png" alt="GhostESP" class="market-hero-logo">
+        <div class="market-beta-line">Beta marketplace</div>
+        <h1>Scripts For GhostESP</h1>
+        <p>Download GhostScript Lua scripts for WiFi, BLE, GPS, and more. Drop a script folder on your SD card and run it from the on-device browser.</p>
+        <div class="market-actions">
+          <a href="#marketplace" class="btn btn-primary">Browse Scripts</a>
+          <a href="marketplace.html" class="btn btn-secondary">Browse Apps</a>
+          <a href="https://github.com/GhostESP-Revival/GhostESP-Scripts" class="btn btn-secondary" target="_blank" rel="noopener">Submit Script</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section id="marketplace" class="section">
+    <div class="container">
+      <h2 data-aos="fade-up">Scripts</h2>
+      <div id="scripts-market-meta" class="market-list-meta" data-aos="fade-up" data-aos-delay="80">Loading scripts...</div>
+      <div id="scripts-market-grid" class="market-app-grid" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <section class="section section-alt">
+    <div class="container">
+      <h2 data-aos="fade-up">Install</h2>
+      <div class="market-install" data-aos="fade-up" data-aos-delay="80">
+        <p>Copy the script folder (containing <code>manifest.json</code> and <code>.gsb</code>) to <code>/mnt/ghostesp/scripts/</code> on your SD card, then open the Scripts browser from the device menu.</p>
+        <p style="margin-top:0.75rem;"><a href="https://docs.ghostesp.net" target="_blank" rel="noopener" style="color:#00ff80;">Full GhostScript docs</a> for creating your own scripts.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-links">
+        <a href="https://discord.gg/5cyNmUMgwh" target="_blank" rel="noopener" class="icon-link" title="Discord">
+          <i class="bi bi-discord"></i>
+        </a>
+        <a href="https://github.com/GhostESP-Revival/GhostESP" target="_blank" rel="noopener" class="icon-link" title="GitHub">
+          <i class="bi bi-github"></i>
+        </a>
+        <a href="https://instagram.com/ghostesprevival" target="_blank" rel="noopener" class="icon-link" title="Instagram">
+          <i class="bi bi-instagram"></i>
+        </a>
+            <button class="cookie-settings-link" onclick="CookieConsent.showSettings()">Cookie Settings</button>
+      <a href="privacy.html" class="cookie-settings-link">Privacy Policy</a>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js" defer></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js" defer></script>
+  <script src="js/components.js" defer></script>
+  <script src="js/social-proof.js" defer></script>
+  <script src="js/scripts-marketplace.js" defer></script>
+  <script src="js/main.js" defer></script>
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      if (typeof AOS !== 'undefined') {
+        AOS.init({ duration: 800, once: true, offset: 100 });
+      }
+    });
+  </script>
+  <script src="js/cookie-consent.js" defer></script>
+</body>
+</html>

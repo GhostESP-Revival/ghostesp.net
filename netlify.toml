@@ -42,6 +42,12 @@
   force = true
 
 [[redirects]]
+  from = "/scripts-marketplace.html"
+  to = "/scripts-marketplace"
+  status = 301
+  force = true
+
+[[redirects]]
   from = "/asset-pack-builder.html"
   to = "/asset-pack-builder"
   status = 301
