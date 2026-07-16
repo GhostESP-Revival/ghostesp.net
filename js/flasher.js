@@ -547,16 +547,14 @@ document.addEventListener('DOMContentLoaded', () => {
             "JCMK": [
                 { name: "DevBoard Pro", chip: "ESP32", firmware: "JCMK_DevBoardPro.zip" },
                 { name: "Flipper Dev-Board w/ JCMK GPS", chip: "ESP32-S2", firmware: "Flipper_JCMK_GPS.zip" },
-                { name: "Marauder V4", chip: "ESP32", firmware: "MarauderV4_FlipperHub.zip" }
+                { name: "Marauder V4", chip: "ESP32", firmware: "MarauderV4_FlipperHub.zip" },
+                { name: "Marauder V8", chip: "ESP32-C5", firmware: "MarauderV8.zip", flashSize: "8MB" },
+                { name: "Marauder Pancake", chip: "ESP32-C5", firmware: "MarauderPancake.zip", flashSize: "8MB" }
             ],
             "Seeed": [
                 { name: "XIAO S3 Sense", chip: "ESP32-S3", firmware: "XIAO_S3_Sense.zip" },
                 { name: "XIAO C5", chip: "ESP32-C5", firmware: "XIAO_C5.zip" },
                 { name: "XIAO S3", chip: "ESP32-S3", firmware: "XIAO_S3.zip" }
-            ],
-            "Marauder": [
-                { name: "Marauder V8", chip: "ESP32-C5", firmware: "MarauderV8.zip", flashSize: "8MB" },
-                { name: "Marauder Pancake", chip: "ESP32-C5", firmware: "MarauderPancake.zip", flashSize: "8MB" }
             ],
             "Displays": [
                 { name: "Crowtech 7\" LCD", chip: "ESP32-S3", firmware: "Crowtech_LCD.zip" },
@@ -761,9 +759,8 @@ document.addEventListener('DOMContentLoaded', () => {
             "Awok": ["AwokMini.zip", "MarauderV4_FlipperHub.zip", "MarauderV6_AwokDual.zip", "esp32v5_awok.zip"],
             "Heltec": ["HeltecV3.zip"],
             "Waveshare": ["Waveshare_LCD.zip"],
-            "JCMK": ["JCMK_DevBoardPro.zip", "Flipper_JCMK_GPS.zip", "MarauderV4_FlipperHub.zip", "MarauderV6_AwokDual.zip"],
+            "JCMK": ["JCMK_DevBoardPro.zip", "Flipper_JCMK_GPS.zip", "MarauderV4_FlipperHub.zip", "MarauderV6_AwokDual.zip", "MarauderV8.zip", "MarauderPancake.zip"],
             "Seeed": ["XIAO_S3_Sense.zip", "XIAO_C5.zip", "XIAO_S3.zip"],
-            "Marauder": ["MarauderV8.zip", "MarauderPancake.zip"],
             "Displays": ["Crowtech_LCD.zip", "Sunton_LCD.zip", "JC3248W535EN_LCD.zip"],
             "Additional": ["Lolin_S3_Pro.zip", "FeberisPro.zip", "ACE_C5.zip", "ACE_S3.zip"]
         };
