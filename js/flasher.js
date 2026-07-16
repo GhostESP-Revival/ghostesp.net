@@ -535,7 +535,8 @@ document.addEventListener('DOMContentLoaded', () => {
             ],
             "Awok": [
                 { name: "Awok Mini", chip: "ESP32-S2", firmware: "AwokMini.zip" },
-                { name: "Awok Dual", chip: "ESP32", firmware: "MarauderV6_AwokDual.zip" }
+                { name: "Awok Dual", chip: "ESP32", firmware: "MarauderV6_AwokDual.zip" },
+                { name: "Awok V5", chip: "ESP32-S2", firmware: "esp32v5_awok.zip" }
             ],
             "Heltec": [
                 { name: "Heltec V3", chip: "ESP32-S3", firmware: "HeltecV3.zip" }
@@ -552,6 +553,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 { name: "XIAO S3 Sense", chip: "ESP32-S3", firmware: "XIAO_S3_Sense.zip" },
                 { name: "XIAO C5", chip: "ESP32-C5", firmware: "XIAO_C5.zip" },
                 { name: "XIAO S3", chip: "ESP32-S3", firmware: "XIAO_S3.zip" }
+            ],
+            "Marauder": [
+                { name: "Marauder V8", chip: "ESP32-C5", firmware: "MarauderV8.zip", flashSize: "8MB" },
+                { name: "Marauder Pancake", chip: "ESP32-C5", firmware: "MarauderPancake.zip", flashSize: "8MB" }
+            ],
+            "Displays": [
+                { name: "Crowtech 7\" LCD", chip: "ESP32-S3", firmware: "Crowtech_LCD.zip" },
+                { name: "Sunton 7\" LCD", chip: "ESP32-S3", firmware: "Sunton_LCD.zip", flashSize: "8MB" },
+                { name: "JC3248W535EN LCD", chip: "ESP32-S3", firmware: "JC3248W535EN_LCD.zip", flashSize: "16MB" }
+            ],
+            "Additional": [
+                { name: "Lolin S3 Pro", chip: "ESP32-S3", firmware: "Lolin_S3_Pro.zip" },
+                { name: "Feberis Pro", chip: "ESP32", firmware: "FeberisPro.zip" },
+                { name: "ACE C5", chip: "ESP32-C5", firmware: "ACE_C5.zip" },
+                { name: "ACE S3", chip: "ESP32-S3", firmware: "ACE_S3.zip" }
             ]
         };
 
@@ -720,6 +736,7 @@ document.addEventListener('DOMContentLoaded', () => {
             "XIAO_S3_Sense.zip": "Seeed XIAO S3 Sense",
             "XIAO_C5.zip": "Seeed XIAO C5",
             "XIAO_S3.zip": "Seeed XIAO S3",
+            "FeberisPro.zip": "Feberis Pro",
             "MarauderV8.zip": "Marauder V8",
             "MarauderPancake.zip": "Marauder Pancake"
         };
@@ -741,11 +758,14 @@ document.addEventListener('DOMContentLoaded', () => {
             "M5Stack": ["ESP32-S3-Cardputer.zip", "CardputerADV.zip"],
             "CYD": ["CYD2USB.zip", "CYDMicroUSB.zip", "CYDDualUSB.zip", "CYD2USB2.4Inch.zip", "CYD2USB2.4Inch_C.zip", "NM-CYD-C5.zip", "CYD2432S028R.zip"],
             "LilyGo": ["LilyGo-T-Deck.zip", "LilyGo-TEmbedC1101.zip", "LilyGo-TDongleS3.zip", "LilyGo-TDongleC5.zip", "LilyGo-S3TWatch-2020.zip", "LilyGo-TDisplayS3-Touch.zip"],
-            "Awok": ["AwokMini.zip", "MarauderV4_FlipperHub.zip", "MarauderV6_AwokDual.zip"],
+            "Awok": ["AwokMini.zip", "MarauderV4_FlipperHub.zip", "MarauderV6_AwokDual.zip", "esp32v5_awok.zip"],
             "Heltec": ["HeltecV3.zip"],
             "Waveshare": ["Waveshare_LCD.zip"],
             "JCMK": ["JCMK_DevBoardPro.zip", "Flipper_JCMK_GPS.zip", "MarauderV4_FlipperHub.zip", "MarauderV6_AwokDual.zip"],
-            "Seeed": ["XIAO_S3_Sense.zip", "XIAO_C5.zip", "XIAO_S3.zip"]
+            "Seeed": ["XIAO_S3_Sense.zip", "XIAO_C5.zip", "XIAO_S3.zip"],
+            "Marauder": ["MarauderV8.zip", "MarauderPancake.zip"],
+            "Displays": ["Crowtech_LCD.zip", "Sunton_LCD.zip", "JC3248W535EN_LCD.zip"],
+            "Additional": ["Lolin_S3_Pro.zip", "FeberisPro.zip", "ACE_C5.zip", "ACE_S3.zip"]
         };
 
         // Generic builds that should always show
@@ -804,7 +824,9 @@ document.addEventListener('DOMContentLoaded', () => {
             "xiao_esp32s3": "XIAO_S3.zip",
             "xiao_esp32s3_sense": "XIAO_S3_Sense.zip",
             "marauderv8": "MarauderV8.zip",
-            "pancake": "MarauderPancake.zip"
+            "marauder v8": "MarauderV8.zip",
+            "pancake": "MarauderPancake.zip",
+            "marauder pancake": "MarauderPancake.zip"
         };
 
         function normalizeBuildTemplate(value) {
@@ -1078,7 +1100,10 @@ document.addEventListener('DOMContentLoaded', () => {
             "Banshee_S3.zip": "esp32s3",
             "XIAO_S3_Sense.zip": "esp32s3",
             "XIAO_C5.zip": "esp32c5",
-            "XIAO_S3.zip": "esp32s3"
+            "XIAO_S3.zip": "esp32s3",
+            "FeberisPro.zip": "esp32",
+            "MarauderV8.zip": "esp32c5",
+            "MarauderPancake.zip": "esp32c5"
         };
 
         document.querySelectorAll('[data-connection-mode]').forEach(card => {
