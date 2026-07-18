@@ -7,21 +7,21 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com https://cdn.jsdelivr.net; img-src 'self' https://raw.githubusercontent.com https://gesp.fuckyourcdn.com data:; font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net; connect-src 'self' https://raw.githubusercontent.com https://gesp.fuckyourcdn.com https://api.github.com https://discord.com; object-src 'none'; base-uri 'self'; form-action 'self';">
 
   <title>GhostESP App Marketplace for Native SD Apps</title>
-  <meta name="description" content="Beta marketplace for manually reviewed GhostESP native SD apps and locally hosted .gapp downloads.">
+  <meta name="description" content="Marketplace for GhostESP native SD apps and locally hosted .gapp downloads.">
   <meta name="keywords" content="GhostESP marketplace, GhostESP apps, native SD apps, ESP32 apps, .gapp">
   <meta name="author" content="Jay Candel">
   <meta name="robots" content="index, follow">
 
   <meta property="og:type" content="website">
   <meta property="og:title" content="GhostESP App Marketplace Beta">
-  <meta property="og:description" content="Manually reviewed native SD apps for GhostESP.">
+  <meta property="og:description" content="Native SD apps for GhostESP.">
   <meta property="og:url" content="https://ghostesp.net/marketplace">
   <meta property="og:site_name" content="GhostESP">
   <meta property="og:image" content="https://ghostesp.net/images/ghostespdotnet.png">
 
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="GhostESP App Marketplace Beta">
-  <meta name="twitter:description" content="Manually reviewed native SD apps for GhostESP.">
+  <meta name="twitter:description" content="Native SD apps for GhostESP.">
   <meta name="twitter:image" content="https://ghostesp.net/images/ghostespdotnet.png">
 
   <link rel="canonical" href="https://ghostesp.net/marketplace">
@@ -161,6 +161,18 @@
       font-size: 0.8rem;
     }
 
+    .market-security-notice {
+      max-width: 760px;
+      margin: 0 auto 1.25rem;
+      padding: 0.85rem 1rem;
+      border: 1px solid rgba(255, 200, 87, 0.38);
+      border-radius: var(--radius);
+      color: rgba(255, 236, 188, 0.9);
+      background: rgba(255, 200, 87, 0.07);
+      font-size: 0.86rem;
+      text-align: center;
+    }
+
     .market-app-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
@@ -213,23 +225,6 @@
 
     .market-app-authors span {
       color: var(--text-dim);
-    }
-
-    .market-reviewed {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-      height: max-content;
-      color: #00ff80;
-      font-family: var(--font-mono);
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      white-space: nowrap;
-    }
-
-    .market-reviewed::before {
-      content: '✓';
-      font-size: 0.85rem;
     }
 
     .market-app-description {
@@ -304,6 +299,21 @@
       background: rgba(255, 255, 255, 0.06);
     }
 
+    .market-source-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 0.45rem;
+      color: var(--text-dim);
+      font-size: 0.8rem;
+      text-decoration: none;
+    }
+
+    .market-source-link:hover {
+      color: var(--text);
+      text-decoration: underline;
+    }
+
     .market-download span:last-child {
       color: var(--text-dim);
       font-family: var(--font-mono);
@@ -339,6 +349,7 @@
       .market-toolbar {
         grid-template-columns: 1fr;
       }
+
     }
 
     @media (max-width: 480px) {
@@ -365,7 +376,7 @@
         <img src="images/ghostespdotnet.png" alt="GhostESP" class="market-hero-logo">
         <div class="market-beta-line">Beta marketplace</div>
         <h1>Native Apps For GhostESP</h1>
-        <p>Reviewed `.gapp` builds for the GhostESP SD app loader. Pick the package for your ESP target, drop it on the SD card, and launch it from the gallery.</p>
+        <p>Native `.gapp` builds for the GhostESP SD app loader. Pick the package for your ESP target, drop it on the SD card, and launch it from the gallery.</p>
         <div class="market-actions">
           <a href="#marketplace" class="btn btn-primary">Browse Apps</a>
           <a href="asset-marketplace.html" class="btn btn-secondary">Asset Packs</a>
@@ -386,6 +397,7 @@
           <option value="">All targets</option>
         </select>
       </div>
+      <p class="market-security-notice" data-aos="fade-up" data-aos-delay="100">Only install apps from sources you trust. Apps obtained outside this marketplace may contain malware or compromise your device.</p>
       <div id="market-meta" class="market-list-meta">Loading apps...</div>
       <div id="market-grid" class="market-app-grid" aria-live="polite"></div>
     </div>

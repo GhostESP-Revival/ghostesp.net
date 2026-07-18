@@ -1,7 +1,8 @@
 (function () {
   const APPS_CATALOG_URL = 'https://raw.githubusercontent.com/GhostESP-Revival/GhostESP-Apps/main/catalog.json';
+  const APP_MANIFEST_BASE_URL = 'https://raw.githubusercontent.com/GhostESP-Revival/GhostESP-Apps/main/apps';
   const ASSETS_CATALOG_URL = 'https://raw.githubusercontent.com/GhostESP-Revival/GhostESP-Assets/main/catalog.json';
-  const CACHE_KEY = 'ghostesp-apps-catalog';
+  const CACHE_KEY = 'ghostesp-apps-catalog-v2';
   const CACHE_TTL = 5 * 60 * 1000;
 
   let apps = [];
@@ -86,18 +87,26 @@
     </div>` : ''}`;
   }
 
+  function getSourceUrl(app) {
+    if (!app.source_repo) return '';
+
+    const repository = app.source_repo.replace(/\.git\/?$/, '').replace(/\/$/, '');
+    const branch = app.source_branch || 'main';
+    const subdir = app.source_subdir ? `/${app.source_subdir.replace(/^\/+/, '')}` : '';
+    return `${repository}/tree/${branch}${subdir}`;
+  }
+
   function renderApp(app) {
     const authors = Array.isArray(app.authors) && app.authors.length ? app.authors : ['Unknown'];
+    const sourceUrl = getSourceUrl(app);
 
     return `<article class="market-app-card">
-      ${app.preview ? `<div class="market-pack-preview"><img src="${escapeHtml(app.preview)}" alt="${escapeHtml(app.name)} preview" loading="lazy"></div>` : ''}
       <div class="market-app-head">
         <div>
           <h3 class="market-app-title">${escapeHtml(app.name)}</h3>
           <div class="market-app-id">${escapeHtml(app.id)} v${escapeHtml(app.version)}</div>
           <div class="market-app-authors"><span>Authors:</span> ${escapeHtml(authors.join(', '))}</div>
         </div>
-        <span class="market-reviewed">${escapeHtml(app.reviewed ? 'Approved' : 'Pending')}</span>
       </div>
       <p class="market-app-description">${escapeHtml(app.description)}</p>
       <div class="market-chip-row">
@@ -105,7 +114,31 @@
         ${(app.targets || []).map((t) => `<span class="market-chip">${escapeHtml(t)}</span>`).join('')}
       </div>
       <div class="market-downloads">${renderDownloads(app)}</div>
+      ${sourceUrl ? `<a class="market-source-link" href="${escapeHtml(sourceUrl)}" target="_blank" rel="noopener">View source code</a>` : ''}
     </article>`;
+  }
+
+  async function addSourceDetails() {
+    const manifests = await Promise.all(apps.map(async (app) => {
+      if (app.source_repo || !app.id) return app;
+
+      try {
+        const response = await fetch(`${APP_MANIFEST_BASE_URL}/${encodeURIComponent(app.id)}/manifest.json`);
+        if (!response.ok) return app;
+
+        const manifest = await response.json();
+        return {
+          ...app,
+          source_repo: manifest.source_repo,
+          source_branch: manifest.source_branch,
+          source_subdir: manifest.source_subdir
+        };
+      } catch (error) {
+        return app;
+      }
+    }));
+
+    apps = manifests;
   }
 
   function render() {
@@ -177,7 +210,8 @@
 
     try {
       const catalog = await fetchCatalog();
-      apps = (catalog.apps || []).filter((app) => app.reviewed);
+      apps = catalog.apps || [];
+      await addSourceDetails();
       renderTargets();
     } catch (err) {
       state.error = 'Failed to load apps. Please try again later.';
