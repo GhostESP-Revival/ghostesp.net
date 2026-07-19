@@ -6,28 +6,29 @@
   <meta name="theme-color" content="#000000">
   
   <!-- SEO Meta Tags -->
-   <title>GhostESP Supported ESP32 Boards and Hardware</title>
-  <meta name="description" content="Find tested GhostESP-compatible ESP32 boards, including GhostBoard, Cardputer, T-Deck, T-Watch, CYD, ESP32-S3, ESP32-C3, ESP32-C5, and ESP32-C6 hardware.">
-  <meta name="keywords" content="GhostESP boards, ESP32 boards, Cardputer, T-Watch, T-Deck, GhostBoard, ESP32-C5, ESP32-S3, compatible hardware">
+   <title>Best ESP32 Boards for GhostESP: Cardputer, CYD, T-Deck & C5</title>
+   <meta name="description" content="Compare tested ESP32 boards for GhostESP, from budget CYD displays to Cardputer, T-Deck, ESP32-C5 5 GHz hardware, and Flipper-compatible boards.">
+   <meta name="keywords" content="best ESP32 board for GhostESP, GhostESP boards, ESP32 security research board, Cardputer, T-Watch, T-Deck, GhostBoard, ESP32-C5, ESP32-S3, compatible hardware">
   <meta name="author" content="Jay Candel">
   <meta name="robots" content="index, follow">
   
   <!-- Open Graph Tags -->
   <meta property="og:type" content="website">
-   <meta property="og:title" content="GhostESP Supported ESP32 Boards and Hardware">
-  <meta property="og:description" content="Hand-picked ESP32 hardware tested and verified for GhostESP, including GhostBoard, Cardputer, T-Deck, CYD, and ESP32-S3 boards.">
+   <meta property="og:title" content="Best ESP32 Boards for GhostESP">
+   <meta property="og:description" content="Compare tested GhostESP hardware, from budget CYD displays to Cardputer, T-Deck, ESP32-C5 5 GHz, and Flipper-compatible boards.">
   <meta property="og:url" content="https://ghostesp.net/boards">
   <meta property="og:site_name" content="GhostESP">
   <meta property="og:image" content="https://ghostesp.net/images/IMG_1178.webp">
   
   <!-- Twitter Card Tags -->
   <meta name="twitter:card" content="summary_large_image">
-   <meta name="twitter:title" content="GhostESP Supported ESP32 Boards and Hardware">
-  <meta name="twitter:description" content="Browse tested ESP32 boards and hardware for GhostESP.">
+   <meta name="twitter:title" content="Best ESP32 Boards for GhostESP">
+   <meta name="twitter:description" content="Compare tested ESP32 boards for GhostESP.">
   <meta name="twitter:image" content="https://ghostesp.net/images/IMG_1178.webp">
   
   <!-- Canonical URL -->
   <link rel="canonical" href="https://ghostesp.net/boards">
+  <link rel="alternate" type="application/rss+xml" title="GhostESP Blog" href="https://ghostesp.net/feed.xml">
   
   <!-- Favicons -->
   <link rel="icon" type="image/x-icon" href="images/favicon.ico">
@@ -45,16 +46,42 @@
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "ItemList",
-    "name": "GhostESP Supported ESP32 Boards",
-    "description": "Tested ESP32 boards compatible with the GhostESP platform.",
-    "url": "https://ghostesp.net/boards",
-    "itemListElement": [
-      { "@type": "ListItem", "position": 1, "name": "GhostBoard", "url": "https://ghostesp.net/boards" },
-      { "@type": "ListItem", "position": 2, "name": "CYD2USB 2.4 inch C Variant", "url": "https://ghostesp.net/boards" },
-      { "@type": "ListItem", "position": 3, "name": "NM-CYD-C5", "url": "https://ghostesp.net/boards" },
-      { "@type": "ListItem", "position": 4, "name": "M5Stack Cardputer", "url": "https://ghostesp.net/boards" },
-      { "@type": "ListItem", "position": 5, "name": "LILYGO T-Deck", "url": "https://ghostesp.net/boards" }
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ghostesp.net/" },
+          { "@type": "ListItem", "position": 2, "name": "Supported Boards", "item": "https://ghostesp.net/boards" }
+        ]
+      },
+      {
+        "@type": "ItemList",
+        "name": "GhostESP Supported ESP32 Boards",
+        "description": "Tested ESP32 boards compatible with the GhostESP platform.",
+        "url": "https://ghostesp.net/boards",
+        "numberOfItems": 19,
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "GhostBoard" },
+          { "@type": "ListItem", "position": 2, "name": "CYD2USB 2.4 inch C Variant" },
+          { "@type": "ListItem", "position": 3, "name": "NM-CYD-C5" },
+          { "@type": "ListItem", "position": 4, "name": "Ultimate Marauder" },
+          { "@type": "ListItem", "position": 5, "name": "The Banshee" },
+          { "@type": "ListItem", "position": 6, "name": "ESP-Rocket" },
+          { "@type": "ListItem", "position": 7, "name": "ESP32-S3 Cardputer" },
+          { "@type": "ListItem", "position": 8, "name": "M5Stack Cardputer ADV" },
+          { "@type": "ListItem", "position": 9, "name": "The Phantom" },
+          { "@type": "ListItem", "position": 10, "name": "T-Embed CC1101" },
+          { "@type": "ListItem", "position": 11, "name": "LilyGo T-Watch S3" },
+          { "@type": "ListItem", "position": 12, "name": "LilyGo T-Deck" },
+          { "@type": "ListItem", "position": 13, "name": "LilyGo T-Display S3 Touch" },
+          { "@type": "ListItem", "position": 14, "name": "CYD-2432S024R Resistive" },
+          { "@type": "ListItem", "position": 15, "name": "Poltergeist 5GHz WiFi Board" },
+          { "@type": "ListItem", "position": 16, "name": "ESP32-C5 Dev Board" },
+          { "@type": "ListItem", "position": 17, "name": "Seeed XIAO ESP32-S3 Sense" },
+          { "@type": "ListItem", "position": 18, "name": "Seeed XIAO ESP32-C5" },
+          { "@type": "ListItem", "position": 19, "name": "Seeed XIAO ESP32S3" }
+        ]
+      }
     ]
   }
   </script>
@@ -106,8 +133,14 @@
     <div class="container">
       <h1>Supported Boards</h1>
       <p style="text-align: center; color: var(--text-dim); margin-bottom: 3rem; max-width: 800px; margin-left: auto; margin-right: auto;">
-        Hand-picked hardware known to work great with Ghost ESP.
+        Compare tested ESP32 hardware for GhostESP, from budget touch displays to portable keyboards, 5 GHz boards, and Flipper-compatible hardware.
       </p>
+      <p style="text-align: center; color: var(--text-dim); font-size: 0.85rem; margin: -2rem auto 2rem; max-width: 700px;">
+        Some purchase links are affiliate links. They may earn GhostESP a commission at no extra cost to you and help fund development.
+      </p>
+      <section aria-labelledby="board-guide-heading" style="max-width: 1000px; margin: 0 auto 2.5rem;">
+        <h2 id="board-guide-heading" style="text-align: center; font-size: 1.35rem;">Choose by use case</h2>
+      </section>
       <div class="tag-filter" id="board-tag-filter" aria-label="Filter supported boards"></div>
       
       <div class="board-grid">
@@ -132,7 +165,7 @@
             <span class="board-tag">SD Card</span>
           </div>
           <p>Compact 2.4" capacitive touch display board powered by an ESP32 WROOM module.</p>
-          <a href="https://s.click.aliexpress.com/e/_olgPirZ" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy Now</a>
+          <a href="https://s.click.aliexpress.com/e/_olgPirZ" target="_blank" rel="noopener sponsored nofollow" data-affiliate="aliexpress" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy Now</a>
         </div>
 
         <div class="card board-card-full">
@@ -144,7 +177,7 @@
             <span class="board-tag">5GHz</span>
           </div>
           <p>ESP32-C5 based Cheap Yellow Display board with 2.4" capacitive touch and 5 GHz Wi-Fi support.</p>
-          <a href="https://s.click.aliexpress.com/e/_c3JPeQEF" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy Now</a>
+          <a href="https://s.click.aliexpress.com/e/_c3JPeQEF" target="_blank" rel="noopener sponsored nofollow" data-affiliate="aliexpress" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy Now</a>
         </div>
 
         <div class="card board-card-full">
@@ -200,7 +233,19 @@
             <span class="board-tag">Infrared</span>
           </div>
           <p>Compact keyboard-style ESP32-S3 device with on-the-go control, SD card and infrared.</p>
-          <a href="https://s.click.aliexpress.com/e/_oljsRNt" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy Now</a>
+          <a href="https://s.click.aliexpress.com/e/_oljsRNt" target="_blank" rel="noopener sponsored nofollow" data-affiliate="aliexpress" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy Now</a>
+        </div>
+
+        <div class="card board-card-full">
+          <img src="https://ae-pic-a1.aliexpress-media.com/kf/Sbaec1d1ba16c4721a47063e795a7513b4.jpg?has_lang=1&amp;ver=2_960x960q75.jpg" alt="M5Stack Cardputer ADV" loading="lazy">
+          <h3>M5Stack Cardputer ADV</h3>
+          <div class="board-tags">
+            <span class="board-tag">Keyboard</span>
+            <span class="board-tag">SD Card</span>
+            <span class="board-tag">Infrared</span>
+          </div>
+          <p>Advanced ESP32-S3 Cardputer with a compact keyboard, display, SD card support, infrared, and sensor expansion.</p>
+          <a href="https://s.click.aliexpress.com/e/_c3zF7Q9H" target="_blank" rel="noopener sponsored nofollow" data-affiliate="aliexpress" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy Now</a>
         </div>
 
         <div class="card board-card-full">
@@ -225,7 +270,7 @@
             <span class="board-tag">NFC</span>
           </div>
           <p>Built-in IR, Sub-Ghz and NFC with ESP32-S3 and SD card slot.</p>
-          <a href="https://www.lilygo.cc/products/t-embed-cc1101?bg_ref=69Mwul6hBm" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy Now</a>
+          <a href="https://www.lilygo.cc/products/t-embed-cc1101?bg_ref=69Mwul6hBm" target="_blank" rel="noopener sponsored nofollow" data-affiliate="lilygo" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy Now</a>
         </div>
 
         <div class="card board-card-full">
@@ -236,7 +281,7 @@
             <span class="board-tag">Infrared</span>
           </div>
           <p>Wearable ESP32-S3 smartwatch with LoRa support.</p>
-          <a href="https://www.lilygo.cc/products/t-watch-s3-us?bg_ref=69Mwul6hBm" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy Now</a>
+          <a href="https://www.lilygo.cc/products/t-watch-s3-us?bg_ref=69Mwul6hBm" target="_blank" rel="noopener sponsored nofollow" data-affiliate="lilygo" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy Now</a>
         </div>
 
         <div class="card board-card-full">
@@ -247,7 +292,7 @@
             <span class="board-tag">Keyboard</span>
           </div>
           <p>Modular developer board (ESP32-S3) designed for LoRa.</p>
-          <a href="https://www.lilygo.cc/products/t-deck?bg_ref=69Mwul6hBm" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy Now</a>
+          <a href="https://www.lilygo.cc/products/t-deck?bg_ref=69Mwul6hBm" target="_blank" rel="noopener sponsored nofollow" data-affiliate="lilygo" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy Now</a>
         </div>
 
         <div class="card board-card-full">
@@ -257,7 +302,7 @@
             <span class="board-tag">Touch</span>
           </div>
           <p>ESP32-S3 development board with integrated touch display.</p>
-          <a href="https://www.lilygo.cc/products/t-display-s3?bg_ref=69Mwul6hBm" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy Now</a>
+          <a href="https://www.lilygo.cc/products/t-display-s3?bg_ref=69Mwul6hBm" target="_blank" rel="noopener sponsored nofollow" data-affiliate="lilygo" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy Now</a>
         </div>
 
         <div class="card board-card-full">
@@ -265,9 +310,10 @@
           <h3>CYD-2432S024R Resistive</h3>
           <div class="board-tags">
             <span class="board-tag">Touch</span>
+            <span class="board-tag">SD Card</span>
           </div>
           <p>2.4" resistive touch display module (CYD-2432S024R)</p>
-          <a href="https://s.click.aliexpress.com/e/_ombDm1D" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy Now</a>
+          <a href="https://s.click.aliexpress.com/e/_ombDm1D" target="_blank" rel="noopener sponsored nofollow" data-affiliate="aliexpress" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy Now</a>
         </div>
 
         <div class="card board-card-full">
@@ -300,6 +346,7 @@
           <h3>Seeed XIAO ESP32-S3 Sense</h3>
           <div class="board-tags">
             <span class="board-tag">SD Card</span>
+            <span class="board-tag">Camera</span>
           </div>
           <p>Dual-core ESP32-S3 with built-in camera sensor, digital microphone, 8MB PSRAM, 8MB Flash, and SD card slot. Ideal for embedded ML, intelligent voice and vision AI.</p>
           <a href="https://www.seeedstudio.com/XIAO-ESP32S3-Sense-p-5639.html" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy Now</a>

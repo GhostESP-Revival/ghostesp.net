@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#000000">
+
+  <title>GhostESP v2.1: Building a Platform - GhostESP Blog</title>
+  <meta name="description" content="GhostESP v2.1 adds the Cloud Store, safe OTA updates, GhostScript, expanded NFC support, and more polish for an extensible platform.">
+  <meta name="author" content="Jay Candel">
+  <meta name="robots" content="index, follow">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="GhostESP v2.1: Building a Platform">
+  <meta property="og:description" content="Cloud Store, safe OTA updates, GhostScript, expanded NFC support, and more polish for GhostESP.">
+  <meta property="og:url" content="https://ghostesp.net/blog-ghostesp-v2-1">
+  <meta property="og:site_name" content="GhostESP">
+  <meta property="og:image" content="https://ghostesp.net/images/IMG_1178.webp">
+  <meta property="article:published_time" content="2026-07-19">
+  <meta property="article:modified_time" content="2026-07-19">
+  <meta property="article:author" content="Jay Candel">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="GhostESP v2.1: Building a Platform">
+  <meta name="twitter:description" content="Cloud Store, safe OTA updates, GhostScript, expanded NFC support, and more polish for GhostESP.">
+  <meta name="twitter:image" content="https://ghostesp.net/images/IMG_1178.webp">
+
+  <link rel="canonical" href="https://ghostesp.net/blog-ghostesp-v2-1">
+  <link rel="alternate" type="application/rss+xml" title="GhostESP Blog" href="https://ghostesp.net/feed.xml">
+
+  <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="css/main.css">
+  <script src="https://unpkg.com/lucide@0.344.0" defer></script>
+  <link rel="stylesheet" href="css/blog.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "GhostESP v2.1: Building a Platform",
+    "description": "GhostESP v2.1 adds the Cloud Store, safe OTA updates, GhostScript, expanded NFC support, and more polish for an extensible platform.",
+    "image": "https://ghostesp.net/images/IMG_1178.webp",
+    "datePublished": "2026-07-19",
+    "dateModified": "2026-07-19",
+    "author": {
+      "@type": "Person",
+      "name": "Jay Candel"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "GhostESP",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://ghostesp.net/images/ghostespdotnet.png"
+      }
+    },
+    "mainEntityOfPage": "https://ghostesp.net/blog-ghostesp-v2-1"
+  }
+  </script>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to content</a>
+  <canvas id="dotTerrain"></canvas>
+  <script src="js/dot-terrain.js"></script>
+
+  <nav id="nav"><noscript><a href="/">Home</a> <a href="boards.html">Boards</a> <a href="flasher.html">Flasher</a> <a href="serial.html">Serial Console</a> <a href="marketplace.html">Apps</a> <a href="asset-marketplace.html">Asset Packs</a> <a href="irdb.html">IRDB</a> <a href="blog.html">Blog</a> <a href="https://docs.ghostesp.net">Docs</a></noscript></nav>
+
+  <header id="main-content" class="post-hero">
+    <div class="container">
+      <a href="blog.html" class="post-back">
+        <i data-lucide="arrow-left"></i>
+        Back to Blog
+      </a>
+      <h1 class="post-title">GhostESP v2.1: Building a Platform</h1>
+      <div class="post-meta">
+        <time datetime="2026-07-19">July 19, 2026</time>
+        <span class="blog-tag">Release</span>
+        <span class="blog-tag">v2.1</span>
+      </div>
+      <div class="author-badge">
+        <img src="https://avatars.githubusercontent.com/jaylikesbunda" alt="Jay Candel" class="author-avatar">
+        <div class="author-info">
+          <span class="author-name">Jay Candel</span>
+          <span class="author-role">GhostESP Maintainer</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <article class="post-content">
+    <div class="container">
+      <div class="post-prose-wrapper">
+        <div class="post-prose">
+          <p>With GhostESP v2.1, I wanted to build on top of v2.0: native SD apps, asset packs, the App Gallery, all of it. This time around I focused on three things I had wanted to tackle for a while: NFC, scripting, and OTA updates. Beyond that, it's mostly polish on everything v2.0 started.</p>
+
+          <h2>Cloud Store</h2>
+          <p>One of the bigger additions is the Cloud Store in the Apps gallery. You can browse and install apps, GhostScript scripts, and asset packs directly on the device from the GitHub catalogs.</p>
+          <p>Honestly, it's mostly about convenience. I hate taking my SD card out, putting it into my PC, copying files over, putting it back in the device, and then hoping I did not forget something. Now you can download what you want on-device, watch the progress bar, and get back to using it.</p>
+
+          <h2>OTA Updates</h2>
+          <p>OTA updates have been in the works for a while, and they ended up being a lot more complicated than I expected.</p>
+          <p>GhostESP supports a lot of different boards, with different flash sizes and partition layouts. Some older board configs also don't reflect the actual flash size fitted to the device, because that was never set correctly when the config was first made. Safe OTA needs room for a second firmware image, and on boards that are already tight on flash, that gets difficult fast. Flash space in general is something we're running low on across a few configs, and doing OTA safely means budgeting for roughly double the application's flash size, not just squeezing the update in wherever there's room.</p>
+          <p>The Banshee C5 was the worst case. It has 8 MB of flash, but about 1.1 MB of that is already reserved for native SD apps running through XIP. XIP matters on the C5 because without it, apps can't execute from external RAM, which puts a hard ceiling on how big native apps can be. There just wasn't room left for a second firmware image the normal way.</p>
+          <p>So I ended up writing a separate application firmware just for OTA. The Banshee reboots into it, that firmware connects to the saved Wi-Fi network, downloads the new image, flashes the correct firmware partition, then reboots back into GhostESP proper.</p>
+          <p>There's also GhostLink OTA, so a primary device can download an update and safely flash a paired peer chip, and offline installs from the SD card if you'd rather not use Wi-Fi. Getting the progress bar working was a small thing, but it was the point where the whole system finally felt done, and downloads ended up faster than I expected.</p>
+
+          <h2>GhostScript</h2>
+          <p>v2.1 also adds GhostScript, a sandboxed Lua 5.4 runtime for running scripts off the SD card, including on devices without PSRAM. There's a script browser, CLI commands, scoped storage, permissions, and support for longer-running scripts that cooperate with the rest of the system instead of blocking it.</p>
+          <p>Native SD apps are still the right call when you need performance or deeper integration. GhostScript is for everything else, a lighter way to build and experiment without writing a full native app.</p>
+
+          <h2>NFC</h2>
+          <p>NFC got real attention this release. v2.1 adds support for the ST25R3916 and ST25R3916B over SPI or I2C alongside the existing PN532 support, with a backend selector in the UI and CLI so you can pick which hardware GhostESP talks to.</p>
+          <p>On top of that: MIFARE Classic nested recovery, PicoPass/iCLASS reads, NDEF creation, NTAG metadata, DESFire summaries, and general cleanup across the NFC menus. Still more I want to do here, but it's a much better foundation now.</p>
+
+          <h2>Everything Else</h2>
+          <p>There's plenty more in v2.1 beyond the headline stuff: new Wi-Fi tools, a QR Generator native SD app, SDK improvements, new infrared protocol support, a more capable headless CLI, better wardriving behavior, and a round of UI and memory fixes across a lot of boards.</p>
+          <p>That's v2.1: install things without pulling your SD card, update firmware without a manual reflash, write a script instead of a full app, and more NFC hardware working out of the box.</p>
+          <p>Full details in the <a href="https://github.com/GhostESP-Revival/GhostESP/blob/Development-deki/CHANGELOG.md" target="_blank" rel="noopener">v2.1 changelog</a>.</p>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-links">
+        <a href="https://discord.gg/5cyNmUMgwh" target="_blank" rel="noopener" class="icon-link" title="Discord">
+          <i class="bi bi-discord"></i>
+        </a>
+        <a href="https://github.com/GhostESP-Revival/GhostESP" target="_blank" rel="noopener" class="icon-link" title="GitHub">
+          <i class="bi bi-github"></i>
+        </a>
+        <a href="https://instagram.com/ghostesprevival" target="_blank" rel="noopener" class="icon-link" title="Instagram">
+          <i class="bi bi-instagram"></i>
+        </a>
+        <button class="cookie-settings-link" onclick="CookieConsent.showSettings()">Cookie Settings</button>
+        <a href="privacy.html" class="cookie-settings-link">Privacy Policy</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/components.js" defer></script>
+  <script src="js/social-proof.js" defer></script>
+  <script src="js/main.js" defer></script>
+  <script src="js/cookie-consent.js" defer></script>
+</body>
+</html>

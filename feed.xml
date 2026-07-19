@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>GhostESP Blog</title>
+    <link>https://ghostesp.net/blog</link>
+    <description>News, updates, and deep dives from the GhostESP project — the open-source wireless research platform for ESP32.</description>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 04 May 2026 00:00:00 GMT</lastBuildDate>
+    <atom:link href="https://ghostesp.net/feed.xml" rel="self" type="application/rss+xml"/>
+    <image>
+      <url>https://ghostesp.net/images/ghostespdotnet.png</url>
+      <title>GhostESP</title>
+      <link>https://ghostesp.net</link>
+    </image>
+
+    <item>
+      <title>The Module Is Not the Problem</title>
+      <link>https://ghostesp.net/blog-module-not-problem</link>
+      <guid isPermaLink="true">https://ghostesp.net/blog-module-not-problem</guid>
+      <pubDate>Sun, 04 May 2026 00:00:00 GMT</pubDate>
+      <category>Ethics</category>
+      <category>RF</category>
+      <description>RF modules are neutral hardware. The real conversation is about firmware design, documentation, intent, and impact.</description>
+    </item>
+
+    <item>
+      <title>Common Misconceptions About ESP32 &quot;Hacking&quot; Tools</title>
+      <link>https://ghostesp.net/blog-esp32-misconceptions</link>
+      <guid isPermaLink="true">https://ghostesp.net/blog-esp32-misconceptions</guid>
+      <pubDate>Sun, 04 May 2026 00:00:00 GMT</pubDate>
+      <category>Education</category>
+      <category>Ecosystem</category>
+      <description>A maintainer's honest look at what people keep getting wrong about the ESP32 security-tool ecosystem.</description>
+    </item>
+
+    <item>
+      <title>Wi-Fi Deauthentication vs RF Jamming: What's the Difference?</title>
+      <link>https://ghostesp.net/blog-deauth-vs-jamming</link>
+      <guid isPermaLink="true">https://ghostesp.net/blog-deauth-vs-jamming</guid>
+      <pubDate>Sun, 04 May 2026 00:00:00 GMT</pubDate>
+      <category>Education</category>
+      <category>Technical</category>
+      <description>A breakdown of how Wi-Fi deauth and RF jamming actually differ — how each works, where they sit in the stack, and why the distinction matters.</description>
+    </item>
+
+  </channel>
+</rss>

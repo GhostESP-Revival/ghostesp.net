@@ -53,4 +53,19 @@ document.addEventListener('DOMContentLoaded', () => {
       card.style.display = selectedTag === 'All' || tags.includes(selectedTag) ? '' : 'none';
     });
   });
+
+  document.addEventListener('click', (event) => {
+    const link = event.target.closest('a[data-affiliate]');
+    if (!link || window.__gaLoaded !== true || !window.gtag) {
+      return;
+    }
+
+    const card = link.closest('.board-card-full');
+    const boardName = card ? card.querySelector('h3').textContent.trim() : 'Unknown board';
+    window.gtag('event', 'affiliate_click', {
+      affiliate_partner: link.dataset.affiliate,
+      board_name: boardName,
+      link_url: link.href
+    });
+  });
 });
