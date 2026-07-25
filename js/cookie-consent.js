@@ -1,6 +1,8 @@
 (function () {
   var GA_ID = 'G-MS2T2178R5';
   var STORAGE_KEY = 'cookie-consent';
+  // capture the original title now, before browser translation can rewrite it
+  var PAGE_TITLE = document.title;
 
   function getConsent() {
     try { return localStorage.getItem(STORAGE_KEY); } catch (e) { return null; }
@@ -55,7 +57,7 @@
     s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
     s.onload = function () {
       gtag('js', new Date());
-      gtag('config', GA_ID, { anonymize_ip: true });
+      gtag('config', GA_ID, { anonymize_ip: true, page_title: PAGE_TITLE });
     };
     document.head.appendChild(s);
   }

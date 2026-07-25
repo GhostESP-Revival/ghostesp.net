@@ -1109,7 +1109,29 @@
   }
 
   async function loadPngAsRgba(file) {
-    const url = URL.createObjectURL(file);
+    // The file's reported MIME type is sometimes empty or wrong (varies by OS/
+    // browser/how the file arrived), and a blob: URL carries no extension for
+    // <img> to sniff from, so force the type explicitly before decoding.
+    const blob = file.type === "image/png" ? file : new Blob([await file.arrayBuffer()], { type: "image/png" });
+
+    if (typeof createImageBitmap === "function") {
+      try {
+        const bitmap = await createImageBitmap(blob, { premultiplyAlpha: "none" });
+        const w = bitmap.width, h = bitmap.height;
+        if (w === 0 || h === 0) throw new Error("Image has zero dimensions");
+        const c = document.createElement("canvas");
+        c.width = w; c.height = h;
+        const ctx = c.getContext("2d");
+        ctx.drawImage(bitmap, 0, 0);
+        bitmap.close();
+        const imageData = ctx.getImageData(0, 0, w, h);
+        return { w, h, rgba: new Uint8Array(imageData.data.buffer) };
+      } catch (err) {
+        // Fall through to the <img>-based path below.
+      }
+    }
+
+    const url = URL.createObjectURL(blob);
     try {
       const img = await new Promise((res, rej) => {
         const i = new Image();

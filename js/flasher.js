@@ -1932,6 +1932,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
             let flashStartTime = null;
 
+            if (window.__gaLoaded === true && typeof window.gtag === 'function') {
+                window.gtag('event', 'flash_start', {
+                    device: savedDevice || 'unknown'
+                });
+            }
+
             try {
                 espLoaderTerminal.writeLine("Preparing to flash...");
                 if (chipInfoElem) chipInfoElem.innerHTML = `<span class="status-indicator status-flashing"></span> Preparing Flash...`;
@@ -2156,6 +2162,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (chipInfoElem) chipInfoElem.innerHTML = `<span class="status-indicator status-success"></span> Flash Complete`;
                 updateStatusIndicator('success', 'Flash complete!', 'Attempting device reset...');
 
+                if (window.__gaLoaded === true && typeof window.gtag === 'function') {
+                    window.gtag('event', 'flash_complete', {
+                        device: savedDevice || 'unknown',
+                        duration_seconds: flashStartTime ? Math.round((Date.now() - flashStartTime) / 1000) : 0
+                    });
+                }
+
                 if (typeof SocialProof !== 'undefined' && SocialProof.showPostFlashModal) {
                     SocialProof.showPostFlashModal();
                 }
@@ -2204,6 +2217,12 @@ document.addEventListener('DOMContentLoaded', () => {
             } catch (error) {
                 console.error("Error during flash process:", error);
                 espLoaderTerminal.writeLine(`\nError flashing: ${error.message}`);
+                if (window.__gaLoaded === true && typeof window.gtag === 'function') {
+                    window.gtag('event', 'flash_error', {
+                        device: savedDevice || 'unknown',
+                        error_message: (error.message || 'unknown').substring(0, 100)
+                    });
+                }
                 if (flashETAElem) flashETAElem.textContent = '';
                 if (chipInfoElem) chipInfoElem.innerHTML = `<span class="status-indicator status-error"></span> Flash failed`;
                 if (flashProgressElem) flashProgressElem.style.width = '0%';

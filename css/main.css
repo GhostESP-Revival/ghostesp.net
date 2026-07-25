@@ -130,11 +130,13 @@ footer { position: relative; z-index: 1; }
 }
 
 .section {
-  padding: 3rem var(--spacing);
+  padding: 4.5rem var(--spacing);
 }
 
 .section-alt {
   background: var(--surface);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
 }
 
 .grid {
@@ -1532,7 +1534,7 @@ nav .container {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  margin: 0 auto 1.5rem;
+  margin: 1.5rem auto 0;
   padding: 0.6rem 1.2rem;
   background: var(--surface);
   border: 1px solid var(--border);
@@ -1549,13 +1551,15 @@ nav .container {
   background: rgba(255, 255, 255, 0.03);
 }
 
-.comparison-toggle i {
+.comparison-toggle i,
+.comparison-toggle svg {
   width: 16px;
   height: 16px;
   transition: transform 0.3s ease;
 }
 
-.comparison-toggle.active i {
+.comparison-toggle.active i,
+.comparison-toggle.active svg {
   transform: rotate(180deg);
 }
 
@@ -1685,6 +1689,10 @@ nav .container {
 
 .comparison-table .category-row td:first-child {
   background: #111;
+}
+
+.comparison-table.collapsed tbody tr:not(.key-row) {
+  display: none;
 }
 
 .check-yes {
@@ -2610,5 +2618,168 @@ h3 {
   .cookie-consent-actions {
     width: 100%;
     justify-content: center;
+  }
+}
+
+/* video facade (click-to-load youtube) */
+.video-facade {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  overflow: hidden;
+  cursor: pointer;
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+
+.video-facade img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.video-facade:hover img,
+.video-facade:focus-visible img {
+  transform: scale(1.03);
+  opacity: 0.85;
+}
+
+.video-facade:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.video-facade-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.75);
+  border: 1px solid var(--border);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease, transform 0.2s ease;
+  pointer-events: none;
+}
+
+.video-facade-play svg {
+  margin-left: 3px;
+}
+
+.video-facade:hover .video-facade-play,
+.video-facade:focus-visible .video-facade-play {
+  background: rgba(0, 0, 0, 0.9);
+  transform: translate(-50%, -50%) scale(1.08);
+}
+
+/* docs quick-link cards */
+.docs-card {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.docs-card::after {
+  margin-top: auto;
+  align-self: flex-end;
+  padding-top: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: #00ff80;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: transform 0.2s ease;
+}
+
+#docs .docs-card::after {
+  content: "Read guide \2192";
+}
+
+#marketplace .docs-card::after {
+  content: "Open \2192";
+}
+
+.docs-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(0, 255, 128, 0.4);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+  color: inherit;
+}
+
+.docs-card:hover::after {
+  transform: translateX(3px);
+}
+
+.docs-card:hover .docs-card-icon,
+.docs-card:focus-visible .docs-card-icon {
+  color: #00ff80;
+}
+
+.docs-card:focus-visible {
+  border-color: rgba(0, 255, 128, 0.4);
+  outline: none;
+}
+
+.docs-card-icon {
+  width: 28px;
+  height: 28px;
+  color: var(--accent);
+  margin-bottom: 0.75rem;
+  transition: color 0.2s ease;
+}
+
+.docs-browse-all {
+  text-align: center;
+  margin-top: 1.5rem;
+}
+
+/* mobile-only sticky conversion CTA */
+.sticky-cta {
+  position: fixed;
+  bottom: 16px;
+  left: 16px;
+  z-index: 1998;
+  display: none;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.sticky-cta-btn {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.sticky-cta-close {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease;
+}
+
+.sticky-cta-close:hover {
+  color: var(--text);
+}
+
+@media (max-width: 768px) {
+  .sticky-cta {
+    display: flex;
   }
 }

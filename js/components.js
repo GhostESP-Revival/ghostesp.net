@@ -22,7 +22,7 @@ const components = {
             <button class="nav-dropdown-toggle" type="button" aria-haspopup="true">Getting Started</button>
             <ul class="nav-dropdown-menu">
               <li><a href="${prefix}#getting-started">Get Started</a></li>
-              <li><a href="${prefix}#features">Features</a></li>
+              <li><a href="${prefix}#capabilities">Features</a></li>
               <li><a href="/boards">Boards</a></li>
             </ul>
           </li>
@@ -64,7 +64,7 @@ const components = {
   },
 
   // sitewide dismissible v2.0 launch banner
-  ANNOUNCE_KEY: 'ghostesp_v2_announce_dismissed',
+  ANNOUNCE_KEY: 'ghostesp_v2_1_announce_dismissed',
 
   renderAnnounceBar() {
     try {
@@ -77,8 +77,8 @@ const components = {
     bar.setAttribute('role', 'region');
     bar.setAttribute('aria-label', 'Announcement');
     bar.innerHTML = `
-      <a href="/#whats-new" class="announce-bar-link">
-        <strong>GhostESP v2.0 is here.</strong>
+      <a href="/#capabilities" class="announce-bar-link">
+        <strong>GhostESP v2.1 is here.</strong>
         <span class="announce-bar-cta">See what's new &rarr;</span>
       </a>
       <button class="announce-bar-close" type="button" aria-label="Dismiss announcement">&times;</button>
@@ -90,6 +90,31 @@ const components = {
       bar.remove();
       document.documentElement.style.setProperty('--announce-height', '0px');
       window.dispatchEvent(new Event('resize'));
+    });
+  },
+
+  // mobile-only sticky conversion CTA (hidden on the flasher itself)
+  STICKY_CTA_KEY: 'ghostesp_sticky_cta_dismissed',
+
+  renderStickyCta() {
+    try {
+      if (localStorage.getItem(this.STICKY_CTA_KEY) === '1') return;
+    } catch (e) {}
+    if (document.querySelector('.sticky-cta')) return;
+    const path = window.location.pathname;
+    if (path.endsWith('/flasher') || path.endsWith('flasher.html')) return;
+
+    const bar = document.createElement('div');
+    bar.className = 'sticky-cta';
+    bar.innerHTML = `
+      <a href="/flasher" class="btn btn-primary sticky-cta-btn" data-track="cta_sticky_flash">Flash Now</a>
+      <button class="sticky-cta-close" type="button" aria-label="Dismiss">&times;</button>
+    `;
+    document.body.appendChild(bar);
+
+    bar.querySelector('.sticky-cta-close').addEventListener('click', () => {
+      try { localStorage.setItem(this.STICKY_CTA_KEY, '1'); } catch (e) {}
+      bar.remove();
     });
   },
 
@@ -207,6 +232,36 @@ const components = {
 // render components on load
 document.addEventListener('DOMContentLoaded', () => {
   components.renderAnnounceBar();
+  components.renderStickyCta();
+
+  // engagement analytics — only fires after GA consent, matching the boards.js pattern
+  document.addEventListener('click', (e) => {
+    if (window.__gaLoaded !== true || typeof window.gtag !== 'function') return;
+
+    const tracked = e.target.closest('[data-track]');
+    if (tracked) {
+      window.gtag('event', tracked.getAttribute('data-track'), {
+        link_url: tracked.href || '',
+        link_text: (tracked.textContent || '').trim().substring(0, 100)
+      });
+      return;
+    }
+
+    const link = e.target.closest('a[href]');
+    if (!link) return;
+    const href = link.href || '';
+
+    if (link.classList.contains('asset-link')) {
+      const label = link.querySelector('span');
+      window.gtag('event', 'download_click', {
+        file_name: label ? label.textContent.trim() : href
+      });
+    } else if (href.indexOf('discord.gg') !== -1 || href.indexOf('discord.com/invite') !== -1) {
+      window.gtag('event', 'discord_join', { link_url: href });
+    } else if (href.indexOf('docs.ghostesp.net') !== -1) {
+      window.gtag('event', 'docs_click', { link_url: href });
+    }
+  });
 
   const nav = document.getElementById('nav');
   if (nav) {
