@@ -209,8 +209,8 @@ document.addEventListener('DOMContentLoaded', () => {
             if (stats.length > 0) {
                 statsContainer.innerHTML = stats.map(stat => `
                     <div class="flasher-chip-stat">
-                        <div class="flasher-chip-stat-label">${stat.label}</div>
-                        <div class="flasher-chip-stat-value ${stat.highlight ? 'highlight' : ''}">${stat.value}</div>
+                        <div class="flasher-chip-stat-label">${escapeHtml(stat.label)}</div>
+                        <div class="flasher-chip-stat-value ${stat.highlight ? 'highlight' : ''}">${escapeHtml(stat.value)}</div>
                     </div>
                 `).join('');
                 panel.classList.add('visible');
@@ -239,10 +239,10 @@ document.addEventListener('DOMContentLoaded', () => {
             if (hasScreen) {
                 const metaItems = [];
                 if (info.CHIP_SCREEN_TYPE) {
-                    metaItems.push(`Type: <span>${info.CHIP_SCREEN_TYPE}</span>`);
+                    metaItems.push(`Type: <span>${escapeHtml(info.CHIP_SCREEN_TYPE)}</span>`);
                 }
                 if (info.CHIP_SCREEN_W && info.CHIP_SCREEN_H) {
-                    metaItems.push(`Resolution: <span>${info.CHIP_SCREEN_W}x${info.CHIP_SCREEN_H}</span>`);
+                    metaItems.push(`Resolution: <span>${escapeHtml(info.CHIP_SCREEN_W)}x${escapeHtml(info.CHIP_SCREEN_H)}</span>`);
                 }
                 
                 if (screenMeta) {
@@ -575,14 +575,14 @@ document.addEventListener('DOMContentLoaded', () => {
             },
             writeLine(data) {
                 if (terminalElem) {
-                    terminalElem.innerHTML += data + '\n';
+                    terminalElem.innerHTML += escapeHtml(data) + '\n';
                     terminalElem.scrollTop = terminalElem.scrollHeight;
                 }
                 console.log(data);
             },
             write(data) {
                 if (terminalElem) {
-                    terminalElem.innerHTML += data;
+                    terminalElem.innerHTML += escapeHtml(data);
                     terminalElem.scrollTop = terminalElem.scrollHeight;
                 }
                 console.log(data);
@@ -2494,6 +2494,43 @@ document.addEventListener('DOMContentLoaded', () => {
             return await response.json();
         }
 
+        function detectAppPartitionOffset(partitionTableBuffer) {
+            try {
+                const view = new DataView(partitionTableBuffer);
+                const appEntries = [];
+                for (let off = 0; off + 32 <= view.byteLength; off += 32) {
+                    const magic = view.getUint16(off, true);
+                    if (magic !== 0x50AA) {
+                        if (magic === 0xEBEB) break; // MD5 checksum entry marks end of table
+                        continue;
+                    }
+                    const type = view.getUint8(off + 2);
+                    const subtype = view.getUint8(off + 3);
+                    const partOffset = view.getUint32(off + 4, true);
+                    const size = view.getUint32(off + 8, true);
+                    if (type === 0x00) { // app partition
+                        appEntries.push({ subtype, offset: partOffset, size });
+                    }
+                }
+                if (appEntries.length === 0) return null;
+                // The main flashable app is the largest app-type partition. Some boards
+                // (e.g. Banshee C5) also carry a small unrelated ota_0-labeled partition
+                // for a self-update image alongside a bigger factory app, so partition
+                // size -- not subtype -- has to pick the primary slot; subtype only
+                // breaks ties between same-size candidates (OTA A/B pairs).
+                const maxSize = Math.max(...appEntries.map(e => e.size));
+                const candidates = appEntries.filter(e => e.size === maxSize);
+                const ota0 = candidates.find(e => e.subtype === 0x10);
+                if (ota0) return ota0.offset;
+                const factory = candidates.find(e => e.subtype === 0x00);
+                if (factory) return factory.offset;
+                candidates.sort((a, b) => a.offset - b.offset);
+                return candidates[0].offset;
+            } catch (e) {
+                return null;
+            }
+        }
+
         async function loadGhostEspZip(optionValue) {
             if (!optionValue) {
                 extractedGhostEspFiles = null;
@@ -2571,6 +2608,17 @@ document.addEventListener('DOMContentLoaded', () => {
                     } else {
                         if (target.elem) {
                             target.elem.textContent = `${target.name} [Not Found]`;
+                        }
+                    }
+                }
+
+                if (filesToExtract.partition.data && filesToExtract.app.data && filesToExtract.app.addressInput) {
+                    const detectedAppOffset = detectAppPartitionOffset(filesToExtract.partition.data);
+                    if (detectedAppOffset !== null) {
+                        const currentAppAddress = parseInt(filesToExtract.app.addressInput.value, 16);
+                        if (detectedAppOffset !== currentAppAddress) {
+                            espLoaderTerminal.writeLine(`Partition table specifies app offset 0x${detectedAppOffset.toString(16)} (was defaulting to 0x${currentAppAddress.toString(16)}). Correcting app flash address.`);
+                            filesToExtract.app.addressInput.value = '0x' + detectedAppOffset.toString(16);
                         }
                     }
                 }

@@ -124,16 +124,16 @@ const components = {
       <div class="release-card">
         <div class="release-header">
           <div>
-            <h3 class="release-title">${release.name || release.tag_name}</h3>
+            <h3 class="release-title">${this.escapeHtml(release.name || release.tag_name)}</h3>
             <div class="release-meta">
               <span>${date}</span>
               <span>•</span>
               <span>${downloads.toLocaleString()} downloads</span>
               <span>•</span>
-              <span><code>${release.tag_name}</code></span>
+              <span><code>${this.escapeHtml(release.tag_name)}</code></span>
             </div>
           </div>
-          <a href="${release.html_url}" class="btn btn-small btn-secondary" target="_blank">View on GitHub</a>
+          <a href="${this.escapeHtml(release.html_url)}" class="btn btn-small btn-secondary" target="_blank">View on GitHub</a>
         </div>
         ${body ? `<div class="release-body">${this.parseMarkdown(body)}</div>` : ''}
         ${release.assets.length ? this.assetList(initialAssets, `${containerId}-assets`) : ''}
@@ -146,8 +146,8 @@ const components = {
     const container = document.getElementById(`${containerId}-assets`);
     if (container) {
       container.innerHTML = allAssets.map(asset => `
-        <a href="${asset.browser_download_url}" class="asset-link" download>
-          <span>${asset.name}</span>
+        <a href="${this.escapeHtml(asset.browser_download_url)}" class="asset-link" download>
+          <span>${this.escapeHtml(asset.name)}</span>
           <span style="margin-left: auto; opacity: 0.5; font-size: 0.85em">${this.formatSize(asset.size)}</span>
         </a>
       `).join('');
@@ -162,8 +162,8 @@ const components = {
     return `
       <div class="release-assets" id="${id}">
         ${assets.map(asset => `
-          <a href="${asset.browser_download_url}" class="asset-link" download>
-            <span>${asset.name}</span>
+          <a href="${this.escapeHtml(asset.browser_download_url)}" class="asset-link" download>
+            <span>${this.escapeHtml(asset.name)}</span>
             <span style="margin-left: auto; opacity: 0.5; font-size: 0.85em">${this.formatSize(asset.size)}</span>
           </a>
         `).join('')}
@@ -188,7 +188,7 @@ const components = {
 
   // simple markdown parser for release notes
   parseMarkdown(text) {
-    return text
+    return this.escapeHtml(text)
       .replace(/^### (.*$)/gim, '<h3>$1</h3>')
       .replace(/^## (.*$)/gim, '<h2>$1</h2>')
       .replace(/^# (.*$)/gim, '<h1>$1</h1>')

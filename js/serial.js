@@ -1,5 +1,14 @@
 const COMMON_BAUD_RATES = [115200, 921600, 9600, 57600, 38400, 19200, 230400, 460800];
 
+function escapeHtml(text) {
+  return String(text)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
 class SerialConsole {
   constructor() {
     this.port = null;
@@ -427,25 +436,26 @@ class SerialConsole {
     this.lineBuffer = completeLines[completeLines.length - 1].endsWith("\n") ? "" : completeLines.pop();
 
     const formattedLines = completeLines.map(line => {
+      const safe = escapeHtml(line);
       if (!line.trim()) return "<br>";
-      if (line.match(/^>\s*[a-z]+$/i)) return `<span class="command-input">${line}</span><br>`;
+      if (line.match(/^>\s*[a-z]+$/i)) return `<span class="command-input">${safe}</span><br>`;
       const statusMessages = ['WiFi scan started','Stopping Wi-Fi','WiFi started','Ready to scan','Please wait','WiFi monitor stopped','HTTP server started'];
-      if (statusMessages.some(msg => line.includes(msg))) return `<span class="status-message">${line}</span><br>`;
-      if (line.match(/^Found \d+ access points$/)) return `<span class="scan-summary">${line}</span><br>`;
-      if (line.match(/^\[\d+\]/)) { const [index, ...rest] = line.split(/(?<=^\[\d+\])\s/); return `<span class="ap-index">${index}</span> ${rest.join('')}<br>`; }
-      if (line.match(/^\s*SSID:/)) { const [label, value] = line.split(/:\s*/); return `<span class="ap-label">${label}:</span> <span class="ap-ssid">${value}</span><br>`; }
-      if (line.match(/^\s*RSSI:/)) { const [label, value] = line.split(/:\s*/); return `<span class="ap-label">${label}:</span> <span class="ap-rssi">${value}</span><br>`; }
-      if (line.match(/^\s*Company:/)) { const [label, value] = line.split(/:\s*/); return `<span class="ap-label">${label}:</span> <span class="ap-company">${value}</span><br>`; }
-      if (line.match(/^[A-Za-z]+$/) && line.length < 20) return `<span class="command-name">${line}</span><br>`;
-      if (line.match(/^Ghost ESP Commands:$/)) return `<span class="section-header">${line}</span><br>`;
-      if (line.match(/^\s{4}(Description|Usage|Arguments):(?:\s|$)/)) return `<span class="help-section-header">${line}</span><br>`;
-      if (line.match(/^\s{4}Usage:\s/)) { const [prefix, ...rest] = line.split(/(?<=Usage:)\s/); return `<span class="help-section-header">${prefix}</span><span class="command-usage">${rest.join(' ')}</span><br>`; }
-      if (line.match(/^\s{8}(-[a-zA-Z]|\[.*?\])\s+:/)) { const [flag, ...description] = line.split(/(?<=:)\s/); return `<span class="command-flag">${flag}</span><span class="flag-description">${description.join(' ')}</span><br>`; }
-      if (line.match(/^\[.*?\]\s*W\s+\(.*?\)\s*spi_flash:/)) return `<span class="warning">${line}</span><br>`;
-      if (line.match(/^Connected to device$/) || line.match(/^Disconnected from device$/)) return `<span class="connection-status">${line}</span><br>`;
-      if (line.match(/^Port Scanner$/)) return `<span class="section-header">${line}</span><br>`;
-      if (line.match(/^\s*OR\s*$/)) return `<span class="separator">${line}</span><br>`;
-      return `<span class="regular-text">${line}</span><br>`;
+      if (statusMessages.some(msg => line.includes(msg))) return `<span class="status-message">${safe}</span><br>`;
+      if (line.match(/^Found \d+ access points$/)) return `<span class="scan-summary">${safe}</span><br>`;
+      if (line.match(/^\[\d+\]/)) { const [index, ...rest] = line.split(/(?<=^\[\d+\])\s/); return `<span class="ap-index">${escapeHtml(index)}</span> ${escapeHtml(rest.join(''))}<br>`; }
+      if (line.match(/^\s*SSID:/)) { const [label, value] = line.split(/:\s*/); return `<span class="ap-label">${escapeHtml(label)}:</span> <span class="ap-ssid">${escapeHtml(value)}</span><br>`; }
+      if (line.match(/^\s*RSSI:/)) { const [label, value] = line.split(/:\s*/); return `<span class="ap-label">${escapeHtml(label)}:</span> <span class="ap-rssi">${escapeHtml(value)}</span><br>`; }
+      if (line.match(/^\s*Company:/)) { const [label, value] = line.split(/:\s*/); return `<span class="ap-label">${escapeHtml(label)}:</span> <span class="ap-company">${escapeHtml(value)}</span><br>`; }
+      if (line.match(/^[A-Za-z]+$/) && line.length < 20) return `<span class="command-name">${safe}</span><br>`;
+      if (line.match(/^Ghost ESP Commands:$/)) return `<span class="section-header">${safe}</span><br>`;
+      if (line.match(/^\s{4}(Description|Usage|Arguments):(?:\s|$)/)) return `<span class="help-section-header">${safe}</span><br>`;
+      if (line.match(/^\s{4}Usage:\s/)) { const [prefix, ...rest] = line.split(/(?<=Usage:)\s/); return `<span class="help-section-header">${escapeHtml(prefix)}</span><span class="command-usage">${escapeHtml(rest.join(' '))}</span><br>`; }
+      if (line.match(/^\s{8}(-[a-zA-Z]|\[.*?\])\s+:/)) { const [flag, ...description] = line.split(/(?<=:)\s/); return `<span class="command-flag">${escapeHtml(flag)}</span><span class="flag-description">${escapeHtml(description.join(' '))}</span><br>`; }
+      if (line.match(/^\[.*?\]\s*W\s+\(.*?\)\s*spi_flash:/)) return `<span class="warning">${safe}</span><br>`;
+      if (line.match(/^Connected to device$/) || line.match(/^Disconnected from device$/)) return `<span class="connection-status">${safe}</span><br>`;
+      if (line.match(/^Port Scanner$/)) return `<span class="section-header">${safe}</span><br>`;
+      if (line.match(/^\s*OR\s*$/)) return `<span class="separator">${safe}</span><br>`;
+      return `<span class="regular-text">${safe}</span><br>`;
     });
 
     if (formattedLines.length) {

@@ -17,6 +17,20 @@
   --max-width: 1200px;
   --font-mono: 'Share Tech Mono', 'Courier New', monospace;
   --font-sans: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  /* semantic aliases consumed by serial-crash/files/mirror components */
+  --console-bg: var(--surface);
+  --background-color: var(--bg);
+  --surface-color: var(--surface);
+  --border-color: var(--border);
+  --text-primary: var(--text);
+  --text-secondary: var(--text-dim);
+  --primary-color: #00ff80;
+  --accent-color: #00ff80;
+  --success-color: #00ff80;
+  --error-color: #ff1a1a;
+  --warning-color: #ffa500;
+  --font-body: var(--font-sans);
 }
 
 @media (prefers-reduced-motion: reduce) {

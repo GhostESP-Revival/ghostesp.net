@@ -62,16 +62,16 @@
               <button id="animate-btn" class="btn btn-primary">Animate</button>
             </div>
           </div>
-          <div id="filter-panel" class="filter-panel" aria-hidden="true">
+          <div id="filter-panel" class="filter-panel">
             <div class="filter-panel-row">
-              <select id="filter-type">
+              <select id="filter-type" aria-label="Filter by network type">
                 <option value="ALL">All Types</option>
                 <option value="WIFI">WiFi</option>
                 <option value="BLE">BLE</option>
               </select>
-              <input id="filter-search" type="text" placeholder="Search SSID/MAC...">
-              <input id="filter-rssi-min" type="number" min="-140" max="0" placeholder="RSSI Min">
-              <input id="filter-rssi-max" type="number" min="-140" max="0" placeholder="RSSI Max">
+              <input id="filter-search" type="text" placeholder="Search SSID/MAC..." aria-label="Search SSID or MAC">
+              <input id="filter-rssi-min" type="number" min="-140" max="0" placeholder="RSSI Min" aria-label="Minimum RSSI">
+              <input id="filter-rssi-max" type="number" min="-140" max="0" placeholder="RSSI Max" aria-label="Maximum RSSI">
             </div>
             <div class="filter-panel-actions">
               <button id="apply-filters" class="btn">Apply</button>
@@ -80,7 +80,6 @@
           </div>
         </div>
         <div id="import-status" class="status"></div>
-      </div>
 
       <div class="app-shell">
         <aside class="panel">
@@ -90,11 +89,11 @@
           </section>
         </aside>
 
-        <main id="main-content" class="map-wrap">
+        <div class="map-wrap">
           <div id="map"></div>
           <div class="time-slider-float">
             <span class="time-label">Time</span>
-            <input type="range" id="time-slider" class="time-slider" min="0" max="100" value="100">
+            <input type="range" id="time-slider" class="time-slider" min="0" max="100" value="100" aria-label="Time filter">
             <span id="time-display" class="time-display">All time</span>
             <label class="time-toggle">
               <input type="checkbox" id="time-all-toggle" checked>
@@ -111,7 +110,7 @@
               <div class="animate-stat-ble" id="animate-ble">0 BLE</div>
             </div>
           </div>
-        </main>
+        </div>
       </div>
     </main>
   </div>

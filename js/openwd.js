@@ -1402,7 +1402,6 @@ function wireUi() {
       const panel = document.getElementById("filter-panel");
       if (!panel) return;
       const isOpen = panel.classList.toggle("open");
-      panel.setAttribute("aria-hidden", String(!isOpen));
       filterToggle.setAttribute("aria-expanded", String(isOpen));
     });
   }

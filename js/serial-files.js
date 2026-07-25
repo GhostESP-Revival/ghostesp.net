@@ -549,7 +549,7 @@ class FileBrowser {
       accPath += "/" + parts[i];
       const isLast = i === parts.length - 1;
       html += `<span class="breadcrumb-sep">›</span>`;
-      html += `<span class="breadcrumb-item${isLast ? " current" : ""}" data-path="${accPath}">${parts[i]}</span>`;
+      html += `<span class="breadcrumb-item${isLast ? " current" : ""}" data-path="${this.escapeHtml(accPath)}">${this.escapeHtml(parts[i])}</span>`;
     }
 
     container.innerHTML = html;
@@ -643,7 +643,7 @@ class FileBrowser {
       const iconClass = this.getIconClass(entry);
 
       html += `
-        <div class="file-item ${entry.type}" data-index="${entry.index}" data-name="${entry.name}" data-type="${entry.type}">
+        <div class="file-item ${entry.type}" data-index="${entry.index}" data-name="${this.escapeHtml(entry.name)}" data-type="${entry.type}">
           <span class="file-icon ${iconClass}">${icon}</span>
           <span class="file-name">${this.escapeHtml(entry.name)}</span>
           <span class="file-size">${size}</span>
@@ -757,9 +757,12 @@ class FileBrowser {
   }
 
   escapeHtml(text) {
-    const div = document.createElement("div");
-    div.textContent = text;
-    return div.innerHTML;
+    return String(text)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
   }
 
   showContextMenu(x, y, entry) {
