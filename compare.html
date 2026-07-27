@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#000000">
+
+  <!-- SEO Meta Tags -->
+  <title>GhostESP vs Bruce, HaleHound, nyanBOX: Full Feature Comparison</title>
+  <meta name="description" content="Full feature-by-feature comparison of GhostESP against Bruce, HaleHound, and nyanBOX firmware across WiFi, BLE, NFC, SubGHz, Ethernet, and platform capabilities.">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="Jay Candel">
+
+  <!-- Open Graph Tags -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="GhostESP vs The Rest: Full Feature Comparison">
+  <meta property="og:description" content="Full feature-by-feature comparison of GhostESP against Bruce, HaleHound, and nyanBOX firmware.">
+  <meta property="og:url" content="https://ghostesp.net/compare">
+  <meta property="og:site_name" content="GhostESP">
+  <meta property="og:image" content="https://ghostesp.net/images/IMG_1178.webp">
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://ghostesp.net/compare">
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+
+  <!-- Fonts and Styles -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+  <link rel="stylesheet" href="css/main.css">
+  <script src="https://unpkg.com/lucide@0.344.0/dist/umd/lucide.min.js" defer></script>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to content</a>
+  <canvas id="dotTerrain"></canvas>
+  <script src="js/dot-terrain.js"></script>
+  <nav id="nav"><noscript><a href="/">Home</a> <a href="boards.html">Boards</a> <a href="flasher.html">Flasher</a> <a href="serial.html">Serial Console</a> <a href="marketplace.html">Apps</a> <a href="asset-marketplace.html">Asset Packs</a> <a href="irdb.html">IRDB</a> <a href="blog.html">Blog</a> <a href="https://docs.ghostesp.net">Docs</a></noscript></nav>
+
+  <section id="main-content" class="section" style="padding-top: 8rem; padding-bottom: 0;">
+    <div class="container">
+      <h1 data-aos="fade-up" style="text-align:center;">GhostESP vs The Rest</h1>
+      <p style="text-align:center; color: var(--text-dim); max-width: 640px; margin: 0 auto 1rem;" data-aos="fade-up">The full 133-feature comparison against Bruce, HaleHound, and nyanBOX.</p>
+    </div>
+  </section>
+
+  <!-- Firmware Comparison -->
+  <section id="comparison" class="section">
+    <div class="container">
+      <div class="comparison-summary" data-aos="fade-up">
+        <div class="comparison-summary-item">
+          <i data-lucide="layers"></i>
+          <span>45+ boards, full wireless suite, LVGL UI, and companion apps</span>
+        </div>
+        <div class="comparison-summary-item">
+          <i data-lucide="code-2"></i>
+          <span>Built on ESP-IDF, not Arduino or PlatformIO</span>
+        </div>
+        <div class="comparison-summary-item">
+          <i data-lucide="unlock"></i>
+          <span>GPL-licensed and fully auditable, firmware, tools, and this website</span>
+        </div>
+      </div>
+      <p class="comparison-disclaimer" data-aos="fade-up">This comparison is based on GhostESP's feature set and publicly available source for the listed projects. It is not a complete feature list for every firmware. HaleHound and nyanBOX are compared against the latest public source available to us; if newer releases are closed source, this table cannot be independently updated or verified against those builds.</p>
+      <div class="comparison-container visible" data-aos="fade-up">
+        <table class="comparison-table" id="comparison-table">
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th class="ghostesp-col">GhostESP</th>
+              <th>Bruce</th>
+              <th>HaleHound</th>
+              <th>nyanBOX</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="category-row key-row"><td colspan="5">Architecture</td></tr>
+            <tr class="key-row">
+              <td>Current source available for audit</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-partial">Limited / older public source</span></td>
+              <td><span class="check-partial">Limited / older public source</span></td>
+            </tr>
+            <tr class="key-row">
+              <td>ESP-IDF-native architecture</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>Arduino / PlatformIO architecture</td>
+              <td class="ghostesp-col"><span class="check-no">&#8212;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+            </tr>
+            <tr class="key-row">
+              <td>Supported board targets</td>
+              <td class="ghostesp-col">46 CI targets</td>
+              <td>42+</td>
+              <td>4</td>
+              <td>1</td>
+            </tr>
+            <tr class="key-row">
+              <td>Full LVGL graphical UI</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+
+            <tr class="category-row key-row"><td colspan="5">WiFi</td></tr>
+            <tr class="key-row">
+              <td>Web dashboard / REST control</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>Captive portal web server</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+            </tr>
+            <tr>
+              <td>AP / station WiFi scanning</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+            </tr>
+            <tr>
+              <td>Deauth / disassoc testing</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+            </tr>
+            <tr>
+              <td>Beacon spam</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+            </tr>
+            <tr>
+              <td>Karma / probe response attack</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>Handshake / EAPOL capture</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>On-device PCAP browser / hc22000 export</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>PMKID capture / export</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+
+            <tr class="key-row">
+              <td>Live Wireshark USB streaming</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr class="key-row">
+              <td>WPA3 / SAE-specific testing</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>WPA3 compliance checker</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>EAPOL logoff attack</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>Channel switch attack</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>GTK abuse / client isolation testing</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>DHCP starvation</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>ARP / port / SSH scanners</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>mDNS discovery</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>NetBIOS scanner</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>HTTP banner scanner</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>SNMP probe</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>WiFi OUI vendor lookup</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>PineAP / Evil Twin detection</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+            </tr>
+            <tr>
+              <td>WPS detection / reporting</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>Pwnagotchi-style automated capture mode</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>Pwnagotchi detector / spam</td>
+              <td class="ghostesp-col"><span class="check-no">&#8212;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+            </tr>
+            <tr>
+              <td>Channel congestion analysis</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+            </tr>
+            <tr>
+              <td>Live WiFi packet monitor / visualizer</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+            </tr>
+            <tr class="key-row">
+              <td>WiFi Airspace Monitor</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>DNS sinkhole / blocklist NXDOMAIN</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr class="key-row">
+              <td>GPS WiFi wardriving</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>BLE wardriving</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>WiGLE upload integration</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>802.15.4 / Zigbee sweep export</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr class="key-row">
+              <td>GhostLink dual-ESP control</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>GhostLink BLE bridge to Android</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>Split-channel wardriving helper</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>GhostLink remote radio support</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>Drone / OpenDroneID detect</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+            </tr>
+            <tr>
+              <td>Drone / OpenDroneID spoof</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+
+            <tr class="category-row"><td colspan="5">Bluetooth LE</td></tr>
+            <tr>
+              <td>BLE scanning</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+            </tr>
+            <tr>
+              <td>Raw BLE scanner</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>BLE spam modes</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+            </tr>
+            <tr>
+              <td>AirTag scan / spoof</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+            </tr>
+            <tr>
+              <td>BLE tracker detection tools</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+            </tr>
+            <tr>
+              <td>Flipper Zero finder</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+            </tr>
+            <tr>
+              <td>GATT / service enumeration</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>BLE device tracking by RSSI</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>BLE stream to Wireshark</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>BLE skimmer detection</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+            </tr>
+            <tr>
+              <td>FastPair / pairing exploit research</td>
+              <td class="ghostesp-col"><span class="check-no">&#8212;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+            </tr>
+            <tr>
+              <td>BLE HID injection / DuckyScript over BLE</td>
+              <td class="ghostesp-col"><span class="check-no">&#8212;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>BLE keyboard mode</td>
+              <td class="ghostesp-col"><span class="check-no">&#8212;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>BLE GATT honeypot / cloned peripheral</td>
+              <td class="ghostesp-col"><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+            </tr>
+            <tr>
+              <td>BLE vulnerability profiling</td>
+              <td class="ghostesp-col"><span class="check-no">&#8212;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>Flock / surveillance detector</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+            </tr>
+
+            <tr class="category-row"><td colspan="5">NFC</td></tr>
+            <tr>
+              <td>PN532 NFC support</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>ST25R3916 NFC support</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>Chameleon Ultra support</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>Chameleon Ultra BLE control</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>Flipper `.nfc` import/export</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>Flipper NFC parser set</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>MIFARE Classic default-key attack</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>MIFARE Classic full embedded dictionary</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>MIFARE Classic user dictionary file</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>MIFARE Classic session key reuse / sector sweep</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>MIFARE Classic hardnested recovery</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>PicoPass / iCLASS reading</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>MIFARE DESFire application / file tree reads</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>EMV / payment card reader</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+
+            <tr class="category-row"><td colspan="5">BadUSB / HID</td></tr>
+            <tr>
+              <td>BadUSB / DuckyScript</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>USB keyboard host mode</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>USB HID keyboard output mode</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>Remote keyboard over dual-device link</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>BadUSB VID/PID identity options</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>BadUSB mouse jiggler / trackpad</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+
+            <tr class="category-row"><td colspan="5">Infrared</td></tr>
+            <tr>
+              <td>IR learn / capture / replay</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>Flipper `.ir` file support</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>Universal IR library transmit</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+
+            <tr class="category-row"><td colspan="5">SubGHz / RF</td></tr>
+            <tr>
+              <td>CC1101 SubGHz scan / replay</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>CC1101 waterfall spectrum analyzer</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>Flipper `.sub` compatibility</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+            </tr>
+            <tr>
+              <td>SubGHz protocol decoders</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>NRF24 spectrum analyzer</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+            </tr>
+            <tr>
+              <td>NRF24 MouseJack</td>
+              <td class="ghostesp-col"><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>Passive jamming detection</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>Active RF jamming shipped</td>
+              <td class="ghostesp-col">Not shipped</td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+            </tr>
+            <tr>
+              <td>Zigbee / 802.15.4 packet capture</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+
+            <tr class="category-row"><td colspan="5">Ethernet</td></tr>
+            <tr>
+              <td>Ethernet W5500 support</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>Ethernet ARP poisoning / MITM tools</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>Ethernet fingerprint / port / ping tools</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>Ethernet DNS / NTP / HTTP / trace tools</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>TLS SNI / HTTP / FTP credential capture over Ethernet</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+
+            <tr class="category-row key-row"><td colspan="5">Miscellaneous</td></tr>
+            <tr>
+              <td>Camera streaming / motion detection</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>Motion alerts with webhook support</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>Network printer / PJL output</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>DIAL / Chromecast testing</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr class="key-row">
+              <td>On-device setup wizard</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>Wired screen mirroring</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+            </tr>
+            <tr>
+              <td>Web screen mirroring</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>SD config backup / restore</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>Battery monitoring / fuel gauge support</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>Sensor / RTC hardware support</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>M5 Cardputer keyboard support</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr class="key-row">
+              <td>Android companion app</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>LoRa support</td>
+              <td class="ghostesp-col"><span class="check-no">&#8212;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>FM radio support</td>
+              <td class="ghostesp-col"><span class="check-no">&#8212;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+
+            <tr class="category-row key-row"><td colspan="5">Platform &amp; Apps</td></tr>
+            <tr>
+              <td>PIN / password lock</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+            </tr>
+            <tr>
+              <td>On-device OTA / SD firmware update</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>Firmware verification / rollback protection</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>GhostLink peer firmware update</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>SD file manager / browser</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr class="key-row">
+              <td>Native SD app/plugin system</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>Native app SDK / build tooling</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>Sandboxed on-device scripting runtime</td>
+              <td class="ghostesp-col">Lua 5.4</td>
+              <td>JavaScript</td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>Cloud app / script / asset store</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>Apps gallery / launcher</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>Ghostchi / virtual pet</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>Audio player</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>Microphone spectrum / visualizer</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>RGB LED visualizer modes</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>Clock / RTC screen</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>Compass screen</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>Accelerometer screen</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>ENV-III temperature / humidity / pressure</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>Accessibility modes / reduced motion</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>Custom theme / UI palette system</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr>
+              <td>Custom SD asset packs</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="comparison-disclaimer" style="margin-top: 1rem;">GhostESP does not ship active jamming features. Distribution, promotion, sale and use of jamming devices or firmware is illegal in many jurisdictions.</p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="legal-banner">
+        <p><strong>Authorized use only.</strong> GhostESP is built for security testing on networks you own, lab research, education, and defensive analysis. Do not use it on networks or devices you do not own or have explicit permission to test.</p>
+      </div>
+      <div class="footer-links">
+        <a href="https://discord.gg/5cyNmUMgwh" target="_blank" rel="noopener" class="icon-link" title="Discord">
+          <i class="bi bi-discord"></i>
+        </a>
+        <a href="https://github.com/GhostESP-Revival/GhostESP" target="_blank" rel="noopener" class="icon-link" title="GitHub">
+          <i class="bi bi-github"></i>
+        </a>
+        <a href="https://instagram.com/ghostesprevival" target="_blank" rel="noopener" class="icon-link" title="Instagram">
+          <i class="bi bi-instagram"></i>
+        </a>
+      </div>
+      <button class="cookie-settings-link" onclick="CookieConsent.showSettings()">Cookie Settings</button>
+      <a href="privacy.html" class="cookie-settings-link">Privacy Policy</a>
+    </div>
+  </footer>
+
+  <script src="js/components.js" defer></script>
+  <script src="js/social-proof.js" defer></script>
+  <script src="js/main.js" defer></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js" defer></script>
+  <script>
+    window.addEventListener('DOMContentLoaded', function () {
+      AOS.init({ duration: 800, once: true, offset: 100 });
+    });
+  </script>
+  <script src="js/cookie-consent.js" defer></script>
+</body>
+</html>

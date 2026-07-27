@@ -1,14 +1,23 @@
 // github api utilities
 const github = {
   async fetchLatestRelease(owner, repo) {
-    try {
-      const response = await fetch(`https://api.github.com/repos/${owner}/${repo}/releases/latest`);
-      if (!response.ok) throw new Error('failed to fetch release');
-      return await response.json();
-    } catch (error) {
-      console.error('github fetch error:', error);
-      throw error;
+    const query = `?owner=${encodeURIComponent(owner)}&repo=${encodeURIComponent(repo)}`;
+    let response = await fetch(`/.netlify/functions/github-release${query}`, {
+      headers: { Accept: 'application/json' }
+    });
+
+    // Keep local static-server development working when Netlify Functions are unavailable.
+    if (response.status === 404) {
+      response = await fetch(`https://api.github.com/repos/${owner}/${repo}/releases/latest`, {
+        headers: {
+          Accept: 'application/vnd.github+json',
+          'X-GitHub-Api-Version': '2022-11-28'
+        }
+      });
     }
+
+    if (!response.ok) throw new Error(`GitHub release request failed (${response.status})`);
+    return await response.json();
   },
 
   async renderRelease(containerId, owner, repo) {
@@ -26,7 +35,8 @@ const github = {
     } catch (error) {
       container.innerHTML = `
         <div class="card" style="text-align: center; color: var(--text-dim);">
-          <p>Failed to load release data. Please try again later.</p>
+          <p>Release details are temporarily unavailable.</p>
+          <a href="https://github.com/${owner}/${repo}/releases" target="_blank" rel="noopener">View releases on GitHub</a>
         </div>
       `;
     }
