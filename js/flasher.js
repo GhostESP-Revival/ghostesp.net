@@ -553,7 +553,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ],
             "Seeed": [
                 { name: "XIAO S3 Sense", chip: "ESP32-S3", firmware: "XIAO_S3_Sense.zip" },
-                { name: "XIAO C5", chip: "ESP32-C5", firmware: "XIAO_C5.zip" },
+                { name: "XIAO C5", chip: "ESP32-C5", firmware: "XIAO_C5.zip", flashSize: "8MB" },
                 { name: "XIAO S3", chip: "ESP32-S3", firmware: "XIAO_S3.zip" }
             ],
             "Displays": [
@@ -2550,6 +2550,63 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
+        // Parse the ESP image header baked into bootloader.bin so the flasher
+        // uses the exact flash mode/freq/size the firmware was compiled with.
+        // esptool-js re-stamps these fields into the image headers at write time
+        // WITHOUT recomputing each image's SHA-256, so flashing with a wrong
+        // size/freq both breaks the bootloader's per-boot image check AND (for a
+        // too-small size) hides partitions past that size. The binary is the
+        // source of truth, which makes this self-correcting for every board.
+        function detectFlashParamsFromImage(imageBuffer) {
+            try {
+                if (!imageBuffer || imageBuffer.byteLength < 4) return null;
+                const view = new DataView(imageBuffer);
+                if (view.getUint8(0) !== 0xE9) return null; // not an ESP image
+                const MODE = { 0: 'qio', 1: 'qout', 2: 'dio', 3: 'dout' };
+                const SIZE = { 0: '1MB', 1: '2MB', 2: '4MB', 3: '8MB', 4: '16MB', 5: '32MB', 6: '64MB', 7: '128MB' };
+                const SPEED = { 0: '40m', 1: '26m', 2: '20m', 0xf: '80m' };
+                const modeByte = view.getUint8(2);
+                const sizeFreq = view.getUint8(3);
+                return {
+                    mode: MODE[modeByte],
+                    freq: SPEED[sizeFreq & 0x0F],
+                    size: SIZE[(sizeFreq >> 4) & 0x0F]
+                };
+            } catch (e) {
+                return null;
+            }
+        }
+
+        // Apply detected params to the UI selects (step-2 + step-3 mirrors),
+        // only touching values whose option actually exists so an unusual build
+        // (e.g. 32MB) degrades gracefully. Returns the set of keys applied.
+        function applyDetectedFlashParams(params) {
+            const applied = new Set();
+            if (!params) return applied;
+            const selects = [
+                ['mode', flashModeSelect, 'flashMode3'],
+                ['freq', flashFreqSelect, 'flashFreq3'],
+                ['size', flashSizeSelect, 'flashSize3']
+            ];
+            for (const [key, primary, mirrorId] of selects) {
+                const value = params[key];
+                if (!value || !primary) continue;
+                if (!Array.from(primary.options).some(o => o.value === value)) continue;
+                primary.value = value;
+                applied.add(key);
+                const mirror = getElementById(mirrorId, { optional: true });
+                if (mirror) mirror.value = value;
+            }
+            if (applied.size > 0) {
+                espLoaderTerminal.writeLine(
+                    `Detected flash params from bootloader image: ` +
+                    `${params.size || '—'} / ${params.freq || '—'} / ${params.mode || '—'}.`
+                );
+                updateFlashSummary();
+            }
+            return applied;
+        }
+
         async function loadGhostEspZip(optionValue) {
             if (!optionValue) {
                 extractedGhostEspFiles = null;
@@ -2644,22 +2701,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 if (foundCount > 0) {
                     extractedGhostEspFiles = filesToExtract;
-                    const requiredEnd = Object.values(filesToExtract).reduce((largestEnd, fileInfo) => {
-                        if (!fileInfo.data) return largestEnd;
-                        const address = parseInt(fileInfo.addressInput.value, 16);
-                        return Math.max(largestEnd, address + fileInfo.data.byteLength);
-                    }, 0);
-                    const selectedFlashBytes = parseInt(flashSizeSelect?.value || '0', 10) * 1024 * 1024;
-                    if (requiredEnd > selectedFlashBytes && flashSizeSelect) {
-                        const fittingOption = Array.from(flashSizeSelect.options).find(option => {
-                            const optionBytes = parseInt(option.value, 10) * 1024 * 1024;
-                            return optionBytes >= requiredEnd;
-                        });
-                        if (fittingOption) {
-                            flashSizeSelect.value = fittingOption.value;
-                            const step3FlashSize = getElementById('flashSize3');
-                            if (step3FlashSize) step3FlashSize.value = fittingOption.value;
-                            espLoaderTerminal.writeLine(`Firmware requires at least ${(requiredEnd / 1024 / 1024).toFixed(2)}MB; using ${fittingOption.value} flash size.`);
+
+                    // Authoritative: read flash mode/freq/size straight from the
+                    // bootloader image header baked in at build time.
+                    const detectedParams = detectFlashParamsFromImage(filesToExtract.bootloader?.data);
+                    const detectedApplied = applyDetectedFlashParams(detectedParams);
+
+                    // Fallback: only if the image header didn't yield a size do we
+                    // bump the size select from the highest address+length of all files.
+                    if (!detectedApplied.has('size')) {
+                        const requiredEnd = Object.values(filesToExtract).reduce((largestEnd, fileInfo) => {
+                            if (!fileInfo.data) return largestEnd;
+                            const address = parseInt(fileInfo.addressInput.value, 16);
+                            return Math.max(largestEnd, address + fileInfo.data.byteLength);
+                        }, 0);
+                        const selectedFlashBytes = parseInt(flashSizeSelect?.value || '0', 10) * 1024 * 1024;
+                        if (requiredEnd > selectedFlashBytes && flashSizeSelect) {
+                            const fittingOption = Array.from(flashSizeSelect.options).find(option => {
+                                const optionBytes = parseInt(option.value, 10) * 1024 * 1024;
+                                return optionBytes >= requiredEnd;
+                            });
+                            if (fittingOption) {
+                                flashSizeSelect.value = fittingOption.value;
+                                const step3FlashSize = getElementById('flashSize3');
+                                if (step3FlashSize) step3FlashSize.value = fittingOption.value;
+                                espLoaderTerminal.writeLine(`Firmware requires at least ${(requiredEnd / 1024 / 1024).toFixed(2)}MB; using ${fittingOption.value} flash size.`);
+                            }
                         }
                     }
                     espLoaderTerminal.writeLine("Extraction complete. Files ready.");
