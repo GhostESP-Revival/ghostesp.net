@@ -1,3 +1,8 @@
 /GhostESPCompanion
 /node_modules
 /ghostesp.net-Performance-on-Search-2026-06-18
+
+# design source files & unreferenced heavy binaries (kept locally, not shipped in repo)
+*.psd
+/downloads/assets/GhostESP_Brand_Assets/05_social/Untitled-twh.png
+/downloads/assets/GhostESP_Brand_Assets/05_social/v2.0-pre2_apps.png

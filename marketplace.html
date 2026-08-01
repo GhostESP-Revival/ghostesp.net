@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#000000">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com https://cdn.jsdelivr.net; img-src 'self' https://raw.githubusercontent.com https://gesp.fuckyourcdn.com data:; font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net; connect-src 'self' https://raw.githubusercontent.com https://gesp.fuckyourcdn.com https://api.github.com https://discord.com; object-src 'none'; base-uri 'self'; form-action 'self';">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com https://cdn.jsdelivr.net; img-src 'self' https://raw.githubusercontent.com https://github.com https://avatars.githubusercontent.com https://gesp.fuckyourcdn.com data:; font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net; connect-src 'self' https://raw.githubusercontent.com https://gesp.fuckyourcdn.com https://api.github.com https://discord.com; object-src 'none'; base-uri 'self'; form-action 'self';">
 
   <title>GhostESP App Marketplace for Native SD Apps</title>
   <meta name="description" content="Marketplace for GhostESP native SD apps and locally hosted .gapp downloads.">
@@ -207,6 +207,16 @@
       margin-bottom: 0.9rem;
     }
 
+    .market-app-icon {
+      width: 48px;
+      height: 48px;
+      flex-shrink: 0;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.04);
+      object-fit: cover;
+    }
+
     .market-app-title {
       margin: 0 0 0.2rem;
       font-size: 1.15rem;
@@ -250,6 +260,28 @@
       background: rgba(255, 255, 255, 0.04);
       font-family: var(--font-mono);
       font-size: 0.7rem;
+    }
+
+    .market-input-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.45rem;
+      margin-bottom: 1rem;
+    }
+
+    .market-input-label {
+      color: var(--text-dim);
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .market-input-row .market-chip {
+      border-color: rgba(255, 200, 87, 0.35);
+      color: rgba(255, 236, 188, 0.92);
+      background: rgba(255, 200, 87, 0.06);
     }
 
     .market-downloads {

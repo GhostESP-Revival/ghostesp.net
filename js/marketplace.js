@@ -96,12 +96,23 @@
     return `${repository}/tree/${branch}${subdir}`;
   }
 
+  function getIconUrl(app) {
+    if (!app.icon) return '';
+
+    if (/^https?:\/\//.test(app.icon)) return app.icon;
+
+    return `https://raw.githubusercontent.com/GhostESP-Revival/GhostESP-Apps/main/apps/${encodeURIComponent(app.id)}/${encodeURIComponent(app.icon)}`;
+  }
+
   function renderApp(app) {
     const authors = Array.isArray(app.authors) && app.authors.length ? app.authors : ['Unknown'];
     const sourceUrl = getSourceUrl(app);
+    const inputs = Array.isArray(app.inputs) && app.inputs.length ? app.inputs : [];
+    const iconUrl = getIconUrl(app);
 
     return `<article class="market-app-card">
       <div class="market-app-head">
+        ${iconUrl ? `<img class="market-app-icon" src="${escapeHtml(iconUrl)}" alt="" loading="lazy">` : ''}
         <div>
           <h3 class="market-app-title">${escapeHtml(app.name)}</h3>
           <div class="market-app-id">${escapeHtml(app.id)} v${escapeHtml(app.version)}</div>
@@ -113,6 +124,10 @@
         <span class="market-chip">${escapeHtml(app.category)}</span>
         ${(app.targets || []).map((t) => `<span class="market-chip">${escapeHtml(t)}</span>`).join('')}
       </div>
+      ${inputs.length ? `<div class="market-input-row">
+        <span class="market-input-label">Inputs:</span>
+        ${inputs.map((input) => `<span class="market-chip">${escapeHtml(input)}</span>`).join('')}
+      </div>` : ''}
       <div class="market-downloads">${renderDownloads(app)}</div>
       ${sourceUrl ? `<a class="market-source-link" href="${escapeHtml(sourceUrl)}" target="_blank" rel="noopener">View source code</a>` : ''}
     </article>`;
@@ -120,7 +135,7 @@
 
   async function addSourceDetails() {
     const manifests = await Promise.all(apps.map(async (app) => {
-      if (app.source_repo || !app.id) return app;
+      if (!app.id || (app.source_repo && app.inputs && app.icon)) return app;
 
       try {
         const response = await fetch(`${APP_MANIFEST_BASE_URL}/${encodeURIComponent(app.id)}/manifest.json`);
@@ -131,7 +146,9 @@
           ...app,
           source_repo: manifest.source_repo,
           source_branch: manifest.source_branch,
-          source_subdir: manifest.source_subdir
+          source_subdir: manifest.source_subdir,
+          inputs: Array.isArray(manifest.inputs) ? manifest.inputs : app.inputs,
+          icon: manifest.icon || app.icon || ''
         };
       } catch (error) {
         return app;

@@ -52,6 +52,7 @@ const components = {
               <li><a href="https://shop.ghostesp.net" target="_blank" rel="noopener">Merch</a></li>
               <li><a href="/blog">Blog</a></li>
               <li><a href="/changelog">Changelog</a></li>
+              <li><a href="/showcase">Showcase</a></li>
               <li><a href="/brand-assets">Brand Assets</a></li>
               <li><a href="/brand-guidelines">Brand Guidelines</a></li>
               <li><a href="/feedback">Feedback</a></li>
