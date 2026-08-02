@@ -282,6 +282,10 @@ nav .container {
   position: relative;
 }
 
+.nav-links > li > a {
+  padding: 0.3rem 0.6rem;
+}
+
 .nav-dropdown {
   position: relative;
 }

@@ -322,11 +322,111 @@
     </div>
   </section>
 
-  <!-- Latest Release -->
-  <section id="releases" class="section section-alt">
+  <!-- Firmware Comparison -->
+  <section id="comparison" class="section">
     <div class="container">
-      <h2 data-aos="fade-up">Latest Release</h2>
-      <div id="latest-release" data-aos="fade-up"></div>
+      <h2 data-aos="fade-up">GhostESP vs The Rest</h2>
+      <div class="comparison-summary" data-aos="fade-up">
+        <div class="comparison-summary-item">
+          <i data-lucide="layers"></i>
+          <span>45+ boards, full wireless suite, LVGL UI, and companion apps</span>
+        </div>
+        <div class="comparison-summary-item">
+          <i data-lucide="code-2"></i>
+          <span>Built on ESP-IDF, not Arduino or PlatformIO</span>
+        </div>
+        <div class="comparison-summary-item">
+          <i data-lucide="unlock"></i>
+          <span>GPL-licensed and fully auditable, firmware, tools, and this website</span>
+        </div>
+      </div>
+      <p class="comparison-disclaimer" data-aos="fade-up">This comparison is based on GhostESP's feature set and publicly available source for the listed projects. It is not a complete feature list for every firmware. HaleHound and nyanBOX are compared against the latest public source available to us; if newer releases are closed source, this table cannot be independently updated or verified against those builds.</p>
+      <div class="comparison-container visible" data-aos="fade-up">
+        <table class="comparison-table" id="comparison-table-teaser">
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th class="ghostesp-col">GhostESP</th>
+              <th>Bruce</th>
+              <th>HaleHound</th>
+              <th>nyanBOX</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="category-row key-row"><td colspan="5">Architecture</td></tr>
+            <tr class="key-row">
+              <td>Current source available for audit</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-partial">Limited / older public source</span></td>
+              <td><span class="check-partial">Limited / older public source</span></td>
+            </tr>
+            <tr class="key-row">
+              <td>Supported board targets</td>
+              <td class="ghostesp-col">46 CI targets</td>
+              <td>42+</td>
+              <td>4</td>
+              <td>1</td>
+            </tr>
+            <tr class="key-row">
+              <td>Full LVGL graphical UI</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr class="category-row key-row"><td colspan="5">WiFi</td></tr>
+            <tr class="key-row">
+              <td>Live Wireshark USB streaming</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr class="key-row">
+              <td>WPA3 / SAE-specific testing</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr class="key-row">
+              <td>WiFi Airspace Monitor</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr class="key-row">
+              <td>GhostLink dual-ESP control</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr class="category-row key-row"><td colspan="5">Platform &amp; Apps</td></tr>
+            <tr class="key-row">
+              <td>Native SD app/plugin system</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+            <tr class="key-row">
+              <td>Android companion app</td>
+              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+              <td><span class="check-no">&#8212;</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <a href="/compare" class="btn btn-primary comparison-toggle" style="text-decoration:none; display:inline-flex; align-items:center; justify-content:center;">
+        <span>See all 133 features</span>
+        <i data-lucide="arrow-right" style="margin-left: 0.4rem; width: 16px; height: 16px;"></i>
+      </a>
+      <p class="comparison-disclaimer" style="margin-top: 1rem;">GhostESP does not ship active jamming features. Distribution, promotion, sale and use of jamming devices or firmware is illegal in many jurisdictions.</p>
     </div>
   </section>
 
@@ -441,111 +541,17 @@
     </div>
   </section>
 
-  <!-- Firmware Comparison -->
-  <section id="comparison" class="section">
+  <!-- Latest Release -->
+  <section id="releases" class="section">
     <div class="container">
-      <h2 data-aos="fade-up">GhostESP vs The Rest</h2>
-      <div class="comparison-summary" data-aos="fade-up">
-        <div class="comparison-summary-item">
-          <i data-lucide="layers"></i>
-          <span>45+ boards, full wireless suite, LVGL UI, and companion apps</span>
-        </div>
-        <div class="comparison-summary-item">
-          <i data-lucide="code-2"></i>
-          <span>Built on ESP-IDF, not Arduino or PlatformIO</span>
-        </div>
-        <div class="comparison-summary-item">
-          <i data-lucide="unlock"></i>
-          <span>GPL-licensed and fully auditable, firmware, tools, and this website</span>
+      <h2 data-aos="fade-up">Latest Release</h2>
+      <div id="latest-release" data-aos="fade-up">
+        <div class="card" style="text-align:center; color: var(--text-dim);">
+          <span class="spinner"></span>
+          <p style="margin-top:0.75rem;">Loading the latest release&hellip;</p>
+          <a href="https://github.com/GhostESP-Revival/GhostESP/releases/latest" target="_blank" rel="noopener">View releases on GitHub</a>
         </div>
       </div>
-      <p class="comparison-disclaimer" data-aos="fade-up">This comparison is based on GhostESP's feature set and publicly available source for the listed projects. It is not a complete feature list for every firmware. HaleHound and nyanBOX are compared against the latest public source available to us; if newer releases are closed source, this table cannot be independently updated or verified against those builds.</p>
-      <div class="comparison-container visible" data-aos="fade-up">
-        <table class="comparison-table" id="comparison-table-teaser">
-          <thead>
-            <tr>
-              <th>Feature</th>
-              <th class="ghostesp-col">GhostESP</th>
-              <th>Bruce</th>
-              <th>HaleHound</th>
-              <th>nyanBOX</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="category-row key-row"><td colspan="5">Architecture</td></tr>
-            <tr class="key-row">
-              <td>Current source available for audit</td>
-              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
-              <td><span class="check-yes">&#10003;</span></td>
-              <td><span class="check-partial">Limited / older public source</span></td>
-              <td><span class="check-partial">Limited / older public source</span></td>
-            </tr>
-            <tr class="key-row">
-              <td>Supported board targets</td>
-              <td class="ghostesp-col">46 CI targets</td>
-              <td>42+</td>
-              <td>4</td>
-              <td>1</td>
-            </tr>
-            <tr class="key-row">
-              <td>Full LVGL graphical UI</td>
-              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
-              <td><span class="check-no">&#8212;</span></td>
-              <td><span class="check-no">&#8212;</span></td>
-              <td><span class="check-no">&#8212;</span></td>
-            </tr>
-            <tr class="category-row key-row"><td colspan="5">WiFi</td></tr>
-            <tr class="key-row">
-              <td>Live Wireshark USB streaming</td>
-              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
-              <td><span class="check-no">&#8212;</span></td>
-              <td><span class="check-no">&#8212;</span></td>
-              <td><span class="check-no">&#8212;</span></td>
-            </tr>
-            <tr class="key-row">
-              <td>WPA3 / SAE-specific testing</td>
-              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
-              <td><span class="check-no">&#8212;</span></td>
-              <td><span class="check-no">&#8212;</span></td>
-              <td><span class="check-no">&#8212;</span></td>
-            </tr>
-            <tr class="key-row">
-              <td>WiFi Airspace Monitor</td>
-              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
-              <td><span class="check-no">&#8212;</span></td>
-              <td><span class="check-no">&#8212;</span></td>
-              <td><span class="check-no">&#8212;</span></td>
-            </tr>
-            <tr class="key-row">
-              <td>GhostLink dual-ESP control</td>
-              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
-              <td><span class="check-no">&#8212;</span></td>
-              <td><span class="check-no">&#8212;</span></td>
-              <td><span class="check-no">&#8212;</span></td>
-            </tr>
-            <tr class="category-row key-row"><td colspan="5">Platform &amp; Apps</td></tr>
-            <tr class="key-row">
-              <td>Native SD app/plugin system</td>
-              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
-              <td><span class="check-no">&#8212;</span></td>
-              <td><span class="check-no">&#8212;</span></td>
-              <td><span class="check-no">&#8212;</span></td>
-            </tr>
-            <tr class="key-row">
-              <td>Android companion app</td>
-              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
-              <td><span class="check-no">&#8212;</span></td>
-              <td><span class="check-no">&#8212;</span></td>
-              <td><span class="check-no">&#8212;</span></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <a href="/compare" class="btn btn-primary comparison-toggle" style="text-decoration:none; display:inline-flex; align-items:center; justify-content:center;">
-        <span>See all 133 features</span>
-        <i data-lucide="arrow-right" style="margin-left: 0.4rem; width: 16px; height: 16px;"></i>
-      </a>
-      <p class="comparison-disclaimer" style="margin-top: 1rem;">GhostESP does not ship active jamming features. Distribution, promotion, sale and use of jamming devices or firmware is illegal in many jurisdictions.</p>
     </div>
   </section>
 
