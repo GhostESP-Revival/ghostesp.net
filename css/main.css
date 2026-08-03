@@ -470,6 +470,12 @@ nav .container {
   margin-bottom: 0.85rem;
 }
 
+.cap-eyebrow-lg {
+  font-size: 1.4rem;
+  letter-spacing: 0.5px;
+  margin-bottom: 1rem;
+}
+
 .cap-head h2 {
   margin-bottom: 0.85rem;
 }
@@ -760,7 +766,9 @@ nav .container {
   padding: 0.75rem 1.5rem;
   border-radius: var(--radius);
   text-decoration: none;
-  font-weight: 500;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.2px;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   display: inline-block;
   border: 1px solid transparent;
@@ -770,6 +778,11 @@ nav .container {
   position: relative;
   overflow: hidden;
   will-change: transform, box-shadow;
+}
+
+.btn > span {
+  display: inline-block;
+  transform: scaleY(1.12);
 }
 
 .btn::before {
@@ -1760,8 +1773,11 @@ h2 {
   margin-bottom: 2rem;
   text-align: center;
   font-family: var(--font-sans);
-  font-weight: 600;
-  letter-spacing: -0.5px;
+  font-weight: 800;
+  letter-spacing: -1px;
+  text-transform: uppercase;
+  transform: scaleY(1.15) !important;
+  transform-origin: center top;
 }
 
 h3 {
@@ -2724,22 +2740,48 @@ h3 {
   transform: translateX(3px);
 }
 
-.docs-card:hover .docs-card-icon,
-.docs-card:focus-visible .docs-card-icon {
-  color: #00ff80;
-}
-
 .docs-card:focus-visible {
   border-color: rgba(0, 255, 128, 0.4);
   outline: none;
 }
 
-.docs-card-icon {
-  width: 28px;
-  height: 28px;
-  color: var(--accent);
+.docs-card-head {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
   margin-bottom: 0.75rem;
-  transition: color 0.2s ease;
+}
+
+.docs-card-icon {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  padding: 10px;
+  box-sizing: content-box;
+  color: #00ff80;
+  background: rgba(0, 255, 128, 0.08);
+  border: 1px solid rgba(0, 255, 128, 0.25);
+  border-radius: 8px;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.docs-card:hover .docs-card-icon,
+.docs-card:focus-visible .docs-card-icon {
+  background: rgba(0, 255, 128, 0.16);
+  border-color: rgba(0, 255, 128, 0.5);
+  transform: scale(1.05);
+}
+
+.docs-card-head h3 {
+  margin-bottom: 0;
+  font-family: var(--font-sans);
+  font-weight: 800;
+  font-size: 1.3rem;
+  line-height: 1;
+  letter-spacing: -0.5px;
+  text-transform: uppercase;
+  transform: scaleY(1.15) translateY(-0.08em);
+  transform-origin: left center;
 }
 
 .docs-browse-all {

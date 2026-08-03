@@ -106,9 +106,9 @@
       <p class="hero-tagline">An open-source wireless platform for ESP32 devices.</p>
       <p class="hero-subtitle">Firmware, web tools, and companion apps for 45+ ESP32 boards.</p>
       <div class="hero-actions">
-        <a href="/flasher" class="btn btn-primary" data-track="cta_hero_flash">Flash Now</a>
-        <a href="#getting-started" class="btn btn-secondary">Get Started</a>
-        <a href="https://docs.ghostesp.net" class="btn btn-secondary" target="_blank" rel="noopener">Docs</a>
+        <a href="/flasher" class="btn btn-primary" data-track="cta_hero_flash"><span>Flash Now</span></a>
+        <a href="#getting-started" class="btn btn-secondary"><span>Get Started</span></a>
+        <a href="https://docs.ghostesp.net" class="btn btn-secondary" target="_blank" rel="noopener"><span>Docs</span></a>
       </div>
     </div>
     <div class="partner-strip">
@@ -157,19 +157,19 @@
           <div class="card-step-number">1</div>
           <h3>Pick a Board</h3>
            <p>Browse tested ESP32 boards that work great with GhostESP</p>
-          <a href="/boards" class="btn btn-primary">View Boards</a>
+          <a href="/boards" class="btn btn-primary"><span>View Boards</span></a>
         </div>
         <div class="card card-primary" data-aos="fade-up" data-aos-delay="200">
           <div class="card-step-number">2</div>
           <h3>Flash Your Device</h3>
           <p>Install GhostESP on your ESP32 using the web flasher</p>
-          <a href="/flasher" class="btn btn-primary">Open Flasher</a>
+          <a href="/flasher" class="btn btn-primary"><span>Open Flasher</span></a>
         </div>
         <div class="card card-primary" data-aos="fade-up" data-aos-delay="300">
           <div class="card-step-number">3</div>
           <h3>Serial Console</h3>
           <p>Configure your device with console, file manager, and screen mirror</p>
-           <a href="/serial" class="btn btn-primary">Open Console</a>
+           <a href="/serial" class="btn btn-primary"><span>Open Console</span></a>
         </div>
       </div>
 
@@ -180,9 +180,8 @@
   <section id="capabilities" class="section section-alt">
     <div class="container">
       <div class="cap-head" data-aos="fade-up">
-        <span class="cap-eyebrow">// what it does</span>
-        <h2>Capabilities</h2>
-        <p class="cap-lead">The largest update in the project's history turns an ESP32 into a full wireless research platform. Pick a band to see what it can do. A <span class="cap-new-inline">NEW</span> tag marks what's new in v2.1.</p>
+        <span class="cap-eyebrow cap-eyebrow-lg">// what it does</span>
+        <p class="cap-lead">Pick a band to see what it can do. A <span class="cap-new-inline">NEW</span> tag marks what's new in v2.1.</p>
       </div>
 
       <div class="cap-explorer" data-aos="fade-up">
@@ -316,8 +315,8 @@
       </div>
 
       <div class="cap-actions" data-aos="fade-up">
-        <a href="#releases" class="btn btn-primary">Download v2.1</a>
-        <a href="https://github.com/GhostESP-Revival/GhostESP/releases/latest" class="btn btn-secondary" target="_blank" rel="noopener">Full Changelog</a>
+        <a href="#releases" class="btn btn-primary"><span>Download v2.1</span></a>
+        <a href="https://github.com/GhostESP-Revival/GhostESP/releases/latest" class="btn btn-secondary" target="_blank" rel="noopener"><span>Full Changelog</span></a>
       </div>
     </div>
   </section>
@@ -433,41 +432,55 @@
   <!-- Documentation -->
   <section id="docs" class="section section-alt">
     <div class="container">
-      <h2 data-aos="fade-up">Documentation</h2>
+      <div class="cap-head" data-aos="fade-up">
+        <h2>Documentation</h2>
+      </div>
       <div class="grid">
         <a href="https://docs.ghostesp.net/latest/getting-started/installation-guide/" target="_blank" rel="noopener" class="card docs-card" data-aos="fade-up" data-aos-delay="100">
-          <i data-lucide="zap" class="docs-card-icon"></i>
-          <h3>Installation Guide</h3>
+          <div class="docs-card-head">
+            <i data-lucide="zap" class="docs-card-icon"></i>
+            <h3>Installation Guide</h3>
+          </div>
           <p>Flash GhostESP with the recommended web flasher.</p>
         </a>
         <a href="https://docs.ghostesp.net/latest/getting-started/" target="_blank" rel="noopener" class="card docs-card" data-aos="fade-up" data-aos-delay="150">
-          <i data-lucide="rocket" class="docs-card-icon"></i>
-          <h3>Getting Started</h3>
+          <div class="docs-card-head">
+            <i data-lucide="rocket" class="docs-card-icon"></i>
+            <h3>Getting Started</h3>
+          </div>
           <p>Initial setup guidance for GhostESP.</p>
         </a>
         <a href="https://docs.ghostesp.net/latest/getting-started/supported-hardware/" target="_blank" rel="noopener" class="card docs-card" data-aos="fade-up" data-aos-delay="200">
-          <i data-lucide="cpu" class="docs-card-icon"></i>
-          <h3>Supported Hardware</h3>
+          <div class="docs-card-head">
+            <i data-lucide="cpu" class="docs-card-icon"></i>
+            <h3>Supported Hardware</h3>
+          </div>
           <p>Device compatibility matrix for GhostESP features.</p>
         </a>
         <a href="https://docs.ghostesp.net/latest/getting-started/webui-guide/" target="_blank" rel="noopener" class="card docs-card" data-aos="fade-up" data-aos-delay="250">
-          <i data-lucide="globe" class="docs-card-icon"></i>
-          <h3>WebUI</h3>
+          <div class="docs-card-head">
+            <i data-lucide="globe" class="docs-card-icon"></i>
+            <h3>WebUI</h3>
+          </div>
           <p>Access and control GhostESP through the web interface.</p>
         </a>
         <a href="https://docs.ghostesp.net/latest/getting-started/command-line-reference/" target="_blank" rel="noopener" class="card docs-card" data-aos="fade-up" data-aos-delay="300">
-          <i data-lucide="terminal" class="docs-card-icon"></i>
-          <h3>CLI Reference</h3>
+          <div class="docs-card-head">
+            <i data-lucide="terminal" class="docs-card-icon"></i>
+            <h3>CLI Reference</h3>
+          </div>
           <p>Common GhostESP CLI commands grouped by category.</p>
         </a>
         <a href="https://docs.ghostesp.net/latest/getting-started/dual-communication/" target="_blank" rel="noopener" class="card docs-card" data-aos="fade-up" data-aos-delay="350">
-          <i data-lucide="link" class="docs-card-icon"></i>
-          <h3>GhostLink</h3>
+          <div class="docs-card-head">
+            <i data-lucide="radio-tower" class="docs-card-icon"></i>
+            <h3>GhostLink</h3>
+          </div>
           <p>Connect two ESP32 devices for remote control.</p>
         </a>
       </div>
       <div class="docs-browse-all" data-aos="fade-up">
-        <a href="https://docs.ghostesp.net" target="_blank" rel="noopener" class="btn btn-secondary">Browse All Docs</a>
+        <a href="https://docs.ghostesp.net" target="_blank" rel="noopener" class="btn btn-secondary"><span>Browse All Docs</span></a>
       </div>
     </div>
   </section>
@@ -475,36 +488,50 @@
   <!-- Community Apps & Packs -->
   <section id="marketplace" class="section">
     <div class="container">
-      <h2 data-aos="fade-up">Community Apps &amp; Packs</h2>
+      <div class="cap-head" data-aos="fade-up">
+        <h2>Apps &amp; Packs</h2>
+      </div>
       <div class="grid">
         <a href="/marketplace" class="card docs-card" data-aos="fade-up" data-aos-delay="100">
-          <i data-lucide="layout-grid" class="docs-card-icon"></i>
-          <h3>App Gallery</h3>
+          <div class="docs-card-head">
+            <i data-lucide="layout-grid" class="docs-card-icon"></i>
+            <h3>App Gallery</h3>
+          </div>
           <p>Native .gapp apps built by the community, ready to sideload.</p>
         </a>
         <a href="/asset-marketplace" class="card docs-card" data-aos="fade-up" data-aos-delay="150">
-          <i data-lucide="palette" class="docs-card-icon"></i>
-          <h3>Asset Packs</h3>
+          <div class="docs-card-head">
+            <i data-lucide="palette" class="docs-card-icon"></i>
+            <h3>Asset Packs</h3>
+          </div>
           <p>Themes and asset packs with live .gtheme swapping.</p>
         </a>
         <a href="/scripts-marketplace" class="card docs-card" data-aos="fade-up" data-aos-delay="200">
-          <i data-lucide="file-code" class="docs-card-icon"></i>
-          <h3>Scripts</h3>
+          <div class="docs-card-head">
+            <i data-lucide="file-code" class="docs-card-icon"></i>
+            <h3>Scripts</h3>
+          </div>
           <p>GhostScript automation scripts shared by the community.</p>
         </a>
         <a href="/asset-pack-builder" class="card docs-card" data-aos="fade-up" data-aos-delay="250">
-          <i data-lucide="hammer" class="docs-card-icon"></i>
-          <h3>Pack Builder</h3>
+          <div class="docs-card-head">
+            <i data-lucide="hammer" class="docs-card-icon"></i>
+            <h3>Pack Builder</h3>
+          </div>
           <p>Build your own custom theme and asset packs.</p>
         </a>
         <a href="/irdb" class="card docs-card" data-aos="fade-up" data-aos-delay="300">
-          <i data-lucide="database" class="docs-card-icon"></i>
-          <h3>IRDB</h3>
+          <div class="docs-card-head">
+            <i data-lucide="database" class="docs-card-icon"></i>
+            <h3>IRDB</h3>
+          </div>
           <p>Infrared remote code database for instant replay.</p>
         </a>
         <a href="/showcase" class="card docs-card" data-aos="fade-up" data-aos-delay="350">
-          <i data-lucide="play-circle" class="docs-card-icon"></i>
-          <h3>Showcase</h3>
+          <div class="docs-card-head">
+            <i data-lucide="play-circle" class="docs-card-icon"></i>
+            <h3>Showcase</h3>
+          </div>
           <p>Video demos and merch drops.</p>
         </a>
       </div>
@@ -520,9 +547,9 @@
           <h3>Auditable by Design</h3>
           <p class="auditable-text">GhostESP is GPL-licensed and built in public. You can inspect the firmware, tools, companion apps, docs, and even this website's source instead of trusting a black-box gadget.</p>
           <div class="auditable-links">
-            <a href="https://github.com/GhostESP-Revival/GhostESP" class="btn btn-secondary btn-small" target="_blank" rel="noopener">Firmware Source</a>
-            <a href="https://github.com/GhostESP-Revival" class="btn btn-secondary btn-small" target="_blank" rel="noopener">All Repos</a>
-            <a href="https://docs.ghostesp.net" class="btn btn-secondary btn-small" target="_blank" rel="noopener">Docs</a>
+            <a href="https://github.com/GhostESP-Revival/GhostESP" class="btn btn-secondary btn-small" target="_blank" rel="noopener"><span>Firmware Source</span></a>
+            <a href="https://github.com/GhostESP-Revival" class="btn btn-secondary btn-small" target="_blank" rel="noopener"><span>All Repos</span></a>
+            <a href="https://docs.ghostesp.net" class="btn btn-secondary btn-small" target="_blank" rel="noopener"><span>Docs</span></a>
           </div>
         </div>
         <div class="discord-widget-card" data-aos="fade-up" data-aos-delay="100">
@@ -535,7 +562,7 @@
             <span class="discord-online-dot"></span>
             <span id="discord-member-number">--</span> members online
           </div>
-          <a href="https://discord.gg/5cyNmUMgwh" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top:1rem;">Join Discord Server</a>
+          <a href="https://discord.gg/5cyNmUMgwh" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top:1rem;"><span>Join Discord Server</span></a>
         </div>
       </div>
     </div>
