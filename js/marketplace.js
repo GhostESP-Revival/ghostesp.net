@@ -109,8 +109,19 @@
     const sourceUrl = getSourceUrl(app);
     const inputs = Array.isArray(app.inputs) && app.inputs.length ? app.inputs : [];
     const iconUrl = getIconUrl(app);
+    const screenshots = Array.isArray(app.screenshots)
+      ? app.screenshots.filter((item) => item && typeof item.url === 'string' && item.url.trim())
+      : (typeof app.preview === 'string' && app.preview.trim()
+          ? [{ url: app.preview.trim(), alt: `${app.name} screenshot` }]
+          : []);
 
     return `<article class="market-app-card">
+      ${screenshots.length ? `<div class="market-app-screenshots" aria-label="${escapeHtml(app.name)} screenshots">
+        ${screenshots.map((item) => `<figure class="market-app-screenshot">
+          <img src="${escapeHtml(item.url)}" alt="${escapeHtml(item.alt || `${app.name} screenshot`)}" loading="lazy" decoding="async">
+          ${item.caption ? `<figcaption>${escapeHtml(item.caption)}</figcaption>` : ''}
+        </figure>`).join('')}
+      </div>` : ''}
       <div class="market-app-head">
         ${iconUrl ? `<img class="market-app-icon" src="${escapeHtml(iconUrl)}" alt="" loading="lazy">` : ''}
         <div>
