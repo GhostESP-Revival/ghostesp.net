@@ -1,7 +1,9 @@
 // main initialization
 document.addEventListener('DOMContentLoaded', () => {
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
   // initialize lenis smooth scroll if available
-  if (typeof Lenis !== 'undefined') {
+  if (typeof Lenis !== 'undefined' && !prefersReducedMotion) {
     const lenis = new Lenis({
       duration: 0.8,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -46,6 +48,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // initialize lucide icons if available
   if (typeof lucide !== 'undefined') {
+    // decorative icons should be invisible to assistive tech
+    document.querySelectorAll('i[data-lucide]').forEach(function (icon) {
+      icon.setAttribute('aria-hidden', 'true');
+    });
     lucide.createIcons();
+    document.querySelectorAll('svg.lucide').forEach(function (svg) {
+      if (!svg.hasAttribute('aria-hidden')) svg.setAttribute('aria-hidden', 'true');
+    });
   }
 });

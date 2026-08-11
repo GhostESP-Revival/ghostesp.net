@@ -9,6 +9,7 @@
   var mouseX = -9999, mouseY = -9999;
   var lastX = 0, lastY = 0;
   var smoothMouseX = -9999, smoothMouseY = -9999;
+  var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   function init() {
     canvas.width = window.innerWidth;
@@ -34,6 +35,7 @@
   }
 
   document.addEventListener('mousemove', function(e) {
+    if (reducedMotion) return;
     mouseX = e.clientX;
     mouseY = e.clientY;
 
@@ -47,6 +49,16 @@
       lastY = e.clientY;
     }
   });
+
+  function drawStatic() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (var s = 0; s < dots.length; s++) {
+      ctx.beginPath();
+      ctx.arc(dots[s].baseX + SPACING / 2, dots[s].baseY + SPACING / 2, 1.5, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(255,255,255,0.15)';
+      ctx.fill();
+    }
+  }
 
   function animate() {
     smoothMouseX += (mouseX - smoothMouseX) * 0.2;
@@ -114,5 +126,9 @@
 
   window.addEventListener('resize', init);
   init();
+  if (reducedMotion) {
+    drawStatic();
+    return;
+  }
   animate();
 })();

@@ -12,12 +12,12 @@ const components = {
         <a href="/" class="nav-logo">
           <img src="images/ghostespdotnet.png" alt="Ghost ESP">
         </a>
-        <button class="mobile-menu-toggle" aria-label="Toggle menu">
+        <button class="mobile-menu-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav-links"> 
           <span></span>
           <span></span>
           <span></span>
         </button>
-        <ul class="${navLinksClass}">
+        <ul id="nav-links" class="${navLinksClass}">
           <li><a href="/boards">Boards</a></li>
           <li><a href="/flasher">Flasher</a></li>
           <li><a href="/marketplace">Apps</a></li>
@@ -157,12 +157,12 @@ const components = {
         </div>
         ${body ? `<div class="release-body">${this.parseMarkdown(body)}</div>` : ''}
         ${release.assets.length ? this.assetList(initialAssets, `${containerId}-assets`) : ''}
-        ${hasMore ? `<div style="display: flex; justify-content: center;"><button class="btn btn-small btn-show-all" onclick="components.showAllAssets('${containerId}', ${JSON.stringify(release.assets).replace(/"/g, '&quot;')})">Show All Downloads</button></div>` : ''}
+        ${hasMore ? `<div style="display: flex; justify-content: center;"><button class="btn btn-small btn-show-all" onclick="components.showAllAssets('${containerId}', ${JSON.stringify(release.assets).replace(/"/g, '&quot;')}, this)">Show All Downloads</button></div>` : ''}
       </div>
     `;
   },
 
-  showAllAssets(containerId, allAssets) {
+  showAllAssets(containerId, allAssets, button) {
     const container = document.getElementById(`${containerId}-assets`);
     if (container) {
       container.innerHTML = allAssets.map(asset => `
@@ -173,8 +173,7 @@ const components = {
       `).join('');
       
       // hide the show all button
-      const btn = event.target;
-      if (btn) btn.style.display = 'none';
+      if (button) button.style.display = 'none';
     }
   },
 
@@ -283,24 +282,40 @@ document.addEventListener('DOMContentLoaded', () => {
     const navLinks = document.querySelector('.nav-links');
     
     if (menuToggle && navLinks) {
+      const setMenuState = (open) => {
+        menuToggle.classList.toggle('active', open);
+        navLinks.classList.toggle('active', open);
+        menuToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        if (open) {
+          const firstLink = navLinks.querySelector('a');
+          if (firstLink) firstLink.focus();
+        } else {
+          menuToggle.focus();
+        }
+      };
+
       menuToggle.addEventListener('click', () => {
-        menuToggle.classList.toggle('active');
-        navLinks.classList.toggle('active');
+        setMenuState(!navLinks.classList.contains('active'));
       });
 
       // close menu when clicking links
       navLinks.querySelectorAll('a').forEach(link => {
         link.addEventListener('click', () => {
-          menuToggle.classList.remove('active');
-          navLinks.classList.remove('active');
+          setMenuState(false);
         });
       });
 
       // close menu when clicking outside
       document.addEventListener('click', (e) => {
         if (!menuToggle.contains(e.target) && !navLinks.contains(e.target)) {
-          menuToggle.classList.remove('active');
-          navLinks.classList.remove('active');
+          setMenuState(false);
+        }
+      });
+
+      // close menu with Escape
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && navLinks.classList.contains('active')) {
+          setMenuState(false);
         }
       });
     }
