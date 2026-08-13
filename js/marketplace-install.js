@@ -168,7 +168,10 @@
         await sleep(250);
       }
     }
-    if (last.text.trim()) return { model: null, gotResponse: true };
+    const cleaned = last.text.replace(/\x1b\[[0-9;]*m/g, '').trim();
+    if (cleaned.length >= 12 || /ghost>|command|commands:/i.test(cleaned)) {
+      return { model: null, gotResponse: true };
+    }
     return { model: null, noResponse: true };
   }
 
@@ -227,6 +230,7 @@
   async function ensureAppsDir(link) {
     const res = await link.sendCommand('sd status', ['SD:STATUS:mounted=', 'SD:ERR'], 15000);
     const status = res.text;
+    console.log('[marketplace-install] sd status:', `matched=${res.matched} garbled=${res.garbled} len=${status.length}`, JSON.stringify(status.slice(0, 240)));
     if (!status || status.includes('SD:ERR')) {
       throw new Error('Could not read the SD card. Is one inserted?');
     }
@@ -236,6 +240,7 @@
     }
 
     const mkdir = await link.sendCommand(`sd mkdir ${APPS_DIR}`, ['SD:OK:', 'SD:ERR:'], 20000);
+    console.log('[marketplace-install] sd mkdir:', `matched=${mkdir.matched} garbled=${mkdir.garbled} len=${mkdir.text.length}`, JSON.stringify(mkdir.text.slice(0, 240)));
     if (mkdir.text.includes('SD:OK:')) return;
     if (mkdir.text.includes('SD:ERR:mkdir_failed')) return;
     throw new Error('Could not create the apps folder on the SD card.');
@@ -357,12 +362,15 @@
   }
 
   async function fetchDownload(url, onProgress) {
-    try {
-      const direct = await fetch(url, { mode: 'cors' });
-      if (direct.ok) {
-        return await readDirectResponse(direct, onProgress);
-      }
-    } catch (error) {}
+    const needsProxy = /^https:\/\/gesp\.fuckyourcdn\.com\//i.test(url);
+    if (!needsProxy) {
+      try {
+        const direct = await fetch(url, { mode: 'cors' });
+        if (direct.ok) {
+          return await readDirectResponse(direct, onProgress);
+        }
+      } catch (error) {}
+    }
 
     const proxyBase = `${proxyBaseUrl()}?url=${encodeURIComponent(url)}`;
     let metaResponse;
