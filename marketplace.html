@@ -225,7 +225,6 @@
       overflow-x: auto;
       scroll-snap-type: x mandatory;
       scrollbar-width: thin;
-      border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 14px;
       background: radial-gradient(circle at top right, rgba(201, 61, 255, 0.16), transparent 45%), rgba(0, 0, 0, 0.45);
     }
@@ -244,10 +243,33 @@
       border-radius: 8px;
     }
 
-    .market-app-screenshot figcaption {
+    .market-screenshot-eyebtn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
       margin-top: 0.5rem;
+      padding: 0.18rem 0.6rem;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      color: var(--text-dim);
+      background: rgba(255, 255, 255, 0.03);
+      cursor: pointer;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .market-screenshot-eyebtn:hover {
+      color: var(--text);
+      border-color: rgba(255, 255, 255, 0.35);
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .market-screenshot-caption {
+      margin: 0.5rem 0 0;
       color: var(--text-dim);
       font-size: 0.78rem;
+      text-align: center;
     }
 
     .market-app-title {
@@ -340,6 +362,48 @@
     .market-download-toggle:hover {
       transform: translateY(-2px);
       box-shadow: 0 6px 18px rgba(255, 255, 255, 0.14);
+    }
+
+    .market-install-btn {
+      width: 100%;
+      padding: 0.7rem 1rem;
+      border: 1px solid rgba(0, 255, 128, 0.45);
+      border-radius: 10px;
+      color: #00ff80;
+      background: rgba(0, 255, 128, 0.08);
+      cursor: pointer;
+      font: inherit;
+      font-weight: 600;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+    .market-install-btn:hover:not(:disabled) {
+      transform: translateY(-2px);
+      background: rgba(0, 255, 128, 0.14);
+      box-shadow: 0 6px 18px rgba(0, 255, 128, 0.12);
+    }
+
+    .market-install-btn:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+
+    .market-install-btn.market-install-busy {
+      animation: market-install-pulse 1.2s ease-in-out infinite;
+    }
+
+    @keyframes market-install-pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.55; }
+    }
+
+    .market-install-status {
+      margin: 0.5rem 0 0;
+      min-height: 1.1rem;
+      color: var(--text-dim);
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      text-align: center;
     }
 
     .market-download-targets {
@@ -445,7 +509,7 @@
         <img src="images/ghostespdotnet.png" alt="GhostESP" class="market-hero-logo">
         <div class="market-beta-line">Beta marketplace</div>
         <h1>Native Apps For GhostESP</h1>
-        <p>Native `.gapp` builds for the GhostESP SD app loader. Pick the package for your ESP target, drop it on the SD card, and launch it from the gallery.</p>
+        <p>Native `.gapp` builds for the GhostESP SD app loader. Pick the package for your ESP target, drop it on the SD card, or install it straight to a USB-connected device from your browser.</p>
         <div class="market-actions">
           <a href="#marketplace" class="btn btn-primary">Browse Apps</a>
           <a href="asset-marketplace.html" class="btn btn-secondary">Asset Packs</a>
@@ -476,7 +540,8 @@
     <div class="container">
       <h2 data-aos="fade-up">Install</h2>
       <p class="market-install" data-aos="fade-up" data-aos-delay="80">
-        Download the `.gapp` for your chip target, copy it to <code>/mnt/ghostesp/apps/</code> on your SD card, then reload the app gallery.
+        Plug your GhostESP into USB, hit <strong>Install to device</strong> on any app card, pick the serial port, and the site auto-detects the baud rate, matches your chip target, uploads the <code>.gapp</code> to <code>/mnt/ghostesp/apps/</code>, and reloads the gallery. Requires a Chromium browser (Chrome / Edge / Opera).<br>
+        Prefer SD? Download the <code>.gapp</code> for your chip target, copy it to <code>/mnt/ghostesp/apps/</code>, then reload the app gallery.
       </p>
     </div>
   </section>
@@ -502,6 +567,7 @@
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js" defer></script>
   <script src="js/components.js" defer></script>
   <script src="js/social-proof.js" defer></script>
+  <script src="js/marketplace-install.js" defer></script>
   <script src="js/marketplace.js" defer></script>
   <script src="js/main.js" defer></script>
   <script>

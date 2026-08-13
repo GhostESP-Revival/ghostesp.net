@@ -3,7 +3,6 @@
   const APP_MANIFEST_BASE_URL = 'https://raw.githubusercontent.com/GhostESP-Revival/GhostESP-Apps/main/apps';
   const ASSETS_CATALOG_URL = 'https://raw.githubusercontent.com/GhostESP-Revival/GhostESP-Assets/main/catalog.json';
   const CACHE_KEY = 'ghostesp-apps-catalog-v2';
-  const CACHE_TTL = 5 * 60 * 1000;
 
   let apps = [];
 
@@ -17,23 +16,21 @@
 
   async function fetchCatalog() {
     const cached = sessionStorage.getItem(CACHE_KEY);
-    if (cached) {
-      try {
-        const { data, timestamp } = JSON.parse(cached);
-        if (Date.now() - timestamp < CACHE_TTL) return data;
-      } catch (e) {}
+    try {
+      const url = `${APPS_CATALOG_URL}?t=${Date.now()}`;
+      const response = await fetch(url, { cache: 'no-store' });
+      if (!response.ok) throw new Error('Failed to load catalog');
+      const catalog = await response.json();
+      sessionStorage.setItem(CACHE_KEY, JSON.stringify({ data: catalog }));
+      return catalog;
+    } catch (error) {
+      if (cached) {
+        try {
+          return JSON.parse(cached).data;
+        } catch (e) {}
+      }
+      throw error;
     }
-
-    const response = await fetch(APPS_CATALOG_URL);
-    if (!response.ok) throw new Error('Failed to load catalog');
-    const catalog = await response.json();
-
-    sessionStorage.setItem(CACHE_KEY, JSON.stringify({
-      data: catalog,
-      timestamp: Date.now()
-    }));
-
-    return catalog;
   }
 
   const escapeHtml = components.escapeHtml.bind(components);
@@ -71,6 +68,7 @@
     const label = targets.length === 1 ? `Download ${targets[0]}` : `Download (${targets.length} targets)`;
 
     const downloads = app.downloads || {};
+    const canInstall = window.MarketplaceInstall && window.MarketplaceInstall.supported && Object.keys(downloads).length > 0;
 
     return `<button class="market-download-toggle" type="button" data-download-toggle="${escapeHtml(app.id)}" aria-expanded="${isExpanded ? 'true' : 'false'}">
       ${escapeHtml(isExpanded ? 'Hide downloads' : label)}
@@ -84,7 +82,11 @@
           <span>${escapeHtml(target)}</span>
         </a>`;
       }).join('')}
-    </div>` : ''}`;
+    </div>` : ''}
+    ${canInstall ? `<button class="market-install-btn" type="button" data-install="${escapeHtml(app.id)}" ${window.MarketplaceInstall.isBusy() ? 'disabled' : ''}>
+      Install to device
+    </button>` : ''}
+    ${canInstall ? `<p class="market-install-status" data-install-status="${escapeHtml(app.id)}"></p>` : ''}`;
   }
 
   function getSourceUrl(app) {
@@ -117,10 +119,16 @@
 
     return `<article class="market-app-card">
       ${screenshots.length ? `<div class="market-app-screenshots" aria-label="${escapeHtml(app.name)} screenshots">
-        ${screenshots.map((item) => `<figure class="market-app-screenshot">
-          <img src="${escapeHtml(item.url)}" alt="${escapeHtml(item.alt || `${app.name} screenshot`)}" loading="lazy" decoding="async">
-          ${item.caption ? `<figcaption>${escapeHtml(item.caption)}</figcaption>` : ''}
-        </figure>`).join('')}
+        ${screenshots.map((item) => {
+          const alt = item.alt || item.caption || `${app.name} screenshot`;
+          return `<figure class="market-app-screenshot">
+          <img src="${escapeHtml(item.url)}" alt="${escapeHtml(alt)}" loading="lazy" decoding="async">
+          <button class="market-screenshot-eyebtn" type="button" data-eyebtn aria-expanded="false" title="Show screenshot description">
+            <i class="bi bi-eye" aria-hidden="true"></i><span>Alt text</span>
+          </button>
+          <figcaption class="market-screenshot-caption" hidden>${escapeHtml(alt)}</figcaption>
+        </figure>`;
+        }).join('')}
       </div>` : ''}
       <div class="market-app-head">
         ${iconUrl ? `<img class="market-app-icon" src="${escapeHtml(iconUrl)}" alt="" loading="lazy">` : ''}
@@ -218,16 +226,40 @@
 
     if (grid) {
       grid.addEventListener('click', (event) => {
-        const button = event.target.closest('[data-download-toggle]');
-        if (!button) return;
-
-        const appId = button.getAttribute('data-download-toggle');
-        if (state.expanded.has(appId)) {
-          state.expanded.delete(appId);
-        } else {
-          state.expanded.add(appId);
+        const toggle = event.target.closest('[data-download-toggle]');
+        if (toggle) {
+          const appId = toggle.getAttribute('data-download-toggle');
+          if (state.expanded.has(appId)) {
+            state.expanded.delete(appId);
+          } else {
+            state.expanded.add(appId);
+          }
+          render();
+          return;
         }
-        render();
+
+        const eye = event.target.closest('[data-eyebtn]');
+        if (eye) {
+          const figure = eye.closest('figure');
+          const caption = figure && figure.querySelector('.market-screenshot-caption');
+          const icon = eye.querySelector('i');
+          if (caption) {
+            const hidden = caption.hidden;
+            caption.hidden = !hidden;
+            eye.setAttribute('aria-expanded', String(!hidden));
+            if (icon) {
+              icon.classList.toggle('bi-eye', hidden);
+              icon.classList.toggle('bi-eye-slash', !hidden);
+            }
+          }
+          return;
+        }
+
+        const install = event.target.closest('[data-install]');
+        if (install && window.MarketplaceInstall) {
+          const appId = install.getAttribute('data-install');
+          window.MarketplaceInstall.install(appId);
+        }
       });
     }
   }
@@ -235,6 +267,10 @@
   document.addEventListener('DOMContentLoaded', async () => {
     bindFilters();
     render();
+
+    if (window.MarketplaceInstall) {
+      window.MarketplaceInstall.setAppResolver((appId) => apps.find((app) => app.id === appId));
+    }
 
     try {
       const catalog = await fetchCatalog();
