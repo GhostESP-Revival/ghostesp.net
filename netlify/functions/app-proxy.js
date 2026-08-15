@@ -1,6 +1,7 @@
 const ALLOWED_PREFIXES = [
   'https://gesp.fuckyourcdn.com/',
-  'https://raw.githubusercontent.com/GhostESP-Revival/'
+  'https://raw.githubusercontent.com/GhostESP-Revival/',
+  'https://github.com/GhostESP-Revival/GhostESP/releases/download/'
 ];
 
 const MAX_CHUNK_BYTES = 512 * 1024;

@@ -14,7 +14,11 @@ exports.handler = async (event) => {
   }
 
   try {
-    const response = await fetch(`https://api.github.com/repos/${owner}/${repo}/releases/latest`, {
+    const endpoint = params.list === '1'
+      ? `https://api.github.com/repos/${owner}/${repo}/releases?per_page=100`
+      : `https://api.github.com/repos/${owner}/${repo}/releases/latest`;
+
+    const response = await fetch(endpoint, {
       headers: {
         Accept: 'application/vnd.github+json',
         'X-GitHub-Api-Version': '2022-11-28',

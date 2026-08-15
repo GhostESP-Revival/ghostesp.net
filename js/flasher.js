@@ -2499,8 +2499,25 @@ document.addEventListener('DOMContentLoaded', () => {
                     ghostEspStatusElem.textContent = 'GitHub rate limit hit. Retrying through proxy...';
                     ghostEspStatusElem.className = 'form-text mt-2 loading';
                 }
-                return await fetchJson(GHOST_ESP_API_PROXY_BASE + encodeURIComponent(apiUrl), 'GitHub proxy');
+                try {
+                    return await fetchJson(GHOST_ESP_API_PROXY_BASE + encodeURIComponent(apiUrl), 'GitHub proxy');
+                } catch (proxyError) {
+                    console.warn('GitHub proxy failed, retrying through Netlify function:', proxyError);
+                    espLoaderTerminal.writeLine(`GitHub proxy unavailable (${proxyError.message}); trying first-party fallback...`);
+                    return await fetchJson(
+                        `${ghostEspApiProxyBaseUrl()}?owner=${GHOST_ESP_OWNER}&repo=${GHOST_ESP_REPO}&list=1`,
+                        'Netlify GitHub fallback'
+                    );
+                }
             }
+        }
+
+        function ghostEspApiProxyBaseUrl() {
+            const proxyPath = '/.netlify/functions/github-release';
+            if (typeof location !== 'undefined' && location.protocol && location.protocol.startsWith('http')) {
+                return `${location.origin}${proxyPath}`;
+            }
+            return `https://ghostesp.net${proxyPath}`;
         }
 
         async function fetchJson(url, sourceLabel) {
@@ -2771,15 +2788,106 @@ document.addEventListener('DOMContentLoaded', () => {
                 ghostEspStatusElem.className = 'form-text mt-2 loading';
             }
 
-            const proxyUrl = GHOST_ESP_ZIP_PROXY_BASE + encodeURIComponent(zipUrl);
             espLoaderTerminal.writeLine(`Fetching GhostESP firmware from ${zipUrl}...`);
 
-            const response = await fetch(proxyUrl);
-            if (!response.ok) {
-                throw new Error(`Fetch failed: ${response.status} ${response.statusText}`);
+            const MAX_ATTEMPTS = 3;
+            for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
+                try {
+                    const proxyUrl = GHOST_ESP_ZIP_PROXY_BASE + encodeURIComponent(zipUrl);
+                    const response = await fetch(proxyUrl);
+                    if (!response.ok) {
+                        throw new Error(`Fetch failed: ${response.status} ${response.statusText}`);
+                    }
+                    const blob = await response.blob();
+                    if (blob.size === 0) {
+                        throw new Error('Proxy returned an empty response.');
+                    }
+                    return blob;
+                } catch (error) {
+                    const lastAttempt = attempt === MAX_ATTEMPTS;
+                    console.warn(`ZIP proxy attempt ${attempt}/${MAX_ATTEMPTS} failed:`, error);
+                    espLoaderTerminal.writeLine(
+                        `ZIP proxy attempt ${attempt}/${MAX_ATTEMPTS} failed (${error.message})${lastAttempt ? '' : '; retrying...'}`
+                    );
+                    if (lastAttempt) break;
+                    await new Promise(resolve => setTimeout(resolve, attempt * 1000));
+                }
             }
 
-            return await response.blob();
+            espLoaderTerminal.writeLine('ZIP proxy unavailable; trying first-party fallback proxy...');
+            return await fetchGhostEspViaAppProxy(zipUrl);
+        }
+
+        function ghostEspProxyBaseUrl() {
+            const proxyPath = '/.netlify/functions/app-proxy';
+            if (typeof location !== 'undefined' && location.protocol && location.protocol.startsWith('http')) {
+                return `${location.origin}${proxyPath}`;
+            }
+            return `https://ghostesp.net${proxyPath}`;
+        }
+
+        function decodeBase64ToBytes(base64) {
+            const binary = atob(base64);
+            const bytes = new Uint8Array(binary.length);
+            for (let i = 0; i < binary.length; i++) {
+                bytes[i] = binary.charCodeAt(i);
+            }
+            return bytes;
+        }
+
+        async function fetchGhostEspViaAppProxy(zipUrl) {
+            const proxyBase = `${ghostEspProxyBaseUrl()}?url=${encodeURIComponent(zipUrl)}`;
+            const chunkSize = 512 * 1024;
+            const chunks = [];
+            let received = 0;
+            let total = 0;
+
+            const metaResponse = await fetch(proxyBase);
+            if (!metaResponse.ok) {
+                throw new Error(`Fallback proxy unavailable (HTTP ${metaResponse.status}).`);
+            }
+            const meta = await metaResponse.json();
+            if (!meta || !meta.ok) {
+                throw new Error((meta && meta.message) || 'Fallback proxy returned no metadata.');
+            }
+            total = meta.total || 0;
+
+            while (true) {
+                let part;
+                let attempts = 0;
+                while (true) {
+                    try {
+                        const partResponse = await fetch(`${proxyBase}&start=${received}&length=${chunkSize}`);
+                        if (!partResponse.ok) throw new Error(`HTTP ${partResponse.status}`);
+                        part = await partResponse.json();
+                        if (!part || !part.ok || !part.data) throw new Error('Bad chunk response.');
+                        break;
+                    } catch (error) {
+                        attempts++;
+                        if (attempts >= 3) throw new Error(`Fallback proxy download stalled (${error.message}).`);
+                        await new Promise(resolve => setTimeout(resolve, 500 * attempts));
+                    }
+                }
+
+                const bytes = decodeBase64ToBytes(part.data);
+                chunks.push(bytes);
+                received += bytes.length;
+
+                if (received % (4 * 1024 * 1024) < chunkSize) {
+                    espLoaderTerminal.writeLine(`Fallback download: ${Math.round(received / 1024 / 1024)} MB${total ? ` / ${Math.round(total / 1024 / 1024)} MB` : ''}`);
+                }
+
+                if (total > 0 && received >= total) break;
+                if (bytes.length < chunkSize) break;
+            }
+
+            const merged = new Uint8Array(received);
+            let offset = 0;
+            for (const chunk of chunks) {
+                merged.set(chunk, offset);
+                offset += chunk.length;
+            }
+            return new Blob([merged]);
         }
 
         // --- UI Functions ---
