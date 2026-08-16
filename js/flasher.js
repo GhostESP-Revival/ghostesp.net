@@ -492,6 +492,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (partitionFileInfoElem) partitionFileInfoElem.textContent = 'No file selected';
 
         const brandDeviceMap = {
+            "GhostLinkP1": [
+                { name: "GhostLink P1 Core", chip: "ESP32-S3", firmware: "GhostLink_P1_Core.zip", flashSize: "16MB" },
+                { name: "GhostLink P1 Peer", chip: "ESP32-C3", firmware: "GhostLink_P1_Peer.zip", flashSize: "4MB" }
+            ],
             "TheWiredHatters": [
                 { name: "Banshee C5", chip: "ESP32-C5", firmware: "Banshee_C5.zip", flashSize: "8MB" },
                 { name: "Banshee S3", chip: "ESP32-S3", firmware: "Banshee_S3.zip" },
@@ -731,6 +735,8 @@ document.addEventListener('DOMContentLoaded', () => {
             "Poltergeist.zip": "Rabbit-Labs Poltergeist",
             "Banshee_C5.zip": "The Wired Hatter's Banshee C5",
             "Banshee_S3.zip": "The Wired Hatter's Banshee S3",
+            "GhostLink_P1_Core.zip": "GhostLink P1 Core",
+            "GhostLink_P1_Peer.zip": "GhostLink P1 Peer",
             "XIAO_S3_Sense.zip": "Seeed XIAO S3 Sense",
             "XIAO_C5.zip": "Seeed XIAO C5",
             "XIAO_S3.zip": "Seeed XIAO S3",
@@ -750,6 +756,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Brand to firmware build mapping for filtering
         const brandToFirmware = {
+            "GhostLinkP1": ["GhostLink_P1_Core.zip", "GhostLink_P1_Peer.zip"],
             "TheWiredHatters": ["esp32-generic.zip", "MarauderV4_FlipperHub.zip", "Banshee_C5.zip", "Banshee_S3.zip"],
             "RabbitLabs": ["ghostboard.zip", "RabbitLabs_Minion.zip", "Poltergeist.zip", "CYD2USB2.4Inch.zip"],
             "Generic": ["esp32-generic.zip", "esp32s2-generic.zip", "esp32s3-generic.zip", "esp32c3-generic.zip", "esp32c6-generic.zip", "esp32c5-generic.zip", "esp32c5-generic-v01.zip"],
@@ -805,6 +812,8 @@ document.addEventListener('DOMContentLoaded', () => {
             "default.esp32s3": "esp32s3-generic.zip",
             "flipper.jcmk_gps": "Flipper_JCMK_GPS.zip",
             "ghostboard": "ghostboard.zip",
+            "ghostlink_p1_core": "GhostLink_P1_Core.zip",
+            "ghostlink_p1_peer": "GhostLink_P1_Peer.zip",
             "heltec wifi kit 32 v3": "HeltecV3.zip",
             "heltecv3": "HeltecV3.zip",
             "lolins3pro": "Lolin_S3_Pro.zip",
@@ -1095,6 +1104,8 @@ document.addEventListener('DOMContentLoaded', () => {
             "Poltergeist.zip": "esp32c5",
             "Banshee_C5.zip": "esp32c5",
             "Banshee_S3.zip": "esp32s3",
+            "GhostLink_P1_Core.zip": "esp32s3",
+            "GhostLink_P1_Peer.zip": "esp32c3",
             "XIAO_S3_Sense.zip": "esp32s3",
             "XIAO_C5.zip": "esp32c5",
             "XIAO_S3.zip": "esp32s3",
