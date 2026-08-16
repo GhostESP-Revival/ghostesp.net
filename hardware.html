@@ -177,6 +177,8 @@
       position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
       color: var(--text-dim); font-size: 0.85rem; text-align: center; padding: 1rem;
     }
+    /* the flex display above beats the [hidden] attribute's display:none, so hide explicitly */
+    .hw-viewer-status[hidden] { display: none; }
     .hw-viewer-cap { text-align: center; color: var(--text-dim); font-size: 0.8rem; margin-top: 0.85rem; }
 
     /* feature grid */
@@ -518,7 +520,8 @@
         }
 
         const material = new THREE.MeshStandardMaterial({
-          color: 0x30363c, metalness: 0.15, roughness: 0.72
+          color: 0x30363c, metalness: 0.15, roughness: 0.72,
+          flatShading: true, side: THREE.DoubleSide
         });
 
         const loader = new STLLoader();
