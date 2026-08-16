@@ -12,6 +12,12 @@
   force = true
 
 [[redirects]]
+  from = "/hardware.html"
+  to = "/hardware"
+  status = 301
+  force = true
+
+[[redirects]]
   from = "/flasher.html"
   to = "/flasher"
   status = 301

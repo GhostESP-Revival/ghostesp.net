@@ -19,6 +19,7 @@ const components = {
         </button>
         <ul id="nav-links" class="${navLinksClass}">
           <li><a href="/boards">Boards</a></li>
+          <li><a href="/hardware">Hardware</a></li>
           <li><a href="/flasher">Flasher</a></li>
           <li><a href="/marketplace">Apps</a></li>
           <li><a href="https://docs.ghostesp.net" target="_blank" rel="noopener">Docs</a></li>
