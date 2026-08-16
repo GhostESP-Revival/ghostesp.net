@@ -66,7 +66,7 @@
           "price": "80.00",
           "priceCurrency": "USD",
           "availability": "https://schema.org/LimitedAvailability",
-          "url": "https://shop.ghostesp.net"
+          "url": "https://shop.ghostesp.net/product/ghostlink-p1-pre-assembled-ghostesp-handheld"
         }
       }
     ]
@@ -78,6 +78,13 @@
 
   <style>
     /* --- hardware page local styles --- */
+    /* scrim: sits above the dot-terrain canvas (both z-index:0, this is later in
+       the DOM so it paints on top) but below page content (z-index:1), dimming
+       the moving dots so bare text without its own background stays readable. */
+    .hw-scrim {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background: rgba(0, 0, 0, 0.62);
+    }
     .hw-hero {
       max-width: 900px; margin: 0 auto; text-align: center;
     }
@@ -193,6 +200,7 @@
 <body>
   <a href="#main-content" class="skip-link">Skip to content</a>
   <canvas id="dotTerrain"></canvas>
+  <div class="hw-scrim" aria-hidden="true"></div>
   <script src="js/dot-terrain.js"></script>
   <nav id="nav"><noscript><a href="/">Home</a> <a href="boards.html">Boards</a> <a href="hardware.html">Hardware</a> <a href="flasher.html">Flasher</a> <a href="marketplace.html">Apps</a> <a href="https://docs.ghostesp.net">Docs</a></noscript></nav>
 
@@ -208,11 +216,7 @@
           Files are open-source and free. Rather not build one? Buy it assembled.
         </p>
         <div class="hw-cta-row">
-          <!-- ============================================================= -->
-          <!-- TODO(deki): swap this href to the exact Big Cartel product    -->
-          <!-- URL once the listing is live (currently points to store root) -->
-          <!-- ============================================================= -->
-          <a href="https://shop.ghostesp.net" target="_blank" rel="noopener" class="btn btn-primary" data-track="buy_assembled_cyd">
+          <a href="https://shop.ghostesp.net/product/ghostlink-p1-pre-assembled-ghostesp-handheld" target="_blank" rel="noopener" class="btn btn-primary" data-track="buy_assembled_cyd">
             <span class="hw-price-badge">Buy Pre-Assembled <span class="amt">$80 USD</span></span>
           </a>
           <a href="downloads/ghostesp-cyd-case.zip" download class="btn btn-secondary" data-track="download_cyd_stls">
@@ -304,8 +308,7 @@
             <li>Directly supports GhostESP development</li>
             <li><strong style="color:var(--warning-color)">18650 cell not included</strong> - add your own</li>
           </ul>
-          <!-- TODO(deki): swap to exact Big Cartel product URL when live -->
-          <a href="https://shop.ghostesp.net" target="_blank" rel="noopener" class="btn btn-primary" data-track="buy_assembled_cyd_card">Buy on shop.ghostesp.net</a>
+          <a href="https://shop.ghostesp.net/product/ghostlink-p1-pre-assembled-ghostesp-handheld" target="_blank" rel="noopener" class="btn btn-primary" data-track="buy_assembled_cyd_card">Buy on shop.ghostesp.net</a>
         </div>
       </div>
     </div>
@@ -323,7 +326,7 @@
         <div class="hw-spec"><span class="k">Walls / infill</span><span class="v">3 walls &middot; 20%</span></div>
         <div class="hw-spec"><span class="k">Supports</span><span class="v">None needed</span></div>
         <div class="hw-spec"><span class="k">Inserts</span><span class="v">M2 heat-set</span></div>
-        <div class="hw-spec"><span class="k">Print time</span><span class="v">~4&ndash;6 hrs</span></div>
+        <div class="hw-spec"><span class="k">Print time</span><span class="v">PLA ~2h &middot; PETG ~3h</span></div>
       </div>
       <p style="text-align:center; color: var(--text-dim); font-size: 0.85rem; margin-top: 1.5rem; max-width: 640px; margin-left:auto; margin-right:auto;">
         Boards drop into locating pockets, screwed retainer bars hold them down, and the front and back
@@ -429,12 +432,6 @@
             print and sell the cases, don't resell the files. Selling prints? Credit GhostESP and link buyers back here.
             Full <code>LICENSE.txt</code> is in the zip.
           </p>
-          <p style="margin-top:0.75rem; font-size:0.8rem;">
-            <!-- TODO(deki): once the STLs are pushed to a PUBLIC repo, point this at that folder -->
-            <a href="https://github.com/GhostESP-Revival/GhostESP" target="_blank" rel="noopener" style="color:var(--text-dim);">
-              <i class="bi bi-github"></i> View source on GitHub
-            </a>
-          </p>
         </div>
       </div>
     </div>
@@ -478,15 +475,8 @@
   <script src="js/main.js" defer></script>
   <script src="js/cookie-consent.js" defer></script>
 
-  <!-- GhostLink P1 3D viewer (three.js, CDN) -->
-  <script type="importmap">
-  {
-    "imports": {
-      "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
-      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
-    }
-  }
-  </script>
+  <!-- GhostLink P1 3D viewer (three.js via jsdelivr +esm, no import map so it
+       is immune to analytics module scripts loading first) -->
   <script type="module">
     const host = document.getElementById('p1-viewer');
     const statusEl = document.getElementById('p1-viewer-status');
@@ -495,9 +485,12 @@
 
     if (host) {
       try {
-        const THREE = await import('three');
-        const { OrbitControls } = await import('three/addons/controls/OrbitControls.js');
-        const { STLLoader } = await import('three/addons/loaders/STLLoader.js');
+        // jsdelivr's /+esm build rewrites the addons' bare "three" imports to a
+        // full jsdelivr URL, so no import map is needed (and CSP already allows
+        // cdn.jsdelivr.net). All three share one three instance via that URL.
+        const THREE = await import('https://cdn.jsdelivr.net/npm/three@0.160.0/+esm');
+        const { OrbitControls } = await import('https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/controls/OrbitControls.js/+esm');
+        const { STLLoader } = await import('https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/loaders/STLLoader.js/+esm');
 
         const scene = new THREE.Scene();
         const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
