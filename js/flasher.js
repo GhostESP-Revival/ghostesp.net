@@ -2326,7 +2326,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             <div class="flasher-handoff">
                                 <p class="flasher-handoff-title"><i class="bi bi-check-circle-fill"></i> GhostESP is installed</p>
                                 <div class="flasher-handoff-links">
-                                    <a href="/serial" class="flasher-handoff-link"><i class="bi bi-terminal"></i> Open Serial Console</a>
+                                    <a href="/dashboard?tab=console" class="flasher-handoff-link"><i class="bi bi-terminal"></i> Open Serial Console</a>
                                     <a href="/changelog" class="flasher-handoff-link"><i class="bi bi-stars"></i> What's new</a>
                                     <a href="https://discord.gg/5cyNmUMgwh" target="_blank" rel="noopener" class="flasher-handoff-link"><i class="bi bi-discord"></i> Get help on Discord</a>
                                 </div>

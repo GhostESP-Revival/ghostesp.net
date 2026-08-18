@@ -25,7 +25,7 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://ghostesp.net/serial</loc>
+    <loc>https://ghostesp.net/dashboard</loc>
     <lastmod>2026-06-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -37,22 +37,10 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://ghostesp.net/marketplace</loc>
-    <lastmod>2026-06-16</lastmod>
+    <loc>https://ghostesp.net/dashboard</loc>
+    <lastmod>2026-08-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://ghostesp.net/asset-marketplace</loc>
-    <lastmod>2026-06-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://ghostesp.net/scripts-marketplace</loc>
-    <lastmod>2026-06-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://ghostesp.net/asset-pack-builder</loc>

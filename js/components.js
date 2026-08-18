@@ -10,7 +10,7 @@ const components = {
     return `
       <div class="container">
         <a href="/" class="nav-logo">
-          <img src="images/ghostespdotnet.png" alt="Ghost ESP">
+          <img src="images/ghostespdotnet.webp" alt="Ghost ESP">
         </a>
         <button class="mobile-menu-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav-links"> 
           <span></span>
@@ -21,33 +21,29 @@ const components = {
           <li><a href="/boards">Boards</a></li>
           <li><a href="/hardware">Hardware</a></li>
           <li><a href="/flasher">Flasher</a></li>
-          <li><a href="/marketplace">Apps</a></li>
+          <li><a href="/dashboard">Dashboard</a></li>
           <li><a href="https://docs.ghostesp.net" target="_blank" rel="noopener">Docs</a></li>
           <li class="nav-dropdown">
             <button class="nav-dropdown-toggle" type="button" aria-haspopup="true">Utilities</button>
             <ul class="nav-dropdown-menu">
-              <li><a href="/serial">Serial</a></li>
               <li><a href="/openwd">WDMap</a></li>
               <li><a href="/companion">Companion App</a></li>
             </ul>
           </li>
           <li class="nav-dropdown">
-            <button class="nav-dropdown-toggle" type="button" aria-haspopup="true">Downloads</button>
-            <ul class="nav-dropdown-menu">
-              <li><a href="/asset-marketplace">Asset Packs</a></li>
-              <li><a href="/scripts-marketplace">Scripts</a></li>
-              <li><a href="/asset-pack-builder">Pack Builder</a></li>
-              <li><a href="/irdb">IRDB</a></li>
-            </ul>
-          </li>
-          <li class="nav-dropdown">
             <button class="nav-dropdown-toggle" type="button" aria-haspopup="true">Resources</button>
             <ul class="nav-dropdown-menu">
-              <li><a href="${prefix}#capabilities">Features</a></li>
-              <li><a href="https://shop.ghostesp.net" target="_blank" rel="noopener">Merch</a></li>
+              <li><a href="/#capabilities">Features</a></li>
               <li><a href="/blog">Blog</a></li>
               <li><a href="/changelog">Changelog</a></li>
               <li><a href="/showcase">Showcase</a></li>
+              <li><a href="/asset-pack-builder">Pack Builder</a></li>
+            </ul>
+          </li>
+          <li class="nav-dropdown">
+            <button class="nav-dropdown-toggle" type="button" aria-haspopup="true">Company</button>
+            <ul class="nav-dropdown-menu">
+              <li><a href="https://shop.ghostesp.net" target="_blank" rel="noopener">Merch</a></li>
               <li><a href="/brand-assets">Brand Assets</a></li>
               <li><a href="/brand-guidelines">Brand Guidelines</a></li>
               <li><a href="/feedback">Feedback</a></li>

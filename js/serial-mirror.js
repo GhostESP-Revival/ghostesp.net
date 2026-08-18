@@ -21,7 +21,10 @@ class SerialMirror {
     this.running = false;
     this.width = 320;
     this.height = 240;
-    this.scale = 2;
+    // Max upscale multiplier over the device's native resolution — keeps a
+    // small panel from blowing up to a huge fraction of a big monitor.
+    this.maxScale = 3;
+    this.maxDisplayPx = 1000;
     this.swapBytes = false;
     this.connected = false;
     this.buffer = new Uint8Array(0);
@@ -66,15 +69,11 @@ class SerialMirror {
     const stopBtn = this.rootEl.querySelector("#mirrorStopBtn");
     const swapBtn = this.rootEl.querySelector("#mirrorSwapBtn");
     const screenshotBtn = this.rootEl.querySelector("#mirrorScreenshotBtn");
-    const scaleDown = this.rootEl.querySelector("#mirrorScaleDown");
-    const scaleUp = this.rootEl.querySelector("#mirrorScaleUp");
 
     if (startBtn) startBtn.onclick = () => this.startMirror();
     if (stopBtn) stopBtn.onclick = () => this.stopMirror();
     if (swapBtn) swapBtn.onclick = () => this.toggleSwap();
     if (screenshotBtn) screenshotBtn.onclick = () => this.takeScreenshot();
-    if (scaleDown) scaleDown.onclick = () => this.changeScale(-1);
-    if (scaleUp) scaleUp.onclick = () => this.changeScale(1);
 
     this.rootEl.querySelectorAll(".mirror-dpad-btn[data-cmd]").forEach((btn) => {
       btn.onclick = () => this.sendInput(btn.dataset.cmd);
@@ -650,23 +649,28 @@ class SerialMirror {
     link.click();
   }
 
-  changeScale(delta) {
-    this.scale = Math.max(1, Math.min(4, this.scale + delta));
-    this.updateScale();
-    this.sendCommand("mirror refresh");
-  }
-
+  // Fit the mirror to its wrapper — but never scale the device's native
+  // framebuffer past maxScale (per-axis) or maxDisplayPx (longest side), so
+  // a small panel can't balloon across a huge workspace.
   updateScale() {
+    if (!this.displayWrapper) return;
     const wrapperRect = this.displayWrapper.getBoundingClientRect();
-    const maxW = wrapperRect.width - 4, maxH = wrapperRect.height - 4;
-    let displayW = this.width * this.scale, displayH = this.height * this.scale;
-    if (displayW > maxW || displayH > maxH) {
-      const ratio = Math.min(maxW / displayW, maxH / displayH);
-      displayW = Math.floor(displayW * ratio); displayH = Math.floor(displayH * ratio);
+    const maxW = Math.max(1, wrapperRect.width - 4);
+    const maxH = Math.max(1, wrapperRect.height - 4);
+    const baseW = Math.max(1, this.width);
+    const baseH = Math.max(1, this.height);
+    const fitRatio = Math.min(maxW / baseW, maxH / baseH);
+    let ratio = Math.min(fitRatio, this.maxScale);
+    let displayW = Math.max(1, Math.floor(baseW * ratio));
+    let displayH = Math.max(1, Math.floor(baseH * ratio));
+    const longest = Math.max(displayW, displayH);
+    if (longest > this.maxDisplayPx) {
+      const absRatio = this.maxDisplayPx / longest;
+      displayW = Math.max(1, Math.floor(displayW * absRatio));
+      displayH = Math.max(1, Math.floor(displayH * absRatio));
     }
-    this.canvas.style.width = `${displayW}px`; this.canvas.style.height = `${displayH}px`;
-    const scaleVal = this.rootEl.querySelector("#mirrorScaleValue");
-    if (scaleVal) scaleVal.textContent = `${this.scale}x`;
+    this.canvas.style.width = `${displayW}px`;
+    this.canvas.style.height = `${displayH}px`;
   }
 
   clearDisplay() {
@@ -767,11 +771,6 @@ function initSerialMirror(rootEl) {
         <div class="mirror-status-dot-wrap"><div class="mirror-status-dot" id="mirrorStatusDot"></div></div>
         <span class="mirror-stat">Res:<span class="mirror-stat-value" id="mirrorResolution">320\u00d7240</span></span>
         <span class="mirror-stat">FPS:<span class="mirror-stat-value" id="mirrorFps">0</span></span>
-        <div class="mirror-scale-controls">
-          <button class="mirror-scale-btn" id="mirrorScaleDown">\u2212</button>
-          <span class="mirror-stat-value" id="mirrorScaleValue">2x</span>
-          <button class="mirror-scale-btn" id="mirrorScaleUp">+</button>
-        </div>
         <span class="mirror-stat">Frames:<span class="mirror-stat-value" id="mirrorFrameCount">0</span></span>
       </div>
       <div class="mirror-unsupported" id="mirrorUnsupported" style="display:none;">
@@ -803,6 +802,7 @@ function setupTabs() {
   tabBtns.forEach((btn) => {
     btn.addEventListener("click", () => {
       const tabId = btn.dataset.tab;
+      const connected = window.serialConsole && window.serialConsole.isConnected;
 
       // Stop mirror when leaving mirror tab
       if (activeTab === "mirror" && tabId !== "mirror" && window.serialMirror?.running) {
@@ -814,6 +814,18 @@ function setupTabs() {
       tabContents.forEach((c) => c.classList.remove("active"));
       btn.classList.add("active");
       document.getElementById(`tab-${tabId}`).classList.add("active");
+
+      // Store and IRDB work while disconnected — keep the welcome card and
+      // the empty console workspace out of the way.
+      const standaloneTab = tabId === "store" || tabId === "irdb";
+      const welcomeCard = document.getElementById("welcomeCard");
+      if (welcomeCard && !connected) {
+        welcomeCard.classList.toggle("hidden", standaloneTab);
+      }
+      const consoleMain = document.getElementById("consoleMain");
+      if (consoleMain && connected) {
+        consoleMain.classList.toggle("hidden", standaloneTab);
+      }
 
       if (tabId === "mirror" && !mirrorInitialized) {
         initSerialMirror(document.getElementById("mirrorRoot"));
@@ -832,6 +844,16 @@ function setupTabs() {
       }
     });
   });
+
+  // Deep-link support: open /dashboard?tab=store (or any tab) on load.
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const requested = params.get("tab");
+    if (requested) {
+      const target = tabBtns.find((b) => b.dataset.tab === requested);
+      if (target && requested !== "console") target.click();
+    }
+  } catch (error) {}
 }
 
 document.addEventListener("DOMContentLoaded", () => { setupTabs(); });

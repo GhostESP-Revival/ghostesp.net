@@ -25,7 +25,13 @@
 
 [[redirects]]
   from = "/serial.html"
-  to = "/serial"
+  to = "/dashboard"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/serial"
+  to = "/dashboard"
   status = 301
   force = true
 
@@ -36,20 +42,38 @@
   force = true
 
 [[redirects]]
+  from = "/marketplace"
+  to = "/dashboard?tab=store"
+  status = 301
+  force = true
+
+[[redirects]]
   from = "/marketplace.html"
-  to = "/marketplace"
+  to = "/dashboard?tab=store"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/asset-marketplace"
+  to = "/dashboard?tab=store&store=assets"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/scripts-marketplace"
+  to = "/dashboard?tab=store&store=scripts"
   status = 301
   force = true
 
 [[redirects]]
   from = "/asset-marketplace.html"
-  to = "/asset-marketplace"
+  to = "/dashboard?tab=store&store=assets"
   status = 301
   force = true
 
 [[redirects]]
   from = "/scripts-marketplace.html"
-  to = "/scripts-marketplace"
+  to = "/dashboard?tab=store&store=scripts"
   status = 301
   force = true
 
@@ -61,7 +85,13 @@
 
 [[redirects]]
   from = "/irdb.html"
-  to = "/irdb"
+  to = "/dashboard?tab=irdb"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/irdb"
+  to = "/dashboard?tab=irdb"
   status = 301
   force = true
 

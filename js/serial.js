@@ -25,9 +25,13 @@ class SerialConsole {
     this.rawDataListeners = new Set();
     this.dataListeners = new Set();
     this.suppressConsoleOutput = false;
+    this._cmdChain = null;
+    this._commandLockHeld = false;
+    this._busyFlag = 0;
     this.initializeElements();
     this.checkBrowserSupport();
     this.setupEventListeners();
+    this.setupChipInfoUI();
   }
 
   initializeElements() {
@@ -136,22 +140,73 @@ class SerialConsole {
 
   updateBaudRateDisplay() {
     if (this.baudRateDisplay && this.baudSelect) {
-      this.baudRateDisplay.textContent = `Baud Rate: ${this.baudSelect.value}`;
+      this.baudRateDisplay.textContent = `Baud Rate: ${this.baudSelect.value === "auto" ? "auto" : this.baudSelect.value}`;
+    }
+  }
+
+  // Shows a temporary "Detecting…" state on the visible connect button while
+  // the baud rate is being auto-detected, then snaps it back.
+  setConnectButtonBusy(busy) {
+    const btn = this.welcomeConnect && this.welcomeConnect.style.display !== 'none'
+      ? this.welcomeConnect
+      : (this.connectButton && this.connectButton.style.display !== 'none' ? this.connectButton : null);
+    if (!btn) return;
+    if (busy) {
+      if (this._connectBtnLabel === undefined) {
+        this._connectBtnLabel = btn.innerHTML;
+        btn.innerHTML = '<i class="bi bi-arrow-repeat dash-spinning" aria-hidden="true"></i> <span>Detecting…</span>';
+      }
+      btn.disabled = true;
+    } else {
+      if (this._connectBtnLabel !== undefined) {
+        btn.innerHTML = this._connectBtnLabel;
+        this._connectBtnLabel = undefined;
+      }
+      btn.disabled = false;
+    }
+  }
+
+  // Resolves the baud select to a number, auto-detecting when "Auto" is chosen.
+  async resolveBaudRate() {
+    const raw = (this.baudSelect && this.baudSelect.value) || "115200";
+    if (raw !== "auto") {
+      const parsed = parseInt(raw, 10);
+      if (!isNaN(parsed) && parsed > 0) return parsed;
+    }
+    this.setConnectButtonBusy(true);
+    this.log("Auto-detecting baud rate...\n");
+    try {
+      const detected = await this.autoDetectBaudOnPort();
+      if (detected) {
+        if (this.baudSelect) this.baudSelect.value = String(detected);
+        this.updateBaudRateDisplay();
+        this.log(`Detected ${detected} baud\n`);
+        return detected;
+      }
+      this.log("Could not auto-detect baud rate, using 115200\n");
+      return 115200;
+    } finally {
+      this.setConnectButtonBusy(false);
     }
   }
 
   async reconnectWithNewBaudRate() {
     try {
+      const baud = parseInt(this.baudSelect.value, 10);
+      if (isNaN(baud) || baud <= 0) {
+        this.log("Auto baud can't be changed while connected — disconnect and reconnect to auto-detect.\n");
+        return;
+      }
       const portInfo = this.port.getInfo();
       await this.disconnect();
       await new Promise((resolve) => setTimeout(resolve, 100));
       await this.port.open({
-        baudRate: parseInt(this.baudSelect.value),
+        baudRate: baud,
         dataBits: 8, stopBits: 1, parity: "none", flowControl: "none",
       });
       this.updateConnectionStatus(true);
       this.startReading();
-      this.log("Reconnected with new baud rate: " + this.baudSelect.value + "\n");
+      this.log("Reconnected with new baud rate: " + baud + "\n");
     } catch (error) {
       this.log(`Error changing baud rate: ${error.message}\n`);
       this.updateConnectionStatus(false);
@@ -266,16 +321,24 @@ class SerialConsole {
 
   updateConnectionStatus(connected) {
     this.isConnected = connected;
+    if (!connected) this.clearChipInfo();
     if (this.connectionStatus) this.connectionStatus.textContent = connected ? "Connected" : "Disconnected";
     if (this.connectionDot) this.connectionDot.classList.toggle("connected", connected);
-    if (this.connectButton) this.connectButton.textContent = connected ? "Disconnect" : "Connect";
+    if (this.connectButton) {
+      this.connectButton.textContent = connected ? "Disconnect" : "Connect";
+      this.connectButton.style.display = connected ? "" : "none";
+    }
+    if (this.welcomeConnect) this.welcomeConnect.style.display = connected ? "none" : "";
     if (this.sendButton) this.sendButton.disabled = !connected;
     if (this.serialInput) this.serialInput.disabled = !connected;
     if (this.baudSelect) this.baudSelect.disabled = connected;
 
     if (this.welcomeCard && this.consoleMain) {
-      this.welcomeCard.classList.toggle("hidden", connected);
-      this.consoleMain.classList.toggle("hidden", !connected);
+      const storeTab = document.querySelector("#tab-store");
+      const irdbTab = document.querySelector("#tab-irdb");
+      const standaloneActive = (storeTab && storeTab.classList.contains("active")) || (irdbTab && irdbTab.classList.contains("active"));
+      this.welcomeCard.classList.toggle("hidden", connected || standaloneActive);
+      this.consoleMain.classList.toggle("hidden", !connected || standaloneActive);
     }
 
     document.dispatchEvent(new CustomEvent("serial-connection-change", { detail: { connected } }));
@@ -286,12 +349,13 @@ class SerialConsole {
       if (this.permissionDialog) this.permissionDialog.style.display = "flex";
       this.port = await navigator.serial.requestPort();
       if (this.permissionDialog) this.permissionDialog.style.display = "none";
-      const baud = parseInt(this.baudSelect?.value || "115200");
+      const baud = await this.resolveBaudRate();
       await this.port.open({ baudRate: baud, dataBits: 8, stopBits: 1, parity: "none", flowControl: "none" });
       this.abortController = new AbortController();
       this.updateConnectionStatus(true);
       this.startReading();
       this.log("Connected to device\n");
+      this.fetchChipInfo().catch(() => {});
     } catch (error) {
       if (this.permissionDialog) this.permissionDialog.style.display = "none";
       if (error.name === "NotFoundError") this.log("No device selected\n");
@@ -311,16 +375,13 @@ class SerialConsole {
       if (this.permissionDialog) this.permissionDialog.style.display = "flex";
       this.port = await navigator.serial.requestPort();
       if (this.permissionDialog) this.permissionDialog.style.display = "none";
-      let baud = parseInt(this.baudSelect?.value || "115200");
-      try {
-        const detected = await this.autoDetectBaudOnPort();
-        if (detected) { baud = detected; if (this.baudSelect) this.baudSelect.value = String(detected); this.updateBaudRateDisplay(); }
-      } catch (e) { this.log(`Baud auto-detect failed, using ${baud}: ${e.message}\n`); }
+      let baud = await this.resolveBaudRate();
       await this.port.open({ baudRate: baud, dataBits: 8, stopBits: 1, parity: "none", flowControl: "none" });
       this.abortController = new AbortController();
       this.updateConnectionStatus(true);
       this.startReading();
       this.log("Connected to device (auto baud)\n");
+      this.fetchChipInfo().catch(() => {});
     } catch (error) {
       if (this.permissionDialog) this.permissionDialog.style.display = "none";
       if (error.name === "NotFoundError") this.log("No device selected\n");
@@ -367,6 +428,214 @@ class SerialConsole {
     } finally {
       await writer.releaseLock();
     }
+  }
+
+  // Marks the shared connection as busy from outside (e.g. a store install)
+  // so background pollers can back off instead of interleaving commands.
+  setBusy(busy) {
+    this._busyFlag = Math.max(0, this._busyFlag + (busy ? 1 : -1));
+  }
+
+  get isBusy() {
+    return this._busyFlag > 0;
+  }
+
+  // Serializes command/response exchanges that share this one open Web Serial
+  // connection (console commands, chipinfo polls, store installs). Runs one at
+  // a time so responses never bleed between concurrent callers.
+  async _withCommandLock(fn) {
+    const prev = this._cmdChain || Promise.resolve();
+    let release;
+    const gate = new Promise((resolve) => { release = resolve; });
+    this._cmdChain = prev.then(() => gate);
+    await prev.catch(() => {});
+    this._commandLockHeld = true;
+    try {
+      return await fn();
+    } finally {
+      this._commandLockHeld = false;
+      release();
+    }
+  }
+
+  // Send a command and wait for one of the given marker strings to appear
+  // in the response, without printing the output to the console. Used by
+  // the Store tab (and other tools) to drive the SAME open connection.
+  async requestCommandResponse(cmd, markers, timeoutMs = 5000) {
+    if (!this.isConnected || !this.port) throw new Error("Not connected");
+    return this._withCommandLock(() => this._requestRawCommandResponse(cmd, markers, timeoutMs));
+  }
+
+  async _requestRawCommandResponse(cmd, markers, timeoutMs = 5000) {
+    const markerList = Array.isArray(markers) ? markers : [markers];
+    const prevSuppress = this.suppressConsoleOutput;
+    const bufferRef = { text: "" };
+    const handler = (chunk) => { bufferRef.text += String(chunk || "").replace(/\x1b\[[0-9;]*m/g, ""); };
+    this.setConsoleOutputSuppressed(true);
+    this.dataListeners.add(handler);
+    const writer = this.port.writable.getWriter();
+    try {
+      await writer.write(this.encoder.encode(cmd + "\n"));
+    } finally {
+      await writer.releaseLock();
+    }
+    const deadline = Date.now() + timeoutMs;
+    try {
+      await new Promise((resolve) => {
+        const tick = () => {
+          if (markerList.some((m) => bufferRef.text.includes(m)) || Date.now() >= deadline) resolve();
+          else setTimeout(tick, 50);
+        };
+        tick();
+      });
+    } finally {
+      this.dataListeners.delete(handler);
+      this.setConsoleOutputSuppressed(prevSuppress);
+    }
+    return bufferRef.text;
+  }
+
+  CHIP_INFO_PATTERNS = {
+    MODEL: /Model\s*:\s*([^\r\n]+)/i,
+    FIRMWARE: /Firmware\s*:\s*([^\r\n]+)/i,
+    GIT_COMMIT: /Git Commit\s*:\s*([^\r\n]+)/i,
+    REVISION: /Revision\s*:\s*v?(\d+(?:\.\d+)+)/i,
+    CORES: /CPU Cores\s*:\s*(\d+)/i,
+    FEATURES: /Features\s*:\s*([^\r\n]+)/i,
+    FREE_HEAP: /Free Heap\s*:\s*(\d+)/i,
+    MIN_FREE_HEAP: /Min Free Heap\s*:\s*(\d+)/i,
+    IDF: /IDF Version\s*:\s*([^\r\n]+)/i,
+    BUILD: /Build Config\s*:\s*([^\r\n]+)/i,
+    SCREEN: /Screen\s*:\s*([^\r\n]+)/i,
+    SCREEN_W: /Width\s*:\s*(\d+)/i,
+    SCREEN_H: /Height\s*:\s*(\d+)/i,
+    SCREEN_TYPE: /Screen Type\s*:\s*([^\r\n]+)/i
+  };
+
+  // Queries the device with `chipinfo` and shows model + firmware in the
+  // dashboard header (same command the flasher uses).
+  async fetchChipInfo() {
+    if (!this.isConnected || !this.port) return null;
+    const text = await this.requestCommandResponse("chipinfo", ["[CHIPINFO_END]"], 8000);
+    const grab = (re) => {
+      const m = text.match(re);
+      return m && m[1] ? m[1].trim() : null;
+    };
+    this.chipInfo = {
+      model: grab(this.CHIP_INFO_PATTERNS.MODEL),
+      firmware: grab(this.CHIP_INFO_PATTERNS.FIRMWARE),
+      gitCommit: grab(this.CHIP_INFO_PATTERNS.GIT_COMMIT),
+      revision: grab(this.CHIP_INFO_PATTERNS.REVISION),
+      cores: grab(this.CHIP_INFO_PATTERNS.CORES),
+      features: grab(this.CHIP_INFO_PATTERNS.FEATURES),
+      freeHeap: grab(this.CHIP_INFO_PATTERNS.FREE_HEAP),
+      minFreeHeap: grab(this.CHIP_INFO_PATTERNS.MIN_FREE_HEAP),
+      idf: grab(this.CHIP_INFO_PATTERNS.IDF),
+      build: grab(this.CHIP_INFO_PATTERNS.BUILD),
+      screen: grab(this.CHIP_INFO_PATTERNS.SCREEN),
+      screenW: grab(this.CHIP_INFO_PATTERNS.SCREEN_W),
+      screenH: grab(this.CHIP_INFO_PATTERNS.SCREEN_H),
+      screenType: grab(this.CHIP_INFO_PATTERNS.SCREEN_TYPE)
+    };
+    this.renderChipInfo();
+    return this.chipInfo;
+  }
+
+  // Header badge (compact) + sidebar device card (full readout).
+  renderChipInfo() {
+    const info = this.chipInfo;
+    const detailEl = document.getElementById("chipInfoDetail");
+    if (detailEl) {
+      const parts = [];
+      if (info.model) parts.push(info.model);
+      if (info.firmware) parts.push(info.firmware);
+      else if (info.revision) parts.push(`rev ${info.revision}`);
+      if (parts.length) {
+        detailEl.textContent = parts.join(" · ");
+        detailEl.classList.add("visible");
+        detailEl.title = [
+          info.model ? `Model: ${info.model}` : "",
+          info.firmware ? `Firmware: ${info.firmware}` : "",
+          info.revision ? `Revision: v${info.revision}` : "",
+          info.cores ? `Cores: ${info.cores}` : "",
+          info.features ? `Features: ${info.features}` : "",
+          info.freeHeap ? `Free heap: ${this.formatKb(info.freeHeap)}` : "",
+          info.idf ? `IDF: ${info.idf}` : ""
+        ].filter(Boolean).join("\n");
+      }
+    }
+
+    const cardBody = document.getElementById("dashDeviceCardBody");
+    const card = document.getElementById("dashDeviceCard");
+    if (cardBody) {
+      if (!info || (!info.model && !info.firmware)) {
+        cardBody.innerHTML = '<p class="dash-device-card-empty">Could not read device info.</p>';
+        return;
+      }
+      const rows = [
+        ["Model", info.model],
+        ["Firmware", info.firmware],
+        ["Revision", info.revision ? `v${info.revision}` : ""],
+        ["Cores", info.cores],
+        ["Free heap", info.freeHeap ? this.formatKb(info.freeHeap) : ""],
+        ["Min heap", info.minFreeHeap ? this.formatKb(info.minFreeHeap) : ""],
+        ["IDF", info.idf],
+        ["Screen", info.screen || (info.screenW && info.screenH ? `${info.screenW}\u00d7${info.screenH}${info.screenType ? ` ${info.screenType}` : ""}` : "")],
+        ["Build", info.build]
+      ].filter(([, v]) => v);
+      cardBody.innerHTML = rows.map(([label, value]) => `
+        <div class="dash-device-row">
+          <span class="dash-device-row-label">${label}</span>
+          <span class="dash-device-row-value" title="${escapeHtml(value)}">${escapeHtml(value.length > 34 ? value.slice(0, 34) + "\u2026" : value)}</span>
+        </div>`).join("");
+    }
+    if (card) card.classList.add("has-device");
+    document.dispatchEvent(new CustomEvent("chip-info-updated", { detail: { chipInfo: this.chipInfo } }));
+  }
+
+  formatKb(bytes) {
+    const kb = Math.round(parseInt(bytes, 10) / 1024);
+    return `${kb} KB`;
+  }
+
+  clearChipInfo() {
+    this.chipInfo = null;
+    const detailEl = document.getElementById("chipInfoDetail");
+    if (detailEl) {
+      detailEl.textContent = "";
+      detailEl.classList.remove("visible");
+      detailEl.title = "";
+    }
+    const card = document.getElementById("dashDeviceCard");
+    if (card) card.classList.remove("has-device");
+    const cardBody = document.getElementById("dashDeviceCardBody");
+    if (cardBody) cardBody.innerHTML = '<p class="dash-device-card-empty">Connect to see device details.</p>';
+    document.dispatchEvent(new CustomEvent("chip-info-updated", { detail: { chipInfo: null } }));
+  }
+
+  setupChipInfoUI() {
+    const refreshBtn = document.getElementById("chipRefreshBtn");
+    if (refreshBtn) {
+      refreshBtn.addEventListener("click", async () => {
+        if (!this.isConnected) return;
+        refreshBtn.disabled = true;
+        refreshBtn.querySelector("i").classList.add("dash-spinning");
+        try {
+          await this.fetchChipInfo();
+        } catch (error) {
+          this.log(`Chip info refresh failed: ${error.message}\n`);
+        } finally {
+          refreshBtn.disabled = false;
+          refreshBtn.querySelector("i").classList.remove("dash-spinning");
+        }
+      });
+    }
+
+    // Keep free-heap and status fresh while connected (quiet command, no console spam)
+    this.chipInfoTimer = setInterval(() => {
+      if (!this.isConnected || this.isBusy || this._commandLockHeld) return;
+      this.fetchChipInfo().catch(() => {});
+    }, 45000);
   }
 
   async sendData() {
@@ -435,8 +704,7 @@ class SerialConsole {
     const completeLines = this.lineBuffer.split("\n");
     this.lineBuffer = completeLines[completeLines.length - 1].endsWith("\n") ? "" : completeLines.pop();
 
-    const formattedLines = completeLines.map(line => {
-      const safe = escapeHtml(line);
+    const formattedLines = completeLines.map(line => {      const safe = escapeHtml(line);
       if (!line.trim()) return "<br>";
       if (line.match(/^>\s*[a-z]+$/i)) return `<span class="command-input">${safe}</span><br>`;
       const statusMessages = ['WiFi scan started','Stopping Wi-Fi','WiFi started','Ready to scan','Please wait','WiFi monitor stopped','HTTP server started'];
@@ -459,8 +727,17 @@ class SerialConsole {
     });
 
     if (formattedLines.length) {
-      if (this.output.innerHTML) this.output.innerHTML += formattedLines.join("");
-      else this.output.innerHTML = formattedLines.join("");
+      // Cap the terminal at MAX_LOG_LINES so long-running scans can't grow
+      // the page into an endless scroll.
+      const MAX_LOG_LINES = 2000;
+      if (!this.logHistory) this.logHistory = [];
+      this.logHistory.push(...formattedLines);
+      if (this.logHistory.length > MAX_LOG_LINES) {
+        this.logHistory.splice(0, this.logHistory.length - MAX_LOG_LINES);
+        this.output.innerHTML = this.logHistory.join("");
+      } else {
+        this.output.innerHTML += formattedLines.join("");
+      }
       setTimeout(() => { if (this.console) this.console.scrollTo({ top: this.console.scrollHeight, behavior: "smooth" }); }, 0);
       requestAnimationFrame(() => { if (this.console) this.console.scrollTo({ top: this.console.scrollHeight, behavior: "auto" }); });
     }

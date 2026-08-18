@@ -59,7 +59,7 @@
         "@id": "https://ghostesp.net/#organization",
         "name": "GhostESP",
         "url": "https://ghostesp.net/",
-        "logo": "https://ghostesp.net/images/ghostespdotnet.png",
+        "logo": "https://ghostesp.net/images/ghostespdotnet.webp",
         "sameAs": [
           "https://github.com/GhostESP-Revival",
           "https://docs.ghostesp.net"
@@ -100,12 +100,12 @@
   <h1 class="sr-only">GhostESP: Revival - ESP32 Wireless Security Testing Platform</h1>
 
   <!-- Navigation -->
-  <nav id="nav"><noscript><a href="/">Home</a> <a href="boards.html">Boards</a> <a href="hardware.html">Hardware</a> <a href="flasher.html">Flasher</a> <a href="serial.html">Serial Console</a> <a href="marketplace.html">Apps</a> <a href="asset-marketplace.html">Asset Packs</a> <a href="irdb.html">IRDB</a> <a href="blog.html">Blog</a> <a href="https://docs.ghostesp.net">Docs</a></noscript></nav>
+  <nav id="nav"><noscript><a href="/">Home</a> <a href="boards.html">Boards</a> <a href="hardware.html">Hardware</a> <a href="flasher.html">Flasher</a> <a href="dashboard.html">Dashboard</a> <a href="blog.html">Blog</a> <a href="https://docs.ghostesp.net">Docs</a></noscript></nav>
 
   <!-- Hero Section -->
   <section id="main-content" class="hero" style="background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.75)), url('images/IMG_1178.webp') center/cover no-repeat;">
     <div class="container" data-aos="fade-up" data-aos-duration="1000">
-      <img src="images/ghostespdotnet.png" alt="GhostESP" class="hero-logo">
+      <img src="images/ghostespdotnet.webp" alt="GhostESP" class="hero-logo">
       <p class="hero-tagline">An open-source wireless platform for ESP32 devices.</p>
       <p class="hero-subtitle">Firmware, web tools, and companion apps for 45+ ESP32 boards.</p>
       <div class="hero-actions">
@@ -126,7 +126,7 @@
           </a>
           <span class="partner-separator">·</span>
           <a href="https://rabbit-labs.com/" target="_blank" rel="noopener" class="partner-link">
-            <img src="images/rabbitlabs.png" alt="Rabbit Labs" class="partner-logo partner-logo--sm">
+            <img src="images/rabbitlabs.webp" alt="Rabbit Labs" class="partner-logo partner-logo--sm">
             <span class="partner-name">Rabbit-Labs<sup class="partner-tm">™</sup></span>
             <i data-lucide="arrow-up-right" style="width:14px;height:14px;opacity:0.4;"></i>
           </a>
@@ -141,7 +141,7 @@
           </a>
           <span class="partner-separator">·</span>
           <a href="https://rabbit-labs.com/" target="_blank" rel="noopener" class="partner-link" tabindex="-1">
-            <img src="images/rabbitlabs.png" alt="" class="partner-logo partner-logo--sm">
+            <img src="images/rabbitlabs.webp" alt="" class="partner-logo partner-logo--sm">
             <span class="partner-name">Rabbit-Labs<sup class="partner-tm">™</sup></span>
             <i data-lucide="arrow-up-right" style="width:14px;height:14px;opacity:0.4;"></i>
           </a>
@@ -173,7 +173,7 @@
           <div class="card-step-number">3</div>
           <h3>Serial Console</h3>
           <p>Configure your device with console, file manager, and screen mirror</p>
-           <a href="/serial" class="btn btn-primary"><span>Open Console</span></a>
+           <a href="/dashboard" class="btn btn-primary"><span>Open Console</span></a>
         </div>
       </div>
 
@@ -496,21 +496,21 @@
         <h2>Apps &amp; Packs</h2>
       </div>
       <div class="grid">
-        <a href="/marketplace" class="card docs-card" data-aos="fade-up" data-aos-delay="100">
+        <a href="/dashboard?tab=store" class="card docs-card" data-aos="fade-up" data-aos-delay="100">
           <div class="docs-card-head">
             <i data-lucide="layout-grid" class="docs-card-icon"></i>
             <h3>App Gallery</h3>
           </div>
           <p>Native .gapp apps built by the community, ready to sideload.</p>
         </a>
-        <a href="/asset-marketplace" class="card docs-card" data-aos="fade-up" data-aos-delay="150">
+        <a href="/dashboard?tab=store&store=assets" class="card docs-card" data-aos="fade-up" data-aos-delay="150">
           <div class="docs-card-head">
             <i data-lucide="palette" class="docs-card-icon"></i>
             <h3>Asset Packs</h3>
           </div>
           <p>Themes and asset packs with live .gtheme swapping.</p>
         </a>
-        <a href="/scripts-marketplace" class="card docs-card" data-aos="fade-up" data-aos-delay="200">
+        <a href="/dashboard?tab=store&store=scripts" class="card docs-card" data-aos="fade-up" data-aos-delay="200">
           <div class="docs-card-head">
             <i data-lucide="file-code" class="docs-card-icon"></i>
             <h3>Scripts</h3>
@@ -524,7 +524,7 @@
           </div>
           <p>Build your own custom theme and asset packs.</p>
         </a>
-        <a href="/irdb" class="card docs-card" data-aos="fade-up" data-aos-delay="300">
+        <a href="/dashboard?tab=irdb" class="card docs-card" data-aos="fade-up" data-aos-delay="300">
           <div class="docs-card-head">
             <i data-lucide="database" class="docs-card-icon"></i>
             <h3>IRDB</h3>
