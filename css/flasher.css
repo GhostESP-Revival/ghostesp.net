@@ -1846,3 +1846,102 @@ nav ul.flasher-nav-links li::marker {
     width: 100%;
   }
 }
+
+/* Platform hint (driver + boot-mode guidance) */
+.flasher-platform-hint {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin: 0 0 1rem 0;
+  padding: 0.75rem 1rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--flasher-border);
+  border-radius: var(--flasher-radius);
+  color: var(--flasher-text-dim);
+  font-size: 0.8rem;
+  line-height: 1.55;
+}
+
+.flasher-platform-hint i {
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+  color: var(--flasher-info);
+}
+
+.flasher-platform-hint a {
+  color: var(--flasher-text);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.flasher-platform-hint a:hover {
+  color: var(--flasher-success);
+}
+
+/* Terminal toolbar */
+.flasher-terminal-toolbar {
+  display: flex;
+  gap: 0.5rem;
+  align-items: stretch;
+}
+
+.flasher-terminal-toolbar .flasher-terminal-toggle {
+  margin-top: 2rem;
+  flex: 1;
+}
+
+.flasher-copy-log-btn {
+  margin-top: 2rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.8rem;
+  font-family: var(--flasher-font-mono);
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+/* Post-flash handoff */
+.flasher-handoff {
+  margin-top: 1.5rem;
+  padding: 1.25rem;
+  background: rgba(0, 255, 128, 0.06);
+  border: 1px solid rgba(0, 255, 128, 0.25);
+  border-radius: var(--flasher-radius-lg, var(--flasher-radius));
+}
+
+.flasher-handoff-title {
+  margin: 0 0 0.85rem 0;
+  color: var(--flasher-success);
+  font-weight: 600;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.flasher-handoff-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.flasher-handoff-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.55rem 1rem;
+  border-radius: var(--flasher-radius);
+  background: transparent;
+  color: var(--flasher-text);
+  border: 1px solid var(--flasher-border);
+  font-size: 0.85rem;
+  font-family: var(--flasher-font-sans);
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.flasher-handoff-link:hover {
+  background: var(--flasher-surface-elevated);
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-1px);
+  color: var(--flasher-text);
+}

@@ -110,6 +110,8 @@
           </button>
         </div>
 
+        <div class="flasher-driver-hint flasher-platform-hint" id="flasherPlatformHint"></div>
+
         <div class="flasher-connect-row d-none" id="connectionPanel">
           <div class="flasher-connect-status">
             <div id="chipInfo" class="flasher-status-bar">
@@ -631,9 +633,14 @@
       </div>
 
       <!-- Terminal -->
-      <button class="flasher-terminal-toggle" id="terminalToggle">
-        <i class="bi bi-terminal"></i> Output Log <i class="bi bi-chevron-down" style="margin-left: 0.5rem;"></i>
-      </button>
+      <div class="flasher-terminal-toolbar">
+        <button class="flasher-terminal-toggle" id="terminalToggle">
+          <i class="bi bi-terminal"></i> Output Log <i class="bi bi-chevron-down" style="margin-left: 0.5rem;"></i>
+        </button>
+        <button class="flasher-btn flasher-btn-secondary flasher-copy-log-btn" id="copyLogBtn" title="Copy log for support">
+          <i class="bi bi-clipboard"></i> Copy Log
+        </button>
+      </div>
       <pre class="flasher-terminal" id="terminal"></pre>
 
       </div> <!-- end flasher-card -->

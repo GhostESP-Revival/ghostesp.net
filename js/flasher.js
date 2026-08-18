@@ -115,8 +115,11 @@ document.addEventListener('DOMContentLoaded', () => {
         function showChipMismatchPopup(selectedModel, detectedModel) {
             const message = `You selected ${selectedModel}, but the connected chip reports ${detectedModel}. Flashing the wrong build can fail or leave the board unbootable.`;
             const safeMessage = escapeHtml(message);
+            const safeDetected = escapeHtml(detectedModel);
             if (!window.bootstrap?.Modal) {
-                return Promise.resolve(window.confirm(`${message}\n\nContinue anyway?`));
+                if (window.confirm(`${message}\n\nSwitch selection to the detected chip (${detectedModel})?`)) return Promise.resolve('switch');
+                if (window.confirm('Continue anyway?')) return Promise.resolve('continue');
+                return Promise.resolve('stay');
             }
 
             return new Promise(resolve => {
@@ -136,7 +139,8 @@ document.addEventListener('DOMContentLoaded', () => {
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="flasher-btn flasher-btn-secondary" data-mismatch-action="stay">Stay Here</button>
-                                    <button type="button" class="flasher-btn flasher-btn-primary" data-mismatch-action="continue">Continue Anyway</button>
+                                    <button type="button" class="flasher-btn flasher-btn-secondary" data-mismatch-action="continue">Continue Anyway</button>
+                                    <button type="button" class="flasher-btn flasher-btn-primary" data-mismatch-action="switch">Use Detected: ${safeDetected}</button>
                                 </div>
                             </div>
                         </div>
@@ -146,21 +150,52 @@ document.addEventListener('DOMContentLoaded', () => {
                 const modalEl = document.getElementById('chipMismatchModal');
                 const modal = new bootstrap.Modal(modalEl);
                 let resolved = false;
-                const finish = (shouldContinue) => {
+                const finish = (result) => {
                     if (resolved) return;
                     resolved = true;
                     modal.hide();
-                    resolve(shouldContinue);
+                    resolve(result);
                 };
 
-                modalEl.querySelector('[data-mismatch-action="stay"]').addEventListener('click', () => finish(false));
-                modalEl.querySelector('[data-mismatch-action="continue"]').addEventListener('click', () => finish(true));
+                modalEl.querySelector('[data-mismatch-action="stay"]').addEventListener('click', () => finish('stay'));
+                modalEl.querySelector('[data-mismatch-action="continue"]').addEventListener('click', () => finish('continue'));
+                modalEl.querySelector('[data-mismatch-action="switch"]').addEventListener('click', () => finish('switch'));
                 modalEl.addEventListener('hidden.bs.modal', () => {
-                    if (!resolved) resolve(false);
+                    if (!resolved) resolve('stay');
                     modalEl.remove();
                 });
                 modal.show();
             });
+        }
+
+        async function applyDetectedChipSelection(detectedModel) {
+            selectedDevice = detectedModel;
+            selectedBrand = null;
+            selectedSide = selectedDevice;
+            selectedFirmwareAssetName = null;
+            selectedFirmwareDisplayName = null;
+
+            // Sync visible selection state with the detected chip
+            document.querySelectorAll('.flasher-device-card').forEach(card => {
+                const matches = card.dataset.device && normalizeChipModelForCompare(card.dataset.device) === normalizeChipModelForCompare(detectedModel);
+                card.classList.toggle('selected', !!matches && !card.classList.contains('brand-card'));
+            });
+            const deviceNameSpan = document.getElementById('selectedDeviceName');
+            if (deviceNameSpan) deviceNameSpan.textContent = `(${detectedModel})`;
+
+            if (chipMismatchWarningElem) chipMismatchWarningElem.style.display = 'none';
+            updateDefaultAddresses();
+            updateConnectButtonLabel();
+            updatePlatformHint();
+            setContinueToStep2Blocked(!connected);
+
+            if (selectedFirmwareMethod === 'download' && connected) {
+                try {
+                    await populateGhostEspDropdown(GHOST_ESP_OWNER, GHOST_ESP_REPO, '.zip', selectedDevice, selectedBrand);
+                } catch (err) {
+                    console.error('Error repopulating firmware after chip auto-switch:', err);
+                }
+            }
         }
 
         function displayChipInfo(info) {
@@ -954,6 +989,27 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
+        const DRIVER_LINKS =
+            '<a href="https://www.wch-ic.com/downloads/ch341ser_exe.html" target="_blank" rel="noopener">CH340/CH341 driver</a>' +
+            ' or <a href="https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers" target="_blank" rel="noopener">CP210x driver</a>';
+
+        function updatePlatformHint() {
+            const hint = document.getElementById('flasherPlatformHint');
+            if (!hint) return;
+            const chip = (selectedDevice || '').toUpperCase();
+            const nativeUsbChips = ['ESP32-S3', 'ESP32-S2', 'ESP32-C3', 'ESP32-C6', 'ESP32-C2'];
+            const hasNativeUsb = nativeUsbChips.some(c => chip.startsWith(c));
+            let html;
+            if (chip && hasNativeUsb) {
+                html = `<i class="bi bi-info-circle"></i><span><strong>${escapeHtml(chip)}:</strong> use the board's <strong>native USB</strong> port when it has one — no driver needed and download mode is automatic. Boards wired to a CH340/CP210x bridge instead need the ${DRIVER_LINKS} and manual boot mode: hold <strong>BOOT</strong>, press <strong>RESET</strong>, then release <strong>BOOT</strong>.</span>`;
+            } else if (chip) {
+                html = `<i class="bi bi-info-circle"></i><span><strong>${escapeHtml(chip)}:</strong> connects through a USB-UART bridge — install the ${DRIVER_LINKS}, plug in a <strong>data</strong> cable, then hold <strong>BOOT</strong>, press <strong>RESET</strong>, release <strong>BOOT</strong> to enter download mode.</span>`;
+            } else {
+                html = `<i class="bi bi-info-circle"></i><span><strong>Tip:</strong> S3/C3/C6 boards with native USB need no driver — download mode is automatic. Other boards need the ${DRIVER_LINKS} plus manual boot mode: hold <strong>BOOT</strong>, press <strong>RESET</strong>, release <strong>BOOT</strong>.</span>`;
+            }
+            hint.innerHTML = html;
+        }
+
         function explainStep2Blocked() {
             let message;
             if (!selectedConnectionMode) {
@@ -1018,6 +1074,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             updateConnectButtonLabel();
+            updatePlatformHint();
             setContinueToStep2Blocked(!connected);
         }
 
@@ -1183,6 +1240,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 selectedFirmwareAssetName = null;
                 selectedFirmwareDisplayName = null;
                 updateConnectButtonLabel();
+                updatePlatformHint();
                 setContinueToStep2Blocked(!connected);
                 
                 if (selectedDeviceMethod === 'chip') {
@@ -1328,6 +1386,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 espLoaderTerminal.writeLine(`Selected: ${selectedSide}`);
                 updateDefaultAddresses();
                 updateConnectButtonLabel();
+                updatePlatformHint();
                 setContinueToStep2Blocked(!connected);
                 if (selectedFirmwareMethod === 'download') {
                     populateGhostEspDropdown(GHOST_ESP_OWNER, GHOST_ESP_REPO, '.zip', selectedDevice, selectedBrand)
@@ -1432,6 +1491,49 @@ document.addEventListener('DOMContentLoaded', () => {
                     icon.className = isHidden ? 'bi bi-terminal' : 'bi bi-terminal-fill';
                 }
             });
+        }
+
+        // --- Copy Log button ---
+        const copyLogBtn = getElementById('copyLogBtn', { optional: true });
+        if (copyLogBtn && terminalElem) {
+            const copyTerminalLog = () => {
+                const selectedOption = ghostEspVariantSelect?.options?.[ghostEspVariantSelect.selectedIndex];
+                const header = [
+                    'GhostESP Web Flasher log',
+                    'Device: ' + (selectedSide || selectedDevice || 'unknown'),
+                    'Chip detected: ' + (chipType || lastDetectedChipModel || 'unknown'),
+                    'Mode: ' + (selectedConnectionMode || 'unknown'),
+                    'Firmware: ' + (selectedOption?.text || 'unknown'),
+                    '-----------------------------'
+                ].join('\n');
+                const payload = header + '\n' + (terminalElem.textContent || '');
+
+                const done = (ok) => {
+                    if (ok) {
+                        copyLogBtn.innerHTML = '<i class="bi bi-check-lg"></i> Copied';
+                        setTimeout(() => { copyLogBtn.innerHTML = '<i class="bi bi-clipboard"></i> Copy Log'; }, 2000);
+                    } else {
+                        copyLogBtn.innerHTML = '<i class="bi bi-exclamation-triangle"></i> Failed';
+                        setTimeout(() => { copyLogBtn.innerHTML = '<i class="bi bi-clipboard"></i> Copy Log'; }, 2000);
+                    }
+                };
+
+                if (navigator.clipboard && window.isSecureContext) {
+                    navigator.clipboard.writeText(payload).then(() => done(true)).catch(() => done(false));
+                } else {
+                    const ta = document.createElement('textarea');
+                    ta.value = payload;
+                    ta.style.position = 'fixed';
+                    ta.style.opacity = '0';
+                    document.body.appendChild(ta);
+                    ta.select();
+                    let ok = false;
+                    try { ok = document.execCommand('copy'); } catch (_) { ok = false; }
+                    document.body.removeChild(ta);
+                    done(ok);
+                }
+            };
+            copyLogBtn.addEventListener('click', copyTerminalLog);
         }
 
         // --- Event Listeners: Stuck / Help Buttons ---
@@ -1805,25 +1907,29 @@ document.addEventListener('DOMContentLoaded', () => {
                 updateStatusIndicator('success', 'Connected', `${selectedSide} (Bootloader Mode)`);
                 updateButtonStates();
 
-                let mismatchConfirmed = true;
+                let mismatchAction = 'continue';
                 if (selectedDevice && chipType) {
-                    const mismatched = chipModelsMismatch(selectedDevice, chipType);
-                    if (mismatched) {
+                    if (chipModelsMismatch(selectedDevice, chipType)) {
                         chipMismatchWarningElem.style.display = 'inline-flex';
                         espLoaderTerminal.writeLine(`WARNING: Chip mismatch! Selected ${selectedDevice} but detected ${chipType}`);
                         if (chipInfoElem) {
                             const sub = chipInfoElem.querySelector('.flasher-status-sub');
                             if (sub) sub.textContent = `-- Mismatch: detected ${chipType} (selected ${selectedDevice})`;
                         }
-                        mismatchConfirmed = await showChipMismatchPopup(selectedDevice, chipType);
+                        mismatchAction = await showChipMismatchPopup(selectedDevice, chipType);
                     } else {
                         chipMismatchWarningElem.style.display = 'none';
                     }
                 }
 
-                if (!mismatchConfirmed) {
+                if (mismatchAction === 'stay') {
                     espLoaderTerminal.writeLine('Stayed on connection step after chip mismatch warning.');
                     return true;
+                }
+                if (mismatchAction === 'switch') {
+                    const oldSel = selectedDevice;
+                    await applyDetectedChipSelection(chipType);
+                    espLoaderTerminal.writeLine(`Auto-switched selection from ${oldSel} to ${chipType} based on the detected chip.`);
                 }
 
                 // Proceed to step 2 directly
@@ -2184,14 +2290,20 @@ document.addEventListener('DOMContentLoaded', () => {
                     SocialProof.showPostFlashModal();
                 }
 
+                let resetOk = false;
                 try {
-                    espLoaderTerminal.writeLine("Attempting soft reset (into app)...");
-                    await espLoader.softReset(true);
-                    espLoaderTerminal.writeLine("Soft reset command sent.");
+                    resetOk = await resetIntoApp();
                     await new Promise(resolve => setTimeout(resolve, 500));
                 } catch (resetError) {
-                    console.error("Soft reset failed:", resetError);
-                    espLoaderTerminal.writeLine(`Note: Soft reset command failed: ${resetError.message}. Manual reset may be required.`);
+                    console.error("Reset failed:", resetError);
+                    espLoaderTerminal.writeLine(`Note: Reset failed: ${resetError.message}. Manual reset may be required.`);
+                }
+
+                if (window.__gaLoaded === true && typeof window.gtag === 'function') {
+                    window.gtag('event', 'flash_reset', {
+                        success: resetOk ? 'yes' : 'no',
+                        device: savedDevice || 'unknown'
+                    });
                 }
 
                 try {
@@ -2211,6 +2323,14 @@ document.addEventListener('DOMContentLoaded', () => {
                             <button id="resetBtn" class="btn btn-secondary" disabled>
                                 <i class="bi bi-arrow-repeat"></i> Reset Device
                             </button>
+                            <div class="flasher-handoff">
+                                <p class="flasher-handoff-title"><i class="bi bi-check-circle-fill"></i> GhostESP is installed</p>
+                                <div class="flasher-handoff-links">
+                                    <a href="/serial" class="flasher-handoff-link"><i class="bi bi-terminal"></i> Open Serial Console</a>
+                                    <a href="/changelog" class="flasher-handoff-link"><i class="bi bi-stars"></i> What's new</a>
+                                    <a href="https://discord.gg/5cyNmUMgwh" target="_blank" rel="noopener" class="flasher-handoff-link"><i class="bi bi-discord"></i> Get help on Discord</a>
+                                </div>
+                            </div>
                         `;
                         flashBtn = document.getElementById('flashBtn');
                         eraseBtn = document.getElementById('eraseBtn');
@@ -2221,8 +2341,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                     connected = false;
                     updateButtonStates();
-                    espLoaderTerminal.writeLine("Flash process complete. Device may have reset.");
-                    updateStatusIndicator('success', 'Flash Complete', 'Device may have reset. Disconnected.');
+                    espLoaderTerminal.writeLine(`Flash process complete. Device ${resetOk ? 'reset successfully' : 'may need a manual reset (RESET button)'}.`);
+                    updateStatusIndicator('success', 'Flash Complete', resetOk ? 'Device reset. Connect to Serial Console to configure.' : 'Press the RESET button on the board if it did not restart. Disconnected.');
                 }
 
             } catch (error) {
@@ -2307,6 +2427,76 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
+        // Reset the connected device back into app mode after flashing.
+        // esptool-js's softReset(true) is a no-op on ESP32, and softReset()
+        // throws once the flash stub is loaded, so we pulse the physical
+        // DTR/RTS lines instead (matching ESP Web Tools / ESP Terminator):
+        //   1) esptool hardware reset (works on boards with an auto-reset
+        //      circuit, e.g. CH340/CP210x/FTDI dev kits)
+        //   2) manual signal pulse on the Web Serial port (USB-JTAG S3/C3/C6
+        //      need only an RTS pulse; classic bridges need the full sequence)
+        //   3) run-app command via the ROM bootloader as a last resort
+        async function resetIntoApp() {
+            espLoaderTerminal.writeLine("Attempting to reset device into app mode...");
+
+            if (espLoader) {
+                try {
+                    await espLoader.after('hard_reset');
+                    espLoaderTerminal.writeLine("Hardware reset (DTR/RTS) sent.");
+                    await new Promise(resolve => setTimeout(resolve, 300));
+                    return true;
+                } catch (resetError) {
+                    espLoaderTerminal.writeLine(`Note: esptool hardware reset failed (${resetError.message}); falling back.`);
+                }
+            }
+
+            try {
+                if (normalSerialPort && typeof normalSerialPort.setSignals === 'function') {
+                    let usbInfo = null;
+                    try {
+                        usbInfo = (typeof normalSerialPort.getInfo === 'function') ? normalSerialPort.getInfo() : null;
+                    } catch (_) { }
+                    // ESP32-S2/S3/C3/C6 native USB is USB-JTAG: no DTR/RTS
+                    // lines exist, so a single RTS pulse triggers the reset.
+                    const isEspressifUsb = !!(usbInfo && usbInfo.usbVendorId === 0x303a);
+                    const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+                    if (isEspressifUsb) {
+                        espLoaderTerminal.writeLine("Sending USB-JTAG reset pulse (RTS)...");
+                        await normalSerialPort.setSignals({ dataTerminalReady: false, requestToSend: true });
+                        await wait(200);
+                        await normalSerialPort.setSignals({ dataTerminalReady: false, requestToSend: false });
+                    } else {
+                        espLoaderTerminal.writeLine("Sending classic reset pulse (DTR/RTS)...");
+                        await normalSerialPort.setSignals({ dataTerminalReady: false, requestToSend: true });
+                        await wait(120);
+                        await normalSerialPort.setSignals({ dataTerminalReady: false, requestToSend: false });
+                        await wait(120);
+                        await normalSerialPort.setSignals({ dataTerminalReady: true, requestToSend: false });
+                        await wait(120);
+                        await normalSerialPort.setSignals({ dataTerminalReady: false, requestToSend: false });
+                    }
+                    await wait(200);
+                    return true;
+                }
+            } catch (signalError) {
+                espLoaderTerminal.writeLine(`Note: manual reset pulse failed (${signalError.message}); falling back.`);
+            }
+
+            if (espLoader) {
+                try {
+                    espLoaderTerminal.writeLine("Sending run-app command via ROM bootloader...");
+                    await espLoader.after('soft_reset');
+                    return true;
+                } catch (resetError) {
+                    espLoaderTerminal.writeLine(`Note: ROM reset failed (${resetError.message}).`);
+                }
+            }
+
+            espLoaderTerminal.writeLine("Automatic reset did not succeed. If the device did not restart, press the physical RESET button on the board.");
+            return false;
+        }
+
         async function resetDevice() {
             if (!connected || !espLoader) {
                 espLoaderTerminal.writeLine("Not connected to a device");
@@ -2315,12 +2505,11 @@ document.addEventListener('DOMContentLoaded', () => {
             if (resetBtn) resetBtn.disabled = true;
 
             try {
-                espLoaderTerminal.writeLine("Attempting soft reset (into app)...");
                 if (chipInfoElem) chipInfoElem.innerHTML = `<span class="status-indicator status-flashing"></span> Resetting...`;
                 updateStatusIndicator('flashing', 'Resetting...', '');
 
-                await espLoader.softReset(true);
-                espLoaderTerminal.writeLine("Soft reset command sent.");
+                const resetOk = await resetIntoApp();
+                espLoaderTerminal.writeLine(resetOk ? "Reset complete. Device should boot into GhostESP." : "Reset finished (manual reset may be needed).");
 
                 if (chipInfoElem) chipInfoElem.innerHTML = `<span class="status-indicator status-connected"></span> Device reset initiated`;
                 updateStatusIndicator('success', 'Reset initiated', 'Device should restart');
@@ -2333,8 +2522,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 }, 1000);
 
             } catch (error) {
-                console.error("Soft reset failed:", error);
-                espLoaderTerminal.writeLine(`Note: Soft reset failed: ${error.message}. Manual reset may be required.`);
+                console.error("Reset failed:", error);
+                espLoaderTerminal.writeLine(`Note: Reset failed: ${error.message}. Manual reset may be required.`);
                 if (chipInfoElem) chipInfoElem.innerHTML = `<span class="status-indicator status-warning"></span> Reset command failed`;
                 updateStatusIndicator('error', 'Reset Failed', error.message);
                 if (resetBtn) resetBtn.disabled = !connected;
