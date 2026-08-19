@@ -42,6 +42,15 @@
   <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
   <link rel="stylesheet" href="css/main.css">
+  <style>
+    /* scrim: sits above the dot-terrain canvas (both z-index:0, this is later in
+       the DOM so it paints on top) but below page content (z-index:1), dimming
+       the moving dots so bare text without its own background stays readable. */
+    .board-scrim {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background: rgba(0, 0, 0, 0.62);
+    }
+  </style>
   <script src="https://unpkg.com/lucide@0.344.0/dist/umd/lucide.min.js" defer></script>
   <script type="application/ld+json">
   {
@@ -59,7 +68,7 @@
         "name": "GhostESP Supported ESP32 Boards",
         "description": "Tested ESP32 boards compatible with the GhostESP platform.",
         "url": "https://ghostesp.net/boards",
-        "numberOfItems": 19,
+        "numberOfItems": 21,
         "itemListElement": [
           { "@type": "ListItem", "position": 1, "name": "GhostBoard" },
           { "@type": "ListItem", "position": 2, "name": "CYD2USB 2.4 inch C Variant" },
@@ -79,7 +88,9 @@
           { "@type": "ListItem", "position": 16, "name": "ESP32-C5 Dev Board" },
           { "@type": "ListItem", "position": 17, "name": "Seeed XIAO ESP32-S3 Sense" },
           { "@type": "ListItem", "position": 18, "name": "Seeed XIAO ESP32-C5" },
-          { "@type": "ListItem", "position": 19, "name": "Seeed XIAO ESP32S3" }
+          { "@type": "ListItem", "position": 19, "name": "Seeed XIAO ESP32S3" },
+          { "@type": "ListItem", "position": 20, "name": "M5Stack CoreS3-SE" },
+          { "@type": "ListItem", "position": 21, "name": "M5Stack AtomS3R" }
         ]
       }
     ]
@@ -92,6 +103,7 @@
 <body>
   <a href="#main-content" class="skip-link">Skip to content</a>
   <canvas id="dotTerrain"></canvas>
+  <div class="board-scrim" aria-hidden="true"></div>
   <script src="js/dot-terrain.js"></script>
   <nav id="nav"><noscript><a href="/">Home</a> <a href="boards.html">Boards</a> <a href="flasher.html">Flasher</a> <a href="dashboard.html">Dashboard</a> <a href="blog.html">Blog</a> <a href="https://docs.ghostesp.net">Docs</a></noscript></nav>
 
@@ -141,16 +153,26 @@
       <p style="text-align: center; color: var(--text-dim); font-size: 0.85rem; margin: -2rem auto 2rem; max-width: 700px;">
         Some purchase links are affiliate links. They may earn GhostESP a commission at no extra cost to you and help fund development.
       </p>
-      <section aria-labelledby="board-guide-heading" style="max-width: 1000px; margin: 0 auto 2.5rem;">
-        <h2 id="board-guide-heading" style="text-align: center; font-size: 1.35rem;">Choose by use case</h2>
-      </section>
-      <div class="tag-filter" id="board-tag-filter" aria-label="Filter supported boards"></div>
+      <div class="board-filter-panel" aria-labelledby="board-guide-heading">
+        <div class="board-filter-header">
+          <h2 id="board-guide-heading">Choose by use case</h2>
+          <span id="board-results-count" class="board-results-count" role="status" aria-live="polite"></span>
+        </div>
+        <div class="board-filter-section">
+          <span class="board-filter-label">Feature</span>
+          <div class="tag-filter" id="board-tag-filter" aria-label="Filter supported boards"></div>
+        </div>
+        <div class="board-filter-section">
+          <span class="board-filter-label">Vendor</span>
+          <div class="tag-filter" id="board-vendor-filter" aria-label="Filter by vendor"></div>
+        </div>
+      </div>
       
       <div class="board-grid">
         <div class="card board-card-full">
           <img src="images/ghostfront-600x800.jpg" alt="GhostBoard" loading="lazy">
-          <span class="board-card-partner board-card-partner--rabbit">Rabbit-Labs</span>
           <h3>GhostBoard</h3>
+          <a href="https://rabbit-labs.com/" target="_blank" rel="noopener" class="board-card-partner board-card-partner--rabbit">Rabbit-Labs</a>
           <div class="board-tags">
             <span class="board-tag">Flipper</span>
             <span class="board-tag">SD Card</span>
@@ -185,8 +207,8 @@
 
         <div class="card board-card-full">
           <img src="https://static.wixstatic.com/media/35ea10_c352ea38cf4c4ba0982a44c7b898755d~mv2.jpg/v1/fill/w_500,h_333,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/35ea10_c352ea38cf4c4ba0982a44c7b898755d~mv2.jpg" alt="Ultimate Marauder" loading="lazy">
-          <span class="board-card-partner board-card-partner--twh">Wired Hatters</span>
           <h3>Ultimate Marauder</h3>
+          <a href="https://www.wiredhatters.com/" target="_blank" rel="noopener" class="board-card-partner board-card-partner--twh">Wired Hatters</a>
           <div class="board-tags">
             <span class="board-tag">Flipper</span>
             <span class="board-tag">GPS</span>
@@ -199,8 +221,8 @@
 
         <div class="card board-card-full">
           <img src="https://static.wixstatic.com/media/35ea10_30c1a7ec6ead46d39aef8aea8c2ede48~mv2.jpg/v1/fill/w_498,h_603,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/35ea10_30c1a7ec6ead46d39aef8aea8c2ede48~mv2.jpg" alt="The Banshee" loading="lazy">
-          <span class="board-card-partner board-card-partner--twh">Wired Hatters</span>
           <h3>The Banshee</h3>
+          <a href="https://www.wiredhatters.com/" target="_blank" rel="noopener" class="board-card-partner board-card-partner--twh">Wired Hatters</a>
           <div class="board-tags">
             <span class="board-tag">5GHz</span>
             <span class="board-tag">Ethernet</span>
@@ -211,6 +233,8 @@
             <span class="board-tag">Sub-GHz</span>
             <span class="board-tag">Display</span>
             <span class="board-tag">Touch</span>
+            <span class="board-tag">Audio</span>
+            <span class="board-tag">Mic</span>
           </div>
           <p>Dual-ESP32 (C5 + S3) GhostESP board with dual-band, SD storage, Ethernet, TFT + OLED displays, RGB lighting, and expansion for sensors and IO.</p>
           <a href="https://www.wiredhatters.com/product-page/the-banshee" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy Now</a>
@@ -218,8 +242,8 @@
 
         <div class="card board-card-full">
           <img src="https://static.wixstatic.com/media/35ea10_b537d4da88a84fddbd67a4029caa690c~mv2.jpg/v1/fill/w_475,h_333,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/35ea10_b537d4da88a84fddbd67a4029caa690c~mv2.jpg" alt="ESP-Rocket" loading="lazy">
-          <span class="board-card-partner board-card-partner--twh">Wired Hatters</span>
           <h3>ESP‑Rocket</h3>
+          <a href="https://www.wiredhatters.com/" target="_blank" rel="noopener" class="board-card-partner board-card-partner--twh">Wired Hatters</a>
           <div class="board-tags">
             <span class="board-tag">Flipper</span>
           </div>
@@ -230,6 +254,7 @@
         <div class="card board-card-full">
           <img src="https://shop.m5stack.com/cdn/shop/files/K132_v11_19_1200x1200.webp" alt="Cardputer" loading="lazy">
           <h3>ESP32-S3 Cardputer</h3>
+          <a href="https://shop.m5stack.com/" target="_blank" rel="noopener" class="board-card-partner board-card-partner--m5">M5Stack</a>
           <div class="board-tags">
             <span class="board-tag">Keyboard</span>
             <span class="board-tag">SD Card</span>
@@ -242,6 +267,7 @@
         <div class="card board-card-full">
           <img src="https://ae-pic-a1.aliexpress-media.com/kf/Sbaec1d1ba16c4721a47063e795a7513b4.jpg?has_lang=1&amp;ver=2_960x960q75.jpg" alt="M5Stack Cardputer ADV" loading="lazy">
           <h3>M5Stack Cardputer ADV</h3>
+          <a href="https://shop.m5stack.com/" target="_blank" rel="noopener" class="board-card-partner board-card-partner--m5">M5Stack</a>
           <div class="board-tags">
             <span class="board-tag">Keyboard</span>
             <span class="board-tag">SD Card</span>
@@ -252,9 +278,36 @@
         </div>
 
         <div class="card board-card-full">
+          <img src="https://cdn.shopify.com/s/files/1/0056/7689/2250/files/1920x2260_ac3abb3a-2355-4941-a865-5bb05294481c.webp" alt="M5Stack CoreS3-SE" loading="lazy">
+          <h3>M5Stack CoreS3-SE</h3>
+          <a href="https://shop.m5stack.com/" target="_blank" rel="noopener" class="board-card-partner board-card-partner--m5">M5Stack</a>
+          <div class="board-tags">
+            <span class="board-tag">Touch</span>
+            <span class="board-tag">Display</span>
+            <span class="board-tag">SD Card</span>
+            <span class="board-tag">Audio</span>
+            <span class="board-tag">Mic</span>
+          </div>
+          <p>ESP32-S3 IoT controller with a 2.0" capacitive touch display, 16MB flash, 8MB PSRAM, microSD slot, speaker and dual mics. Flashed over USB-C.</p>
+          <a href="https://shop.m5stack.com/products/m5stack-cores3-se-iot-controller-w-o-battery-bottom?variant=45170957451521" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy Now</a>
+        </div>
+
+        <div class="card board-card-full">
+          <img src="https://cdn.shopify.com/s/files/1/0056/7689/2250/files/1920x2260_21da9b2e-e1dc-4710-8755-202d0483a50c.webp" alt="M5Stack AtomS3R" loading="lazy">
+          <h3>M5Stack AtomS3R</h3>
+          <a href="https://shop.m5stack.com/" target="_blank" rel="noopener" class="board-card-partner board-card-partner--m5">M5Stack</a>
+          <div class="board-tags">
+            <span class="board-tag">Infrared</span>
+            <span class="board-tag">Display</span>
+          </div>
+          <p>Pocket-sized ESP32-S3 with a 0.85" IPS display, long-range IR blaster, 9-axis motion sensing, 8MB flash and 8MB PSRAM.</p>
+          <a href="https://shop.m5stack.com/products/atoms3r-dev-kit" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy Now</a>
+        </div>
+
+        <div class="card board-card-full">
           <img src="images/pham-600x800.jpg" alt="The Phantom" loading="lazy">
-          <span class="board-card-partner board-card-partner--rabbit">Rabbit-Labs</span>
           <h3>The Phantom</h3>
+          <a href="https://rabbit-labs.com/" target="_blank" rel="noopener" class="board-card-partner board-card-partner--rabbit">Rabbit-Labs</a>
           <div class="board-tags">
             <span class="board-tag">Touch</span>
             <span class="board-tag">SD Card</span>
@@ -266,6 +319,7 @@
         <div class="card board-card-full">
           <img src="https://lilygo.cc/cdn/shop/files/T-EMBED-CC1101-PLUS_6_4bda35c0-79ad-41ba-9aa7-52792d723ab1.jpg" alt="T-Embed" loading="lazy">
           <h3>T-Embed CC1101</h3>
+          <a href="https://www.lilygo.cc/" target="_blank" rel="noopener" class="board-card-partner board-card-partner--lilygo">LilyGo</a>
           <div class="board-tags">
             <span class="board-tag">Infrared</span>
             <span class="board-tag">SD Card</span>
@@ -279,6 +333,7 @@
         <div class="card board-card-full">
           <img src="https://lilygo.cc/cdn/shop/files/shipping_511a8c0c-8aca-4406-bcf0-0a70ea2d3a0e.jpg" alt="T-Watch" loading="lazy">
           <h3>LilyGo T-Watch S3</h3>
+          <a href="https://www.lilygo.cc/" target="_blank" rel="noopener" class="board-card-partner board-card-partner--lilygo">LilyGo</a>
           <div class="board-tags">
             <span class="board-tag">Touch</span>
             <span class="board-tag">Infrared</span>
@@ -290,6 +345,7 @@
         <div class="card board-card-full">
           <img src="https://lilygo.cc/cdn/shop/files/LILYGO-T-DECK_2_7fbd52e8-0aea-466e-8407-dee4aca5b381.jpg" alt="T-Deck" loading="lazy">
           <h3>LilyGo T-Deck</h3>
+          <a href="https://www.lilygo.cc/" target="_blank" rel="noopener" class="board-card-partner board-card-partner--lilygo">LilyGo</a>
           <div class="board-tags">
             <span class="board-tag">Touch</span>
             <span class="board-tag">Keyboard</span>
@@ -301,6 +357,7 @@
         <div class="card board-card-full">
           <img src="https://lilygo.cc/cdn/shop/products/LILYGO-T-Display-S3-Touch-version_5.jpg" alt="T-Display S3" loading="lazy">
           <h3>LilyGo T-Display S3 Touch</h3>
+          <a href="https://www.lilygo.cc/" target="_blank" rel="noopener" class="board-card-partner board-card-partner--lilygo">LilyGo</a>
           <div class="board-tags">
             <span class="board-tag">Touch</span>
           </div>
@@ -321,8 +378,8 @@
 
         <div class="card board-card-full">
           <img src="images/p1-scaled.jpg" alt="Rabbit-Labs Poltergeist 5Ghz WiFi Board" loading="lazy">
-          <span class="board-card-partner board-card-partner--rabbit">Rabbit-Labs</span>
           <h3>Poltergeist 5GHz WiFi Board</h3>
+          <a href="https://rabbit-labs.com/" target="_blank" rel="noopener" class="board-card-partner board-card-partner--rabbit">Rabbit-Labs</a>
           <div class="board-tags">
             <span class="board-tag">5GHz</span>
             <span class="board-tag">Flipper</span>
@@ -347,6 +404,7 @@
         <div class="card board-card-full">
           <img src="https://media-cdn.seeedstudio.com/media/catalog/product/cache/bb49d3ec4ee05b6f018e93f896b8a25d/3/-/3-113991115-xiao-esp32-s3-sense.jpg" alt="Seeed XIAO ESP32-S3 Sense" loading="lazy">
           <h3>Seeed XIAO ESP32-S3 Sense</h3>
+          <a href="https://www.seeedstudio.com/" target="_blank" rel="noopener" class="board-card-partner board-card-partner--seeed">Seeed Studio</a>
           <div class="board-tags">
             <span class="board-tag">SD Card</span>
             <span class="board-tag">Camera</span>
@@ -358,6 +416,7 @@
         <div class="card board-card-full">
           <img src="https://media-cdn.seeedstudio.com/media/catalog/product/cache/bb49d3ec4ee05b6f018e93f896b8a25d/1/-/1-100010048-seeed-studio-xiao-esp32c5.jpg" alt="Seeed XIAO ESP32-C5" loading="lazy">
           <h3>Seeed XIAO ESP32-C5</h3>
+          <a href="https://www.seeedstudio.com/" target="_blank" rel="noopener" class="board-card-partner board-card-partner--seeed">Seeed Studio</a>
           <div class="board-tags">
             <span class="board-tag">5GHz</span>
           </div>
@@ -368,11 +427,16 @@
         <div class="card board-card-full">
           <img src="https://media-cdn.seeedstudio.com/media/catalog/product/cache/bb49d3ec4ee05b6f018e93f896b8a25d/1/-/1-113991114-xiao-esp32s3-font_1.jpg" alt="Seeed XIAO ESP32S3" loading="lazy">
           <h3>Seeed XIAO ESP32S3</h3>
+          <a href="https://www.seeedstudio.com/" target="_blank" rel="noopener" class="board-card-partner board-card-partner--seeed">Seeed Studio</a>
           <div class="board-tags">
           </div>
           <p>240MHz Xtensa LX7 dual-core processor with Wi-Fi and BLE 5.0. Ultra-low 14μA deep sleep mode with lithium battery charging management. Ideal for IoT, smart homes, and wearables.</p>
           <a href="https://www.seeedstudio.com/XIAO-ESP32S3-p-5627.html" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy Now</a>
         </div>
+      </div>
+
+      <div id="board-empty-state" class="board-empty-state" hidden>
+        No boards match this filter. Try another feature tag.
       </div>
     </div>
   </section>

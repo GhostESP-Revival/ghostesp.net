@@ -41,6 +41,8 @@ const GHOST_ESP_NICE_NAMES = {
   "rabbitlabs_minion.zip": "Rabbit Labs' Minion",
   "jcmk_devboardpro.zip": "JCMK DevBoard Pro",
   "cardputeradv.zip": "Cardputer ADV",
+  "m5stack_cores3-se.zip": "M5Stack CoreS3-SE",
+  "m5stack_atoms3r.zip": "M5Stack AtomS3R",
   "lolin_s3_pro.zip": "Lolin S3 Pro",
   "poltergeist.zip": "Rabbit-Labs Poltergeist",
   "banshee_c5.zip": "The Wired Hatter's Banshee C5",
