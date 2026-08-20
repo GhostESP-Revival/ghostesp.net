@@ -9,6 +9,15 @@ document.addEventListener('DOMContentLoaded', () => {
     return;
   }
 
+  // Randomise default board order on every page load (Fisher-Yates shuffle)
+  for (let i = cards.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [cards[i], cards[j]] = [cards[j], cards[i]];
+  }
+  if (grid) {
+    cards.forEach((card) => grid.appendChild(card));
+  }
+
   const tagCounts = new Map();
   const vendorCounts = new Map();
   cards.forEach((card) => {
