@@ -85,31 +85,6 @@ const components = {
     });
   },
 
-  // mobile-only sticky conversion CTA (hidden on the flasher itself)
-  STICKY_CTA_KEY: 'ghostesp_sticky_cta_dismissed',
-
-  renderStickyCta() {
-    try {
-      if (localStorage.getItem(this.STICKY_CTA_KEY) === '1') return;
-    } catch (e) {}
-    if (document.querySelector('.sticky-cta')) return;
-    const path = window.location.pathname;
-    if (path.endsWith('/flasher') || path.endsWith('flasher.html')) return;
-
-    const bar = document.createElement('div');
-    bar.className = 'sticky-cta';
-    bar.innerHTML = `
-      <a href="/flasher" class="btn btn-primary sticky-cta-btn" data-track="cta_sticky_flash">Flash Now</a>
-      <button class="sticky-cta-close" type="button" aria-label="Dismiss">&times;</button>
-    `;
-    document.body.appendChild(bar);
-
-    bar.querySelector('.sticky-cta-close').addEventListener('click', () => {
-      try { localStorage.setItem(this.STICKY_CTA_KEY, '1'); } catch (e) {}
-      bar.remove();
-    });
-  },
-
   loading() {
     return `
       <div class="loading">
@@ -223,7 +198,6 @@ const components = {
 // render components on load
 document.addEventListener('DOMContentLoaded', () => {
   components.renderAnnounceBar();
-  components.renderStickyCta();
 
   // engagement analytics — only fires after GA consent, matching the boards.js pattern
   document.addEventListener('click', (e) => {

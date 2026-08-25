@@ -2901,43 +2901,4 @@ h3 {
   margin-top: 1.5rem;
 }
 
-/* mobile-only sticky conversion CTA */
-.sticky-cta {
-  position: fixed;
-  bottom: 16px;
-  left: 16px;
-  z-index: 1998;
-  display: none;
-  align-items: center;
-  gap: 0.5rem;
-}
 
-.sticky-cta-btn {
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-}
-
-.sticky-cta-close {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  color: var(--text-dim);
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  font-size: 1rem;
-  line-height: 1;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: color 0.2s ease;
-}
-
-.sticky-cta-close:hover {
-  color: var(--text);
-}
-
-@media (max-width: 768px) {
-  .sticky-cta {
-    display: flex;
-  }
-}
