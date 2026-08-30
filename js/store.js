@@ -6,7 +6,7 @@
   const CATALOGS = {
     apps: {
       url: 'https://raw.githubusercontent.com/GhostESP-Revival/GhostESP-Apps/main/catalog.json',
-      cacheKey: 'ghostesp-store-apps-v2',
+      cacheKey: 'ghostesp-store-apps-v3',
       items: (c) => c.apps || [],
       reviewedOnly: false
     },
@@ -25,6 +25,16 @@
   };
 
   const TAB_ICONS = { apps: 'bi-grid', assets: 'bi-palette', scripts: 'bi-file-code' };
+
+  const TARGET_LABELS = {
+    esp32: 'ESP32',
+    esp32s2: 'ESP32-S2',
+    esp32s3: 'ESP32-S3',
+    esp32c3: 'ESP32-C3',
+    esp32c5: 'ESP32-C5',
+    esp32c6: 'ESP32-C6',
+    esp32p4: 'ESP32-P4'
+  };
 
   const proxyBase = () => {
     const path = '/.netlify/functions/app-proxy';
@@ -63,6 +73,11 @@
     if (lower === 'esp32') return 'esp32';
     if (lower.startsWith('esp32') && lower.includes('-')) return lower.replace(/-/g, '');
     return lower;
+  }
+
+  function targetLabel(target) {
+    const normalized = normalizeChip(target);
+    return TARGET_LABELS[normalized] || String(target || '').toUpperCase();
   }
 
   // The chip of the currently connected device, when known: { chip, label } or null.
@@ -413,7 +428,7 @@
       state.target = '';
     }
     els.target.innerHTML = '<option value="">All targets</option>' + targets.map((t) =>
-      `<option value="${esc(t)}" ${t === state.target ? 'selected' : ''}>${esc(t)}</option>`).join('');
+      `<option value="${esc(t)}" ${t === state.target ? 'selected' : ''}>${esc(targetLabel(t))}</option>`).join('');
   }
 
   function downloadsFor(item, key) {
@@ -492,7 +507,7 @@
         </button>
         ${isExpanded ? `<div class="store-download-targets">
           ${entries.map(([target, url]) => `<a class="store-download" href="${esc(url)}" download>
-            <span>${esc(url.split('/').pop())}</span><span>${esc(target)}</span>
+            <span>${esc(url.split('/').pop())}</span><span>${esc(targetLabel(target))}</span>
           </a>`).join('')}
         </div>` : ''}
         ${install.show ? `
@@ -508,7 +523,7 @@
     const authors = (item.authors || []).length ? item.authors : ['Unknown'];
     const chips = [item.category].filter(Boolean).map((c) => `<span class="store-chip store-chip-accent">${esc(c)}</span>`).join('');
     const metaChips = key === 'apps'
-      ? (item.targets || []).map((t) => `<span class="store-chip">${esc(t)}</span>`).join('')
+      ? (item.targets || []).map((t) => `<span class="store-chip">${esc(targetLabel(t))}</span>`).join('')
       : key === 'scripts'
         ? (item.permissions || []).slice(0, 4).map((p) => `<span class="store-chip store-permission-chip">${esc(p)}</span>`).join('')
         : (item.contents || []).map((c) => `<span class="store-chip">${esc(c)}</span>`).join('');

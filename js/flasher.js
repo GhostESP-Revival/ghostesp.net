@@ -543,6 +543,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 { name: "Poltergeist", chip: "ESP32-C5", firmware: "Poltergeist.zip" },
                 { name: "Phantom", chip: "ESP32", firmware: "CYD2USB2.4Inch.zip" }
             ],
+            "Elecrow": [
+                { name: "CrowPanel Advanced P4 7/9/10.1-inch (v1.2+)", chip: "ESP32-P4", firmware: "CrowPanel_Advanced_P4_7_9_10.1inch.zip", flashSize: "16MB" },
+                { name: "CrowPanel Advanced P4 7/9/10.1-inch (v1.1)", chip: "ESP32-P4", firmware: "CrowPanel_Advanced_P4_7_9_10.1inch_v1.1.zip", flashSize: "16MB" }
+            ],
             "Generic": [
                 { name: "Generic ESP32", chip: "ESP32", firmware: "esp32-generic.zip" },
                 { name: "Generic ESP32-S2", chip: "ESP32-S2", firmware: "esp32s2-generic.zip" },
@@ -721,6 +725,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 appAddress: '0x10000',
                 bootloaderAddress: '0x2000',
                 partitionAddress: '0x8000'
+            },
+            'ESP32-P4': {
+                filters: [
+                    { usbVendorId: 0x303A, usbProductId: 0x1001 },
+                    { usbVendorId: 0x10C4, usbProductId: 0xEA60 },
+                    { usbVendorId: 0x0403, usbProductId: 0x6001 },
+                    { usbVendorId: 0x303A, usbProductId: 0x1011 },
+                    { usbVendorId: 0x1A86, usbProductId: 0x55D4 }
+                ],
+                defaultFlashMode: 'dio',
+                defaultFlashFreq: '80m',
+                defaultFlashSize: '16MB',
+                appAddress: '0x10000',
+                bootloaderAddress: '0x2000',
+                partitionAddress: '0x8000'
             }
         };
 
@@ -782,6 +801,8 @@ document.addEventListener('DOMContentLoaded', () => {
             "FeberisPro.zip": "Feberis Pro",
             "MarauderV8.zip": "Marauder V8",
             "MarauderPancake.zip": "Marauder Pancake"
+            ,"CrowPanel_Advanced_P4_7_9_10.1inch.zip": "Elecrow CrowPanel Advanced P4 7/9/10.1-inch (v1.2+)",
+            "CrowPanel_Advanced_P4_7_9_10.1inch_v1.1.zip": "Elecrow CrowPanel Advanced P4 7/9/10.1-inch (v1.1)"
         };
 
         const ghostEspChipMapping = {
@@ -791,6 +812,7 @@ document.addEventListener('DOMContentLoaded', () => {
             "esp32c3": "ESP32-C3",
             "esp32c6": "ESP32-C6",
             "esp32c5": "ESP32-C5"
+            ,"esp32p4": "ESP32-P4"
         };
 
         // Brand to firmware build mapping for filtering
@@ -809,6 +831,7 @@ document.addEventListener('DOMContentLoaded', () => {
             "Seeed": ["XIAO_S3_Sense.zip", "XIAO_C5.zip", "XIAO_S3.zip"],
             "Displays": ["Crowtech_LCD.zip", "Sunton_LCD.zip", "JC3248W535EN_LCD.zip"],
             "Additional": ["Lolin_S3_Pro.zip", "FeberisPro.zip", "ACE_C5.zip", "ACE_S3.zip"]
+            ,"Elecrow": ["CrowPanel_Advanced_P4_7_9_10.1inch.zip", "CrowPanel_Advanced_P4_7_9_10.1inch_v1.1.zip"]
         };
 
         // Generic builds that should always show
@@ -878,6 +901,10 @@ document.addEventListener('DOMContentLoaded', () => {
             "marauder v8": "MarauderV8.zip",
             "pancake": "MarauderPancake.zip",
             "marauder pancake": "MarauderPancake.zip"
+            ,"crowpanel advanced p4 7/9/10.1-inch": "CrowPanel_Advanced_P4_7_9_10.1inch.zip",
+            "crowpanel advanced p4 7/9/10.1-inch v1.1": "CrowPanel_Advanced_P4_7_9_10.1inch_v1.1.zip",
+            "crowpanel_advanced_p4_mipi_1024x600": "CrowPanel_Advanced_P4_7_9_10.1inch.zip",
+            "crowpanel_advanced_p4_mipi_1024x600_v11": "CrowPanel_Advanced_P4_7_9_10.1inch_v1.1.zip"
         };
 
         function normalizeBuildTemplate(value) {
@@ -899,6 +926,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (compact.includes('ESP32C6')) return 'ESP32-C6';
             if (compact.includes('ESP32C5')) return 'ESP32-C5';
             if (compact.includes('ESP32C3')) return 'ESP32-C3';
+            if (compact.includes('ESP32P4')) return 'ESP32-P4';
             if (compact.includes('ESP32')) return 'ESP32';
             return null;
         }
@@ -1137,6 +1165,8 @@ document.addEventListener('DOMContentLoaded', () => {
             "esp32c5-generic.zip": "esp32c5",
             "esp32c5-generic-v01.zip": "esp32c5",
             "esp32c6-generic.zip": "esp32c6",
+            "CrowPanel_Advanced_P4_7_9_10.1inch.zip": "esp32p4",
+            "CrowPanel_Advanced_P4_7_9_10.1inch_v1.1.zip": "esp32p4",
             "esp32v5_awok.zip": "esp32s2",
             "ACE_C5.zip": "esp32c5",
             "ACE_S3.zip": "esp32s3",
@@ -2779,6 +2809,26 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
+        function detectPartitionByLabel(partitionTableBuffer, wantedLabel) {
+            try {
+                const view = new DataView(partitionTableBuffer);
+                for (let off = 0; off + 32 <= view.byteLength; off += 32) {
+                    if (view.getUint16(off, true) !== 0x50AA) continue;
+                    const labelBytes = new Uint8Array(partitionTableBuffer, off + 12, 16);
+                    const label = new TextDecoder().decode(labelBytes).replace(/\0.*$/, '');
+                    if (label === wantedLabel) {
+                        return {
+                            offset: view.getUint32(off + 4, true),
+                            size: view.getUint32(off + 8, true)
+                        };
+                    }
+                }
+            } catch (_) {
+                // A malformed/nonstandard table is handled by the normal file checks.
+            }
+            return null;
+        }
+
         // Parse the ESP image header baked into bootloader.bin so the flasher
         // uses the exact flash mode/freq/size the firmware was compiled with.
         // esptool-js re-stamps these fields into the image headers at write time
@@ -2925,6 +2975,25 @@ document.addEventListener('DOMContentLoaded', () => {
                             espLoaderTerminal.writeLine(`Partition table specifies app offset 0x${detectedAppOffset.toString(16)} (was defaulting to 0x${currentAppAddress.toString(16)}). Correcting app flash address.`);
                             filesToExtract.app.addressInput.value = '0x' + detectedAppOffset.toString(16);
                         }
+                    }
+
+                    // P4 factory ZIPs intentionally contain only three flashable
+                    // files. firmware.bin is a sparse image: the P4 app starts at
+                    // the detected app offset and the C6 ESP-Hosted peer image is
+                    // stored at the partition table's slave_fw offset. Refuse a
+                    // truncated bundle so it can never flash a host without its C6.
+                    if (selectedDevice === 'ESP32-P4') {
+                        const slavePartition = detectPartitionByLabel(filesToExtract.partition.data, 'slave_fw');
+                        const appOffset = parseInt(filesToExtract.app.addressInput.value, 16);
+                        if (!slavePartition) {
+                            throw new Error('P4 partition table has no slave_fw partition; refusing to flash without the embedded C6 peer image.');
+                        }
+                        const relativeSlaveOffset = slavePartition.offset - appOffset;
+                        const appBytes = new Uint8Array(filesToExtract.app.data);
+                        if (relativeSlaveOffset < 0 || appBytes.length <= relativeSlaveOffset || appBytes[relativeSlaveOffset] !== 0xE9) {
+                            throw new Error(`P4 firmware bundle is missing its embedded C6 peer image (expected slave_fw at 0x${slavePartition.offset.toString(16)}).`);
+                        }
+                        espLoaderTerminal.writeLine(`Verified P4 bundle: embedded C6 peer image reaches slave_fw at 0x${slavePartition.offset.toString(16)}.`);
                     }
                 }
 
