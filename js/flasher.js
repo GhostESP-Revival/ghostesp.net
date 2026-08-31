@@ -544,6 +544,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 { name: "Phantom", chip: "ESP32", firmware: "CYD2USB2.4Inch.zip" }
             ],
             "Elecrow": [
+                { name: "CrowPanel Advanced P4 5-inch (800×480 RGB)", chip: "ESP32-P4", firmware: "CrowPanel_Advanced_P4_5inch.zip", flashSize: "16MB" },
                 { name: "CrowPanel Advanced P4 7/9/10.1-inch (v1.2+)", chip: "ESP32-P4", firmware: "CrowPanel_Advanced_P4_7_9_10.1inch.zip", flashSize: "16MB" },
                 { name: "CrowPanel Advanced P4 7/9/10.1-inch (v1.1)", chip: "ESP32-P4", firmware: "CrowPanel_Advanced_P4_7_9_10.1inch_v1.1.zip", flashSize: "16MB" }
             ],
@@ -801,7 +802,8 @@ document.addEventListener('DOMContentLoaded', () => {
             "FeberisPro.zip": "Feberis Pro",
             "MarauderV8.zip": "Marauder V8",
             "MarauderPancake.zip": "Marauder Pancake"
-            ,"CrowPanel_Advanced_P4_7_9_10.1inch.zip": "Elecrow CrowPanel Advanced P4 7/9/10.1-inch (v1.2+)",
+            ,"CrowPanel_Advanced_P4_5inch.zip": "Elecrow CrowPanel Advanced P4 5-inch (800×480 RGB)",
+            "CrowPanel_Advanced_P4_7_9_10.1inch.zip": "Elecrow CrowPanel Advanced P4 7/9/10.1-inch (v1.2+)",
             "CrowPanel_Advanced_P4_7_9_10.1inch_v1.1.zip": "Elecrow CrowPanel Advanced P4 7/9/10.1-inch (v1.1)"
         };
 
@@ -831,7 +833,7 @@ document.addEventListener('DOMContentLoaded', () => {
             "Seeed": ["XIAO_S3_Sense.zip", "XIAO_C5.zip", "XIAO_S3.zip"],
             "Displays": ["Crowtech_LCD.zip", "Sunton_LCD.zip", "JC3248W535EN_LCD.zip"],
             "Additional": ["Lolin_S3_Pro.zip", "FeberisPro.zip", "ACE_C5.zip", "ACE_S3.zip"]
-            ,"Elecrow": ["CrowPanel_Advanced_P4_7_9_10.1inch.zip", "CrowPanel_Advanced_P4_7_9_10.1inch_v1.1.zip"]
+            ,"Elecrow": ["CrowPanel_Advanced_P4_5inch.zip", "CrowPanel_Advanced_P4_7_9_10.1inch.zip", "CrowPanel_Advanced_P4_7_9_10.1inch_v1.1.zip"]
         };
 
         // Generic builds that should always show
@@ -901,7 +903,9 @@ document.addEventListener('DOMContentLoaded', () => {
             "marauder v8": "MarauderV8.zip",
             "pancake": "MarauderPancake.zip",
             "marauder pancake": "MarauderPancake.zip"
-            ,"crowpanel advanced p4 7/9/10.1-inch": "CrowPanel_Advanced_P4_7_9_10.1inch.zip",
+            ,"crowpanel advanced p4 5-inch": "CrowPanel_Advanced_P4_5inch.zip",
+            "crowpanel_advanced_p4_rgb_800x480": "CrowPanel_Advanced_P4_5inch.zip",
+            "crowpanel advanced p4 7/9/10.1-inch": "CrowPanel_Advanced_P4_7_9_10.1inch.zip",
             "crowpanel advanced p4 7/9/10.1-inch v1.1": "CrowPanel_Advanced_P4_7_9_10.1inch_v1.1.zip",
             "crowpanel_advanced_p4_mipi_1024x600": "CrowPanel_Advanced_P4_7_9_10.1inch.zip",
             "crowpanel_advanced_p4_mipi_1024x600_v11": "CrowPanel_Advanced_P4_7_9_10.1inch_v1.1.zip"
@@ -1165,6 +1169,7 @@ document.addEventListener('DOMContentLoaded', () => {
             "esp32c5-generic.zip": "esp32c5",
             "esp32c5-generic-v01.zip": "esp32c5",
             "esp32c6-generic.zip": "esp32c6",
+            "CrowPanel_Advanced_P4_5inch.zip": "esp32p4",
             "CrowPanel_Advanced_P4_7_9_10.1inch.zip": "esp32p4",
             "CrowPanel_Advanced_P4_7_9_10.1inch_v1.1.zip": "esp32p4",
             "esp32v5_awok.zip": "esp32s2",
