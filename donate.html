@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#000000">
+
+  <!-- SEO Meta Tags -->
+  <title>Support GhostESP - Donate</title>
+  <meta name="description" content="Support GhostESP development with a donation. Your contribution helps keep GhostESP free, open source, and in active development.">
+  <meta name="robots" content="index, follow">
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://ghostesp.net/donate">
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+
+  <!-- Fonts and Styles -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="css/main.css">
+  <script src="https://unpkg.com/lucide@0.344.0/dist/umd/lucide.min.js" defer></script>
+  <!-- Cloudflare Web Analytics -->
+  <script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "8a43f9bb615d42a8ad405808147cc502"}'></script>
+  <!-- End Cloudflare Web Analytics -->
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to content</a>
+  <canvas id="dotTerrain"></canvas>
+  <script src="js/dot-terrain.js"></script>
+
+  <nav id="nav"><noscript><a href="/">Home</a> <a href="boards.html">Boards</a> <a href="hardware.html">Hardware</a> <a href="flasher.html">Flasher</a> <a href="dashboard.html">Dashboard</a> <a href="blog.html">Blog</a> <a href="https://docs.ghostesp.net">Docs</a></noscript></nav>
+
+  <!-- Donate Hero -->
+  <section id="main-content" class="hero" style="min-height: 70vh; padding-bottom: 2rem; background: radial-gradient(ellipse at center, rgba(0,255,128,0.08), transparent 65%);">
+    <div class="container">
+      <div class="cap-eyebrow cap-eyebrow-lg" data-aos="fade-up">// keep the project alive</div>
+
+      <div class="hero-actions" data-aos="fade-up">
+        <a href="https://ko-fi.com/jaylikesbunda" class="btn btn-primary" target="_blank" rel="noopener" data-track="cta_donate_kofi"><span>Donate on Ko-fi</span></a>
+        <a href="https://github.com/GhostESP-Revival/GhostESP" class="btn btn-secondary" target="_blank" rel="noopener" data-track="cta_donate_github"><span>Star the Repo</span></a>
+        <a href="https://github.com/GhostESP-Revival/GhostESP/blob/Development-deki/CONTRIBUTING.md" class="btn btn-secondary" target="_blank" rel="noopener" data-track="cta_donate_contribute"><span>Contribute</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Where your support goes -->
+  <section id="where-it-goes" class="section section-alt">
+    <div class="container">
+      <div class="cap-head" data-aos="fade-up">
+        <span class="cap-eyebrow">// where it goes</span>
+        <h2>Where Your Support Goes</h2>
+      </div>
+      <div class="grid">
+        <div class="card docs-card" data-aos="fade-up" data-aos-delay="100">
+          <div class="docs-card-head">
+            <i data-lucide="cpu" class="docs-card-icon"></i>
+            <h3>Dev Hardware</h3>
+          </div>
+          <p>Boards, modules, and accessories used to test features across the 60+ supported targets.</p>
+        </div>
+        <div class="card docs-card" data-aos="fade-up" data-aos-delay="150">
+          <div class="docs-card-head">
+            <i data-lucide="server" class="docs-card-icon"></i>
+            <h3>Hosting &amp; Infrastructure</h3>
+          </div>
+          <p>Keeps the flasher, docs, app store, and this site running fast and reliable.</p>
+        </div>
+        <div class="card docs-card" data-aos="fade-up" data-aos-delay="200">
+          <div class="docs-card-head">
+            <i data-lucide="clock" class="docs-card-icon"></i>
+            <h3>Development Time</h3>
+          </div>
+          <p>Funds time for firmware features, bug fixes, companion apps, and community support.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Other ways to help -->
+  <section id="other-ways" class="section">
+    <div class="container">
+      <div class="cap-head" data-aos="fade-up">
+        <span class="cap-eyebrow">// no funds? no problem</span>
+        <h2>Other Ways to Help</h2>
+      </div>
+      <div class="trust-grid" data-aos="fade-up" style="max-width: 1000px;">
+        <div class="auditable-card">
+          <div class="auditable-card-icon"><i data-lucide="star"></i></div>
+          <h3>Star the Repo</h3>
+          <p class="auditable-text">A GitHub star is the single easiest way to boost GhostESP's visibility and help others find it.</p>
+          <div class="auditable-links">
+            <a href="https://github.com/GhostESP-Revival/GhostESP" class="btn btn-secondary btn-small" target="_blank" rel="noopener"><span>Star on GitHub</span></a>
+          </div>
+        </div>
+        <div class="auditable-card">
+          <div class="auditable-card-icon"><i data-lucide="code-2"></i></div>
+          <h3>Contribute</h3>
+          <p class="auditable-text">Code, docs, board configs, and app testing are all welcome. Check the contributing guide to get started.</p>
+          <div class="auditable-links">
+            <a href="https://github.com/GhostESP-Revival/GhostESP/blob/Development-deki/CONTRIBUTING.md" class="btn btn-secondary btn-small" target="_blank" rel="noopener"><span>Read the Guide</span></a>
+          </div>
+        </div>
+        <div class="auditable-card">
+          <div class="auditable-card-icon"><i data-lucide="share-2"></i></div>
+          <h3>Share the Project</h3>
+          <p class="auditable-text">Recommend GhostESP to a friend, team, or community that could put it to good use.</p>
+          <div class="auditable-links">
+            <a href="https://discord.gg/5cyNmUMgwh" class="btn btn-secondary btn-small" target="_blank" rel="noopener"><span>Join Discord</span></a>
+          </div>
+        </div>
+        <div class="auditable-card">
+          <div class="auditable-card-icon"><i data-lucide="message-circle"></i></div>
+          <h3>Help Others</h3>
+          <p class="auditable-text">Answer questions on Discord, report bugs, and help new users get their boards flashed and running.</p>
+          <div class="auditable-links">
+            <a href="/feedback" class="btn btn-secondary btn-small"><span>Send Feedback</span></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-actions" data-aos="fade-up" style="margin-top: 3rem;">
+        <a href="https://ko-fi.com/jaylikesbunda" class="btn btn-primary" target="_blank" rel="noopener" data-track="cta_donate_kofi_bottom"><span>Donate on Ko-fi</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-links">
+        <a href="https://discord.gg/5cyNmUMgwh" target="_blank" rel="noopener" class="icon-link" title="Discord">
+          <i class="bi bi-discord"></i>
+        </a>
+        <a href="https://github.com/GhostESP-Revival/GhostESP" target="_blank" rel="noopener" class="icon-link" title="GitHub">
+          <i class="bi bi-github"></i>
+        </a>
+        <a href="https://instagram.com/ghostesprevival" target="_blank" rel="noopener" class="icon-link" title="Instagram">
+          <i class="bi bi-instagram"></i>
+        </a>
+      </div>
+      <button class="cookie-settings-link" onclick="CookieConsent.showSettings()">Cookie Settings</button>
+      <a href="privacy.html" class="cookie-settings-link">Privacy Policy</a>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js" defer></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js" defer></script>
+  <script src="js/components.js" defer></script>
+  <script src="js/main.js" defer></script>
+  <script src="js/cookie-consent.js" defer></script>
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      if (typeof AOS !== 'undefined') {
+        AOS.init({ duration: 800, once: true, offset: 100 });
+      }
+    });
+  </script>
+</body>
+</html>

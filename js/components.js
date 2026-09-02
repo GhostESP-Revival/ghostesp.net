@@ -23,13 +23,7 @@ const components = {
           <li><a href="/flasher">Flasher</a></li>
           <li><a href="/dashboard">Dashboard</a></li>
           <li><a href="https://docs.ghostesp.net" target="_blank" rel="noopener">Docs</a></li>
-          <li class="nav-dropdown">
-            <button class="nav-dropdown-toggle" type="button" aria-haspopup="true">Utilities</button>
-            <ul class="nav-dropdown-menu">
-              <li><a href="/openwd">WDMap</a></li>
-              <li><a href="/companion">Companion App</a></li>
-            </ul>
-          </li>
+          <li><a href="/donate">Donate</a></li>
           <li class="nav-dropdown">
             <button class="nav-dropdown-toggle" type="button" aria-haspopup="true">Resources</button>
             <ul class="nav-dropdown-menu">
@@ -38,10 +32,12 @@ const components = {
               <li><a href="/changelog">Changelog</a></li>
               <li><a href="/showcase">Showcase</a></li>
               <li><a href="/asset-pack-builder">Pack Builder</a></li>
+              <li><a href="/openwd">WDMap</a></li>
+              <li><a href="/companion">Companion App</a></li>
             </ul>
           </li>
           <li class="nav-dropdown">
-            <button class="nav-dropdown-toggle" type="button" aria-haspopup="true">Company</button>
+            <button class="nav-dropdown-toggle" type="button" aria-haspopup="true">Community</button>
             <ul class="nav-dropdown-menu">
               <li><a href="https://shop.ghostesp.net" target="_blank" rel="noopener">Merch</a></li>
               <li><a href="/brand-assets">Brand Assets</a></li>
