@@ -1389,6 +1389,7 @@ nav .container {
   letter-spacing: 0.4px;
   font-weight: 400;
   line-height: 1.4;
+  color: #60a5fa;
   text-decoration: none;
   transition: color 0.2s, filter 0.2s;
 }

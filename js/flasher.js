@@ -544,9 +544,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 { name: "Phantom", chip: "ESP32", firmware: "CYD2USB2.4Inch.zip" }
             ],
             "Elecrow": [
+                { name: "CrowPanel 5.79-inch E-paper (792×272)", chip: "ESP32-S3", firmware: "CrowPanel_5.79_Epaper.zip", flashSize: "8MB" },
+                { name: "CrowPanel 4.2-inch E-paper (400×300)", chip: "ESP32-S3", firmware: "CrowPanel_4.2_Epaper.zip", flashSize: "8MB" },
                 { name: "CrowPanel Advanced P4 5-inch (800×480 RGB)", chip: "ESP32-P4", firmware: "CrowPanel_Advanced_P4_5inch.zip", flashSize: "16MB" },
                 { name: "CrowPanel Advanced P4 7/9/10.1-inch (v1.2+)", chip: "ESP32-P4", firmware: "CrowPanel_Advanced_P4_7_9_10.1inch.zip", flashSize: "16MB" },
-                { name: "CrowPanel Advanced P4 7/9/10.1-inch (v1.1)", chip: "ESP32-P4", firmware: "CrowPanel_Advanced_P4_7_9_10.1inch_v1.1.zip", flashSize: "16MB" }
+                { name: "CrowPanel Advanced P4 7/9/10.1-inch (v1.1)", chip: "ESP32-P4", firmware: "CrowPanel_Advanced_P4_7_9_10.1inch_v1.1.zip", flashSize: "16MB" },
+                { name: "CrowPanel Advance 7-inch S3 (800×480 RGB)", chip: "ESP32-S3", firmware: "CrowPanel_Advance_7inch.zip", flashSize: "16MB" },
+                { name: "CrowPanel Advance 5-inch S3 (800×480 RGB)", chip: "ESP32-S3", firmware: "CrowPanel_Advance_5.zip", flashSize: "16MB" },
+                { name: "CrowPanel Advance 4.3-inch S3 (800×480 RGB)", chip: "ESP32-S3", firmware: "CrowPanel_Advance_43.zip", flashSize: "16MB" },
+                { name: "CrowPanel Advance 3.5-inch S3 (480×320 SPI ILI9488)", chip: "ESP32-S3", firmware: "CrowPanel_Advance_35.zip", flashSize: "16MB" },
+                { name: "CrowPanel Advance 2.8-inch S3 (320×240 SPI ST7789)", chip: "ESP32-S3", firmware: "CrowPanel_Advance_28.zip", flashSize: "16MB" },
+                { name: "CrowPanel Advance 2.4-inch S3 (320×240 SPI ST7789)", chip: "ESP32-S3", firmware: "CrowPanel_Advance_24.zip", flashSize: "16MB" }
             ],
             "Generic": [
                 { name: "Generic ESP32", chip: "ESP32", firmware: "esp32-generic.zip" },
@@ -803,8 +811,16 @@ document.addEventListener('DOMContentLoaded', () => {
             "MarauderV8.zip": "Marauder V8",
             "MarauderPancake.zip": "Marauder Pancake"
             ,"CrowPanel_Advanced_P4_5inch.zip": "Elecrow CrowPanel Advanced P4 5-inch (800×480 RGB)",
+            "CrowPanel_5.79_Epaper.zip": "Elecrow CrowPanel 5.79-inch E-paper (792×272)",
+            "CrowPanel_4.2_Epaper.zip": "Elecrow CrowPanel 4.2-inch E-paper (400×300)",
             "CrowPanel_Advanced_P4_7_9_10.1inch.zip": "Elecrow CrowPanel Advanced P4 7/9/10.1-inch (v1.2+)",
-            "CrowPanel_Advanced_P4_7_9_10.1inch_v1.1.zip": "Elecrow CrowPanel Advanced P4 7/9/10.1-inch (v1.1)"
+            "CrowPanel_Advanced_P4_7_9_10.1inch_v1.1.zip": "Elecrow CrowPanel Advanced P4 7/9/10.1-inch (v1.1)",
+            "CrowPanel_Advance_7inch.zip": "Elecrow CrowPanel Advance 7-inch S3 (800×480 RGB)",
+            "CrowPanel_Advance_5.zip": "Elecrow CrowPanel Advance 5-inch S3 (800×480 RGB)",
+            "CrowPanel_Advance_43.zip": "Elecrow CrowPanel Advance 4.3-inch S3 (800×480 RGB)",
+            "CrowPanel_Advance_35.zip": "Elecrow CrowPanel Advance 3.5-inch S3 (480×320 SPI)",
+            "CrowPanel_Advance_28.zip": "Elecrow CrowPanel Advance 2.8-inch S3 (320×240 SPI)",
+            "CrowPanel_Advance_24.zip": "Elecrow CrowPanel Advance 2.4-inch S3 (320×240 SPI)"
         };
 
         const ghostEspChipMapping = {
@@ -833,7 +849,7 @@ document.addEventListener('DOMContentLoaded', () => {
             "Seeed": ["XIAO_S3_Sense.zip", "XIAO_C5.zip", "XIAO_S3.zip"],
             "Displays": ["Crowtech_LCD.zip", "Sunton_LCD.zip", "JC3248W535EN_LCD.zip"],
             "Additional": ["Lolin_S3_Pro.zip", "FeberisPro.zip", "ACE_C5.zip", "ACE_S3.zip"]
-            ,"Elecrow": ["CrowPanel_Advanced_P4_5inch.zip", "CrowPanel_Advanced_P4_7_9_10.1inch.zip", "CrowPanel_Advanced_P4_7_9_10.1inch_v1.1.zip"]
+            ,"Elecrow": ["CrowPanel_5.79_Epaper.zip", "CrowPanel_4.2_Epaper.zip", "CrowPanel_Advanced_P4_5inch.zip", "CrowPanel_Advanced_P4_7_9_10.1inch.zip", "CrowPanel_Advanced_P4_7_9_10.1inch_v1.1.zip", "CrowPanel_Advance_7inch.zip", "CrowPanel_Advance_5.zip", "CrowPanel_Advance_43.zip", "CrowPanel_Advance_35.zip", "CrowPanel_Advance_28.zip", "CrowPanel_Advance_24.zip"]
         };
 
         // Generic builds that should always show
@@ -904,11 +920,35 @@ document.addEventListener('DOMContentLoaded', () => {
             "pancake": "MarauderPancake.zip",
             "marauder pancake": "MarauderPancake.zip"
             ,"crowpanel advanced p4 5-inch": "CrowPanel_Advanced_P4_5inch.zip",
+            "crowpanel 5.79-inch e-paper": "CrowPanel_5.79_Epaper.zip",
+            "crowpanel 5.79 e-paper": "CrowPanel_5.79_Epaper.zip",
+            "crowpanel_579_epaper": "CrowPanel_5.79_Epaper.zip",
+            "crowpanel 4.2-inch e-paper": "CrowPanel_4.2_Epaper.zip",
+            "crowpanel 4.2 e-paper": "CrowPanel_4.2_Epaper.zip",
+            "crowpanel_42_epaper": "CrowPanel_4.2_Epaper.zip",
             "crowpanel_advanced_p4_rgb_800x480": "CrowPanel_Advanced_P4_5inch.zip",
             "crowpanel advanced p4 7/9/10.1-inch": "CrowPanel_Advanced_P4_7_9_10.1inch.zip",
             "crowpanel advanced p4 7/9/10.1-inch v1.1": "CrowPanel_Advanced_P4_7_9_10.1inch_v1.1.zip",
             "crowpanel_advanced_p4_mipi_1024x600": "CrowPanel_Advanced_P4_7_9_10.1inch.zip",
-            "crowpanel_advanced_p4_mipi_1024x600_v11": "CrowPanel_Advanced_P4_7_9_10.1inch_v1.1.zip"
+            "crowpanel_advanced_p4_mipi_1024x600_v11": "CrowPanel_Advanced_P4_7_9_10.1inch_v1.1.zip",
+            "crowpanel_advance7": "CrowPanel_Advance_7inch.zip",
+            "crowpanel advance 7-inch": "CrowPanel_Advance_7inch.zip",
+            "crowpanel_advance_7inch": "CrowPanel_Advance_7inch.zip",
+            "crowpanel_advance5": "CrowPanel_Advance_5.zip",
+            "crowpanel advance 5-inch": "CrowPanel_Advance_5.zip",
+            "crowpanel_advance_5": "CrowPanel_Advance_5.zip",
+            "crowpanel_advance43": "CrowPanel_Advance_43.zip",
+            "crowpanel advance 4.3-inch": "CrowPanel_Advance_43.zip",
+            "crowpanel_advance_43": "CrowPanel_Advance_43.zip",
+            "crowpanel_advance35": "CrowPanel_Advance_35.zip",
+            "crowpanel advance 3.5-inch": "CrowPanel_Advance_35.zip",
+            "crowpanel_advance_35": "CrowPanel_Advance_35.zip",
+            "crowpanel_advance28": "CrowPanel_Advance_28.zip",
+            "crowpanel advance 2.8-inch": "CrowPanel_Advance_28.zip",
+            "crowpanel_advance_28": "CrowPanel_Advance_28.zip",
+            "crowpanel_advance24": "CrowPanel_Advance_24.zip",
+            "crowpanel advance 2.4-inch": "CrowPanel_Advance_24.zip",
+            "crowpanel_advance_24": "CrowPanel_Advance_24.zip"
         };
 
         function normalizeBuildTemplate(value) {
@@ -1192,6 +1232,8 @@ document.addEventListener('DOMContentLoaded', () => {
             "Crowtech_LCD.zip": "esp32s3",
             "Sunton_LCD.zip": "esp32s3",
             "JC3248W535EN_LCD.zip": "esp32s3",
+            "CrowPanel_5.79_Epaper.zip": "esp32s3",
+            "CrowPanel_4.2_Epaper.zip": "esp32s3",
             "Flipper_JCMK_GPS.zip": "esp32s2",
             "LilyGo-T-Deck.zip": "esp32s3",
             "LilyGo-TEmbedC1101.zip": "esp32s3",
