@@ -2414,7 +2414,9 @@ document.addEventListener('DOMContentLoaded', () => {
                             </button>
                             <div class="flasher-handoff">
                                 <p class="flasher-handoff-title"><i class="bi bi-check-circle-fill"></i> GhostESP is installed</p>
+                                <p style="font-size:0.85rem;opacity:0.85;margin:0 0 0.75rem 0;">If it helped you, star the project on GitHub to help others find GhostESP.</p>
                                 <div class="flasher-handoff-links">
+                                    <a href="https://github.com/GhostESP-Revival/GhostESP" target="_blank" rel="noopener" class="flasher-handoff-link flasher-handoff-link--star" data-github-cta data-cta-location="post_flash_handoff" data-after-flash="true" data-cta-variant="default"><i class="bi bi-star-fill"></i> Star on GitHub <span data-star-count></span></a>
                                     <a href="/dashboard?tab=console" class="flasher-handoff-link"><i class="bi bi-terminal"></i> Open Serial Console</a>
                                     <a href="/changelog" class="flasher-handoff-link"><i class="bi bi-stars"></i> What's new</a>
                                     <a href="https://discord.gg/5cyNmUMgwh" target="_blank" rel="noopener" class="flasher-handoff-link"><i class="bi bi-discord"></i> Get help on Discord</a>
@@ -2427,6 +2429,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         if (flashBtn) flashBtn.addEventListener('click', flash);
                         if (eraseBtn) eraseBtn.addEventListener('click', eraseFlash);
                         if (resetBtn) resetBtn.addEventListener('click', resetDevice);
+                        if (window.GhostStar && typeof window.GhostStar.hydrate === 'function') {
+                            try { window.GhostStar.hydrate(actionContainer); } catch (e) {}
+                        }
                     }
                     connected = false;
                     updateButtonStates();

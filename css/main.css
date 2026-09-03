@@ -118,6 +118,13 @@ body {
 
 /* Content sits above canvas */
 nav { position: relative; z-index: 2000; }
+.home-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: rgba(0, 0, 0, 0.62);
+}
 .hero { position: relative; z-index: 1; }
 .section { position: relative; z-index: 1; }
 footer { position: relative; z-index: 1; }
@@ -2414,6 +2421,38 @@ h3 {
 .nav-star-btn span {
   line-height: 1;
   vertical-align: middle;
+}
+
+/* reusable GitHub star CTA: deliberately quiet text-link style.
+   The only prominent star ask is post-flash (modal + handoff),
+   shown after the user received value. Everywhere else is a whisper. */
+.github-star-btn .github-star-count {
+  font-variant-numeric: tabular-nums;
+  opacity: 0.85;
+}
+
+.star-cta-banner {
+  display: block;
+  margin: 0 auto 1.5rem;
+  max-width: 760px;
+  text-align: center;
+  color: var(--text-dim);
+  font-size: 0.82rem;
+  opacity: 0.75;
+}
+
+.star-cta-quiet {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-color: rgba(255, 255, 255, 0.25);
+  white-space: nowrap;
+}
+
+.star-cta-quiet:hover {
+  opacity: 1;
+  color: var(--text);
+  text-decoration-color: currentColor;
 }
 
 /* discord widget card */

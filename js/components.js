@@ -199,6 +199,20 @@ document.addEventListener('DOMContentLoaded', () => {
   document.addEventListener('click', (e) => {
     if (window.__gaLoaded !== true || typeof window.gtag !== 'function') return;
 
+    // GitHub star CTA clicks. This tracks OUTBOUND CLICKS only — a click
+    // is not a star. Measure repo impact separately via star growth.
+    const githubCta = e.target.closest('[data-github-cta]');
+    if (githubCta) {
+      window.gtag('event', 'github_cta_click', {
+        cta_location: githubCta.dataset.ctaLocation || 'unknown',
+        source_path: window.location.pathname || '',
+        after_flash: githubCta.dataset.afterFlash === 'true' ? 'yes' : 'no',
+        variant: githubCta.dataset.ctaVariant || 'default',
+        link_url: githubCta.href || ''
+      });
+      return;
+    }
+
     const tracked = e.target.closest('[data-track]');
     if (tracked) {
       window.gtag('event', tracked.getAttribute('data-track'), {

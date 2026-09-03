@@ -1945,3 +1945,29 @@ nav ul.flasher-nav-links li::marker {
   transform: translateY(-1px);
   color: var(--flasher-text);
 }
+
+.flasher-handoff-link--star {
+  /* same quiet treatment as other handoff links; the star icon carries it */
+}
+
+/* contextual pre-flash star whisper (non-intrusive single text line) */
+.flasher-star-strip {
+  margin-bottom: 1rem;
+  font-size: 0.8rem;
+  color: var(--flasher-text-dim, #9aa3b2);
+  opacity: 0.75;
+  text-align: center;
+}
+
+.flasher-star-strip a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-color: rgba(255, 255, 255, 0.25);
+  white-space: nowrap;
+}
+
+.flasher-star-strip a:hover {
+  opacity: 1;
+  color: var(--flasher-text);
+}
