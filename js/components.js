@@ -30,6 +30,7 @@ const components = {
               <li><a href="/#capabilities">Features</a></li>
               <li><a href="/blog">Blog</a></li>
               <li><a href="/changelog">Changelog</a></li>
+              <li><a href="/isprereleasethelatest">Release Check</a></li>
               <li><a href="/showcase">Showcase</a></li>
               <li><a href="/asset-pack-builder">Pack Builder</a></li>
               <li><a href="/openwd">WDMap</a></li>

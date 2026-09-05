@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#000000">
+  <title>GhostESP Stable vs Prerelease Version Check</title>
+  <meta name="description" content="Check whether the latest GhostESP prerelease is newer than the latest stable release.">
+  <meta name="robots" content="index, follow">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="GhostESP Stable vs Prerelease Version Check">
+  <meta property="og:description" content="Check whether the latest GhostESP prerelease is newer than the latest stable release.">
+  <meta property="og:url" content="https://ghostesp.net/isprereleasethelatest">
+  <meta property="og:site_name" content="GhostESP">
+  <meta property="og:image" content="https://ghostesp.net/images/IMG_1178.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="GhostESP Stable vs Prerelease Version Check">
+  <meta name="twitter:description" content="Check whether the latest GhostESP prerelease is newer than the latest stable release.">
+  <meta name="twitter:image" content="https://ghostesp.net/images/IMG_1178.webp">
+  <link rel="canonical" href="https://ghostesp.net/isprereleasethelatest">
+  <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/version-check.css">
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to content</a>
+  <canvas id="dotTerrain"></canvas>
+  <script src="js/dot-terrain.js"></script>
+  <nav id="nav"><noscript><a href="/">Home</a> <a href="/flasher">Flasher</a> <a href="/changelog">Changelog</a></noscript></nav>
+  <main id="main-content" class="version-check-page" data-status="is-error">
+    <div class="container">
+      <p class="version-check-kicker">GhostESP / release telemetry</p>
+      <h1>Is prerelease the latest?</h1>
+      <p class="version-check-lead">A quick answer for the people who want the newest build without guessing which channel is ahead.</p>
+      <section class="version-check-card" aria-labelledby="version-check-answer">
+        <div class="version-check-card-top"><span class="version-check-live"><span></span> Live GitHub check</span><span class="version-check-repo">GhostESP-Revival/GhostESP</span></div>
+        <p id="version-check-answer" class="version-check-answer">Checking GitHub releases...</p>
+        <p id="version-check-summary" class="version-check-summary">Comparing the newest semantic versions from the stable and prerelease channels.</p>
+        <div class="version-check-versions">
+          <a class="version-check-version" href="https://github.com/GhostESP-Revival/GhostESP/releases" target="_blank" rel="noopener"><span class="version-check-version-label">Stable</span><strong id="version-check-stable">Loading...</strong></a>
+          <div class="version-check-versus" aria-hidden="true">vs</div>
+          <a class="version-check-version" href="https://github.com/GhostESP-Revival/GhostESP/releases" target="_blank" rel="noopener"><span class="version-check-version-label">Prerelease</span><strong id="version-check-prerelease">Loading...</strong></a>
+        </div>
+        <p class="version-check-updated">Compared by semantic version · Checked <time id="version-check-time">When the page loads</time></p>
+        <p id="version-check-error" class="version-check-error" role="status" hidden></p>
+      </section>
+      <div class="version-check-actions"><a class="btn btn-secondary" href="/flasher">Open the flasher</a><a class="btn btn-secondary" href="https://github.com/GhostESP-Revival/GhostESP/releases" target="_blank" rel="noopener">View all releases</a></div>
+      <p class="version-check-share-note">Share this URL when someone asks which GhostESP channel is ahead.</p>
+    </div>
+  </main>
+  <footer class="footer"><div class="container"><div class="footer-links"><a href="https://discord.gg/5cyNmUMgwh" target="_blank" rel="noopener" class="icon-link">Discord</a><a href="https://github.com/GhostESP-Revival/GhostESP" target="_blank" rel="noopener" class="icon-link">GitHub</a><a href="/privacy" class="cookie-settings-link">Privacy Policy</a></div></div></footer>
+  <script src="js/components.js" defer></script>
+  <script src="js/version-check.js" defer></script>
+  <script src="js/main.js" defer></script>
+</body>
+</html>

@@ -149,6 +149,18 @@
   status = 301
   force = true
 
+[[redirects]]
+  from = "/isprereleasethelatest"
+  to = "/.netlify/functions/version-check"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/isprereleasethelatest.html"
+  to = "/isprereleasethelatest"
+  status = 301
+  force = true
+
 # Pretty URLs - serve extensionless URLs from matching .html files.
 [[redirects]]
   from = "/:url"
