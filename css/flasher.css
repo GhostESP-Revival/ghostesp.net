@@ -389,6 +389,126 @@ nav ul.flasher-nav-links li::marker {
   background: rgba(255, 255, 255, 0.04);
 }
 
+.flasher-device-thumb {
+  height: 112px;
+  margin: -0.25rem auto 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+  border-radius: 0.6rem;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.flasher-device-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.flasher-device-thumb-placeholder {
+  color: var(--flasher-text-dim);
+  font-size: 2rem;
+  border: 1px dashed var(--flasher-border);
+}
+
+.flasher-support-modal .modal-content {
+  overflow: hidden;
+  border: 1px solid rgba(0, 229, 255, 0.28);
+  box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.55), 0 0 2rem rgba(0, 229, 255, 0.1);
+}
+
+.flasher-support-modal .modal-header {
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.flasher-modal-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.flasher-modal-icon {
+  display: grid;
+  place-items: center;
+  width: 2.35rem;
+  height: 2.35rem;
+  flex: 0 0 2.35rem;
+  border-radius: 0.75rem;
+  color: var(--flasher-accent, #00e5ff);
+  background: rgba(0, 229, 255, 0.12);
+  font-size: 1.1rem;
+}
+
+.flasher-modal-kicker {
+  margin: 0.15rem 0 0;
+  color: var(--flasher-text-dim);
+  font-size: 0.78rem;
+}
+
+.flasher-support-callout {
+  display: flex;
+  gap: 0.65rem;
+  align-items: flex-start;
+  margin-bottom: 1.2rem;
+  padding: 0.8rem 0.9rem;
+  border-left: 2px solid var(--flasher-accent, #00e5ff);
+  border-radius: 0 0.55rem 0.55rem 0;
+  color: var(--flasher-text, #fff);
+  background: rgba(0, 229, 255, 0.07);
+  font-size: 0.9rem;
+}
+
+.flasher-support-callout i,
+.flasher-modal-note i {
+  color: var(--flasher-accent, #00e5ff);
+}
+
+.flasher-modal-heading {
+  margin-bottom: 0.65rem;
+  color: var(--flasher-text-dim);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.flasher-browser-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.55rem;
+}
+
+.flasher-browser-list span {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.65rem 0.7rem;
+  border: 1px solid var(--flasher-border);
+  border-radius: 0.55rem;
+  color: var(--flasher-text);
+  font-size: 0.86rem;
+}
+
+.flasher-browser-list i {
+  color: var(--flasher-accent, #00e5ff);
+}
+
+.flasher-modal-note {
+  margin: 1rem 0 0;
+  color: var(--flasher-text-dim);
+  font-size: 0.78rem;
+}
+
+@media (max-width: 420px) {
+  .flasher-browser-list {
+    grid-template-columns: 1fr;
+  }
+}
+
 #brandSelectionContainer .flasher-device-name {
   display: flex;
   align-items: center;

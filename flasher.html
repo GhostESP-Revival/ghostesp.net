@@ -145,16 +145,16 @@
         </div>
 
         <div class="flasher-toggle" id="deviceMethodToggle" style="max-width: 280px;">
-          <button class="flasher-toggle-btn active" id="choiceByChip" data-method="chip">
+          <button class="flasher-toggle-btn" id="choiceByChip" data-method="chip">
             By Chip
           </button>
-          <button class="flasher-toggle-btn" id="choiceByBrand" data-method="brand">
+          <button class="flasher-toggle-btn active" id="choiceByBrand" data-method="brand">
             By Brand
           </button>
         </div>
 
         <!-- By Chip Model -->
-        <div id="chipSelectionContainer">
+        <div id="chipSelectionContainer" class="d-none">
           <div class="flasher-device-grid">
             <div class="flasher-device-card" data-device="ESP32">
               <div class="flasher-device-name">ESP32</div>
@@ -209,7 +209,7 @@
         </div>
 
         <!-- By Board Brand -->
-        <div id="brandSelectionContainer" class="d-none">
+        <div id="brandSelectionContainer">
           <div class="brand-back-btn-wrapper" id="brandBackBtnWrapper" style="display:none; margin-bottom: 1rem;">
             <button id="brandBackBtn" class="flasher-btn flasher-btn-secondary" style="font-size: 0.85rem; padding: 0.5rem 1rem;">
               <i class="bi bi-arrow-left"></i> Back to Brands
@@ -763,24 +763,35 @@
   </div>
 
   <!-- Browser Not Supported Modal -->
-  <div class="modal fade" id="webSerialModal" tabindex="-1" aria-hidden="true">
+  <div class="modal fade flasher-support-modal" id="webSerialModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Browser Not Supported</h5>
+          <div class="flasher-modal-title-wrap">
+            <span class="flasher-modal-icon"><i class="bi bi-usb-symbol" aria-hidden="true"></i></span>
+            <div>
+              <h5 class="modal-title">Web Serial unavailable</h5>
+              <p class="flasher-modal-kicker">One browser setting is stopping USB access</p>
+            </div>
+          </div>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <p style="color: var(--flasher-danger);">WebSerial is not supported in this browser.</p>
-          <p>Please use a supported browser:</p>
-          <ul>
-            <li>Chrome (v89+)</li>
-            <li>Edge (v89+)</li>
-            <li>Opera (v76+)</li>
-          </ul>
+          <div class="flasher-support-callout">
+            <i class="bi bi-info-circle-fill" aria-hidden="true"></i>
+            <span>This flasher needs the Web Serial API to connect to your ESP32 over USB.</span>
+          </div>
+          <p class="flasher-modal-heading">Try one of these desktop browsers:</p>
+          <div class="flasher-browser-list">
+            <span><i class="bi bi-browser-chrome" aria-hidden="true"></i> Chrome 89+</span>
+            <span><i class="bi bi-browser-edge" aria-hidden="true"></i> Edge 89+</span>
+            <span><i class="bi bi-fire" aria-hidden="true"></i> Firefox 151+</span>
+            <span><i class="bi bi-opera" aria-hidden="true"></i> Opera 76+</span>
+          </div>
+          <p class="flasher-modal-note"><i class="bi bi-lock-fill" aria-hidden="true"></i> Open <strong>ghostesp.net</strong> over HTTPS and make sure you are using a desktop browser.</p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="flasher-btn flasher-btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="flasher-btn flasher-btn-secondary" data-bs-dismiss="modal">Got it</button>
         </div>
       </div>
     </div>
