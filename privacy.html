@@ -9,23 +9,30 @@
   <meta name="description" content="Review the GhostESP website privacy policy, including analytics, cookies, feedback form data, third-party services, and user privacy choices.">
   <meta name="robots" content="index, follow">
 
-  <link rel="stylesheet" href="css/main.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Share+Tech+Mono&display=swap">
+  <link rel="stylesheet" href="css/main.css?v=2">
+  <link rel="stylesheet" href="css/polish.css?v=2">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Share+Tech+Mono&display=swap">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <style>
     body { background: var(--bg); }
     .privacy-page {
-      padding-top: calc(var(--nav-height, 80px) + 2rem);
+      padding-top: 0;
       min-height: 100vh;
     }
     .privacy-content {
-      max-width: 800px;
+      max-width: 1200px;
       margin: 0 auto;
-      padding: 2rem 1rem 4rem;
+      padding: 0 var(--spacing) 4rem;
+    }
+    .privacy-content > * {
+      max-width: 800px;
     }
     .privacy-content h1 {
-      font-family: var(--font-mono);
-      font-size: 2rem;
+      font-family: var(--font-sans);
+      font-weight: 500;
+      letter-spacing: -0.04em;
+      text-align: left;
+      font-size: 2.6rem;
       margin-bottom: 0.5rem;
     }
     .privacy-content .last-updated {
@@ -38,6 +45,11 @@
       margin-top: 2rem;
       margin-bottom: 0.75rem;
       color: var(--text);
+      font-family: var(--font-sans);
+      font-weight: 500;
+      text-transform: none;
+      letter-spacing: -0.01em;
+      text-align: left;
     }
     .privacy-content p, .privacy-content li {
       color: var(--text-dim);
@@ -63,12 +75,23 @@
   <!-- End Cloudflare Web Analytics -->
 </head>
 
-<body>
+<body class="polished">
+  <a href="#main-content" class="skip-link">Skip to content</a>
+  <canvas id="dotTerrain" aria-hidden="true"></canvas>
+  <script src="js/dot-terrain.js?v=2"></script>
+  <div class="page-scrim tint-none" aria-hidden="true"></div>
   <nav id="nav"></nav>
+
+  <header id="main-content" class="page-hero">
+    <div class="container">
+      <span class="editorial-eyebrow">Your data, your call</span>
+      <h1>Privacy policy.</h1>
+      <p class="editorial-lede">What ghostesp.net collects, why, and the controls you have.</p>
+    </div>
+  </header>
 
   <main class="privacy-page">
     <div class="privacy-content">
-      <h1>Privacy Policy</h1>
       <p class="last-updated">Last updated: June 2026</p>
 
       <h2>Overview</h2>
@@ -152,8 +175,8 @@
 
   <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js" defer></script>
   <script src="https://unpkg.com/lucide@0.344.0/dist/umd/lucide.min.js" defer></script>
-  <script src="js/components.js" defer></script>
-  <script src="js/main.js" defer></script>
-  <script src="js/cookie-consent.js" defer></script>
+  <script src="js/components.js?v=2" defer></script>
+  <script src="js/main.js?v=2" defer></script>
+  <script src="js/cookie-consent.js?v=2" defer></script>
 </body>
 </html>

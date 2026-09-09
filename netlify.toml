@@ -13,7 +13,19 @@
 
 [[redirects]]
   from = "/hardware.html"
-  to = "/hardware"
+  to = "/printables"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/hardware"
+  to = "/printables"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/printables.html"
+  to = "/printables"
   status = 301
   force = true
 
@@ -161,6 +173,18 @@
   status = 301
   force = true
 
+[[redirects]]
+  from = "/showcase"
+  to = "/features#demos"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/showcase.html"
+  to = "/features#demos"
+  status = 301
+  force = true
+
 # Pretty URLs - serve extensionless URLs from matching .html files.
 [[redirects]]
   from = "/:url"
@@ -181,3 +205,31 @@
     Referrer-Policy = "strict-origin-when-cross-origin"
     X-Content-Type-Options = "nosniff"
     X-Frame-Options = "SAMEORIGIN"
+
+# Cache strategy: pages revalidate every load; versioned static assets
+# (css/*.css?v=N, js/*.js?v=N) are immutable. Bump the ?v= query in the
+# HTML <link>/<script> tags whenever css/js change.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/css/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/js/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/images/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+
+[[headers]]
+  for = "/downloads/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"

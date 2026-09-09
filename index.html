@@ -45,11 +45,9 @@
   <!-- Fonts and Styles -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
-  <link rel="stylesheet" href="css/main.css">
-  <link rel="preload" href="images/IMG_1178.webp" as="image">
+  <link rel="stylesheet" href="css/main.css?v=2">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -90,23 +88,14 @@
   <!-- Cloudflare Web Analytics -->
   <script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "8a43f9bb615d42a8ad405808147cc502"}'></script>
   <!-- End Cloudflare Web Analytics -->
+  <link rel="stylesheet" href="css/polish.css?v=2">
 </head>
-<body>
-  <a href="#main-content" class="skip-link">Skip to content</a>
-  <!-- Dot terrain canvas background -->
-  <canvas id="dotTerrain"></canvas>
-  <div class="home-scrim" aria-hidden="true"></div>
-  <script src="js/dot-terrain.js"></script>
-
-  <h1 class="sr-only">GhostESP: Revival - ESP32 Wireless Security Testing Platform</h1>
-
-  <!-- Navigation -->
-  <nav id="nav"><noscript><a href="/">Home</a> <a href="boards.html">Boards</a> <a href="hardware.html">Hardware</a> <a href="flasher.html">Flasher</a> <a href="dashboard.html">Dashboard</a> <a href="blog.html">Blog</a> <a href="https://docs.ghostesp.net">Docs</a></noscript></nav>
-
-  <!-- Hero Section -->
-  <section id="main-content" class="hero" style="background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.75)), url('images/IMG_1178.webp') center/cover no-repeat;">
-    <div class="container" data-aos="fade-up" data-aos-duration="1000">
-      <img src="images/ghostespdotnet.webp" alt="GhostESP" class="hero-logo">
+<body class="polished">
+<a href="#main-content" class="skip-link">Skip to content</a><canvas id="dotTerrain" aria-hidden="true"></canvas><div class="home-scrim" aria-hidden="true"></div><script src="js/dot-terrain.js?v=2"></script><nav id="nav"></nav>
+<main id="main-content" class="editorial-main legacy-home-main">
+  <section class="hero legacy-hero">
+    <div class="container">
+      <img src="images/ghostespdotnet.webp" alt="GhostESP" class="hero-logo" width="350" height="93">
       <p class="hero-tagline">An open-source wireless platform for ESP32 devices.</p>
       <p class="hero-subtitle">Firmware, web tools, and companion apps for 45+ ESP32 boards.</p>
       <div class="hero-actions">
@@ -115,493 +104,34 @@
         <a href="https://docs.ghostesp.net" class="btn btn-secondary" target="_blank" rel="noopener"><span>Docs</span></a>
       </div>
     </div>
-    <div class="partner-strip">
-      <div class="partner-marquee">
-        <div class="partner-marquee-content" aria-hidden="false">
-          <span class="partner-label">Official Hardware Partners</span>
-          <a href="https://www.wiredhatters.com/" target="_blank" rel="noopener" class="partner-link">
-            <img src="https://static.wixstatic.com/media/35ea10_4e3676aadd454004b37123f8af4128de~mv2.jpg/v1/fill/w_500,h_500,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/logo%20black%20BG%20clean_edited.jpg" alt="The Wired Hatters" class="partner-logo">
-            <span class="partner-name">Wired Hatters<sup class="partner-tm">™</sup></span>
-            <i data-lucide="arrow-up-right" style="width:14px;height:14px;opacity:0.4;"></i>
-          </a>
-          <span class="partner-separator">·</span>
-          <a href="https://rabbit-labs.com/" target="_blank" rel="noopener" class="partner-link">
-            <img src="images/rabbitlabs.webp" alt="Rabbit Labs" class="partner-logo partner-logo--sm">
-            <span class="partner-name">Rabbit-Labs<sup class="partner-tm">™</sup></span>
-            <i data-lucide="arrow-up-right" style="width:14px;height:14px;opacity:0.4;"></i>
-          </a>
-          <span class="partner-separator">·</span>
-        </div>
-        <div class="partner-marquee-content" aria-hidden="true">
-          <span class="partner-label">Official Hardware Partners</span>
-          <a href="https://www.wiredhatters.com/" target="_blank" rel="noopener" class="partner-link" tabindex="-1">
-            <img src="https://static.wixstatic.com/media/35ea10_4e3676aadd454004b37123f8af4128de~mv2.jpg/v1/fill/w_500,h_500,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/logo%20black%20BG%20clean_edited.jpg" alt="" class="partner-logo">
-            <span class="partner-name">Wired Hatters<sup class="partner-tm">™</sup></span>
-            <i data-lucide="arrow-up-right" style="width:14px;height:14px;opacity:0.4;"></i>
-          </a>
-          <span class="partner-separator">·</span>
-          <a href="https://rabbit-labs.com/" target="_blank" rel="noopener" class="partner-link" tabindex="-1">
-            <img src="images/rabbitlabs.webp" alt="" class="partner-logo partner-logo--sm">
-            <span class="partner-name">Rabbit-Labs<sup class="partner-tm">™</sup></span>
-            <i data-lucide="arrow-up-right" style="width:14px;height:14px;opacity:0.4;"></i>
-          </a>
-          <span class="partner-separator">·</span>
-        </div>
-      </div>
-    </div>
   </section>
-
-  <!-- Getting Started -->
-  <section id="getting-started" class="section">
-    <div class="container">
-      <h2 data-aos="fade-up">Getting Started</h2>
-      <!-- Primary onboarding steps -->
-      <div class="getting-started-primary">
-        <div class="card card-primary" data-aos="fade-up" data-aos-delay="100">
-          <div class="card-step-number">1</div>
-          <h3>Pick a Board</h3>
-           <p>Browse tested ESP32 boards that work great with GhostESP</p>
-          <a href="/boards" class="btn btn-primary"><span>View Boards</span></a>
-        </div>
-        <div class="card card-primary" data-aos="fade-up" data-aos-delay="200">
-          <div class="card-step-number">2</div>
-          <h3>Flash Your Device</h3>
-          <p>Install GhostESP on your ESP32 using the web flasher</p>
-          <a href="/flasher" class="btn btn-primary"><span>Open Flasher</span></a>
-        </div>
-        <div class="card card-primary" data-aos="fade-up" data-aos-delay="300">
-          <div class="card-step-number">3</div>
-          <h3>Serial Console</h3>
-          <p>Configure your device with console, file manager, and screen mirror</p>
-           <a href="/dashboard" class="btn btn-primary"><span>Open Console</span></a>
-        </div>
-      </div>
-
+  <div class="partner-strip" aria-label="Official hardware partners">
+    <div class="partner-marquee" aria-hidden="false">
+      <div class="partner-marquee-content"><span class="partner-label">Official Hardware Partners</span><a href="https://www.wiredhatters.com/" target="_blank" rel="noopener" class="partner-link"><img src="https://static.wixstatic.com/media/35ea10_4e3676aadd454004b37123f8af4128de~mv2.jpg/v1/fill/w_500,h_500,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/logo%20black%20BG%20clean_edited.jpg" alt="The Wired Hatters" class="partner-logo"><span class="partner-name">Wired Hatters<sup>™</sup></span><span aria-hidden="true">↗</span></a><span class="partner-separator">·</span><a href="https://rabbit-labs.com/" target="_blank" rel="noopener" class="partner-link"><img src="images/rabbitlabs.webp" alt="Rabbit Labs" class="partner-logo partner-logo--sm"><span class="partner-name">Rabbit-Labs<sup>™</sup></span><span aria-hidden="true">↗</span></a><span class="partner-separator">·</span></div>
+      <div class="partner-marquee-content" aria-hidden="true"><span class="partner-label">Official Hardware Partners</span><a href="https://www.wiredhatters.com/" class="partner-link" tabindex="-1"><img src="https://static.wixstatic.com/media/35ea10_4e3676aadd454004b37123f8af4128de~mv2.jpg/v1/fill/w_500,h_500,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/logo%20black%20BG%20clean_edited.jpg" alt="" class="partner-logo"><span class="partner-name">Wired Hatters<sup>™</sup></span><span aria-hidden="true">↗</span></a><span class="partner-separator">·</span><a href="https://rabbit-labs.com/" class="partner-link" tabindex="-1"><img src="images/rabbitlabs.webp" alt="" class="partner-logo partner-logo--sm"><span class="partner-name">Rabbit-Labs<sup>™</sup></span><span aria-hidden="true">↗</span></a><span class="partner-separator">·</span></div>
     </div>
-  </section>
-
-  <!-- Capabilities Explorer -->
-  <section id="capabilities" class="section section-alt">
-    <div class="container">
-      <div class="cap-head" data-aos="fade-up">
-        <span class="cap-eyebrow cap-eyebrow-lg">// what it does</span>
-        <p class="cap-lead">Pick a band to see what it can do. A <span class="cap-new-inline">NEW</span> tag marks what's new in v2.1.</p>
-      </div>
-
-      <div class="cap-explorer" data-aos="fade-up">
-        <div class="cap-tabs" role="tablist" aria-label="Capability domains">
-          <button class="cap-tab active" role="tab" aria-selected="true" aria-controls="cap-panel-wifi" id="cap-tab-wifi" data-target="wifi"><i data-lucide="wifi"></i><span>WiFi</span></button>
-          <button class="cap-tab" role="tab" aria-selected="false" aria-controls="cap-panel-ble" id="cap-tab-ble" data-target="ble"><i data-lucide="bluetooth"></i><span>Bluetooth LE</span></button>
-          <button class="cap-tab" role="tab" aria-selected="false" aria-controls="cap-panel-nfc" id="cap-tab-nfc" data-target="nfc"><i data-lucide="scan-line"></i><span>NFC &amp; IR</span></button>
-          <button class="cap-tab" role="tab" aria-selected="false" aria-controls="cap-panel-subghz" id="cap-tab-subghz" data-target="subghz"><i data-lucide="radio"></i><span>SubGHz &amp; RF</span></button>
-          <button class="cap-tab" role="tab" aria-selected="false" aria-controls="cap-panel-network" id="cap-tab-network" data-target="network"><i data-lucide="network"></i><span>Network</span></button>
-          <button class="cap-tab" role="tab" aria-selected="false" aria-controls="cap-panel-badusb" id="cap-tab-badusb" data-target="badusb"><i data-lucide="usb"></i><span>BadUSB &amp; HID</span></button>
-          <button class="cap-tab" role="tab" aria-selected="false" aria-controls="cap-panel-platform" id="cap-tab-platform" data-target="platform"><i data-lucide="layers"></i><span>Platform &amp; UI</span></button>
-        </div>
-
-        <div class="cap-panels">
-          <div class="cap-panel active" role="tabpanel" id="cap-panel-wifi" aria-labelledby="cap-tab-wifi" tabindex="0">
-            <div class="cap-panel-head">
-              <div class="cap-panel-icon"><i data-lucide="wifi"></i></div>
-              <div><h3>WiFi Suite</h3><p class="cap-panel-tagline">2.4 &amp; 5 GHz testing, capture, and monitoring.</p></div>
-            </div>
-            <ul class="cap-list">
-              <li>Deauth, beacon spam &amp; karma</li>
-              <li>Evil portal with custom HTML</li>
-              <li>WPA3 / SAE testing + compliance checker</li>
-              <li>PCAP, PMKID &amp; hc22000 export &middot; live Wireshark over USB</li>
-              <li>WiFi airspace monitor: deauth fingerprinting, evil twins &amp; Karma <span class="cap-new">v2.1</span></li>
-              <li>Packet Visualizer &amp; channel congestion charts <span class="cap-new">v2.1</span></li>
-              <li>Recon: ARP &middot; mDNS &middot; NetBIOS &middot; SSH &middot; SNMP &middot; HTTP banner</li>
-              <li>SMB/NetBIOS enumeration &amp; SNMP MIB walk <span class="cap-new">v2.1</span></li>
-              <li>GPS wardriving &amp; WiGLE export</li>
-            </ul>
-          </div>
-
-          <div class="cap-panel" role="tabpanel" id="cap-panel-ble" aria-labelledby="cap-tab-ble" tabindex="0" hidden>
-            <div class="cap-panel-head">
-              <div class="cap-panel-icon"><i data-lucide="bluetooth"></i></div>
-              <div><h3>Bluetooth LE</h3><p class="cap-panel-tagline">Scan, capture, and spoof BLE devices.</p></div>
-            </div>
-            <ul class="cap-list">
-              <li>BLE scan &amp; raw scanner</li>
-              <li>Device spam modes</li>
-              <li>AirTag scan / spoof &middot; Flipper Zero finder</li>
-              <li>GATT enumeration &middot; device tracking (live RSSI)</li>
-              <li>BLE &rarr; Wireshark &middot; skimmer &amp; Flock detection</li>
-              <li>BLE wardriving &amp; WiGLE export</li>
-              <li>Drone / OpenDroneID scan, track &amp; spoof</li>
-              <li>GhostLink BLE bridge to Android app</li>
-            </ul>
-          </div>
-
-          <div class="cap-panel" role="tabpanel" id="cap-panel-nfc" aria-labelledby="cap-tab-nfc" tabindex="0" hidden>
-            <div class="cap-panel-head">
-              <div class="cap-panel-icon"><i data-lucide="scan-line"></i></div>
-              <div><h3>NFC &amp; Infrared</h3><p class="cap-panel-tagline">Read, write, and replay NFC and IR signals.</p></div>
-            </div>
-            <ul class="cap-list">
-              <li>PN532 &amp; ST25R3916 &middot; Chameleon Ultra (BLE control)</li>
-              <li>NTAG read/write &middot; MIFARE dictionary + nested recovery</li>
-              <li>EMV payment-card reading <span class="cap-new">v2.1</span></li>
-              <li>DESFire tree reads &middot; PicoPass / iCLASS &middot; NDEF creation <span class="cap-new">v2.1</span></li>
-              <li>Opal, myki, ITSO &amp; Gallagher card parsers <span class="cap-new">v2.1</span></li>
-              <li>Flipper <code>.nfc</code> import/export &amp; parser collection</li>
-              <li>IR learn / capture / replay &middot; all Flipper IR protocols TX</li>
-              <li>Universal IR library &middot; Flipper <code>.ir</code> support &middot; IR dazzler</li>
-            </ul>
-          </div>
-
-          <div class="cap-panel" role="tabpanel" id="cap-panel-subghz" aria-labelledby="cap-tab-subghz" tabindex="0" hidden>
-            <div class="cap-panel-head">
-              <div class="cap-panel-icon"><i data-lucide="radio"></i></div>
-              <div><h3>SubGHz &amp; RF</h3><p class="cap-panel-tagline">Analyze, capture, and replay across the bands.</p></div>
-            </div>
-            <ul class="cap-list">
-              <li>CC1101 scan / replay &middot; 315&ndash;915 MHz</li>
-              <li>Waterfall spectrum analyzer</li>
-              <li>20+ protocol decoders &middot; Flipper <code>.sub</code></li>
-              <li>NRF24 spectrum analyzer &amp; sniff</li>
-              <li>Zigbee / 802.15.4 capture</li>
-              <li>Passive jamming detection &middot; GhostLink remote radio</li>
-            </ul>
-          </div>
-
-          <div class="cap-panel" role="tabpanel" id="cap-panel-network" aria-labelledby="cap-tab-network" tabindex="0" hidden>
-            <div class="cap-panel-head">
-              <div class="cap-panel-icon"><i data-lucide="network"></i></div>
-              <div><h3>Network &amp; Ethernet</h3><p class="cap-panel-tagline">Wired attacks and live traffic interception.</p></div>
-            </div>
-            <ul class="cap-list">
-              <li>Ethernet / W5500</li>
-              <li>ARP poisoning &amp; MITM tools</li>
-              <li>Fingerprint, port, ping, DNS, NTP &amp; trace tools</li>
-              <li>DNS intercept / sinkhole (NXDOMAIN)</li>
-              <li>Credential capture: TLS SNI &middot; HTTP &middot; FTP</li>
-              <li>DIAL / Chromecast &middot; network printer (PJL)</li>
-              <li>Camera streaming &amp; Discord motion alerts</li>
-            </ul>
-          </div>
-
-          <div class="cap-panel" role="tabpanel" id="cap-panel-badusb" aria-labelledby="cap-tab-badusb" tabindex="0" hidden>
-            <div class="cap-panel-head">
-              <div class="cap-panel-icon"><i data-lucide="usb"></i></div>
-              <div><h3>BadUSB &amp; HID</h3><p class="cap-panel-tagline">HID payloads and host-side control.</p></div>
-            </div>
-            <ul class="cap-list">
-              <li>BadUSB / DuckyScript</li>
-              <li>VID/PID identity options</li>
-              <li>USB keyboard host mode</li>
-              <li>USB HID keyboard output</li>
-              <li>Trackpad cursor &amp; mouse jiggler</li>
-              <li>type_char CLI &amp; dedicated WebUI page</li>
-            </ul>
-          </div>
-
-          <div class="cap-panel" role="tabpanel" id="cap-panel-platform" aria-labelledby="cap-tab-platform" tabindex="0" hidden>
-            <div class="cap-panel-head">
-              <div class="cap-panel-icon"><i data-lucide="layers"></i></div>
-              <div><h3>Platform &amp; UI</h3><p class="cap-panel-tagline">Control, extend, and theme the whole device.</p></div>
-            </div>
-            <ul class="cap-list">
-              <li>LVGL UI &middot; 60 FPS &middot; 17+ themes &middot; <code>.gtheme</code> asset packs</li>
-              <li>Carousel, grid &amp; list layouts with paginated nav</li>
-              <li>Cloud Store: install apps, scripts &amp; packs on-device <span class="cap-new">v2.1</span></li>
-              <li>GhostScript: sandboxed Lua runtime on SD <span class="cap-new">v2.1</span></li>
-              <li>Native SD apps: <code>.gapp</code>, App Gallery, gbt SDK, XIP on C5</li>
-              <li>OTA Wi-Fi firmware updates with rollback protection <span class="cap-new">v2.1</span></li>
-              <li>Ghostchi: 50 levels, 27 XP sources &amp; moods</li>
-              <li>PIN lockscreen &amp; setup wizard</li>
-              <li>GhostLink dual-ESP &middot; Android app &middot; Flipper companion</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <div class="cap-actions" data-aos="fade-up">
-        <a href="#releases" class="btn btn-primary"><span>Download v2.1</span></a>
-        <a href="https://github.com/GhostESP-Revival/GhostESP/releases/latest" class="btn btn-secondary" target="_blank" rel="noopener"><span>Full Changelog</span></a>
-      </div>
+  </div>
+  <section id="capabilities" class="editorial-section container">
+    <div class="section-heading"><div><span class="eyebrow">What it does</span><h2>Wireless tools on one platform.</h2></div><a href="/features" class="text-link">Explore all features ↗</a></div>
+    <div class="benefit-grid">
+      <a class="benefit-card" href="/boards"><i data-lucide="cpu"></i><h3>Find your board.</h3><p>Tested targets across the ESP32 family, with capabilities you can compare before flashing.</p><span>Browse supported boards ↗</span></a>
+      <a class="benefit-card" href="/features#capabilities"><i data-lucide="radio"></i><h3>Test wireless.</h3><p>Wi-Fi, BLE, NFC, IR, and Sub-GHz tools for networks you own and lab setups.</p><span>Explore wireless tools ↗</span></a>
+      <a class="benefit-card" href="/dashboard?tab=store"><i data-lucide="blocks"></i><h3>Extend it.</h3><p>Community apps, themes, scripts, and SD card extensions.</p><span>Browse apps &amp; themes ↗</span></a>
+      <a class="benefit-card" href="/dashboard"><i data-lucide="monitor"></i><h3>Open the dashboard.</h3><p>Browser console, screen mirror, file management, and app library.</p><span>Explore the Dashboard ↗</span></a>
     </div>
+    <div class="product-actions section-cta-row"><a href="https://docs.ghostesp.net" class="btn btn-secondary" target="_blank" rel="noopener" data-track="cta_home_docs">Browse documentation ↗</a><a href="/compare" class="btn btn-secondary" data-track="cta_home_compare">Compare 133 features ↗</a><a href="/dashboard?tab=store" class="text-link" data-track="cta_home_store">Open the app store ↗</a></div>
   </section>
-
-  <!-- Firmware Comparison -->
-  <section id="comparison" class="section">
-    <div class="container">
-      <h2 data-aos="fade-up">GhostESP vs The Rest</h2>
-      <div class="comparison-summary" data-aos="fade-up">
-        <div class="comparison-summary-item">
-          <i data-lucide="layers"></i>
-          <span>45+ boards, full wireless suite, LVGL UI, and companion apps</span>
-        </div>
-        <div class="comparison-summary-item">
-          <i data-lucide="code-2"></i>
-          <span>Built on ESP-IDF, not Arduino or PlatformIO</span>
-        </div>
-        <div class="comparison-summary-item">
-          <i data-lucide="unlock"></i>
-          <span>GPL-licensed and fully auditable, firmware, tools, and this website</span>
-        </div>
-      </div>
-      <p class="comparison-disclaimer" data-aos="fade-up">This comparison is based on GhostESP's feature set and publicly available source for the listed projects. It is not a complete feature list for every firmware. HaleHound and nyanBOX are compared against the latest public source available to us; if newer releases are closed source, this table cannot be independently updated or verified against those builds.</p>
-      <div class="comparison-container visible" data-aos="fade-up">
-        <table class="comparison-table" id="comparison-table-teaser">
-          <thead>
-            <tr>
-              <th>Feature</th>
-              <th class="ghostesp-col">GhostESP</th>
-              <th>Bruce</th>
-              <th>HaleHound</th>
-              <th>nyanBOX</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="category-row key-row"><td colspan="5">Architecture</td></tr>
-            <tr class="key-row">
-              <td>Current source available for audit</td>
-              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
-              <td><span class="check-yes">&#10003;</span></td>
-              <td><span class="check-partial">Limited / older public source</span></td>
-              <td><span class="check-partial">Limited / older public source</span></td>
-            </tr>
-            <tr class="key-row">
-              <td>Supported board targets</td>
-              <td class="ghostesp-col">46 CI targets</td>
-              <td>42+</td>
-              <td>4</td>
-              <td>1</td>
-            </tr>
-            <tr class="key-row">
-              <td>Full LVGL graphical UI</td>
-              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
-              <td><span class="check-no">&#8212;</span></td>
-              <td><span class="check-no">&#8212;</span></td>
-              <td><span class="check-no">&#8212;</span></td>
-            </tr>
-            <tr class="category-row key-row"><td colspan="5">WiFi</td></tr>
-            <tr class="key-row">
-              <td>Live Wireshark USB streaming</td>
-              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
-              <td><span class="check-no">&#8212;</span></td>
-              <td><span class="check-no">&#8212;</span></td>
-              <td><span class="check-no">&#8212;</span></td>
-            </tr>
-            <tr class="key-row">
-              <td>WPA3 / SAE-specific testing</td>
-              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
-              <td><span class="check-no">&#8212;</span></td>
-              <td><span class="check-no">&#8212;</span></td>
-              <td><span class="check-no">&#8212;</span></td>
-            </tr>
-            <tr class="key-row">
-              <td>WiFi Airspace Monitor</td>
-              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
-              <td><span class="check-no">&#8212;</span></td>
-              <td><span class="check-no">&#8212;</span></td>
-              <td><span class="check-no">&#8212;</span></td>
-            </tr>
-            <tr class="key-row">
-              <td>GhostLink dual-ESP control</td>
-              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
-              <td><span class="check-no">&#8212;</span></td>
-              <td><span class="check-no">&#8212;</span></td>
-              <td><span class="check-no">&#8212;</span></td>
-            </tr>
-            <tr class="category-row key-row"><td colspan="5">Platform &amp; Apps</td></tr>
-            <tr class="key-row">
-              <td>Native SD app/plugin system</td>
-              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
-              <td><span class="check-no">&#8212;</span></td>
-              <td><span class="check-no">&#8212;</span></td>
-              <td><span class="check-no">&#8212;</span></td>
-            </tr>
-            <tr class="key-row">
-              <td>Android companion app</td>
-              <td class="ghostesp-col"><span class="check-yes">&#10003;</span></td>
-              <td><span class="check-no">&#8212;</span></td>
-              <td><span class="check-no">&#8212;</span></td>
-              <td><span class="check-no">&#8212;</span></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <a href="/compare" class="btn btn-primary comparison-toggle" style="text-decoration:none; display:inline-flex; align-items:center; justify-content:center;">
-        <span>See all 133 features</span>
-        <i data-lucide="arrow-right" style="margin-left: 0.4rem; width: 16px; height: 16px;"></i>
-      </a>
-      <p class="comparison-disclaimer" style="margin-top: 1rem;">GhostESP does not ship active jamming features. Distribution, promotion, sale and use of jamming devices or firmware is illegal in many jurisdictions.</p>
-    </div>
+  <section id="getting-started" class="editorial-section container">
+    <div class="section-heading"><div><span class="eyebrow">Start with your hardware</span><h2>Select compatible hardware.</h2></div><a href="/boards" class="text-link" data-track="cta_home_boards">Browse all boards ↗</a></div>
+    <div class="board-paths"><a href="/boards"><span>01 / Choose hardware</span><h3>Select hardware.</h3><p>Browse tested boards, compare capabilities, and find the build for your setup.</p><strong>Browse supported boards ↗</strong></a><a href="/flasher"><span>02 / Install GhostESP</span><h3>Flash from the browser.</h3><p>Connect over USB and install the build matched to your hardware.</p><strong>Open the flasher ↗</strong></a><a href="/dashboard"><span>03 / Use the device</span><h3>Open the workspace.</h3><p>Manage files, mirror the screen, run the console, and browse apps.</p><strong>Open the Dashboard ↗</strong></a></div>
   </section>
-
-  <!-- Documentation -->
-  <section id="docs" class="section section-alt">
-    <div class="container">
-      <div class="cap-head" data-aos="fade-up">
-        <h2>Documentation</h2>
-      </div>
-      <div class="grid">
-        <a href="https://docs.ghostesp.net/latest/getting-started/installation-guide/" target="_blank" rel="noopener" class="card docs-card" data-aos="fade-up" data-aos-delay="100">
-          <div class="docs-card-head">
-            <i data-lucide="zap" class="docs-card-icon"></i>
-            <h3>Installation Guide</h3>
-          </div>
-          <p>Flash GhostESP with the recommended web flasher.</p>
-        </a>
-        <a href="https://docs.ghostesp.net/latest/getting-started/" target="_blank" rel="noopener" class="card docs-card" data-aos="fade-up" data-aos-delay="150">
-          <div class="docs-card-head">
-            <i data-lucide="rocket" class="docs-card-icon"></i>
-            <h3>Getting Started</h3>
-          </div>
-          <p>Initial setup guidance for GhostESP.</p>
-        </a>
-        <a href="https://docs.ghostesp.net/latest/getting-started/supported-hardware/" target="_blank" rel="noopener" class="card docs-card" data-aos="fade-up" data-aos-delay="200">
-          <div class="docs-card-head">
-            <i data-lucide="cpu" class="docs-card-icon"></i>
-            <h3>Supported Hardware</h3>
-          </div>
-          <p>Device compatibility matrix for GhostESP features.</p>
-        </a>
-        <a href="https://docs.ghostesp.net/latest/getting-started/webui-guide/" target="_blank" rel="noopener" class="card docs-card" data-aos="fade-up" data-aos-delay="250">
-          <div class="docs-card-head">
-            <i data-lucide="globe" class="docs-card-icon"></i>
-            <h3>WebUI</h3>
-          </div>
-          <p>Access and control GhostESP through the web interface.</p>
-        </a>
-        <a href="https://docs.ghostesp.net/latest/getting-started/command-line-reference/" target="_blank" rel="noopener" class="card docs-card" data-aos="fade-up" data-aos-delay="300">
-          <div class="docs-card-head">
-            <i data-lucide="terminal" class="docs-card-icon"></i>
-            <h3>CLI Reference</h3>
-          </div>
-          <p>Common GhostESP CLI commands grouped by category.</p>
-        </a>
-        <a href="https://docs.ghostesp.net/latest/getting-started/dual-communication/" target="_blank" rel="noopener" class="card docs-card" data-aos="fade-up" data-aos-delay="350">
-          <div class="docs-card-head">
-            <i data-lucide="radio-tower" class="docs-card-icon"></i>
-            <h3>GhostLink</h3>
-          </div>
-          <p>Connect two ESP32 devices for remote control.</p>
-        </a>
-      </div>
-      <div class="docs-browse-all" data-aos="fade-up">
-        <a href="https://docs.ghostesp.net" target="_blank" rel="noopener" class="btn btn-secondary"><span>Browse All Docs</span></a>
-      </div>
-    </div>
+  <section class="editorial-section container dashboard-feature">
+    <div><span class="eyebrow">Dashboard</span><h2>Browser-based device management.</h2><p>Console, screen mirror, file management, and app library in one workspace. The app library is browsable without a connection.</p><div class="product-actions"><a href="/dashboard" class="btn btn-primary" data-track="cta_home_dashboard">Open Dashboard ↗</a><a href="/dashboard?tab=store" class="text-link">Browse apps</a></div></div>
+    <div class="workspace-preview" aria-label="Dashboard capabilities"><div class="preview-grid"><a href="/dashboard?tab=console"><i data-lucide="terminal"></i><strong>Console</strong><span>Configure your device</span></a><a href="/dashboard?tab=mirror"><i data-lucide="monitor"></i><strong>Screen mirror</strong><span>See it on a bigger screen</span></a><a href="/dashboard?tab=files"><i data-lucide="folder"></i><strong>Files</strong><span>Manage your SD card</span></a><a href="/dashboard?tab=store"><i data-lucide="blocks"></i><strong>Apps &amp; themes</strong><span>Find something new</span></a></div></div>
   </section>
-
-  <!-- Community Apps & Packs -->
-  <section id="marketplace" class="section">
-    <div class="container">
-      <div class="cap-head" data-aos="fade-up">
-        <h2>Apps &amp; Packs</h2>
-      </div>
-      <div class="grid">
-        <a href="/dashboard?tab=store" class="card docs-card" data-aos="fade-up" data-aos-delay="100">
-          <div class="docs-card-head">
-            <i data-lucide="layout-grid" class="docs-card-icon"></i>
-            <h3>App Gallery</h3>
-          </div>
-          <p>Native .gapp apps built by the community, ready to sideload.</p>
-        </a>
-        <a href="/dashboard?tab=store&store=assets" class="card docs-card" data-aos="fade-up" data-aos-delay="150">
-          <div class="docs-card-head">
-            <i data-lucide="palette" class="docs-card-icon"></i>
-            <h3>Asset Packs</h3>
-          </div>
-          <p>Themes and asset packs with live .gtheme swapping.</p>
-        </a>
-        <a href="/dashboard?tab=store&store=scripts" class="card docs-card" data-aos="fade-up" data-aos-delay="200">
-          <div class="docs-card-head">
-            <i data-lucide="file-code" class="docs-card-icon"></i>
-            <h3>Scripts</h3>
-          </div>
-          <p>GhostScript automation scripts shared by the community.</p>
-        </a>
-        <a href="/asset-pack-builder" class="card docs-card" data-aos="fade-up" data-aos-delay="250">
-          <div class="docs-card-head">
-            <i data-lucide="hammer" class="docs-card-icon"></i>
-            <h3>Pack Builder</h3>
-          </div>
-          <p>Build your own custom theme and asset packs.</p>
-        </a>
-        <a href="/dashboard?tab=irdb" class="card docs-card" data-aos="fade-up" data-aos-delay="300">
-          <div class="docs-card-head">
-            <i data-lucide="database" class="docs-card-icon"></i>
-            <h3>IRDB</h3>
-          </div>
-          <p>Infrared remote code database for instant replay.</p>
-        </a>
-        <a href="/showcase" class="card docs-card" data-aos="fade-up" data-aos-delay="350">
-          <div class="docs-card-head">
-            <i data-lucide="play-circle" class="docs-card-icon"></i>
-            <h3>Showcase</h3>
-          </div>
-          <p>Video demos and merch drops.</p>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Community & Trust -->
-  <section id="community" class="section section-alt">
-    <div class="container">
-      <div class="trust-grid">
-        <div class="auditable-card" data-aos="fade-up">
-          <div class="auditable-card-icon"><i data-lucide="unlock"></i></div>
-          <h3>Auditable by Design</h3>
-          <p class="auditable-text">GhostESP is GPL-licensed and built in public. You can inspect the firmware, tools, companion apps, docs, and even this website's source instead of trusting a black-box gadget.</p>
-          <div class="auditable-links">
-            <a href="https://github.com/GhostESP-Revival/GhostESP" class="btn btn-secondary btn-small" target="_blank" rel="noopener"><span>Firmware Source</span></a>
-            <a href="https://github.com/GhostESP-Revival" class="btn btn-secondary btn-small" target="_blank" rel="noopener"><span>All Repos</span></a>
-            <a href="https://docs.ghostesp.net" class="btn btn-secondary btn-small" target="_blank" rel="noopener"><span>Docs</span></a>
-          </div>
-        </div>
-        <div class="discord-widget-card" data-aos="fade-up" data-aos-delay="100">
-          <div class="discord-widget-header">
-            <svg viewBox="0 0 24 24" width="24" height="24" fill="#5865F2"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"></path></svg>
-            <h3>Join the Community</h3>
-          </div>
-          <p class="discord-widget-desc">Get help, share projects, and stay updated with the latest GhostESP developments.</p>
-          <div class="discord-widget-count" id="discord-member-count" style="display:none;">
-            <span class="discord-online-dot"></span>
-            <span id="discord-member-number">--</span> members online
-          </div>
-          <a href="https://discord.gg/5cyNmUMgwh" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top:1rem;"><span>Join Discord Server</span></a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Support GhostESP -->
-  <section id="support" class="section">
-    <div class="container">
-      <div class="cap-head" data-aos="fade-up">
-        <span class="cap-eyebrow">// support the project</span>
-        <h2>Support GhostESP</h2>
-        <p class="cap-lead">GhostESP is free and open source, built and maintained in public. Join the $5/month Patreon Supporter tier for Discord perks, or make a one-time donation to help fund development, hosting, and hardware testing. Firmware, public releases, and prereleases remain free for everyone.</p>
-      </div>
-      <div class="hero-actions" data-aos="fade-up">
-        <a href="https://www.patreon.com/GhostESP" class="btn btn-primary" target="_blank" rel="noopener" data-track="cta_support_patreon"><span>Support on Patreon</span></a>
-        <a href="/donate" class="btn btn-secondary" data-track="cta_support_donate"><span>More Ways to Help</span></a>
-        <a href="https://github.com/GhostESP-Revival/GhostESP" class="btn btn-secondary" target="_blank" rel="noopener" data-track="cta_support_star"><span>Star on GitHub</span></a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Latest Release -->
-  <section id="releases" class="section">
-    <div class="container">
-      <h2 data-aos="fade-up">Latest Release</h2>
-      <div id="latest-release" data-aos="fade-up">
-        <div class="card" style="text-align:center; color: var(--text-dim);">
-          <span class="spinner"></span>
-          <p style="margin-top:0.75rem;">Loading the latest release&hellip;</p>
-          <a href="https://github.com/GhostESP-Revival/GhostESP/releases/latest" target="_blank" rel="noopener">View releases on GitHub</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
+  <section id="support" class="editorial-section container"><div class="support-band"><span class="eyebrow">Funding</span><h2>Development funding.</h2><p>Donations cover test hardware, hosting, and development time. Firmware and releases stay free.</p><div class="product-actions"><a href="/donate" class="btn btn-primary" data-track="cta_support_donate">Support development ↗</a><a href="https://github.com/GhostESP-Revival/GhostESP" class="text-link" target="_blank" rel="noopener" data-track="cta_support_source">Explore the source ↗</a><a href="https://discord.gg/5cyNmUMgwh" class="text-link" target="_blank" rel="noopener" data-track="cta_support_discord">Join Discord ↗</a></div></div></section>
+  <div id="releases" class="container feature-footer"><a class="btn btn-primary btn-small" href="/flasher" data-track="cta_release_flash">Download v2.1 ↗</a><a href="/changelog">Full changelog →</a><a href="https://docs.ghostesp.net">Documentation →</a><a href="/compare">Compare firmware →</a><a href="https://discord.gg/5cyNmUMgwh">Join the community →</a></div>
+</main>
   <!-- Footer -->
   <footer class="footer">
     <div class="container">
@@ -624,118 +154,22 @@
     </div>
   </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js" defer></script>
-  <script src="https://unpkg.com/lucide@0.344.0/dist/umd/lucide.min.js" defer></script>
-  <script src="js/components.js" defer></script>
-  <script src="js/github.js" defer></script>
-  <script src="js/social-proof.js" defer></script>
-  <script src="js/main.js" defer></script>
-  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js" defer></script>
-  <script>
-    window.addEventListener('DOMContentLoaded', () => {
-      AOS.init({
-        duration: 800,
-        once: true,
-        offset: 100
-      });
-
-      // Capabilities explorer - tab switching
-      (function () {
-        var tabs = Array.prototype.slice.call(document.querySelectorAll('.cap-tab'));
-        var panels = Array.prototype.slice.call(document.querySelectorAll('.cap-panel'));
-        if (!tabs.length) return;
-
-        function activate(tab) {
-          var target = tab.getAttribute('data-target');
-          tabs.forEach(function (t) {
-            var on = t === tab;
-            t.classList.toggle('active', on);
-            t.setAttribute('aria-selected', on ? 'true' : 'false');
-          });
-          panels.forEach(function (p) {
-            var on = p.id === 'cap-panel-' + target;
-            p.classList.toggle('active', on);
-            if (on) { p.removeAttribute('hidden'); } else { p.setAttribute('hidden', ''); }
-          });
-        }
-
-        tabs.forEach(function (tab, i) {
-          tab.addEventListener('click', function () { activate(tab); });
-          tab.addEventListener('keydown', function (e) {
-            if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
-            e.preventDefault();
-            var next = e.key === 'ArrowRight' ? (i + 1) % tabs.length : (i - 1 + tabs.length) % tabs.length;
-            tabs[next].focus();
-            activate(tabs[next]);
-          });
-        });
-      })();
-
-      // Partner marquee - JS-driven RAF scroll for reliability
-      var marquee = document.querySelector('.partner-marquee');
-      if (marquee) {
-        var pos = 0;
-        var paused = false;
-        var contentWidth = 0;
-        var strip = marquee.closest('.partner-strip');
-        
-        function ensureEnoughContent() {
-          var contents = marquee.querySelectorAll('.partner-marquee-content');
-          if (contents.length === 0) return;
-          var firstContent = contents[0];
-          var singleWidth = firstContent.offsetWidth;
-          var viewportWidth = window.innerWidth;
-          var needed = Math.ceil((viewportWidth * 1.5) / singleWidth) + 1;
-          if (needed % 2 !== 0) needed++;
-          while (marquee.children.length < needed) {
-            var clone = firstContent.cloneNode(true);
-            clone.setAttribute('aria-hidden', 'true');
-            var links = clone.querySelectorAll('a');
-            for (var i = 0; i < links.length; i++) { links[i].setAttribute('tabindex', '-1'); }
-            marquee.appendChild(clone);
-          }
-          contentWidth = singleWidth;
-        }
-        
-        function calculateWidth() {
-          var firstContent = marquee.querySelector('.partner-marquee-content');
-          if (firstContent) {
-            contentWidth = firstContent.offsetWidth;
-          }
-        }
-        
-        ensureEnoughContent();
-        
-        window.addEventListener('resize', function() {
-          var oldWidth = contentWidth;
-          ensureEnoughContent();
-          if (oldWidth > 0 && contentWidth > 0) {
-            pos = pos * (contentWidth / oldWidth);
-          }
-        });
-        
-        if (strip) {
-          strip.addEventListener('mouseenter', function() { paused = true; });
-          strip.addEventListener('mouseleave', function() { paused = false; });
-        }
-        
-        function tickMarquee() {
-          if (!paused && contentWidth > 0) {
-            var baseSpeed = 0.5 + window.innerWidth * 0.0001;
-            pos -= baseSpeed;
-            if (-pos >= contentWidth * (marquee.children.length - 1)) {
-              pos = -contentWidth;
-            }
-            marquee.style.transform = 'translateX(' + pos + 'px)';
-          }
-          requestAnimationFrame(tickMarquee);
-        }
-        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-        requestAnimationFrame(tickMarquee);
-      }
-    });
-  </script>
-  
-  <script src="js/cookie-consent.js" defer></script>
-</body>
-</html>
+<script src="https://unpkg.com/lucide@0.344.0/dist/umd/lucide.min.js" defer></script>
+<script src="js/components.js?v=2" defer></script><script src="js/github.js?v=2" defer></script>
+<script src="js/main.js?v=2" defer></script><script src="js/cookie-consent.js?v=2" defer></script>
+<script>
+  window.addEventListener('load', function () {
+    var marquee = document.querySelector('.partner-marquee');
+    if (!marquee) return;
+    var first = marquee.querySelector('.partner-marquee-content');
+    if (!first) return;
+    var needed = Math.ceil((window.innerWidth * 2) / first.offsetWidth);
+    if (needed % 2 !== 0) needed++;
+    while (marquee.children.length < Math.max(needed, 4)) {
+      var clone = first.cloneNode(true);
+      clone.setAttribute('aria-hidden', 'true');
+      clone.querySelectorAll('a').forEach(function (link) { link.setAttribute('tabindex', '-1'); });
+      marquee.appendChild(clone);
+    }
+  });
+</script></body></html>

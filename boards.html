@@ -39,18 +39,9 @@
   <!-- Fonts and Styles -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
-  <link rel="stylesheet" href="css/main.css">
-  <style>
-    /* scrim: sits above the dot-terrain canvas (both z-index:0, this is later in
-       the DOM so it paints on top) but below page content (z-index:1), dimming
-       the moving dots so bare text without its own background stays readable. */
-    .board-scrim {
-      position: fixed; inset: 0; z-index: 0; pointer-events: none;
-      background: rgba(0, 0, 0, 0.62);
-    }
-  </style>
+  <link rel="stylesheet" href="css/main.css?v=2">
   <script src="https://unpkg.com/lucide@0.344.0/dist/umd/lucide.min.js" defer></script>
   <script type="application/ld+json">
   {
@@ -100,68 +91,31 @@
   <!-- Cloudflare Web Analytics -->
   <script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "8a43f9bb615d42a8ad405808147cc502"}'></script>
   <!-- End Cloudflare Web Analytics -->
+  <link rel="stylesheet" href="css/polish.css?v=2">
 </head>
-<body>
+<body class="polished">
+  <canvas id="dotTerrain" aria-hidden="true"></canvas><script src="js/dot-terrain.js?v=2"></script><div class="page-scrim tint-cyan" aria-hidden="true"></div>
   <a href="#main-content" class="skip-link">Skip to content</a>
-  <canvas id="dotTerrain"></canvas>
-  <div class="board-scrim" aria-hidden="true"></div>
-  <script src="js/dot-terrain.js"></script>
   <nav id="nav"><noscript><a href="/">Home</a> <a href="boards.html">Boards</a> <a href="flasher.html">Flasher</a> <a href="dashboard.html">Dashboard</a> <a href="blog.html">Blog</a> <a href="https://docs.ghostesp.net">Docs</a></noscript></nav>
 
-  <!-- Partner Marquee -->
-  <div class="partner-strip partner-strip--standalone">
-    <div class="partner-marquee">
-      <div class="partner-marquee-content" aria-hidden="false">
-        <span class="partner-label">Official Hardware Partners</span>
-        <a href="https://www.wiredhatters.com/" target="_blank" rel="noopener" class="partner-link">
-          <img src="https://static.wixstatic.com/media/35ea10_4e3676aadd454004b37123f8af4128de~mv2.jpg/v1/fill/w_500,h_500,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/logo%20black%20BG%20clean_edited.jpg" alt="The Wired Hatters" class="partner-logo">
-          <span class="partner-name">Wired Hatters<sup class="partner-tm">™</sup></span>
-          <i data-lucide="arrow-up-right" style="width:14px;height:14px;opacity:0.4;"></i>
-        </a>
-        <span class="partner-separator">·</span>
-        <a href="https://rabbit-labs.com/" target="_blank" rel="noopener" class="partner-link">
-          <img src="images/rabbitlabs.webp" alt="Rabbit Labs" class="partner-logo partner-logo--sm">
-          <span class="partner-name">Rabbit-Labs<sup class="partner-tm">™</sup></span>
-          <i data-lucide="arrow-up-right" style="width:14px;height:14px;opacity:0.4;"></i>
-        </a>
-        <span class="partner-separator">·</span>
-      </div>
-      <div class="partner-marquee-content" aria-hidden="true">
-        <span class="partner-label">Official Hardware Partners</span>
-        <a href="https://www.wiredhatters.com/" target="_blank" rel="noopener" class="partner-link" tabindex="-1">
-          <img src="https://static.wixstatic.com/media/35ea10_4e3676aadd454004b37123f8af4128de~mv2.jpg/v1/fill/w_500,h_500,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/logo%20black%20BG%20clean_edited.jpg" alt="" class="partner-logo">
-          <span class="partner-name">Wired Hatters<sup class="partner-tm">™</sup></span>
-          <i data-lucide="arrow-up-right" style="width:14px;height:14px;opacity:0.4;"></i>
-        </a>
-        <span class="partner-separator">·</span>
-        <a href="https://rabbit-labs.com/" target="_blank" rel="noopener" class="partner-link" tabindex="-1">
-          <img src="images/rabbitlabs.webp" alt="" class="partner-logo partner-logo--sm">
-          <span class="partner-name">Rabbit-Labs<sup class="partner-tm">™</sup></span>
-          <i data-lucide="arrow-up-right" style="width:14px;height:14px;opacity:0.4;"></i>
-        </a>
-        <span class="partner-separator">·</span>
-      </div>
-    </div>
-  </div>
-
   <!-- Boards Section -->
-  <section id="main-content" class="section" style="padding-top: 4rem;">
+  <header id="main-content" class="page-hero board-catalogue">
     <div class="container">
-      <h1>Supported Boards</h1>
-      <p style="text-align: center; color: var(--text-dim); margin-bottom: 3rem; max-width: 800px; margin-left: auto; margin-right: auto;">
-        Compare tested ESP32 hardware for GhostESP, from budget touch displays to portable keyboards, 5 GHz boards, and Flipper-compatible hardware.
-      </p>
-      <p style="text-align: center; color: var(--text-dim); font-size: 0.85rem; margin: -2rem auto 2rem; max-width: 700px;">
-        Some purchase links are affiliate links. They may earn GhostESP a commission at no extra cost to you and help fund development. Boards are shown in random order on each page load.
-      </p>
-      <div class="star-cta-banner">
-        <span>Using GhostESP? <a href="https://github.com/GhostESP-Revival/GhostESP" class="star-cta-quiet github-star-btn" target="_blank" rel="noopener" data-github-cta data-cta-location="boards_banner" data-cta-variant="default">Star it on GitHub <span data-star-count></span></a> to help others find the project.</span>
-      </div>
+      <span class="editorial-eyebrow">Hardware for GhostESP</span>
+      <h1>Supported boards.</h1>
+      <p class="editorial-lede">Tested ESP32 boards for GhostESP, searchable by name, chip, vendor, or capability. Each card links to the vendor and lists the hardware features GhostESP supports.</p>
+      <p class="page-hero-note">Some purchase links earn GhostESP a commission at no extra cost to you, helping fund development.</p>
+    </div>
+  </header>
+  <section class="section" style="padding-top: 1rem;">
+    <div class="container">
       <div class="board-filter-panel" aria-labelledby="board-guide-heading">
         <div class="board-filter-header">
-          <h2 id="board-guide-heading">Choose by use case</h2>
+          <h2 id="board-guide-heading">Explore the catalogue</h2>
           <span id="board-results-count" class="board-results-count" role="status" aria-live="polite"></span>
+          <button type="button" id="board-clear" class="board-clear">Clear filters</button>
         </div>
+        <label class="board-search-label" for="board-search">Search boards</label><input type="search" id="board-search" class="board-search" placeholder="Board name, chip, or feature…"><details class="board-filters"><summary>Filter by feature or vendor</summary>
         <div class="board-filter-section">
           <span class="board-filter-label">Feature</span>
           <div class="tag-filter" id="board-tag-filter" aria-label="Filter supported boards"></div>
@@ -169,11 +123,11 @@
         <div class="board-filter-section">
           <span class="board-filter-label">Vendor</span>
           <div class="tag-filter" id="board-vendor-filter" aria-label="Filter by vendor"></div>
-        </div>
+        </div></details>
       </div>
       
       <div class="board-grid">
-        <div class="card board-card-full">
+        <div class="card board-card-full" id="board-elecrow-crowpanel-1-28-quot-rotary-esp32-s3">
           <img src="https://www.elecrow.com/media/catalog/product/1/_/1.28inch_rotary_knob_screen_2.jpg" alt="Elecrow CrowPanel 1.28-inch rotary ESP32-S3 display" loading="lazy">
           <h3>Elecrow CrowPanel 1.28&quot; Rotary ESP32-S3</h3>
           <a href="https://www.elecrow.com/crowpanel-1-28inch-hmi-esp32-rotary-display-240-240-ips-round-touch-knob-screen.html" target="_blank" rel="noopener" class="board-card-partner">Elecrow</a>
@@ -186,10 +140,10 @@
             <span class="board-tag">Wi-Fi</span>
           </div>
           <p>Compact 240×240 GC9A01 round IPS display with CST816D capacitive touch and rotary encoder. GhostESP adds a circular interface and USB Audio volume/mute control for Windows and Linux. Use the dedicated CrowPanel 1.28-inch Rotary build.</p>
-          <a href="https://www.elecrow.com/crowpanel-1-28inch-hmi-esp32-rotary-display-240-240-ips-round-touch-knob-screen.html" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy Now</a>
+          <a href="https://www.elecrow.com/crowpanel-1-28inch-hmi-esp32-rotary-display-240-240-ips-round-touch-knob-screen.html" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy from vendor ↗</a>
         </div>
 
-        <div class="card board-card-full">
+        <div class="card board-card-full" id="board-elecrow-crowpanel-esp32-5-79-quot-e-paper">
           <img src="https://www.elecrow.com/media/catalog/product/e/s/esp32_5.79_e-paper_hmi_display_1_1.png" alt="Elecrow CrowPanel ESP32 5.79-inch e-paper" loading="lazy">
           <h3>Elecrow CrowPanel ESP32 5.79&quot; E-Paper</h3>
           <a href="https://www.elecrow.com/crowpanel-esp32-5-79-e-paper-hmi-display-with-272-792-resolution-black-white-color-driven-by-spi-interface.html" target="_blank" rel="noopener" class="board-card-partner">Elecrow</a>
@@ -200,10 +154,10 @@
             <span class="board-tag">Wi-Fi</span>
           </div>
           <p>5.79-inch black-and-white SPI e-paper HMI with 792×272 resolution, dual SSD1683 controllers, 8 MB flash, 8 MB PSRAM, five navigation buttons, SD card and battery interface. Use the dedicated GhostESP 5.79-inch E-paper build.</p>
-          <a href="https://www.elecrow.com/crowpanel-esp32-5-79-e-paper-hmi-display-with-272-792-resolution-black-white-color-driven-by-spi-interface.html" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy Now</a>
+          <a href="https://www.elecrow.com/crowpanel-esp32-5-79-e-paper-hmi-display-with-272-792-resolution-black-white-color-driven-by-spi-interface.html" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy from vendor ↗</a>
         </div>
 
-        <div class="card board-card-full">
+        <div class="card board-card-full" id="board-elecrow-crowpanel-esp32-4-2-quot-e-paper">
           <img src="https://www.elecrow.com/media/catalog/product/cache/b6b9577937e6a96f50e53ddc42983628/4/_/4.2_inch_esp32_hmi_e-paper_display.png" alt="Elecrow CrowPanel ESP32 4.2-inch e-paper" loading="lazy">
           <h3>Elecrow CrowPanel ESP32 4.2&quot; E-Paper</h3>
           <a href="https://www.elecrow.com/crowpanel-esp32-4-2-e-paper-hmi-display-with-400-300-resolution-black-white-color-driven-by-spi-interface.html?r=YWxzb2Fk" target="_blank" rel="noopener" class="board-card-partner">Elecrow</a>
@@ -214,10 +168,10 @@
             <span class="board-tag">Wi-Fi</span>
           </div>
           <p>4.2-inch black-and-white SPI e-paper HMI with 400×300 resolution, 8 MB flash, 8 MB PSRAM, five navigation buttons, SD card and battery interface. Use the dedicated GhostESP 4.2-inch E-paper build.</p>
-          <a href="https://www.elecrow.com/crowpanel-esp32-4-2-e-paper-hmi-display-with-400-300-resolution-black-white-color-driven-by-spi-interface.html?r=YWxzb2Fk" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy Now</a>
+          <a href="https://www.elecrow.com/crowpanel-esp32-4-2-e-paper-hmi-display-with-400-300-resolution-black-white-color-driven-by-spi-interface.html?r=YWxzb2Fk" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy from vendor ↗</a>
         </div>
 
-        <div class="card board-card-full">
+        <div class="card board-card-full" id="board-elecrow-crowpanel-advanced-p4-5-inch">
           <img src="https://www.elecrow.com/wiki/assets/images/CrowPanel_Advanced_5inch_ESP32-P4_HMI_AI_Display_1024x600_IPS_Touch_Screen_with_WiFi_6/crowpanel_esp32-p4_5inch_hmi_display.webp" alt="Elecrow CrowPanel Advanced P4 5-inch" loading="lazy">
           <h3>Elecrow CrowPanel Advanced P4 5-inch</h3>
           <a href="https://www.elecrow.com/crowpanel-advanced-5inch-esp32-p4-hmi-ai-display-800x480-ips-touch-screen-with-wifi-6.html" target="_blank" rel="noopener" class="board-card-partner">Elecrow</a>
@@ -231,10 +185,10 @@
             <span class="board-tag">Wi-Fi</span>
           </div>
           <p>5-inch CrowPanel Advanced P4 HMI with 800×480 RGB touch display, audio, Wi-Fi and BLE through the onboard C6 ESP-Hosted coprocessor. Uses the dedicated 5-inch GhostESP build, not the 7/9/10.1-inch MIPI build.</p>
-          <a href="https://www.elecrow.com/crowpanel-advanced-5inch-esp32-p4-hmi-ai-display-800x480-ips-touch-screen-with-wifi-6.html" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy Now</a>
+          <a href="https://www.elecrow.com/crowpanel-advanced-5inch-esp32-p4-hmi-ai-display-800x480-ips-touch-screen-with-wifi-6.html" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy from vendor ↗</a>
         </div>
 
-        <div class="card board-card-full">
+        <div class="card board-card-full" id="board-elecrow-crowpanel-advanced-p4-10-1-inch">
           <img src="https://www.elecrow.com/media/catalog/product/cache/b6b9577937e6a96f50e53ddc42983628/e/s/esp32-p4_10.1inch_hmi_display_1.jpg" alt="Elecrow CrowPanel Advanced P4 10.1-inch" loading="lazy">
           <h3>Elecrow CrowPanel Advanced P4 10.1-inch</h3>
           <a href="https://www.elecrow.com/crowpanel-advanced-10-1inch-esp32-p4-hmi-ai-display-1024x600-ips-touch-screen-wifi-6.html" target="_blank" rel="noopener" class="board-card-partner">Elecrow</a>
@@ -248,10 +202,10 @@
             <span class="board-tag">Wi-Fi</span>
           </div>
           <p>Large CrowPanel Advanced P4 HMI with MIPI display, touch, audio, Wi-Fi and BLE through the onboard C6 ESP-Hosted coprocessor. Supported by the v1.2+ GhostESP build.</p>
-          <a href="https://www.elecrow.com/crowpanel-advanced-10-1inch-esp32-p4-hmi-ai-display-1024x600-ips-touch-screen-wifi-6.html" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy Now</a>
+          <a href="https://www.elecrow.com/crowpanel-advanced-10-1inch-esp32-p4-hmi-ai-display-1024x600-ips-touch-screen-wifi-6.html" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy from vendor ↗</a>
         </div>
 
-        <div class="card board-card-full">
+        <div class="card board-card-full" id="board-elecrow-crowpanel-advanced-p4-7-inch">
           <img src="https://www.elecrow.com/media/catalog/product/cache/b6b9577937e6a96f50e53ddc42983628/e/s/esp32-p4_7inch_display_1_2.jpg" alt="Elecrow CrowPanel Advanced P4 7-inch" loading="lazy">
           <h3>Elecrow CrowPanel Advanced P4 7-inch</h3>
           <a href="https://www.elecrow.com/crowpanel-advanced-7inch-esp32-p4-hmi-ai-display-1024x600-ips-touch-screen-with-wifi-6-compatible-with-arduino-lvgl-micropython.html" target="_blank" rel="noopener" class="board-card-partner">Elecrow</a>
@@ -265,10 +219,10 @@
             <span class="board-tag">Wi-Fi</span>
           </div>
           <p>7-inch CrowPanel Advanced P4 HMI with 1024×600 touch display, audio, Wi-Fi and BLE through the onboard C6 ESP-Hosted coprocessor.</p>
-          <a href="https://www.elecrow.com/crowpanel-advanced-7inch-esp32-p4-hmi-ai-display-1024x600-ips-touch-screen-with-wifi-6-compatible-with-arduino-lvgl-micropython.html" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy Now</a>
+          <a href="https://www.elecrow.com/crowpanel-advanced-7inch-esp32-p4-hmi-ai-display-1024x600-ips-touch-screen-with-wifi-6-compatible-with-arduino-lvgl-micropython.html" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy from vendor ↗</a>
         </div>
 
-        <div class="card board-card-full">
+        <div class="card board-card-full" id="board-elecrow-crowpanel-advanced-p4-9-inch">
           <img src="https://www.elecrow.com/media/catalog/product/cache/b6b9577937e6a96f50e53ddc42983628/e/s/esp32-p4_9inch_hmi_display_1.jpg" alt="Elecrow CrowPanel Advanced P4 9-inch" loading="lazy">
           <h3>Elecrow CrowPanel Advanced P4 9-inch</h3>
           <a href="https://www.elecrow.com/crowpanel-advanced-9inch-esp32-p4-hmi-ai-display-1024x600-ips-touch-screen-wifi-6-support.html" target="_blank" rel="noopener" class="board-card-partner">Elecrow</a>
@@ -282,10 +236,10 @@
             <span class="board-tag">Wi-Fi</span>
           </div>
           <p>9-inch CrowPanel Advanced P4 HMI with 1024×600 touch display, audio, Wi-Fi and BLE through the onboard C6 ESP-Hosted coprocessor.</p>
-          <a href="https://www.elecrow.com/crowpanel-advanced-9inch-esp32-p4-hmi-ai-display-1024x600-ips-touch-screen-wifi-6-support.html" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy Now</a>
+          <a href="https://www.elecrow.com/crowpanel-advanced-9inch-esp32-p4-hmi-ai-display-1024x600-ips-touch-screen-wifi-6-support.html" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy from vendor ↗</a>
         </div>
 
-        <div class="card board-card-full">
+        <div class="card board-card-full" id="board-elecrow-crowpanel-advance-5-0-quot-esp32-s3">
           <img src="https://www.elecrow.com/media/catalog/product/cache/b6b9577937e6a96f50e53ddc42983628/e/s/esp32_advance_hmi_5inch_display_1.jpg" alt="Elecrow CrowPanel Advance 5.0-inch ESP32-S3" loading="lazy">
           <h3>Elecrow CrowPanel Advance 5.0&quot; ESP32-S3</h3>
           <a href="https://www.elecrow.com/crowpanel-advance-5-0-hmi-esp32-ai-display-800x480-ips-artificial-intelligent-touch-screen.html" target="_blank" rel="noopener" class="board-card-partner">Elecrow</a>
@@ -297,10 +251,10 @@
             <span class="board-tag">Wi-Fi</span>
           </div>
           <p>5-inch 800&#215;480 IPS RGB display (ST7262, 16-bit) with GT911 capacitive touch, 16 MB flash / 8 MB PSRAM. Native CrowPanel RGB path with 16 MHz PCLK and factory GT911 configuration.</p>
-          <a href="https://www.elecrow.com/crowpanel-advance-5-0-hmi-esp32-ai-display-800x480-ips-artificial-intelligent-touch-screen.html" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy Now</a>
+          <a href="https://www.elecrow.com/crowpanel-advance-5-0-hmi-esp32-ai-display-800x480-ips-artificial-intelligent-touch-screen.html" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy from vendor ↗</a>
         </div>
 
-        <div class="card board-card-full">
+        <div class="card board-card-full" id="board-elecrow-crowpanel-advance-4-3-quot-esp32-s3">
           <img src="https://www.elecrow.com/media/catalog/product/cache/b6b9577937e6a96f50e53ddc42983628/e/s/esp32_advance_hmi_4.3inch_display1_1.jpg" alt="Elecrow CrowPanel Advance 4.3-inch ESP32-S3" loading="lazy">
           <h3>Elecrow CrowPanel Advance 4.3&quot; ESP32-S3</h3>
           <a href="https://www.elecrow.com/crowpanel-advance-4-3-hmi-esp32-800x480-ai-display-ips-touch-artificial-intelligent-screen.html" target="_blank" rel="noopener" class="board-card-partner">Elecrow</a>
@@ -312,10 +266,10 @@
             <span class="board-tag">Wi-Fi</span>
           </div>
           <p>4.3-inch 800&#215;480 IPS RGB display (ST7262) with GT911 capacitive touch. Shares the 16-bit RGB bus/pinout with the 7-inch and 5-inch Advance boards; uses the same GhostESP RGB driver family.</p>
-          <a href="https://www.elecrow.com/crowpanel-advance-4-3-hmi-esp32-800x480-ai-display-ips-touch-artificial-intelligent-screen.html" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy Now</a>
+          <a href="https://www.elecrow.com/crowpanel-advance-4-3-hmi-esp32-800x480-ai-display-ips-touch-artificial-intelligent-screen.html" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy from vendor ↗</a>
         </div>
 
-        <div class="card board-card-full">
+        <div class="card board-card-full" id="board-elecrow-crowpanel-advance-3-5-quot-esp32-s3">
           <img src="https://www.elecrow.com/media/catalog/product/cache/b6b9577937e6a96f50e53ddc42983628/e/s/esp32_advance_hmi_3.5inch_display.jpg" alt="Elecrow CrowPanel Advance 3.5-inch ESP32-S3" loading="lazy">
           <h3>Elecrow CrowPanel Advance 3.5&quot; ESP32-S3</h3>
           <a href="https://www.elecrow.com/crowpanel-advance-3-5-hmi-esp32-ai-display-480x320-artificial-intelligent-ips-touch-screen.html" target="_blank" rel="noopener" class="board-card-partner">Elecrow</a>
@@ -326,10 +280,10 @@
             <span class="board-tag">SD Card</span>
           </div>
           <p>3.5-inch 480&#215;320 SPI display (ILI9488 @ 40 MHz) with GT911 touch (I2C addr 0x14, RST 48 / INT 47, SWAPXY + INVERT_Y). SPI bus on MOSI 39 / CLK 42 / CS 40 / DC 41 / RST 2.</p>
-          <a href="https://www.elecrow.com/crowpanel-advance-3-5-hmi-esp32-ai-display-480x320-artificial-intelligent-ips-touch-screen.html" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy Now</a>
+          <a href="https://www.elecrow.com/crowpanel-advance-3-5-hmi-esp32-ai-display-480x320-artificial-intelligent-ips-touch-screen.html" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy from vendor ↗</a>
         </div>
 
-        <div class="card board-card-full">
+        <div class="card board-card-full" id="board-elecrow-crowpanel-advance-2-8-quot-esp32-s3">
           <img src="https://www.elecrow.com/media/catalog/product/cache/b6b9577937e6a96f50e53ddc42983628/e/s/esp32_advance_hmi_2.8inch_display.jpg" alt="Elecrow CrowPanel Advance 2.8-inch ESP32-S3" loading="lazy">
           <h3>Elecrow CrowPanel Advance 2.8&quot; ESP32-S3</h3>
           <a href="https://www.elecrow.com/crowpanel-advance-2-8-hmi-esp32-ai-display-320x240-artificial-ips-intelligent-touchscreen.html" target="_blank" rel="noopener" class="board-card-partner">Elecrow</a>
@@ -340,10 +294,10 @@
             <span class="board-tag">SD Card</span>
           </div>
           <p>2.8-inch 320&#215;240 SPI display (ST7789 @ 80 MHz) with FT6x06-compatible capacitive touch. SPI bus on MOSI 39 / CLK 42 / CS 40 / DC 41; backlight fixed-on.</p>
-          <a href="https://www.elecrow.com/crowpanel-advance-2-8-hmi-esp32-ai-display-320x240-artificial-ips-intelligent-touchscreen.html" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy Now</a>
+          <a href="https://www.elecrow.com/crowpanel-advance-2-8-hmi-esp32-ai-display-320x240-artificial-ips-intelligent-touchscreen.html" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy from vendor ↗</a>
         </div>
 
-        <div class="card board-card-full">
+        <div class="card board-card-full" id="board-elecrow-crowpanel-advance-2-4-quot-esp32-s3">
           <img src="https://www.elecrow.com/media/catalog/product/cache/b6b9577937e6a96f50e53ddc42983628/e/s/esp32_advance_hmi_2.4inch_display.jpg" alt="Elecrow CrowPanel Advance 2.4-inch ESP32-S3" loading="lazy">
           <h3>Elecrow CrowPanel Advance 2.4&quot; ESP32-S3</h3>
           <a href="https://www.elecrow.com/crowpanel-advance-2-4-hmi-esp32-320x240-ips-ai-display-artificial-intelligent-touchscreen-1.html" target="_blank" rel="noopener" class="board-card-partner">Elecrow</a>
@@ -354,10 +308,10 @@
             <span class="board-tag">SD Card</span>
           </div>
           <p>2.4-inch 320&#215;240 SPI display (ST7789 @ 80 MHz) with FT6x06-compatible capacitive touch. Same SPI mapping as the 2.8-inch variant; optimized for the compact HMI form factor.</p>
-          <a href="https://www.elecrow.com/crowpanel-advance-2-4-hmi-esp32-320x240-ips-ai-display-artificial-intelligent-touchscreen-1.html" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy Now</a>
+          <a href="https://www.elecrow.com/crowpanel-advance-2-4-hmi-esp32-320x240-ips-ai-display-artificial-intelligent-touchscreen-1.html" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy from vendor ↗</a>
         </div>
 
-        <div class="card board-card-full">
+        <div class="card board-card-full" id="board-ghostboard">
           <img src="images/ghostfront-600x800.jpg" alt="GhostBoard" loading="lazy">
           <h3>GhostBoard</h3>
           <a href="https://rabbit-labs.com/" target="_blank" rel="noopener" class="board-card-partner board-card-partner--rabbit">Rabbit-Labs</a>
@@ -367,10 +321,10 @@
             <span class="board-tag">GPS</span>
           </div>
           <p>Flipper‑compatible C6 board made for Ghost ESP. SD slot, 3 RGB LEDs, GPS expansion.</p>
-          <a href="https://rabbit-labs.com/product/spookyesp-the-esp32-c6-board-that-sends-shivers-down-your-spine/" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy Now</a>
+          <a href="https://rabbit-labs.com/product/spookyesp-the-esp32-c6-board-that-sends-shivers-down-your-spine/" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy from vendor ↗</a>
         </div>
 
-        <div class="card board-card-full">
+        <div class="card board-card-full" id="board-cyd2usb-2-4-c-variant">
           <img src="https://ae-pic-a1.aliexpress-media.com/kf/Se5f531b3b4f642c28c0b0655653c23d2p.jpg_960x960q75.jpg_.avif" alt="CYD2USB" loading="lazy">
           <h3>CYD2USB 2.4" C Variant</h3>
           <div class="board-tags">
@@ -378,10 +332,10 @@
             <span class="board-tag">SD Card</span>
           </div>
           <p>Compact 2.4" capacitive touch display board powered by an ESP32 WROOM module.</p>
-          <a href="https://s.click.aliexpress.com/e/_olgPirZ" target="_blank" rel="noopener sponsored nofollow" data-affiliate="aliexpress" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy Now</a>
+          <a href="https://s.click.aliexpress.com/e/_olgPirZ" target="_blank" rel="noopener sponsored nofollow" data-affiliate="aliexpress" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy from vendor ↗</a>
         </div>
 
-        <div class="card board-card-full">
+        <div class="card board-card-full" id="board-nm-cyd-c5">
           <img src="https://ae-pic-a1.aliexpress-media.com/kf/S411ea9e721b34a3782a2991d015548bb0.jpg_960x960q75.jpg" alt="NM-CYD-C5" loading="lazy">
           <h3>NM-CYD-C5</h3>
           <div class="board-tags">
@@ -390,10 +344,10 @@
             <span class="board-tag">5GHz</span>
           </div>
           <p>ESP32-C5 based Cheap Yellow Display board with 2.4" capacitive touch and 5 GHz Wi-Fi support.</p>
-          <a href="https://s.click.aliexpress.com/e/_c3JPeQEF" target="_blank" rel="noopener sponsored nofollow" data-affiliate="aliexpress" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy Now</a>
+          <a href="https://s.click.aliexpress.com/e/_c3JPeQEF" target="_blank" rel="noopener sponsored nofollow" data-affiliate="aliexpress" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy from vendor ↗</a>
         </div>
 
-        <div class="card board-card-full">
+        <div class="card board-card-full" id="board-ultimate-marauder">
           <img src="https://static.wixstatic.com/media/35ea10_c352ea38cf4c4ba0982a44c7b898755d~mv2.jpg/v1/fill/w_500,h_333,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/35ea10_c352ea38cf4c4ba0982a44c7b898755d~mv2.jpg" alt="Ultimate Marauder" loading="lazy">
           <h3>Ultimate Marauder</h3>
           <a href="https://www.wiredhatters.com/" target="_blank" rel="noopener" class="board-card-partner board-card-partner--twh">Wired Hatters</a>
@@ -404,10 +358,10 @@
             <span class="board-tag">Touch</span>
           </div>
           <p>Dual-ESP32 Marauder board by Wired Hatters with Flipper support, GPS, SD card and touch.</p>
-          <a href="https://www.wiredhatters.com/product-page/ultimate-maurauder" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy Now</a>
+          <a href="https://www.wiredhatters.com/product-page/ultimate-maurauder" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy from vendor ↗</a>
         </div>
 
-        <div class="card board-card-full">
+        <div class="card board-card-full" id="board-the-banshee">
           <img src="https://static.wixstatic.com/media/35ea10_30c1a7ec6ead46d39aef8aea8c2ede48~mv2.jpg/v1/fill/w_498,h_603,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/35ea10_30c1a7ec6ead46d39aef8aea8c2ede48~mv2.jpg" alt="The Banshee" loading="lazy">
           <h3>The Banshee</h3>
           <a href="https://www.wiredhatters.com/" target="_blank" rel="noopener" class="board-card-partner board-card-partner--twh">Wired Hatters</a>
@@ -426,10 +380,10 @@
             <span class="board-tag">Mic</span>
           </div>
           <p>Dual-ESP32 (C5 + S3) GhostESP board with dual-band, SD storage, Ethernet, TFT + OLED displays, rotary encoder, RGB lighting, and expansion for sensors and IO.</p>
-          <a href="https://www.wiredhatters.com/product-page/the-banshee" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy Now</a>
+          <a href="https://www.wiredhatters.com/product-page/the-banshee" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy from vendor ↗</a>
         </div>
 
-        <div class="card board-card-full">
+        <div class="card board-card-full" id="board-flipperhub-rocket">
           <img src="https://static.wixstatic.com/media/35ea10_b537d4da88a84fddbd67a4029caa690c~mv2.jpg" alt="Wired Hatters FlipperHub Rocket" loading="lazy">
           <h3>FlipperHub Rocket</h3>
           <a href="https://www.wiredhatters.com/" target="_blank" rel="noopener" class="board-card-partner board-card-partner--twh">Wired Hatters</a>
@@ -437,10 +391,10 @@
             <span class="board-tag">Flipper</span>
           </div>
           <p>Wired Hatters’ ESP32-WROOM-UE FlipperHub Rocket with USB-C, SMA antenna, and optional GPS expansion.</p>
-          <a href="https://www.wiredhatters.com/product-page/esp-rocket" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy Now</a>
+          <a href="https://www.wiredhatters.com/product-page/esp-rocket" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy from vendor ↗</a>
         </div>
 
-        <div class="card board-card-full">
+        <div class="card board-card-full" id="board-esp32-s3-cardputer">
           <img src="https://shop.m5stack.com/cdn/shop/files/K132_v11_19_1200x1200.webp" alt="Cardputer" loading="lazy">
           <h3>ESP32-S3 Cardputer</h3>
           <a href="https://shop.m5stack.com/?ref=feibejxf" target="_blank" rel="noopener" class="board-card-partner board-card-partner--m5">M5Stack</a>
@@ -450,10 +404,10 @@
             <span class="board-tag">Infrared</span>
           </div>
           <p>Compact keyboard-style ESP32-S3 device with on-the-go control, SD card and infrared.</p>
-          <a href="https://s.click.aliexpress.com/e/_oljsRNt" target="_blank" rel="noopener sponsored nofollow" data-affiliate="aliexpress" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy Now</a>
+          <a href="https://s.click.aliexpress.com/e/_oljsRNt" target="_blank" rel="noopener sponsored nofollow" data-affiliate="aliexpress" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy from vendor ↗</a>
         </div>
 
-        <div class="card board-card-full">
+        <div class="card board-card-full" id="board-m5stack-cardputer-adv">
           <img src="https://ae-pic-a1.aliexpress-media.com/kf/Sbaec1d1ba16c4721a47063e795a7513b4.jpg?has_lang=1&amp;ver=2_960x960q75.jpg" alt="M5Stack Cardputer ADV" loading="lazy">
           <h3>M5Stack Cardputer ADV</h3>
           <a href="https://shop.m5stack.com/?ref=feibejxf" target="_blank" rel="noopener" class="board-card-partner board-card-partner--m5">M5Stack</a>
@@ -463,10 +417,10 @@
             <span class="board-tag">Infrared</span>
           </div>
           <p>Advanced ESP32-S3 Cardputer with a compact keyboard, display, SD card support, infrared, and sensor expansion.</p>
-          <a href="https://s.click.aliexpress.com/e/_c3zF7Q9H" target="_blank" rel="noopener sponsored nofollow" data-affiliate="aliexpress" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy Now</a>
+          <a href="https://s.click.aliexpress.com/e/_c3zF7Q9H" target="_blank" rel="noopener sponsored nofollow" data-affiliate="aliexpress" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy from vendor ↗</a>
         </div>
 
-        <div class="card board-card-full">
+        <div class="card board-card-full" id="board-m5stack-cores3-se">
           <img src="https://cdn.shopify.com/s/files/1/0056/7689/2250/files/1920x2260_ac3abb3a-2355-4941-a865-5bb05294481c.webp" alt="M5Stack CoreS3-SE" loading="lazy">
           <h3>M5Stack CoreS3-SE</h3>
           <a href="https://shop.m5stack.com/?ref=feibejxf" target="_blank" rel="noopener" class="board-card-partner board-card-partner--m5">M5Stack</a>
@@ -478,10 +432,10 @@
             <span class="board-tag">Mic</span>
           </div>
           <p>ESP32-S3 IoT controller with a 2.0" capacitive touch display, 16MB flash, 8MB PSRAM, microSD slot, speaker and dual mics. Flashed over USB-C.</p>
-          <a href="https://shop.m5stack.com/products/m5stack-cores3-se-iot-controller-w-o-battery-bottom?variant=45170957451521&amp;ref=feibejxf" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy Now</a>
+          <a href="https://shop.m5stack.com/products/m5stack-cores3-se-iot-controller-w-o-battery-bottom?variant=45170957451521&amp;ref=feibejxf" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy from vendor ↗</a>
         </div>
 
-        <div class="card board-card-full">
+        <div class="card board-card-full" id="board-m5stack-atoms3r">
           <img src="https://cdn.shopify.com/s/files/1/0056/7689/2250/files/1920x2260_21da9b2e-e1dc-4710-8755-202d0483a50c.webp" alt="M5Stack AtomS3R" loading="lazy">
           <h3>M5Stack AtomS3R</h3>
           <a href="https://shop.m5stack.com/?ref=feibejxf" target="_blank" rel="noopener" class="board-card-partner board-card-partner--m5">M5Stack</a>
@@ -491,10 +445,10 @@
             <span class="board-tag">Display</span>
           </div>
           <p>Pocket-sized ESP32-S3 with a 0.85" IPS display, long-range IR blaster, 9-axis motion sensing, 8MB flash and 8MB PSRAM.</p>
-          <a href="https://shop.m5stack.com/products/atoms3r-dev-kit?ref=feibejxf" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy Now</a>
+          <a href="https://shop.m5stack.com/products/atoms3r-dev-kit?ref=feibejxf" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy from vendor ↗</a>
         </div>
 
-        <div class="card board-card-full">
+        <div class="card board-card-full" id="board-the-phantom">
           <img src="images/pham-600x800.jpg" alt="The Phantom" loading="lazy">
           <h3>The Phantom</h3>
           <a href="https://rabbit-labs.com/" target="_blank" rel="noopener" class="board-card-partner board-card-partner--rabbit">Rabbit-Labs</a>
@@ -503,10 +457,10 @@
             <span class="board-tag">SD Card</span>
           </div>
           <p>ESP32-based device with SD card, resistive touch display and stylus.</p>
-          <a href="https://rabbit-labs.com/product/the-phantom-by-rabbit-labs/?v=8bcc25c96aa5" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy Now</a>
+          <a href="https://rabbit-labs.com/product/the-phantom-by-rabbit-labs/?v=8bcc25c96aa5" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy from vendor ↗</a>
         </div>
 
-        <div class="card board-card-full">
+        <div class="card board-card-full" id="board-t-embed-cc1101">
           <img src="https://lilygo.cc/cdn/shop/files/T-EMBED-CC1101-PLUS_6_4bda35c0-79ad-41ba-9aa7-52792d723ab1.jpg" alt="T-Embed" loading="lazy">
           <h3>T-Embed CC1101</h3>
           <a href="https://www.lilygo.cc/" target="_blank" rel="noopener" class="board-card-partner board-card-partner--lilygo">LilyGo</a>
@@ -518,10 +472,10 @@
             <span class="board-tag">NFC</span>
           </div>
           <p>Built-in rotary encoder, IR, Sub-GHz and NFC with ESP32-S3 and SD card slot.</p>
-          <a href="https://www.lilygo.cc/products/t-embed-cc1101?bg_ref=69Mwul6hBm" target="_blank" rel="noopener sponsored nofollow" data-affiliate="lilygo" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy Now</a>
+          <a href="https://www.lilygo.cc/products/t-embed-cc1101?bg_ref=69Mwul6hBm" target="_blank" rel="noopener sponsored nofollow" data-affiliate="lilygo" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy from vendor ↗</a>
         </div>
 
-        <div class="card board-card-full">
+        <div class="card board-card-full" id="board-lilygo-t-watch-s3">
           <img src="https://lilygo.cc/cdn/shop/files/shipping_511a8c0c-8aca-4406-bcf0-0a70ea2d3a0e.jpg" alt="T-Watch" loading="lazy">
           <h3>LilyGo T-Watch S3</h3>
           <a href="https://www.lilygo.cc/" target="_blank" rel="noopener" class="board-card-partner board-card-partner--lilygo">LilyGo</a>
@@ -530,10 +484,10 @@
             <span class="board-tag">Infrared</span>
           </div>
           <p>Wearable ESP32-S3 smartwatch with LoRa support.</p>
-          <a href="https://www.lilygo.cc/products/t-watch-s3-us?bg_ref=69Mwul6hBm" target="_blank" rel="noopener sponsored nofollow" data-affiliate="lilygo" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy Now</a>
+          <a href="https://www.lilygo.cc/products/t-watch-s3-us?bg_ref=69Mwul6hBm" target="_blank" rel="noopener sponsored nofollow" data-affiliate="lilygo" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy from vendor ↗</a>
         </div>
 
-        <div class="card board-card-full">
+        <div class="card board-card-full" id="board-lilygo-t-deck">
           <img src="https://lilygo.cc/cdn/shop/files/LILYGO-T-DECK_2_7fbd52e8-0aea-466e-8407-dee4aca5b381.jpg" alt="T-Deck" loading="lazy">
           <h3>LilyGo T-Deck</h3>
           <a href="https://www.lilygo.cc/" target="_blank" rel="noopener" class="board-card-partner board-card-partner--lilygo">LilyGo</a>
@@ -542,10 +496,10 @@
             <span class="board-tag">Keyboard</span>
           </div>
           <p>Modular developer board (ESP32-S3) designed for LoRa.</p>
-          <a href="https://www.lilygo.cc/products/t-deck?bg_ref=69Mwul6hBm" target="_blank" rel="noopener sponsored nofollow" data-affiliate="lilygo" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy Now</a>
+          <a href="https://www.lilygo.cc/products/t-deck?bg_ref=69Mwul6hBm" target="_blank" rel="noopener sponsored nofollow" data-affiliate="lilygo" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy from vendor ↗</a>
         </div>
 
-        <div class="card board-card-full">
+        <div class="card board-card-full" id="board-lilygo-t-display-s3-touch">
           <img src="https://lilygo.cc/cdn/shop/products/LILYGO-T-Display-S3-Touch-version_5.jpg" alt="T-Display S3" loading="lazy">
           <h3>LilyGo T-Display S3 Touch</h3>
           <a href="https://www.lilygo.cc/" target="_blank" rel="noopener" class="board-card-partner board-card-partner--lilygo">LilyGo</a>
@@ -553,10 +507,10 @@
             <span class="board-tag">Touch</span>
           </div>
           <p>ESP32-S3 development board with integrated touch display.</p>
-          <a href="https://www.lilygo.cc/products/t-display-s3?bg_ref=69Mwul6hBm" target="_blank" rel="noopener sponsored nofollow" data-affiliate="lilygo" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy Now</a>
+          <a href="https://www.lilygo.cc/products/t-display-s3?bg_ref=69Mwul6hBm" target="_blank" rel="noopener sponsored nofollow" data-affiliate="lilygo" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy from vendor ↗</a>
         </div>
 
-        <div class="card board-card-full">
+        <div class="card board-card-full" id="board-cyd-2432s024r-resistive">
           <img src="https://ae-pic-a1.aliexpress-media.com/kf/S59700c86dd9949c7a629e34fa38c7408y.jpg_960x960q75.jpg_.avif" alt="CYD Resistive" loading="lazy">
           <h3>CYD-2432S024R Resistive</h3>
           <div class="board-tags">
@@ -564,10 +518,10 @@
             <span class="board-tag">SD Card</span>
           </div>
           <p>2.4" resistive touch display module (CYD-2432S024R)</p>
-          <a href="https://s.click.aliexpress.com/e/_ombDm1D" target="_blank" rel="noopener sponsored nofollow" data-affiliate="aliexpress" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy Now</a>
+          <a href="https://s.click.aliexpress.com/e/_ombDm1D" target="_blank" rel="noopener sponsored nofollow" data-affiliate="aliexpress" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy from vendor ↗</a>
         </div>
 
-        <div class="card board-card-full">
+        <div class="card board-card-full" id="board-poltergeist-5ghz-wifi-board">
           <img src="images/p1-scaled.jpg" alt="Rabbit-Labs Poltergeist 5Ghz WiFi Board" loading="lazy">
           <h3>Poltergeist 5GHz WiFi Board</h3>
           <a href="https://rabbit-labs.com/" target="_blank" rel="noopener" class="board-card-partner board-card-partner--rabbit">Rabbit-Labs</a>
@@ -579,20 +533,20 @@
             <span class="board-tag">SD Card</span>
           </div>
           <p>ESP32-C5 board built for the Flipper with dual-band WiFi, BLE spam, OLED status screen, SD slot, and a custom IR blaster/receiver designed for GhostESP use.</p>
-          <a href="https://rabbit-labs.com/product/rabbit-labs-poltergeist-5ghz-wifi-board/" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy Now</a>
+          <a href="https://rabbit-labs.com/product/rabbit-labs-poltergeist-5ghz-wifi-board/" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy from vendor ↗</a>
         </div>
 
-        <div class="card board-card-full">
+        <div class="card board-card-full" id="board-esp32-c5-dev-board">
           <img src="https://ae-pic-a1.aliexpress-media.com/kf/S64ca5ad2310f41558d934e9f13b876e9S.png_960x960.png_.avif" alt="ESP32-C5" loading="lazy">
           <h3>ESP32-C5 Dev Board</h3>
           <div class="board-tags">
             <span class="board-tag">5GHz</span>
           </div>
           <p>Next‑gen dual‑band ready platform for advanced tests.</p>
-          <a href="https://www.aliexpress.com/item/1005009128201189.html" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy Now</a>
+          <a href="https://www.aliexpress.com/item/1005009128201189.html" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy from vendor ↗</a>
         </div>
 
-        <div class="card board-card-full">
+        <div class="card board-card-full" id="board-seeed-xiao-esp32-s3-sense">
           <img src="https://media-cdn.seeedstudio.com/media/catalog/product/cache/bb49d3ec4ee05b6f018e93f896b8a25d/3/-/3-113991115-xiao-esp32-s3-sense.jpg" alt="Seeed XIAO ESP32-S3 Sense" loading="lazy">
           <h3>Seeed XIAO ESP32-S3 Sense</h3>
           <a href="https://www.seeedstudio.com/" target="_blank" rel="noopener" class="board-card-partner board-card-partner--seeed">Seeed Studio</a>
@@ -601,10 +555,10 @@
             <span class="board-tag">Camera</span>
           </div>
           <p>Dual-core ESP32-S3 with built-in camera sensor, digital microphone, 8MB PSRAM, 8MB Flash, and SD card slot. Ideal for embedded ML, intelligent voice and vision AI.</p>
-          <a href="https://www.seeedstudio.com/XIAO-ESP32S3-Sense-p-5639.html" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy Now</a>
+          <a href="https://www.seeedstudio.com/XIAO-ESP32S3-Sense-p-5639.html" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy from vendor ↗</a>
         </div>
 
-        <div class="card board-card-full">
+        <div class="card board-card-full" id="board-seeed-xiao-esp32-c5">
           <img src="https://media-cdn.seeedstudio.com/media/catalog/product/cache/bb49d3ec4ee05b6f018e93f896b8a25d/1/-/1-100010048-seeed-studio-xiao-esp32c5.jpg" alt="Seeed XIAO ESP32-C5" loading="lazy">
           <h3>Seeed XIAO ESP32-C5</h3>
           <a href="https://www.seeedstudio.com/" target="_blank" rel="noopener" class="board-card-partner board-card-partner--seeed">Seeed Studio</a>
@@ -612,22 +566,22 @@
             <span class="board-tag">5GHz</span>
           </div>
           <p>The first XIAO module with 5 GHz Wi-Fi support. RISC-V architecture with dual-band Wi-Fi 6, Bluetooth 5, and IEEE 802.15.4 (Zigbee, Thread). Supports Matter, HomeKit, and MQTT.</p>
-          <a href="https://www.seeedstudio.com/Seeed-Studio-XIAO-ESP32C5-p-6609.html" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy Now</a>
+          <a href="https://www.seeedstudio.com/Seeed-Studio-XIAO-ESP32C5-p-6609.html" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy from vendor ↗</a>
         </div>
 
-        <div class="card board-card-full">
+        <div class="card board-card-full" id="board-seeed-xiao-esp32s3">
           <img src="https://media-cdn.seeedstudio.com/media/catalog/product/cache/bb49d3ec4ee05b6f018e93f896b8a25d/1/-/1-113991114-xiao-esp32s3-font_1.jpg" alt="Seeed XIAO ESP32S3" loading="lazy">
           <h3>Seeed XIAO ESP32S3</h3>
           <a href="https://www.seeedstudio.com/" target="_blank" rel="noopener" class="board-card-partner board-card-partner--seeed">Seeed Studio</a>
           <div class="board-tags">
           </div>
           <p>240MHz Xtensa LX7 dual-core processor with Wi-Fi and BLE 5.0. Ultra-low 14μA deep sleep mode with lithium battery charging management. Ideal for IoT, smart homes, and wearables.</p>
-          <a href="https://www.seeedstudio.com/XIAO-ESP32S3-p-5627.html" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy Now</a>
+          <a href="https://www.seeedstudio.com/XIAO-ESP32S3-p-5627.html" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Buy from vendor ↗</a>
         </div>
       </div>
 
       <div id="board-empty-state" class="board-empty-state" hidden>
-        No boards match this filter. Try another feature tag.
+        No boards match. Try a different search or clear your filters.
       </div>
     </div>
   </section>
@@ -646,6 +600,12 @@
     </div>
   </section>
 
+  <div class="partner-strip" aria-label="Official hardware partners">
+    <div class="partner-marquee" aria-hidden="false">
+      <div class="partner-marquee-content"><span class="partner-label">Official Hardware Partners</span><a href="https://www.wiredhatters.com/" target="_blank" rel="noopener" class="partner-link"><img src="https://static.wixstatic.com/media/35ea10_4e3676aadd454004b37123f8af4128de~mv2.jpg/v1/fill/w_500,h_500,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/logo%20black%20BG%20clean_edited.jpg" alt="The Wired Hatters" class="partner-logo"><span class="partner-name">Wired Hatters<sup>™</sup></span><span aria-hidden="true">↗</span></a><span class="partner-separator">·</span><a href="https://rabbit-labs.com/" target="_blank" rel="noopener" class="partner-link"><img src="images/rabbitlabs.webp" alt="Rabbit Labs" class="partner-logo partner-logo--sm"><span class="partner-name">Rabbit-Labs<sup>™</sup></span><span aria-hidden="true">↗</span></a><span class="partner-separator">·</span></div>
+      <div class="partner-marquee-content" aria-hidden="true"><span class="partner-label">Official Hardware Partners</span><a href="https://www.wiredhatters.com/" class="partner-link" tabindex="-1"><img src="https://static.wixstatic.com/media/35ea10_4e3676aadd454004b37123f8af4128de~mv2.jpg/v1/fill/w_500,h_500,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/logo%20black%20BG%20clean_edited.jpg" alt="" class="partner-logo"><span class="partner-name">Wired Hatters<sup>™</sup></span><span aria-hidden="true">↗</span></a><span class="partner-separator">·</span><a href="https://rabbit-labs.com/" class="partner-link" tabindex="-1"><img src="images/rabbitlabs.webp" alt="" class="partner-logo partner-logo--sm"><span class="partner-name">Rabbit-Labs<sup>™</sup></span><span aria-hidden="true">↗</span></a><span class="partner-separator">·</span></div>
+    </div>
+  </div>
   <!-- Footer -->
   <footer class="footer">
     <div class="container">
@@ -665,11 +625,11 @@
     </div>
   </footer>
 
-  <script src="js/components.js" defer></script>
-  <script src="js/github.js" defer></script>
-  <script src="js/social-proof.js" defer></script>
-  <script src="js/main.js" defer></script>
-  <script src="js/boards.js" defer></script>
+  <script src="js/components.js?v=2" defer></script>
+  <script src="js/github.js?v=2" defer></script>
+  <script src="js/social-proof.js?v=2" defer></script>
+  <script src="js/main.js?v=2" defer></script>
+  <script src="js/boards.js?v=2" defer></script>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       var marquee = document.querySelector('.partner-marquee');
@@ -735,6 +695,6 @@
       }
     });
   </script>
-  <script src="js/cookie-consent.js" defer></script>
+  <script src="js/cookie-consent.js?v=2" defer></script>
 </body>
 </html>

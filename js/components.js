@@ -19,7 +19,7 @@ const components = {
         </button>
         <ul id="nav-links" class="${navLinksClass}">
           <li><a href="/boards">Boards</a></li>
-          <li><a href="/hardware">Hardware</a></li>
+          <li><a href="/printables">Printables</a></li>
           <li><a href="/flasher">Flasher</a></li>
           <li><a href="/dashboard">Dashboard</a></li>
           <li><a href="https://docs.ghostesp.net" target="_blank" rel="noopener">Docs</a></li>
@@ -27,11 +27,10 @@ const components = {
           <li class="nav-dropdown">
             <button class="nav-dropdown-toggle" type="button" aria-haspopup="true">Resources</button>
             <ul class="nav-dropdown-menu">
-              <li><a href="/#capabilities">Features</a></li>
+              <li><a href="/features">Features</a></li>
               <li><a href="/blog">Blog</a></li>
               <li><a href="/changelog">Changelog</a></li>
               <li><a href="/isprereleasethelatest">Release Check</a></li>
-              <li><a href="/showcase">Showcase</a></li>
               <li><a href="/asset-pack-builder">Pack Builder</a></li>
               <li><a href="/openwd">WDMap</a></li>
               <li><a href="/companion">Companion App</a></li>
@@ -66,7 +65,7 @@ const components = {
     bar.setAttribute('role', 'region');
     bar.setAttribute('aria-label', 'Announcement');
     bar.innerHTML = `
-      <a href="/#capabilities" class="announce-bar-link">
+      <a href="/changelog" class="announce-bar-link">
         <strong>GhostESP v2.1 is here.</strong>
         <span class="announce-bar-cta">See what's new &rarr;</span>
       </a>

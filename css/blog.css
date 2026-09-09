@@ -1,9 +1,23 @@
 .post-hero {
-  padding: 140px var(--spacing) 40px;
+  padding: calc(var(--nav-height, 112px) + 4rem) var(--spacing) 48px;
   position: relative;
   z-index: 1;
 }
 .post-hero .container { max-width: 780px; }
+.post-hero .blog-tag {
+  display: inline-block;
+  padding: 4px 10px;
+  background: rgba(255,255,255,.05);
+  border: 1px solid #2b2b2b;
+  border-radius: 5px;
+  font: 11px var(--font-mono);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: #a8b0aa;
+}
+.post-hero .post-meta time {
+  color: #8f948f;
+}
 .post-back {
   display: inline-flex;
   align-items: center;
@@ -20,7 +34,8 @@
   font-size: 2.2rem;
   line-height: 1.2;
   margin-bottom: 1rem;
-  letter-spacing: -0.5px;
+  letter-spacing: -0.04em;
+  font-weight: 500;
   text-align: left;
 }
 .post-meta {
@@ -34,17 +49,20 @@
 .post-meta time {
   font-family: var(--font-mono);
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.06em;
   font-size: 0.8rem;
+  color: #8f948f;
 }
 .post-meta .blog-tag {
   font-size: 0.75rem;
   padding: 0.25rem 0.6rem;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid var(--border);
-  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid #2b2b2b;
+  border-radius: 5px;
   font-family: var(--font-mono);
-  color: var(--text-dim);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #a8b0aa;
 }
 .author-badge {
   display: flex;
@@ -87,9 +105,9 @@
 }
 .post-content .container { max-width: 780px; }
 .post-prose-wrapper {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
+  background: #111;
+  border: 1px solid #2b2b2b;
+  border-radius: 12px;
   padding: 2.5rem;
 }
 .post-prose {
@@ -227,9 +245,10 @@
   font-size: 1rem;
   margin: 0 0 0.5rem;
   color: var(--text);
-  font-family: var(--font-mono);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+  font-family: var(--font-sans);
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: -0.01em;
 }
 .faq-item p {
   margin: 0;

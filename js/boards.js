@@ -9,15 +9,13 @@ document.addEventListener('DOMContentLoaded', () => {
     return;
   }
 
-  // Randomise default board order on every page load (Fisher-Yates shuffle)
+  // Random order on every page load.
   for (let i = cards.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [cards[i], cards[j]] = [cards[j], cards[i]];
   }
-  if (grid) {
-    cards.forEach((card) => grid.appendChild(card));
-  }
-
+  if (grid) cards.forEach(card => grid.appendChild(card));
+  const search = document.getElementById('board-search');
   const tagCounts = new Map();
   const vendorCounts = new Map();
   cards.forEach((card) => {
@@ -98,7 +96,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const tags = card.dataset.tags ? card.dataset.tags.split(',').map((tag) => tag.trim()) : [];
       const tagOk = activeTag === 'All' || tags.includes(activeTag);
       const vendorOk = activeVendor === null || card.dataset.vendor === activeVendor;
-      const visible = tagOk && vendorOk;
+      const query = (search?.value || '').trim().toLowerCase();
+      const visible = tagOk && vendorOk && card.textContent.toLowerCase().includes(query);
       card.style.display = visible ? '' : 'none';
       card.setAttribute('aria-hidden', visible ? 'false' : 'true');
     });
@@ -106,7 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function render() {
-    const anyFilter = activeTag !== 'All' || activeVendor !== null;
+    const anyFilter = activeTag !== 'All' || activeVendor !== null || Boolean(search?.value.trim());
     const visibleCount = cards.filter((card) => card.style.display !== 'none').length;
     const isEmpty = anyFilter && visibleCount === 0;
 
@@ -151,7 +150,29 @@ document.addEventListener('DOMContentLoaded', () => {
     applyFilters();
   });
 
+  search?.addEventListener('input', applyFilters);
+  document.getElementById('board-clear')?.addEventListener('click', () => {
+    if (search) search.value = '';
+    activeTag = 'All';
+    activeVendor = null;
+    setActive(tagButtons, tagButtons[0]);
+    setActive(vendorButtons, vendorButtons[0]);
+    applyFilters();
+    search?.focus();
+  });
+  function revealLinkedBoard() {
+    const card = cards.find(card => '#' + card.id === window.location.hash);
+    if (!card) return;
+    if (search) search.value = '';
+    activeTag = 'All'; activeVendor = null;
+    setActive(tagButtons, tagButtons[0]);
+    setActive(vendorButtons, vendorButtons[0]);
+    applyFilters();
+    card.scrollIntoView({ block: 'start' });
+  }
+  window.addEventListener('hashchange', revealLinkedBoard);
   render();
+  revealLinkedBoard();
 
   document.addEventListener('click', (event) => {
     const link = event.target.closest('a[data-affiliate]');

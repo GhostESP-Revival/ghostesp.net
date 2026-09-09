@@ -37,6 +37,7 @@ class SerialConsole {
   initializeElements() {
     this.connectButton = document.getElementById("connectButton");
     this.welcomeConnect = document.getElementById("welcomeConnect");
+    this.welcomeConnectInline = document.getElementById("welcomeConnectInline");
     this.clearButton = document.getElementById("clearButton");
     this.sendButton = document.getElementById("sendButton");
     this.serialInput = document.getElementById("serialInput");
@@ -64,6 +65,7 @@ class SerialConsole {
         this.connectButton.setAttribute("data-tooltip", "web serial not supported in this browser");
       }
       if (this.welcomeConnect) this.welcomeConnect.disabled = true;
+      if (this.welcomeConnectInline) this.welcomeConnectInline.disabled = true;
       return false;
     } else {
       if (this.connectButton) this.connectButton.removeAttribute("data-tooltip");
@@ -74,6 +76,7 @@ class SerialConsole {
   setupEventListeners() {
     if (this.connectButton) this.connectButton.addEventListener("click", () => this.toggleConnection());
     if (this.welcomeConnect) this.welcomeConnect.addEventListener("click", () => this.connect());
+    if (this.welcomeConnectInline) this.welcomeConnectInline.addEventListener("click", () => this.connect());
     if (this.clearButton) this.clearButton.addEventListener("click", () => this.clearConsole());
     if (this.sendButton) this.sendButton.addEventListener("click", () => this.sendData());
     if (this.exportButton) this.exportButton.addEventListener("click", () => this.exportLog());

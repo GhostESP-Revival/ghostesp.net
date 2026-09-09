@@ -1,42 +1,47 @@
 .version-check-page {
   min-height: calc(100vh - 180px);
-  padding: calc(var(--nav-height, 80px) + 5rem) var(--spacing) 4rem;
+  padding: calc(var(--nav-height, 112px) + 4.5rem) var(--spacing) 4rem;
   position: relative;
   z-index: 1;
-  text-align: center;
+  text-align: left;
 }
+.version-check-page .container { max-width: 760px; margin: 0 auto; }
+.version-check-kicker { letter-spacing: .1em; }
+.version-check-lead { margin: 0 0 2.5rem; }
 
 .version-check-kicker {
   color: #00ff80;
   font-family: var(--font-mono);
   font-size: 0.8rem;
-  letter-spacing: 1.5px;
+  letter-spacing: .1em;
   margin-bottom: 1rem;
   text-transform: uppercase;
 }
 
 .version-check-page h1 {
-  font-family: var(--font-mono);
-  font-size: clamp(2rem, 5vw, 3.5rem);
-  letter-spacing: 1px;
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: clamp(34px, 4.5vw, 54px); line-height: 1.08;
+  letter-spacing: -.04em;
   line-height: 1.1;
   margin-bottom: 1rem;
-  text-transform: uppercase;
+  text-transform: none;
 }
 
 .version-check-lead {
   color: var(--text-dim);
   font-size: 1.05rem;
-  margin: 0 auto 2.5rem;
+  line-height: 1.7;
+  margin: 0 0 2.5rem;
   max-width: 630px;
 }
 
 .version-check-card {
-  background: rgba(10, 10, 10, 0.92);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  border-radius: var(--radius);
-  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.42);
-  margin: 0 auto;
+  background: #111;
+  border: 1px solid #2b2b2b;
+  border-radius: 12px;
+  box-shadow: none;
+  margin: 0;
   max-width: 760px;
   padding: clamp(1.4rem, 4vw, 2.5rem);
   text-align: left;
@@ -71,7 +76,6 @@
 .version-check-live span {
   background: #00ff80;
   border-radius: 50%;
-  box-shadow: 0 0 10px rgba(0, 255, 128, 0.8);
   height: 7px;
   width: 7px;
 }
@@ -101,8 +105,8 @@
 
 .version-check-versions {
   align-items: stretch;
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
+  border-top: 1px solid #2b2b2b;
+  border-bottom: 1px solid #2b2b2b;
   padding: 1.25rem 0;
 }
 
@@ -130,7 +134,7 @@
 
 .version-check-versus {
   align-self: center;
-  color: rgba(255, 255, 255, 0.35);
+  color: #8f948f;
   font-family: var(--font-mono);
   font-size: 0.8rem;
   text-transform: uppercase;
@@ -152,15 +156,15 @@
   display: flex;
   flex-wrap: wrap;
   gap: 0.8rem;
-  justify-content: center;
-  margin: 1.75rem auto 0;
+  justify-content: flex-start;
+  margin: 1.75rem 0 0;
 }
 
 .version-check-share-note {
-  color: rgba(255, 255, 255, 0.38);
+  color: #8f948f;
   font-family: var(--font-mono);
   font-size: 0.75rem;
-  margin: 1.2rem auto 0;
+  margin: 1.2rem 0 0;
 }
 
 .version-check-page[data-status="is-prerelease"] .version-check-answer { color: #00ff80; }
@@ -169,7 +173,7 @@
 .version-check-page[data-status="is-error"] .version-check-answer { color: var(--text-dim); }
 
 @media (max-width: 600px) {
-  .version-check-page { padding-top: calc(var(--nav-height, 80px) + 3.5rem); }
+  .version-check-page { padding-top: calc(var(--nav-height, 112px) + 3.5rem); }
   .version-check-card-top { align-items: flex-start; flex-direction: column; }
   .version-check-repo { max-width: 100%; }
   .version-check-versions { gap: 0.65rem; }

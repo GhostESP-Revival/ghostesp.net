@@ -22,50 +22,46 @@
   <!-- Fonts and Styles -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
-  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/main.css?v=2">
   <script src="https://unpkg.com/lucide@0.344.0/dist/umd/lucide.min.js" defer></script>
   <!-- Cloudflare Web Analytics -->
   <script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "8a43f9bb615d42a8ad405808147cc502"}'></script>
   <!-- End Cloudflare Web Analytics -->
+  <link rel="stylesheet" href="css/polish.css?v=2">
 </head>
-<body>
+<body class="polished">
+  <canvas id="dotTerrain" aria-hidden="true"></canvas><script src="js/dot-terrain.js?v=2"></script><div class="page-scrim tint-soft" aria-hidden="true"></div>
   <a href="#main-content" class="skip-link">Skip to content</a>
-  <canvas id="dotTerrain"></canvas>
-  <script src="js/dot-terrain.js"></script>
 
-  <nav id="nav"><noscript><a href="/">Home</a> <a href="boards.html">Boards</a> <a href="hardware.html">Hardware</a> <a href="flasher.html">Flasher</a> <a href="dashboard.html">Dashboard</a> <a href="blog.html">Blog</a> <a href="https://docs.ghostesp.net">Docs</a></noscript></nav>
+  <nav id="nav"><noscript><a href="/">Home</a> <a href="boards.html">Boards</a> <a href="printables.html">Printables</a> <a href="flasher.html">Flasher</a> <a href="dashboard.html">Dashboard</a> <a href="blog.html">Blog</a> <a href="https://docs.ghostesp.net">Docs</a></noscript></nav>
 
   <!-- Donate Hero -->
-  <section id="main-content" class="hero" style="min-height: 70vh; padding-bottom: 2rem; background: radial-gradient(ellipse at center, rgba(0,255,128,0.08), transparent 65%);">
+  <header id="main-content" class="page-hero donate-hero">
     <div class="container">
-      <h1 class="support-page-title" data-aos="fade-up">// support GhostESP</h1>
-      <p class="hero-tagline" data-aos="fade-up">Help fund continued development, testing hardware, hosting, and community support while keeping GhostESP free and open source.</p>
-
-      <div class="hero-actions" data-aos="fade-up">
-        <a href="https://www.patreon.com/GhostESP" class="btn btn-primary" target="_blank" rel="noopener" data-track="cta_donate_patreon"><span>Support on Patreon</span></a>
-        <a href="https://ko-fi.com/jaylikesbunda" class="btn btn-secondary" target="_blank" rel="noopener" data-track="cta_donate_kofi"><span>Give Once on Ko-fi</span></a>
-        <a href="https://github.com/GhostESP-Revival/GhostESP" class="btn btn-secondary" target="_blank" rel="noopener" data-track="cta_donate_github"><span>Star the Repo</span></a>
-        <a href="https://github.com/GhostESP-Revival/GhostESP/blob/Development-deki/CONTRIBUTING.md" class="btn btn-secondary" target="_blank" rel="noopener" data-track="cta_donate_contribute"><span>Contribute</span></a>
+      <span class="editorial-eyebrow">Support the project</span>
+      <h1>Donate.</h1>
+      <p class="editorial-lede">Donations cover development time, test hardware, hosting, and community support. Firmware and releases remain free.</p>
+      <div class="page-hero-actions">
+        <a href="https://www.patreon.com/GhostESP" class="btn btn-primary" target="_blank" rel="noopener" data-track="cta_donate_patreon"><span>Support monthly · $5 USD</span></a>
+        <a href="https://ko-fi.com/jaylikesbunda" class="btn btn-secondary" target="_blank" rel="noopener" data-track="cta_donate_kofi"><span>Give once on Ko-fi</span></a>
       </div>
+      <p class="page-hero-note">Patreon for monthly support; Ko-fi for one-time gifts.</p>
     </div>
-  </section>
+  </header>
 
   <!-- Patreon membership -->
-  <section id="patreon" class="section section-alt">
+  <section id="patreon" class="section section--tight">
     <div class="container">
-      <div class="cap-head" data-aos="fade-up">
-        <h2 class="support-section-title">// Patreon Supporter</h2>
-        <p class="cap-lead">A monthly Patreon membership helps keep GhostESP alive and growing.</p>
-      </div>
+      <div class="section-heading"><div><span class="eyebrow">Patreon</span><h2>Monthly membership.</h2></div><a href="https://ko-fi.com/jaylikesbunda" target="_blank" rel="noopener" class="text-link">One-time gift via Ko-fi ↗</a></div>
+      <p class="editorial-lede" style="margin-bottom: 2rem;">Monthly funding for GhostESP development.</p>
 
-      <div class="supporter-card" data-aos="fade-up">
+      <div class="supporter-card" style="margin: 0;">
         <div class="supporter-card-main">
           <div>
             <h3>Supporter</h3>
-            <p>Help support the continued development of GhostESP and receive a few community perks as our thanks.</p>
+            <p>Monthly funding for GhostESP development, with Discord perks.</p>
           </div>
         </div>
 
@@ -78,13 +74,12 @@
           <h4>What&rsquo;s included</h4>
           <ul>
             <li><i data-lucide="check"></i><span><strong>Supporter</strong> role in the GhostESP Discord</span></li>
-            <li><i data-lucide="check"></i><span>Access to VIP and supporter channels</span></li>
-            <li><i data-lucide="check"></i><span>Our deepest thanks</span></li>
+            <li><i data-lucide="check"></i><span>Access to supporter channels</span></li>
           </ul>
         </div>
 
         <div class="supporter-promise">
-          <p><strong>No firmware or core GhostESP features are paywalled.</strong> Public releases and prereleases remain free for everyone.</p>
+          <p><strong>No firmware features are paywalled.</strong> Public releases and prereleases remain free for everyone.</p>
         </div>
 
         <a href="https://www.patreon.com/GhostESP" class="btn btn-primary supporter-cta" target="_blank" rel="noopener" data-track="cta_donate_patreon_tier"><span>Join as a Supporter</span></a>
@@ -93,81 +88,84 @@
   </section>
 
   <!-- Where your support goes -->
-  <section id="where-it-goes" class="section">
+  <section id="where-it-goes" class="section section--tight">
     <div class="container">
-      <div class="cap-head" data-aos="fade-up">
-        <h2 class="support-section-title">// where your support goes</h2>
-      </div>
+      <div class="section-heading"><div><span class="eyebrow">Allocation</span><h2>Where donations go.</h2></div></div>
       <div class="grid">
-        <div class="card docs-card" data-aos="fade-up" data-aos-delay="100">
-          <div class="docs-card-head">
-            <i data-lucide="cpu" class="docs-card-icon"></i>
-            <h3>Dev Hardware</h3>
-          </div>
-          <p>Boards, modules, and accessories used to test features across the 60+ supported targets.</p>
+        <div class="card">
+          <div class="card-icon"><i data-lucide="cpu"></i></div>
+          <h3>Dev Hardware</h3>
+          <p>Boards, modules, and accessories used to test features across supported GhostESP hardware.</p>
         </div>
-        <div class="card docs-card" data-aos="fade-up" data-aos-delay="150">
-          <div class="docs-card-head">
-            <i data-lucide="server" class="docs-card-icon"></i>
-            <h3>Hosting &amp; Infrastructure</h3>
-          </div>
+        <div class="card">
+          <div class="card-icon"><i data-lucide="server"></i></div>
+          <h3>Hosting &amp; Infrastructure</h3>
           <p>Keeps the flasher, docs, app store, and this site running fast and reliable.</p>
         </div>
-        <div class="card docs-card" data-aos="fade-up" data-aos-delay="200">
-          <div class="docs-card-head">
-            <i data-lucide="clock" class="docs-card-icon"></i>
-            <h3>Development Time</h3>
-          </div>
+        <div class="card">
+          <div class="card-icon"><i data-lucide="clock"></i></div>
+          <h3>Development Time</h3>
           <p>Funds time for firmware features, bug fixes, companion apps, and community support.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Other ways to help -->
-  <section id="other-ways" class="section">
+  <!-- Merch drop -->
+  <section id="merch" class="section section--tight">
     <div class="container">
-      <div class="cap-head" data-aos="fade-up">
-        <h2 class="support-section-title">// other ways to help</h2>
+      <div class="section-heading"><div><span class="eyebrow">Merchandise</span><h2>v2.0 drop.</h2></div><a href="https://shop.ghostesp.net" target="_blank" rel="noopener" class="text-link">Open the shop ↗</a></div>
+      <div class="merch-drop">
+        <div class="merch-drop-media">
+          <img src="images/20merch.webp" alt="GhostESP v2.0 merch drop" loading="lazy">
+        </div>
+        <div class="merch-drop-body">
+          <span class="merch-drop-tag">Proceeds fund development</span>
+          <h2>The GhostESP v2.0 drop</h2>
+          <p>T-shirts, stickers, and prints. Proceeds cover test hardware and hosting.</p>
+          <div class="product-actions">
+            <a href="https://shop.ghostesp.net" class="btn btn-primary" target="_blank" rel="noopener"><span>Open the shop</span></a>
+            <a href="https://ko-fi.com/jaylikesbunda" class="text-link" target="_blank" rel="noopener">Donate instead ↗</a>
+          </div>
+        </div>
       </div>
-      <div class="trust-grid" data-aos="fade-up" style="max-width: 1000px;">
-        <div class="auditable-card">
-          <div class="auditable-card-icon"><i data-lucide="star"></i></div>
-          <h3>Star the Repo</h3>
-          <p class="auditable-text">A GitHub star is the single easiest way to boost GhostESP's visibility and help others find it.</p>
-          <div class="auditable-links">
-            <a href="https://github.com/GhostESP-Revival/GhostESP" class="btn btn-secondary btn-small" target="_blank" rel="noopener"><span>Star on GitHub</span></a>
-          </div>
+    </div>
+  </section>
+
+  <!-- Other ways to help -->
+  <section id="other-ways" class="section section--tight" style="padding-top: 0;">
+    <div class="container">
+      <div class="section-heading"><div><span class="eyebrow">Otherwise</span><h2>Other ways to contribute.</h2></div></div>
+      <div class="grid">
+        <div class="card">
+          <div class="card-icon"><i data-lucide="star"></i></div>
+          <h3>Star the repository</h3>
+          <p>Stars help others find the project.</p>
+          <a href="https://github.com/GhostESP-Revival/GhostESP" class="btn btn-secondary btn-small" target="_blank" rel="noopener"><span>Star on GitHub</span></a>
         </div>
-        <div class="auditable-card">
-          <div class="auditable-card-icon"><i data-lucide="code-2"></i></div>
+        <div class="card">
+          <div class="card-icon"><i data-lucide="code-2"></i></div>
           <h3>Contribute</h3>
-          <p class="auditable-text">Code, docs, board configs, and app testing are all welcome. Check the contributing guide to get started.</p>
-          <div class="auditable-links">
-            <a href="https://github.com/GhostESP-Revival/GhostESP/blob/Development-deki/CONTRIBUTING.md" class="btn btn-secondary btn-small" target="_blank" rel="noopener"><span>Read the Guide</span></a>
-          </div>
+          <p>Code, docs, board configs, and app testing are all welcome. Check the contributing guide to get started.</p>
+          <a href="https://github.com/GhostESP-Revival/GhostESP/blob/Development-deki/CONTRIBUTING.md" class="btn btn-secondary btn-small" target="_blank" rel="noopener"><span>Read the Guide</span></a>
         </div>
-        <div class="auditable-card">
-          <div class="auditable-card-icon"><i data-lucide="share-2"></i></div>
-          <h3>Share the Project</h3>
-          <p class="auditable-text">Recommend GhostESP to a friend, team, or community that could put it to good use.</p>
-          <div class="auditable-links">
-            <a href="https://discord.gg/5cyNmUMgwh" class="btn btn-secondary btn-small" target="_blank" rel="noopener"><span>Join Discord</span></a>
-          </div>
+        <div class="card">
+          <div class="card-icon"><i data-lucide="share-2"></i></div>
+          <h3>Share the project</h3>
+          <p>Refer teams or communities that do authorized wireless testing.</p>
+          <a href="https://discord.gg/5cyNmUMgwh" class="btn btn-secondary btn-small" target="_blank" rel="noopener"><span>Join Discord</span></a>
         </div>
-        <div class="auditable-card">
-          <div class="auditable-card-icon"><i data-lucide="message-circle"></i></div>
-          <h3>Help Others</h3>
-          <p class="auditable-text">Answer questions on Discord, report bugs, and help new users get their boards flashed and running.</p>
-          <div class="auditable-links">
-            <a href="/feedback" class="btn btn-secondary btn-small"><span>Send Feedback</span></a>
-          </div>
+        <div class="card">
+          <div class="card-icon"><i data-lucide="message-circle"></i></div>
+          <h3>Support users</h3>
+          <p>Answer questions on Discord, report bugs, and help new users flash their boards.</p>
+          <a href="/feedback" class="btn btn-secondary btn-small"><span>Send Feedback</span></a>
         </div>
       </div>
 
-      <div class="hero-actions" data-aos="fade-up" style="margin-top: 3rem;">
-        <a href="https://www.patreon.com/GhostESP" class="btn btn-primary" target="_blank" rel="noopener" data-track="cta_donate_patreon_bottom"><span>Support on Patreon</span></a>
-        <a href="https://ko-fi.com/jaylikesbunda" class="btn btn-secondary" target="_blank" rel="noopener" data-track="cta_donate_kofi_bottom"><span>Give Once on Ko-fi</span></a>
+      <div class="page-hero-actions" style="margin-top: 2.5rem;">
+        <a href="https://www.patreon.com/GhostESP" class="btn btn-primary" target="_blank" rel="noopener" data-track="cta_donate_patreon_bottom"><span>Support monthly · $5 USD</span></a>
+        <a href="https://ko-fi.com/jaylikesbunda" class="btn btn-secondary" target="_blank" rel="noopener" data-track="cta_donate_kofi_bottom"><span>Give once on Ko-fi</span></a>
       </div>
     </div>
   </section>
@@ -192,16 +190,8 @@
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js" defer></script>
-  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js" defer></script>
-  <script src="js/components.js" defer></script>
-  <script src="js/main.js" defer></script>
-  <script src="js/cookie-consent.js" defer></script>
-  <script>
-    window.addEventListener('DOMContentLoaded', () => {
-      if (typeof AOS !== 'undefined') {
-        AOS.init({ duration: 800, once: true, offset: 100 });
-      }
-    });
-  </script>
+  <script src="js/components.js?v=2" defer></script>
+  <script src="js/main.js?v=2" defer></script>
+  <script src="js/cookie-consent.js?v=2" defer></script>
 </body>
 </html>

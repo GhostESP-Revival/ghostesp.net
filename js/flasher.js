@@ -534,7 +534,7 @@ document.addEventListener('DOMContentLoaded', () => {
             "TheWiredHatters": [
                 { name: "Banshee C5", chip: "ESP32-C5", firmware: "Banshee_C5.zip", flashSize: "8MB" },
                 { name: "Banshee S3", chip: "ESP32-S3", firmware: "Banshee_S3.zip" },
-                { name: "FlipperHub Rocket", chip: "ESP32", firmware: "esp32-generic.zip", image: "https://static.wixstatic.com/media/35ea10_b537d4da88a84fddbd67a4029caa690c~mv2.jpg" },
+                { name: "FlipperHub Rocket", chip: "ESP32", firmware: "esp32-generic.zip", image: "images/flasher/flipperhub-rocket.webp" },
                 { name: "Marauder V4 / FlipperHub", chip: "ESP32", firmware: "MarauderV4_FlipperHub.zip" }
             ],
             "RabbitLabs": [
@@ -544,18 +544,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 { name: "Phantom", chip: "ESP32", firmware: "CYD2USB2.4Inch.zip", image: "images/pham-600x800.jpg" }
             ],
             "Elecrow": [
-                { name: "CrowPanel 1.28-inch Rotary (240×240)", chip: "ESP32-S3", firmware: "CrowPanel_1.28inch_Rotary.zip", flashSize: "16MB" },
-                { name: "CrowPanel 5.79-inch E-paper (792×272)", chip: "ESP32-S3", firmware: "CrowPanel_5.79_Epaper.zip", flashSize: "8MB" },
-                { name: "CrowPanel 4.2-inch E-paper (400×300)", chip: "ESP32-S3", firmware: "CrowPanel_4.2_Epaper.zip", flashSize: "8MB" },
-                { name: "CrowPanel Advanced P4 5-inch (800×480 RGB)", chip: "ESP32-P4", firmware: "CrowPanel_Advanced_P4_5inch.zip", flashSize: "16MB" },
+                { name: "CrowPanel 1.28-inch Rotary", chip: "ESP32-S3", firmware: "CrowPanel_1.28inch_Rotary.zip", flashSize: "16MB" },
+                { name: "CrowPanel 5.79-inch E-paper", chip: "ESP32-S3", firmware: "CrowPanel_5.79_Epaper.zip", flashSize: "8MB" },
+                { name: "CrowPanel 4.2-inch E-paper", chip: "ESP32-S3", firmware: "CrowPanel_4.2_Epaper.zip", flashSize: "8MB" },
+                { name: "CrowPanel Advanced P4 5-inch", chip: "ESP32-P4", firmware: "CrowPanel_Advanced_P4_5inch.zip", flashSize: "16MB" },
                 { name: "CrowPanel Advanced P4 7/9/10.1-inch (v1.2+)", chip: "ESP32-P4", firmware: "CrowPanel_Advanced_P4_7_9_10.1inch.zip", flashSize: "16MB" },
                 { name: "CrowPanel Advanced P4 7/9/10.1-inch (v1.1)", chip: "ESP32-P4", firmware: "CrowPanel_Advanced_P4_7_9_10.1inch_v1.1.zip", flashSize: "16MB" },
-                { name: "CrowPanel Advance 7-inch S3 (800×480 RGB)", chip: "ESP32-S3", firmware: "CrowPanel_Advance_7inch.zip", flashSize: "16MB" },
-                { name: "CrowPanel Advance 5-inch S3 (800×480 RGB)", chip: "ESP32-S3", firmware: "CrowPanel_Advance_5.zip", flashSize: "16MB" },
-                { name: "CrowPanel Advance 4.3-inch S3 (800×480 RGB)", chip: "ESP32-S3", firmware: "CrowPanel_Advance_43.zip", flashSize: "16MB" },
-                { name: "CrowPanel Advance 3.5-inch S3 (480×320 SPI ILI9488)", chip: "ESP32-S3", firmware: "CrowPanel_Advance_35.zip", flashSize: "16MB" },
-                { name: "CrowPanel Advance 2.8-inch S3 (320×240 SPI ST7789)", chip: "ESP32-S3", firmware: "CrowPanel_Advance_28.zip", flashSize: "16MB" },
-                { name: "CrowPanel Advance 2.4-inch S3 (320×240 SPI ST7789)", chip: "ESP32-S3", firmware: "CrowPanel_Advance_24.zip", flashSize: "16MB" }
+                { name: "CrowPanel Advance 7-inch S3", chip: "ESP32-S3", firmware: "CrowPanel_Advance_7inch.zip", flashSize: "16MB" },
+                { name: "CrowPanel Advance 5-inch S3", chip: "ESP32-S3", firmware: "CrowPanel_Advance_5.zip", flashSize: "16MB" },
+                { name: "CrowPanel Advance 4.3-inch S3", chip: "ESP32-S3", firmware: "CrowPanel_Advance_43.zip", flashSize: "16MB" },
+                { name: "CrowPanel Advance 3.5-inch S3", chip: "ESP32-S3", firmware: "CrowPanel_Advance_35.zip", flashSize: "16MB" },
+                { name: "CrowPanel Advance 2.8-inch S3", chip: "ESP32-S3", firmware: "CrowPanel_Advance_28.zip", flashSize: "16MB" },
+                { name: "CrowPanel Advance 2.4-inch S3", chip: "ESP32-S3", firmware: "CrowPanel_Advance_24.zip", flashSize: "16MB" }
             ],
             "Generic": [
                 { name: "Generic ESP32", chip: "ESP32", firmware: "esp32-generic.zip" },
@@ -628,43 +628,40 @@ document.addEventListener('DOMContentLoaded', () => {
         // direct manufacturer assets so the picker feels like a physical
         // board selector rather than a list of build names.
         const deviceImageMap = {
-            "CrowPanel_1.28inch_Rotary.zip": "https://www.elecrow.com/media/catalog/product/1/_/1.28inch_rotary_knob_screen_2.jpg",
-            "CrowPanel_5.79_Epaper.zip": "https://www.elecrow.com/media/catalog/product/e/s/esp32_5.79_e-paper_hmi_display_1_1.png",
-            "CrowPanel_4.2_Epaper.zip": "https://www.elecrow.com/media/catalog/product/cache/b6b9577937e6a96f50e53ddc42983628/4/_/4.2_inch_esp32_hmi_e-paper_display.png",
-            "CrowPanel_Advance_7inch.zip": "https://www.elecrow.com/media/catalog/product/cache/b6b9577937e6a96f50e53ddc42983628/e/s/esp32_hmi_7inch_display_1.jpg",
-            "CrowPanel_Advance_5.zip": "https://www.elecrow.com/media/catalog/product/cache/b6b9577937e6a96f50e53ddc42983628/e/s/esp32_advance_hmi_5inch_display_1.jpg",
-            "CrowPanel_Advance_43.zip": "https://www.elecrow.com/media/catalog/product/cache/b6b9577937e6a96f50e53ddc42983628/e/s/esp32_advance_hmi_4.3inch_display1_1.jpg",
-            "CrowPanel_Advance_35.zip": "https://www.elecrow.com/media/catalog/product/cache/b6b9577937e6a96f50e53ddc42983628/e/s/esp32_advance_hmi_3.5inch_display.jpg",
-            "CrowPanel_Advance_28.zip": "https://www.elecrow.com/media/catalog/product/cache/b6b9577937e6a96f50e53ddc42983628/e/s/esp32_advance_hmi_2.8inch_display.jpg",
-            "CrowPanel_Advance_24.zip": "https://www.elecrow.com/media/catalog/product/cache/b6b9577937e6a96f50e53ddc42983628/e/s/esp32_advance_hmi_2.4inch_display.jpg",
-            "Banshee_C5.zip": "https://static.wixstatic.com/media/35ea10_30c1a7ec6ead46d39aef8aea8c2ede48~mv2.jpg",
-            "Banshee_S3.zip": "https://static.wixstatic.com/media/35ea10_30c1a7ec6ead46d39aef8aea8c2ede48~mv2.jpg",
-            "ghostboard.zip": "https://rabbitlabs.b-cdn.net/wp-content/uploads/2024/10/ghostfront-300x300.jpg",
-            "RabbitLabs_Minion.zip": "https://rabbitlabs.b-cdn.net/wp-content/uploads/2024/06/original-18-300x300.jpeg",
-            "Poltergeist.zip": "https://rabbitlabs.b-cdn.net/wp-content/uploads/2025/11/p1-300x300.jpg",
-            "CYD2USB2.4Inch.zip": "https://ae-pic-a1.aliexpress-media.com/kf/Se5f531b3b4f642c28c0b0655653c23d2p.jpg_960x960q75.jpg_.avif",
-            "CYD2USB.zip": "https://ae-pic-a1.aliexpress-media.com/kf/Se5f531b3b4f642c28c0b0655653c23d2p.jpg_960x960q75.jpg_.avif",
-            "NM-CYD-C5.zip": "https://ae-pic-a1.aliexpress-media.com/kf/S411ea9e721b34a3782a2991d015548bb0.jpg_960x960q75.jpg",
-            "CYD2432S028R.zip": "https://ae-pic-a1.aliexpress-media.com/kf/S59700c86dd9949c7a629e34fa38c7408y.jpg_960x960q75.jpg_.avif",
-            "MarauderV4_FlipperHub.zip": "https://static.wixstatic.com/media/35ea10_c352ea38cf4c4ba0982a44c7b898755d~mv2.jpg",
-            "CrowPanel_Advanced_P4_5inch.zip": "https://www.elecrow.com/wiki/assets/images/CrowPanel_Advanced_5inch_ESP32-P4_HMI_AI_Display_1024x600_IPS_Touch_Screen_with_WiFi_6/crowpanel_esp32-p4_5inch_hmi_display.webp",
-            "CrowPanel_Advanced_P4_7_9_10.1inch.zip": "https://www.elecrow.com/media/catalog/product/cache/b6b9577937e6a96f50e53ddc42983628/e/s/esp32-p4_7inch_display_1_2.jpg",
-            "CrowPanel_Advanced_P4_7_9_10.1inch_v1.1.zip": "https://www.elecrow.com/media/catalog/product/cache/b6b9577937e6a96f50e53ddc42983628/e/s/esp32-p4_7inch_display_1_2.jpg",
-            "LilyGo-TEmbedC1101.zip": "https://lilygo.cc/cdn/shop/files/T-EMBED-CC1101-PLUS_6_4bda35c0-79ad-41ba-9aa7-52792d723ab1.jpg",
-            "LilyGo-T-Deck.zip": "https://lilygo.cc/cdn/shop/files/LILYGO-T-DECK_2_7fbd52e8-0aea-466e-8407-dee4aca5b381.jpg",
-            "LilyGo-S3TWatch-2020.zip": "https://lilygo.cc/cdn/shop/files/shipping_511a8c0c-8aca-4406-bcf0-0a70ea2d3a0e.jpg",
-            "LilyGo-TDisplayS3-Touch.zip": "https://lilygo.cc/cdn/shop/products/LILYGO-T-Display-S3-Touch-version_5.jpg",
-            "ESP32-S3-Cardputer.zip": "https://shop.m5stack.com/cdn/shop/files/K132_v11_19_1200x1200.webp",
-            "CardputerADV.zip": "https://ae-pic-a1.aliexpress-media.com/kf/Sbaec1d1ba16c4721a47063e795a7513b4.jpg",
-            "M5Stack_CoreS3-SE.zip": "https://cdn.shopify.com/s/files/1/0056/7689/2250/files/1920x2260_ac3abb3a-2355-4941-a865-5bb05294481c.webp",
-            "M5Stack_AtomS3R.zip": "https://cdn.shopify.com/s/files/1/0056/7689/2250/files/1920x2260_21da9b2e-e1dc-4710-8755-202d0483a50c.webp",
-            "Waveshare_LCD.zip": "https://www.waveshare.com/w/upload/6/6d/ESP32-S3-Touch-LCD-7.jpg",
-            "Crowtech_LCD.zip": "https://www.elecrow.com/media/catalog/product/e/s/esp32_hmi_7inch_display_1.jpg",
-            "Sunton_LCD.zip": "https://www.sunton.com.cn/cdn/shop/files/ESP32-8048S070C_1.jpg",
-            "JC3248W535EN_LCD.zip": "https://m.media-amazon.com/images/I/71xQ2rVt3WL._SL1500_.jpg",
-            "XIAO_S3_Sense.zip": "https://media-cdn.seeedstudio.com/media/catalog/product/cache/bb49d3ec4ee05b6f018e93f896b8a25d/3/-/3-113991115-xiao-esp32-s3-sense.jpg",
-            "XIAO_C5.zip": "https://media-cdn.seeedstudio.com/media/catalog/product/cache/bb49d3ec4ee05b6f018e93f896b8a25d/1/-/1-100010048-seeed-studio-xiao-esp32c5.jpg",
-            "XIAO_S3.zip": "https://media-cdn.seeedstudio.com/media/catalog/product/cache/bb49d3ec4ee05b6f018e93f896b8a25d/1/-/1-113991114-xiao-esp32s3-font_1.jpg"
+            "CrowPanel_1.28inch_Rotary.zip": "images/flasher/crowpanel-1-28inch-rotary.webp",
+            "CrowPanel_5.79_Epaper.zip": "images/flasher/crowpanel-5-79-epaper.webp",
+            "CrowPanel_4.2_Epaper.zip": "images/flasher/crowpanel-4-2-epaper.webp",
+            "CrowPanel_Advance_7inch.zip": "images/flasher/crowpanel-advance-7.webp",
+            "CrowPanel_Advance_5.zip": "images/flasher/crowpanel-advance-5.webp",
+            "CrowPanel_Advance_43.zip": "images/flasher/crowpanel-advance-4-3.webp",
+            "CrowPanel_Advance_35.zip": "images/flasher/crowpanel-advance-3-5.webp",
+            "CrowPanel_Advance_28.zip": "images/flasher/crowpanel-advance-2-8.webp",
+            "CrowPanel_Advance_24.zip": "images/flasher/crowpanel-advance-2-4.webp",
+            "Banshee_C5.zip": "images/flasher/banshee.webp",
+            "Banshee_S3.zip": "images/flasher/banshee.webp",
+            "ghostboard.zip": "images/flasher/ghostboard.webp",
+            "RabbitLabs_Minion.zip": "images/flasher/rabbitlabs-minion.webp",
+            "Poltergeist.zip": "images/flasher/poltergeist.webp",
+            "CYD2USB2.4Inch.zip": "images/flasher/cyd2usb.webp",
+            "CYD2USB.zip": "images/flasher/cyd2usb.webp",
+            "NM-CYD-C5.zip": "images/flasher/nm-cyd-c5.webp",
+            "CYD2432S028R.zip": "images/flasher/cyd-2432s028r.webp",
+            "MarauderV4_FlipperHub.zip": "images/flasher/marauder-v4.webp",
+            "CrowPanel_Advanced_P4_5inch.zip": "images/flasher/crowpanel-p4-5.webp",
+            "CrowPanel_Advanced_P4_7_9_10.1inch.zip": "images/flasher/crowpanel-p4-7.webp",
+            "CrowPanel_Advanced_P4_7_9_10.1inch_v1.1.zip": "images/flasher/crowpanel-p4-7.webp",
+            "LilyGo-TEmbedC1101.zip": "images/flasher/lilygo-t-embed-cc1101.webp",
+            "LilyGo-T-Deck.zip": "images/flasher/lilygo-t-deck.webp",
+            "LilyGo-S3TWatch-2020.zip": "images/flasher/lilygo-t-watch-s3.webp",
+            "LilyGo-TDisplayS3-Touch.zip": "images/flasher/lilygo-t-display-s3-touch.webp",
+            "ESP32-S3-Cardputer.zip": "images/flasher/m5stack-cardputer.webp",
+            "CardputerADV.zip": "images/flasher/m5stack-cardputer-adv.webp",
+            "M5Stack_CoreS3-SE.zip": "images/flasher/m5stack-cores3-se.webp",
+            "M5Stack_AtomS3R.zip": "images/flasher/m5stack-atoms3r.webp",
+            "Crowtech_LCD.zip": "images/flasher/crowtech-7-lcd.webp",
+            "XIAO_S3_Sense.zip": "images/flasher/seeed-xiao-s3-sense.webp",
+            "XIAO_C5.zip": "images/flasher/seeed-xiao-c5.webp",
+            "XIAO_S3.zip": "images/flasher/seeed-xiao-s3.webp"
         };
 
         let espLoaderTerminal = {
@@ -837,7 +834,7 @@ document.addEventListener('DOMContentLoaded', () => {
             "LilyGo-TDongleC5.zip": "LilyGo T-Dongle-C5",
             "LilyGo-S3TWatch-2020.zip": "LilyGo S3 T-Watch 2020",
             "LilyGo-TDisplayS3-Touch.zip": "LilyGo TDisplay S3 Touch",
-            "CrowPanel_1.28inch_Rotary.zip": "Elecrow CrowPanel 1.28-inch Rotary (240×240)",
+            "CrowPanel_1.28inch_Rotary.zip": "Elecrow CrowPanel 1.28-inch Rotary",
             "RabbitLabs_Minion.zip": "Rabbit Labs' Minion",
             "JCMK_DevBoardPro.zip": "JCMK DevBoard Pro",
             "CardputerADV.zip": "Cardputer ADV",
@@ -855,17 +852,17 @@ document.addEventListener('DOMContentLoaded', () => {
             "FeberisPro.zip": "Feberis Pro",
             "MarauderV8.zip": "Marauder V8",
             "MarauderPancake.zip": "Marauder Pancake"
-            ,"CrowPanel_Advanced_P4_5inch.zip": "Elecrow CrowPanel Advanced P4 5-inch (800×480 RGB)",
-            "CrowPanel_5.79_Epaper.zip": "Elecrow CrowPanel 5.79-inch E-paper (792×272)",
-            "CrowPanel_4.2_Epaper.zip": "Elecrow CrowPanel 4.2-inch E-paper (400×300)",
+            ,"CrowPanel_Advanced_P4_5inch.zip": "Elecrow CrowPanel Advanced P4 5-inch",
+            "CrowPanel_5.79_Epaper.zip": "Elecrow CrowPanel 5.79-inch E-paper",
+            "CrowPanel_4.2_Epaper.zip": "Elecrow CrowPanel 4.2-inch E-paper",
             "CrowPanel_Advanced_P4_7_9_10.1inch.zip": "Elecrow CrowPanel Advanced P4 7/9/10.1-inch (v1.2+)",
             "CrowPanel_Advanced_P4_7_9_10.1inch_v1.1.zip": "Elecrow CrowPanel Advanced P4 7/9/10.1-inch (v1.1)",
-            "CrowPanel_Advance_7inch.zip": "Elecrow CrowPanel Advance 7-inch S3 (800×480 RGB)",
-            "CrowPanel_Advance_5.zip": "Elecrow CrowPanel Advance 5-inch S3 (800×480 RGB)",
-            "CrowPanel_Advance_43.zip": "Elecrow CrowPanel Advance 4.3-inch S3 (800×480 RGB)",
-            "CrowPanel_Advance_35.zip": "Elecrow CrowPanel Advance 3.5-inch S3 (480×320 SPI)",
-            "CrowPanel_Advance_28.zip": "Elecrow CrowPanel Advance 2.8-inch S3 (320×240 SPI)",
-            "CrowPanel_Advance_24.zip": "Elecrow CrowPanel Advance 2.4-inch S3 (320×240 SPI)"
+            "CrowPanel_Advance_7inch.zip": "Elecrow CrowPanel Advance 7-inch S3",
+            "CrowPanel_Advance_5.zip": "Elecrow CrowPanel Advance 5-inch S3",
+            "CrowPanel_Advance_43.zip": "Elecrow CrowPanel Advance 4.3-inch S3",
+            "CrowPanel_Advance_35.zip": "Elecrow CrowPanel Advance 3.5-inch S3",
+            "CrowPanel_Advance_28.zip": "Elecrow CrowPanel Advance 2.8-inch S3",
+            "CrowPanel_Advance_24.zip": "Elecrow CrowPanel Advance 2.4-inch S3"
         };
 
         const ghostEspChipMapping = {
@@ -1155,6 +1152,48 @@ document.addEventListener('DOMContentLoaded', () => {
             if (chipInfoElem) {
                 chipInfoElem.innerHTML = `<span class="status-indicator status-disconnected"></span> ${message}`;
             }
+            return message;
+        }
+
+        function getStep1AttentionTarget() {
+            if (!selectedConnectionMode) return '#connectionModeChoice';
+            if (selectedConnectionMode === 'detect') return '#connectionPanel';
+            if (!selectedDevice) {
+                const chipContainer = document.getElementById('chipSelectionContainer');
+                if (selectedDeviceMethod === 'chip' && chipContainer && !chipContainer.classList.contains('d-none')) {
+                    return '#chipSelectionContainer';
+                }
+                return '#brandSelectionContainer';
+            }
+            return '#connectionPanel';
+        }
+
+        function showContinueNudge(anchorBtn, message, attentionSelector) {
+            if (!anchorBtn) return;
+            const wrapper = anchorBtn.closest('.flasher-nav-right') || anchorBtn.parentElement;
+            if (!wrapper) return;
+            let bubble = wrapper.querySelector('.flasher-nudge');
+            if (!bubble) {
+                bubble = document.createElement('div');
+                bubble.className = 'flasher-nudge';
+                bubble.setAttribute('role', 'status');
+                wrapper.appendChild(bubble);
+            }
+            bubble.innerHTML = `<i class="bi bi-info-circle"></i><span>${escapeHtml(message)}</span>`;
+            requestAnimationFrame(() => bubble.classList.add('show'));
+            if (wrapper._nudgeTimer) clearTimeout(wrapper._nudgeTimer);
+            wrapper._nudgeTimer = setTimeout(() => bubble.classList.remove('show'), 3800);
+            anchorBtn.classList.remove('shake');
+            void anchorBtn.offsetWidth;
+            anchorBtn.classList.add('shake');
+            anchorBtn.addEventListener('animationend', () => anchorBtn.classList.remove('shake'), { once: true });
+            if (attentionSelector) {
+                const target = document.querySelector(attentionSelector);
+                if (target) {
+                    target.classList.add('nudge-attention');
+                    setTimeout(() => target.classList.remove('nudge-attention'), 1600);
+                }
+            }
         }
 
         function explainConnectBlocked() {
@@ -1322,7 +1361,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (continueToStep2Btn) {
             continueToStep2Btn.addEventListener('click', () => {
                 if (!connected) {
-                    explainStep2Blocked();
+                    const message = explainStep2Blocked();
+                    showContinueNudge(continueToStep2Btn, message, getStep1AttentionTarget());
                     return;
                 }
 
@@ -1340,13 +1380,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (continueToStep3Btn) {
             continueToStep3Btn.addEventListener('click', () => {
-                if (connected) {
+                if (connected && hasFirmwareFilesSelected()) {
                     updateFlashSummary();
                     goToStep(3);
+                } else if (connected) {
+                    const message = 'Select a firmware build first.';
+                    espLoaderTerminal.writeLine(message);
+                    showContinueNudge(continueToStep3Btn, message, '#ghostEspVariantSelect');
                 } else {
-                    espLoaderTerminal.writeLine("Please connect to a device first");
+                    const message = 'Please connect to a device first';
+                    espLoaderTerminal.writeLine(message);
+                    showContinueNudge(continueToStep3Btn, message, '#connectionPanel');
                 }
             });
+            // The button is disabled until connected + firmware chosen, so
+            // clicks land on the tooltip wrapper instead — still show the nudge.
+            const step3Wrapper = continueToStep3Btn.closest('span');
+            if (step3Wrapper) {
+                step3Wrapper.addEventListener('click', (e) => {
+                    if (continueToStep3Btn.disabled) {
+                        e.preventDefault();
+                        const message = !connected
+                            ? 'Please connect to a device first'
+                            : 'Select a firmware build first.';
+                        espLoaderTerminal.writeLine(message);
+                        showContinueNudge(continueToStep3Btn, message, !connected ? '#connectionPanel' : '#ghostEspVariantSelect');
+                    }
+                }, true);
+            }
         }
 
         if (backToStep2Btn) {
@@ -1636,6 +1697,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (terminalToggleBtn && terminalElem) {
             terminalToggleBtn.addEventListener('click', () => {
                 terminalElem.classList.toggle('open');
+                const group = terminalToggleBtn.closest('.flasher-terminal-group');
+                if (group) group.classList.toggle('open', terminalElem.classList.contains('open'));
                 const isHidden = terminalElem.classList.contains('d-none');
                 const icon = terminalToggleBtn.querySelector('i');
                 if (icon) {
@@ -2437,9 +2500,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     });
                 }
 
-                if (typeof SocialProof !== 'undefined' && SocialProof.showPostFlashModal) {
-                    SocialProof.showPostFlashModal();
-                }
 
                 let resetOk = false;
                 try {
@@ -2476,11 +2536,11 @@ document.addEventListener('DOMContentLoaded', () => {
                             </button>
                             <div class="flasher-handoff">
                                 <p class="flasher-handoff-title"><i class="bi bi-check-circle-fill"></i> GhostESP is installed</p>
-                                <p style="font-size:0.85rem;opacity:0.85;margin:0 0 0.75rem 0;">If it helped you, star the project on GitHub to help others find GhostESP.</p>
+                                <p style="font-size:0.85rem;opacity:0.85;margin:0 0 0.75rem 0;">Your next stop: the Dashboard. Connect your device to configure it, manage files, and explore apps.</p>
                                 <div class="flasher-handoff-links">
-                                    <a href="https://github.com/GhostESP-Revival/GhostESP" target="_blank" rel="noopener" class="flasher-handoff-link flasher-handoff-link--star" data-github-cta data-cta-location="post_flash_handoff" data-after-flash="true" data-cta-variant="default"><i class="bi bi-star-fill"></i> Star on GitHub <span data-star-count></span></a>
-                                    <a href="/dashboard?tab=console" class="flasher-handoff-link"><i class="bi bi-terminal"></i> Open Serial Console</a>
-                                    <a href="/changelog" class="flasher-handoff-link"><i class="bi bi-stars"></i> What's new</a>
+                                    <a href="/dashboard" class="btn btn-primary" data-track="cta_post_flash_dashboard">Open Dashboard ↗</a>
+                                    <a href="/dashboard?tab=store" class="flasher-handoff-link" data-track="cta_post_flash_store">Explore apps</a>
+                                    <a href="/donate" class="flasher-handoff-link" data-track="cta_post_flash_donate">Support development</a>
                                     <a href="https://discord.gg/5cyNmUMgwh" target="_blank" rel="noopener" class="flasher-handoff-link"><i class="bi bi-discord"></i> Get help on Discord</a>
                                 </div>
                             </div>
@@ -2498,7 +2558,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     connected = false;
                     updateButtonStates();
                     espLoaderTerminal.writeLine(`Flash process complete. Device ${resetOk ? 'reset successfully' : 'may need a manual reset (RESET button)'}.`);
-                    updateStatusIndicator('success', 'Flash Complete', resetOk ? 'Device reset. Connect to Serial Console to configure.' : 'Press the RESET button on the board if it did not restart. Disconnected.');
+                    updateStatusIndicator('success', 'Flash Complete', resetOk ? 'Device reset. Open the Dashboard to get started.' : 'Press the RESET button on the board if it did not restart. Disconnected.');
                 }
 
             } catch (error) {

@@ -33,39 +33,37 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
-  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/main.css?v=2">
+  <link rel="stylesheet" href="css/polish.css?v=2">
   <script src="https://unpkg.com/lucide@0.344.0/dist/umd/lucide.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js" defer></script>
 
   <style>
     .builder-hero {
-      padding: 100px var(--spacing) 32px;
-      text-align: center;
-      background:
-        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-        linear-gradient(180deg, #050505 0%, #000 100%);
-      background-size: 32px 32px, 32px 32px, 100% 100%;
-      border-bottom: 1px solid var(--border);
+      padding: calc(var(--nav-height, 112px) + 4.5rem) var(--spacing) 44px;
+      text-align: left;
       position: relative;
       z-index: 1;
     }
 
     .builder-hero h1 {
-      font-family: var(--font-mono);
-      font-size: clamp(1.5rem, 4vw, 2.2rem);
-      margin-bottom: 0.75rem;
-      color: var(--text);
+      font-family: var(--font-sans);
+      font-weight: 500;
+      letter-spacing: -0.045em;
+      font-size: clamp(34px, 4.5vw, 54px);
+      line-height: 1.08;
+      margin-bottom: 18px;
+      color: #f3f5f3;
     }
 
     .builder-hero p {
       color: var(--text-dim);
       font-size: 1rem;
       max-width: 600px;
-      margin: 0 auto;
-      line-height: 1.6;
+      margin: 0;
+      line-height: 1.7;
     }
 
     .builder-layout {
@@ -451,7 +449,7 @@
     }
 
     .builder-btn-primary {
-      background: var(--accent);
+      background: #00ff80;
       color: var(--bg);
       border: 0;
       border-radius: var(--radius);
@@ -652,7 +650,7 @@
     }
 
     .extract-row a {
-      color: var(--accent);
+      color: #00ff80;
       text-decoration: none;
       font-size: 0.7rem;
     }
@@ -682,12 +680,11 @@
     }
 
     .dropzone.drag-over {
-      border-color: var(--accent);
+      border-color: #00ff80;
       color: var(--text);
     }
 
     .builder-footer-note {
-      text-align: center;
       padding: 2rem var(--spacing);
       border-top: 1px solid var(--border);
       position: relative;
@@ -699,7 +696,7 @@
       font-size: 0.8rem;
       color: var(--text-dim);
       max-width: 600px;
-      margin: 0 auto;
+      margin: 0;
       line-height: 1.6;
     }
 
@@ -722,7 +719,7 @@
 
     @media (max-width: 480px) {
       .builder-hero {
-        padding: 100px var(--spacing) 32px;
+        padding: calc(var(--nav-height, 112px) + 2rem) var(--spacing) 32px;
       }
 
       .builder-layout {
@@ -754,20 +751,22 @@
   <script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "8a43f9bb615d42a8ad405808147cc502"}'></script>
   <!-- End Cloudflare Web Analytics -->
 </head>
-<body>
+<body class="polished">
   <a href="#main-content" class="skip-link">Skip to content</a>
   <canvas id="dotTerrain"></canvas>
-  <script src="js/dot-terrain.js"></script>
+  <script src="js/dot-terrain.js?v=2"></script>
+  <div class="page-scrim tint-teal-left" aria-hidden="true"></div>
   <nav id="nav"><noscript><a href="/">Home</a> <a href="boards.html">Boards</a> <a href="flasher.html">Flasher</a> <a href="dashboard.html">Dashboard</a> <a href="blog.html">Blog</a> <a href="https://docs.ghostesp.net">Docs</a></noscript></nav>
 
-  <div class="builder-hero">
+  <header id="main-content" class="page-hero">
     <div class="container">
-      <h1>Asset Pack Builder</h1>
-      <p>Design and export <code style="background:rgba(255,255,255,0.1);padding:0.1rem 0.4rem;border-radius:4px;font-family:var(--font-mono);font-size:0.85rem;">.gtheme</code> packs for your GhostESP device.</p>
+      <span class="editorial-eyebrow">Theme studio</span>
+      <h1>Asset Pack Builder.</h1>
+      <p class="editorial-lede">Design and export <code style="background:rgba(255,255,255,0.1);padding:0.1rem 0.4rem;border-radius:4px;font-family:var(--font-mono);font-size:0.85rem;">.gtheme</code> packs for your GhostESP device.</p>
     </div>
-  </div>
+  </header>
 
-  <section id="main-content" class="builder-layout">
+  <section class="builder-layout">
 
     <div class="builder-editor">
 
@@ -942,9 +941,9 @@
     </div>
   </footer>
 
-  <script src="js/components.js" defer></script>
-  <script src="js/social-proof.js" defer></script>
-  <script src="js/main.js" defer></script>
+  <script src="js/components.js?v=2" defer></script>
+  <script src="js/social-proof.js?v=2" defer></script>
+  <script src="js/main.js?v=2" defer></script>
 
   <script>
   "use strict";
@@ -2439,6 +2438,6 @@
   wireUp();
   </script>
 
-  <script src="js/cookie-consent.js" defer></script>
+  <script src="js/cookie-consent.js?v=2" defer></script>
 </body>
 </html>

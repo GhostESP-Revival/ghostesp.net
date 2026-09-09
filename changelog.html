@@ -32,37 +32,20 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
-  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/main.css?v=2">
+  <link rel="stylesheet" href="css/polish.css?v=2">
   <script src="https://unpkg.com/lucide@0.344.0/dist/umd/lucide.min.js" defer></script>
   <style>
-    .changelog-hero {
-      padding: 140px var(--spacing) 60px;
-      text-align: center;
-      position: relative;
-      z-index: 1;
-    }
-    .changelog-hero h1 {
-      font-family: var(--font-mono);
-      font-size: 2.5rem;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      margin-bottom: 0.75rem;
-    }
-    .changelog-hero p {
-      color: var(--text-dim);
-      max-width: 560px;
-      margin: 0 auto;
-      font-size: 1.05rem;
-    }
     .changelog-controls {
       display: flex;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-start;
       gap: 1rem;
-      margin-bottom: 2.5rem;
+      margin-bottom: 2rem;
       flex-wrap: wrap;
+      max-width: 800px;
     }
     .changelog-controls label {
       font-family: var(--font-mono);
@@ -89,10 +72,13 @@
       padding-right: 2.25rem;
       transition: border-color 0.2s ease;
     }
-    .changelog-branch-select:hover,
-    .changelog-branch-select:focus {
+    .changelog-branch-select:hover {
       border-color: rgba(255, 255, 255, 0.3);
-      outline: none;
+    }
+    .changelog-branch-select:focus-visible {
+      border-color: rgba(0, 255, 128, 0.45);
+      outline: 2px solid #69e6a0;
+      outline-offset: 2px;
     }
     .changelog-branch-select option {
       background: var(--surface);
@@ -108,9 +94,13 @@
     .changelog-view-link:hover {
       color: var(--text);
     }
+    .changelog-view-link:focus-visible {
+      outline: 2px solid #69e6a0;
+      outline-offset: 2px;
+    }
     .changelog-content {
-      max-width: 860px;
-      margin: 0 auto;
+      max-width: 800px;
+      margin: 0;
       position: relative;
       z-index: 1;
     }
@@ -119,17 +109,18 @@
       border: 1px solid var(--border);
       border-radius: var(--radius);
       padding: 2rem;
-      margin-bottom: 1.5rem;
-      transition: border-color 0.3s ease;
+      margin-bottom: 1.25rem;
+      transition: border-color 0.18s ease;
     }
     .changelog-version:hover {
-      border-color: rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.22);
     }
     .changelog-version h2 {
-      font-family: var(--font-mono);
-      font-size: 1.5rem;
+      font-family: var(--font-sans);
+      font-weight: 500;
+      font-size: 1.35rem;
+      letter-spacing: -0.02em;
       margin-bottom: 0.25rem;
-      letter-spacing: 1px;
     }
     .changelog-version h2 code {
       background: rgba(255, 255, 255, 0.06);
@@ -139,10 +130,10 @@
     }
     .changelog-version h3 {
       font-family: var(--font-mono);
-      font-size: 1rem;
+      font-size: 0.78rem;
       color: var(--text-dim);
       text-transform: uppercase;
-      letter-spacing: 1.5px;
+      letter-spacing: 0.08em;
       margin: 1.5rem 0 0.75rem;
       padding-bottom: 0.5rem;
       border-bottom: 1px solid var(--border);
@@ -185,14 +176,14 @@
       margin: 0.5rem 0;
     }
     .changelog-empty {
-      text-align: center;
-      padding: 4rem 2rem;
+      text-align: left;
+      padding: 3rem 0;
       color: var(--text-dim);
       font-family: var(--font-mono);
     }
     .changelog-loading {
-      text-align: center;
-      padding: 4rem 2rem;
+      text-align: left;
+      padding: 3rem 0;
       color: var(--text-dim);
       font-family: var(--font-mono);
     }
@@ -216,36 +207,35 @@
       font-style: italic;
       margin: 0.5rem 0 1rem;
       padding: 0.75rem 1rem;
-      background: rgba(255, 255, 255, 0.03);
-      border-left: 3px solid var(--border);
-      border-radius: 0 4px 4px 0;
+      background: rgba(0, 255, 128, 0.04);
+      border-left: 2px solid rgba(0, 255, 128, 0.4);
+      border-radius: 0 8px 8px 0;
     }
     @media (max-width: 768px) {
-      .changelog-hero h1 { font-size: 1.8rem; }
       .changelog-version { padding: 1.5rem; }
-      .changelog-controls { flex-direction: column; }
+      .changelog-controls { flex-direction: column; align-items: flex-start; }
     }
   </style>
   <!-- Cloudflare Web Analytics -->
   <script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "8a43f9bb615d42a8ad405808147cc502"}'></script>
   <!-- End Cloudflare Web Analytics -->
 </head>
-<body>
+<body class="polished">
   <a href="#main-content" class="skip-link">Skip to content</a>
   <canvas id="dotTerrain"></canvas>
-  <script src="js/dot-terrain.js"></script>
+  <script src="js/dot-terrain.js?v=2"></script>
+  <div class="page-scrim tint-faint" aria-hidden="true"></div>
 
   <nav id="nav"><noscript><a href="/">Home</a> <a href="boards.html">Boards</a> <a href="flasher.html">Flasher</a> <a href="dashboard.html">Dashboard</a> <a href="changelog.html">Changelog</a> <a href="https://docs.ghostesp.net">Docs</a></noscript></nav>
 
-  <section id="main-content" class="changelog-hero">
+  <header id="main-content" class="page-hero">
     <div class="container">
-      <h1>Changelog</h1>
-      <p>Every addition, change, and fix across GhostESP releases.</p>
-      <div class="star-cta-banner" style="margin-top:1.25rem;">
-        <span>Like what you see? <a href="https://github.com/GhostESP-Revival/GhostESP" class="star-cta-quiet github-star-btn" target="_blank" rel="noopener" data-github-cta data-cta-location="changelog_hero" data-cta-variant="default">Star GhostESP on GitHub <span data-star-count></span></a>.</span>
-      </div>
+      <span class="editorial-eyebrow">Release notes</span>
+      <h1>Changelog.</h1>
+      <p class="editorial-lede">Every addition, change, and fix across GhostESP releases.</p>
+      <div class="page-hero-note">Like what you see? <a href="https://github.com/GhostESP-Revival/GhostESP" class="star-cta-quiet github-star-btn" target="_blank" rel="noopener" data-github-cta data-cta-location="changelog_hero" data-cta-variant="default">Star GhostESP on GitHub <span data-star-count></span></a>.</div>
     </div>
-  </section>
+  </header>
 
   <section class="section" style="padding-top: 0;">
     <div class="container">
@@ -279,13 +269,14 @@
             <button class="cookie-settings-link" onclick="CookieConsent.showSettings()">Cookie Settings</button>
       <a href="privacy.html" class="cookie-settings-link">Privacy Policy</a>
     </div>
+    </div>
   </footer>
 
-  <script src="js/components.js" defer></script>
-  <script src="js/changelog.js" defer></script>
-  <script src="js/github.js" defer></script>
-  <script src="js/social-proof.js" defer></script>
-  <script src="js/main.js" defer></script>
-  <script src="js/cookie-consent.js" defer></script>
+  <script src="js/components.js?v=2" defer></script>
+  <script src="js/changelog.js?v=2" defer></script>
+  <script src="js/github.js?v=2" defer></script>
+  <script src="js/social-proof.js?v=2" defer></script>
+  <script src="js/main.js?v=2" defer></script>
+  <script src="js/cookie-consent.js?v=2" defer></script>
 </body>
 </html>

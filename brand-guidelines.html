@@ -32,29 +32,19 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
-  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/main.css?v=2">
+  <link rel="stylesheet" href="css/polish.css?v=2">
   <script src="https://unpkg.com/lucide@0.344.0/dist/umd/lucide.min.js" defer></script>
   <style>
-    .guidelines-hero {
-      text-align: center;
-      padding: 6rem 1rem 2rem;
-      position: relative;
-      z-index: 1;
-    }
-    .guidelines-hero p {
-      color: var(--text-dim);
-      max-width: 600px;
-      margin: 0 auto;
-      font-size: 1rem;
-      line-height: 1.6;
-    }
     .guidelines-content {
       max-width: 800px;
-      margin: 0 auto;
       padding-bottom: 4rem;
     }
+    /* Box is borderless so body text shares the hero title's left line */
+    .polished .container.guidelines-content { max-width: 1200px; margin: 0 auto; }
+    .guidelines-content .guidelines-card { background: transparent; border: none; padding: 0; max-width: 800px; }
     .guidelines-card {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -96,7 +86,7 @@
     }
     .guidelines-content li.dont::before {
       content: '\2717';
-      color: #ff4444;
+      color: #ff6b6b;
     }
     .guidelines-content code {
       background: rgba(255, 255, 255, 0.06);
@@ -111,7 +101,7 @@
       margin: 2rem 0;
     }
     .guidelines-content a {
-      color: var(--accent);
+      color: #00ff80;
     }
     .short-list {
       list-style: none;
@@ -136,7 +126,7 @@
       font-family: var(--font-mono);
     }
     .example-col.allowed h5 { color: #00ff80; }
-    .example-col.not-allowed h5 { color: #ff4444; }
+    .example-col.not-allowed h5 { color: #ff6b6b; }
     .example-col ul { margin: 0; }
     .example-col li {
       padding: 0.25rem 0;
@@ -163,18 +153,20 @@
   <script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "8a43f9bb615d42a8ad405808147cc502"}'></script>
   <!-- End Cloudflare Web Analytics -->
 </head>
-<body>
+<body class="polished">
   <a href="#main-content" class="skip-link">Skip to content</a>
   <canvas id="dotTerrain"></canvas>
-  <script src="js/dot-terrain.js"></script>
+  <script src="js/dot-terrain.js?v=2"></script>
+  <div class="page-scrim tint-faint" aria-hidden="true"></div>
   <nav id="nav"><noscript><a href="/">Home</a> <a href="boards.html">Boards</a> <a href="flasher.html">Flasher</a> <a href="dashboard.html">Dashboard</a> <a href="blog.html">Blog</a> <a href="https://docs.ghostesp.net">Docs</a></noscript></nav>
 
-  <section id="main-content" class="guidelines-hero">
+  <header id="main-content" class="page-hero">
     <div class="container">
-      <h1>Brand Usage Guidelines</h1>
-      <p>Rules for using the GhostESP name, logo, and assets in your products and content.</p>
+      <span class="editorial-eyebrow">For builders &amp; creators</span>
+      <h1>Brand usage guidelines.</h1>
+      <p class="editorial-lede">Rules for using the GhostESP name, logo, and assets in your products and content.</p>
     </div>
-  </section>
+  </header>
 
   <section class="section" style="padding-top: 0;">
     <div class="container guidelines-content">
@@ -300,11 +292,12 @@
             <button class="cookie-settings-link" onclick="CookieConsent.showSettings()">Cookie Settings</button>
       <a href="privacy.html" class="cookie-settings-link">Privacy Policy</a>
     </div>
+    </div>
   </footer>
 
-  <script src="js/components.js" defer></script>
-  <script src="js/social-proof.js" defer></script>
-  <script src="js/main.js" defer></script>
-  <script src="js/cookie-consent.js" defer></script>
+  <script src="js/components.js?v=2" defer></script>
+  <script src="js/social-proof.js?v=2" defer></script>
+  <script src="js/main.js?v=2" defer></script>
+  <script src="js/cookie-consent.js?v=2" defer></script>
 </body>
 </html>

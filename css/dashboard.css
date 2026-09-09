@@ -2,16 +2,9 @@
    Load this stylesheet LAST so it wins the layout fights with the
    console/mirror/files/crash CSS that was written for the old tab layout. */
 
-/* Dim the animated dot terrain like the hardware page does: a fixed scrim
-   that paints above the canvas (later in the DOM, same z-index) but below
-   the dashboard content (z-index 1). */
-.dash-scrim {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background: rgba(0, 0, 0, 0.62);
-}
+/* Dim the animated dot terrain with the shared tinted scrim
+   (see .page-scrim in polish.css). The console and workspace panels
+   carry their own backgrounds, so this stays subtle by design. */
 
 .dash-shell {
   position: relative;
@@ -39,7 +32,8 @@ body:has(.dash-shell) .announce-bar {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: #050505;
+  background: rgba(0, 0, 0, 0.92);
+  backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--border, var(--serial-border));
   padding: 0.65rem 1rem 0.65rem 1.25rem;
 }
@@ -66,11 +60,13 @@ body:has(.dash-shell) .announce-bar {
 }
 
 .dash-title-name {
-  font-weight: 600;
+  font-weight: 500;
   font-size: 1.02rem;
+  letter-spacing: -0.02em;
   display: block;
   line-height: 1.2;
   color: var(--text-primary, var(--serial-text));
+  font-family: var(--font-sans, var(--serial-font-sans));
 }
 
 .dash-title-sub {
@@ -136,9 +132,19 @@ body:has(.dash-shell) .announce-bar {
 
 .dash-baud {
   max-width: 150px;
-  background: transparent;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border, var(--serial-border));
+  border-radius: 9px;
+  color: var(--text-dim, var(--serial-secondary));
+  font-family: var(--font-mono, var(--serial-font-mono));
   font-size: 0.8rem;
   padding: 0.5rem 0.6rem;
+  cursor: pointer;
+}
+
+.dash-baud:focus-visible {
+  outline: 2px solid #69e6a0;
+  outline-offset: 2px;
 }
 
 /* ---- Body grid ---- */
@@ -150,7 +156,7 @@ body:has(.dash-shell) .announce-bar {
 }/* ---- Sidebar ---- */
 .dash-nav {
   border-right: 1px solid var(--border, var(--serial-border));
-  background: rgba(0, 0, 0, 0.35);
+  background: transparent;
   padding: 1.25rem 0.75rem;
   display: flex;
   flex-direction: column;
@@ -163,12 +169,39 @@ body:has(.dash-shell) .announce-bar {
   gap: 0.25rem;
 }
 
+/* Inner sidebar <nav> must not inherit the fixed site-header bar */
+nav.dash-nav-list {
+  position: static;
+  top: auto;
+  left: auto;
+  width: 100%;
+  padding: 0;
+  background: transparent;
+  backdrop-filter: none;
+  border-bottom: none;
+  z-index: auto;
+}
+
+.dash-nav-label {
+  font-family: var(--font-mono, var(--serial-font-mono));
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-dim, var(--serial-secondary));
+  opacity: 0.7;
+  padding: 0.5rem 0.85rem 0.15rem;
+}
+
+.dash-nav-label:first-child {
+  padding-top: 0;
+}
+
 .dash-nav-item {
   display: flex;
   align-items: center;
   gap: 0.7rem;
   width: 100%;
-  padding: 0.7rem 0.85rem;
+  padding: 0.65rem 0.85rem;
   background: transparent;
   border: 1px solid transparent;
   border-radius: 10px;
@@ -176,15 +209,27 @@ body:has(.dash-shell) .announce-bar {
   font-family: var(--font-sans, var(--serial-font-sans));
   font-size: 0.9rem;
   font-weight: 500;
+  letter-spacing: -0.01em;
   cursor: pointer;
   text-align: left;
   flex: 0 0 auto;
-  transition: all 0.18s ease;
+  transition: background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+}
+
+.dash-nav-item:focus-visible,
+.dash-nav-link:focus-visible,
+.dash-icon-btn:focus-visible,
+.quick-cmd:focus-visible {
+  outline: 2px solid #69e6a0;
+  outline-offset: 2px;
 }
 
 .dash-nav-item i {
   font-size: 1.05rem;
   line-height: 1;
+  width: 20px;
+  text-align: center;
+  flex-shrink: 0;
 }
 
 .dash-nav-item:hover {
@@ -250,7 +295,7 @@ body:has(.dash-shell) .announce-bar {
   background: transparent;
   color: var(--text-dim, var(--serial-secondary));
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: color 0.15s ease, border-color 0.15s ease;
 }
 
 .dash-icon-btn:hover {
@@ -320,7 +365,7 @@ body:has(.dash-shell) .announce-bar {
   text-decoration: none;
   font-size: 0.82rem;
   border-radius: 8px;
-  transition: all 0.15s ease;
+  transition: background-color 0.15s ease, color 0.15s ease;
 }
 
 .dash-nav-link:hover {
@@ -397,10 +442,12 @@ body:has(.dash-shell) .announce-bar {
   border-radius: 999px;
   padding: 0.28rem 0.75rem;
   font-size: 0.75rem;
+  font-family: var(--font-mono, var(--serial-font-mono));
   color: var(--text-dim, var(--serial-text-dim));
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.09);
-  transition: all 0.15s ease;
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease, background-color 0.15s ease;
 }
 
 .quick-cmd:hover {
@@ -486,12 +533,26 @@ body:has(.dash-shell) .announce-bar {
 
 #tab-store .store-grid {
   align-content: start;
+  justify-items: stretch;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1rem;
 }
 
 /* Store controls span the full workspace (no centered gutters) */
 #tab-store .store-tabs {
   margin-bottom: 0.75rem;
   max-width: none;
+  justify-content: flex-start;
+}
+
+#tab-store .store-tab {
+  font-family: var(--font-sans, var(--serial-font-sans));
+  transition: color 0.15s ease, border-color 0.15s ease, background-color 0.15s ease;
+}
+
+#tab-store .store-tab:focus-visible {
+  outline: 2px solid #69e6a0;
+  outline-offset: 2px;
 }
 
 #tab-store .store-toolbar {
@@ -500,12 +561,48 @@ body:has(.dash-shell) .announce-bar {
   grid-template-columns: 1fr 220px;
 }
 
-#tab-store .store-security-notice {
-  max-width: none;
+#tab-store .store-input:focus,
+#tab-store .store-select:focus {
+  border-color: rgba(0, 255, 128, 0.4);
+  box-shadow: 0 0 0 3px rgba(0, 255, 128, 0.08);
 }
 
 #tab-store .store-list-meta {
   margin-bottom: 0.75rem;
+  text-align: left;
+}
+
+#tab-store .store-card {
+  max-width: none;
+  border-radius: 12px;
+  background: rgba(13, 13, 13, 0.92);
+}
+
+#tab-store .store-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.22);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+#tab-store .store-card-title {
+  font-family: var(--font-sans, var(--serial-font-sans));
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+#tab-store .store-install-btn {
+  border-radius: 9px;
+  transition: background-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+#tab-store .store-install-btn:focus-visible,
+#tab-store .store-download-toggle:focus-visible {
+  outline: 2px solid #69e6a0;
+  outline-offset: 2px;
+}
+
+#tab-store .store-empty {
+  grid-column: 1 / -1;
 }
 
 #tab-store .store-chip-filter {
@@ -519,6 +616,8 @@ body:has(.dash-shell) .announce-bar {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
+  max-width: 640px;
+  margin: 0 0 1rem;
   padding: 0.55rem 1rem;
   border: 1px solid rgba(255, 200, 87, 0.22);
   border-radius: 999px;
@@ -543,13 +642,32 @@ body:has(.dash-shell) .announce-bar {
   padding: 2.75rem 2rem;
   gap: 1.1rem;
   background: rgba(5, 5, 5, 0.9);
+  border: 1px solid var(--border, var(--serial-border));
+  border-radius: 12px;
 }
 
 .welcome-card h1 {
+  font-family: var(--font-sans, var(--serial-font-sans));
   font-size: 1.9rem;
+  font-weight: 500;
+  letter-spacing: -0.03em;
   margin: 0;
   line-height: 1.15;
   color: var(--text-primary, var(--serial-text));
+}
+
+.welcome-card .welcome-desc {
+  color: var(--text-dim, var(--serial-text-dim));
+}
+
+.welcome-card .step-num {
+  background: rgba(0, 255, 128, 0.07);
+  border-color: rgba(0, 255, 128, 0.3);
+  color: #00ff80;
+}
+
+.welcome-card .welcome-hint a {
+  text-underline-offset: 2px;
 }
 
 .welcome-actions {
@@ -711,6 +829,28 @@ body:has(.dash-shell) .announce-bar {
   #tab-irdb .stats { justify-content: flex-start; }
 }
 
+/* Dashboard dialogs — same language as the flasher modals */
+.dash-shell ~ .dialog-overlay .dialog,
+.dialog-overlay .dialog {
+  background: #0b0b0b;
+  border: 1px solid var(--border, var(--serial-border));
+  border-radius: 12px;
+}
+
+.dialog-overlay .dialog h2 {
+  font-family: var(--font-sans, var(--serial-font-sans));
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dash-nav-item,
+  .dash-nav-link,
+  .quick-cmd {
+    transition: none;
+  }
+}
+
 /* ---- Other views ---- */
 #tab-files.active,
 #tab-crash.active {
@@ -738,6 +878,11 @@ body:has(.dash-shell) .announce-bar {
   .dash-nav-list {
     flex-direction: row;
     gap: 0.4rem;
+    align-items: center;
+  }
+
+  .dash-nav-label {
+    display: none;
   }
 
   .dash-nav-item {

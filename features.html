@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#000000">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://unpkg.com https://www.googletagmanager.com https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com https://cdn.jsdelivr.net; img-src 'self' https://ghostesp.net https://raw.githubusercontent.com https://www.youtube.com https://i.ytimg.com https://static.wixstatic.com data:; font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net; frame-src https://www.youtube.com; connect-src 'self' https://api.github.com https://cdn.spookytools.com https://www.google-analytics.com https://googleads.g.doubleclick.net https://discord.com https://ingesteer.services-prod.nsvcs.net https://cloudflareinsights.com; object-src 'none'; base-uri 'self'; form-action 'self';">
+  
+  <!-- SEO Meta Tags -->
+  <title>GhostESP Features — Explore the toolkit</title>
+   <meta name="description" content="Open-source ESP32 wireless security testing platform with WiFi, BLE, NFC, IR, SubGHz, wardriving, web flashing tools, companion apps, and tested board support.">
+   <meta name="keywords" content="GhostESP, Ghost ESP, ESP32, wireless platform, WiFi testing, wireless security, penetration testing, BLE scanning, deauth detection, WiFi analysis, ESP32-C5, ESP32-S3, ESP32-C3, ESP32-C6, security research, NFC, wardriving">
+  <meta name="author" content="Jay Candel">
+  <meta name="robots" content="index, follow">
+  <meta name="language" content="English">
+  
+  <!-- Open Graph Tags -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="GhostESP Features">
+   <meta property="og:description" content="An open-source wireless platform for ESP32 devices. Firmware, web tools, companion app, and more for wireless security research.">
+  <meta property="og:url" content="https://ghostesp.net/features">
+  <meta property="og:site_name" content="GhostESP">
+  <meta property="og:image" content="https://ghostesp.net/images/IMG_1178.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="GhostESP - ESP32 Wireless Testing Platform">
+  
+  <!-- Twitter Card Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="GhostESP Features">
+   <meta name="twitter:description" content="An open-source wireless platform for ESP32 devices.">
+  <meta name="twitter:image" content="https://ghostesp.net/images/IMG_1178.webp">
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://ghostesp.net/features">
+  <link rel="alternate" type="application/rss+xml" title="GhostESP Blog" href="https://ghostesp.net/feed.xml">
+  
+  <!-- Favicons -->
+  <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+  <link rel="manifest" href="images/site.webmanifest">
+  
+  <!-- Fonts and Styles -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="css/main.css?v=2">
+  
+  <!-- Cloudflare Web Analytics -->
+  <script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "8a43f9bb615d42a8ad405808147cc502"}'></script>
+  <!-- End Cloudflare Web Analytics -->
+  <link rel="stylesheet" href="css/polish.css?v=2">
+</head>
+<body class="polished"><canvas id="dotTerrain" aria-hidden="true"></canvas><script src="js/dot-terrain.js?v=2"></script><div class="page-scrim tint-teal" aria-hidden="true"></div><a href="#main-content" class="skip-link">Skip to content</a><nav id="nav"></nav>
+<header id="main-content" class="page-hero">
+<div class="container"><span class="editorial-eyebrow">The toolkit</span><h1>Features.</h1><p class="editorial-lede">GhostESP capabilities across wireless, device control, and platform. Available features depend on the board and connected hardware.</p><div class="page-hero-actions"><a href="/flasher" class="btn btn-primary"><span>Flash GhostESP</span></a><a href="/compare" class="btn btn-secondary"><span>Compare firmware</span></a></div></div>
+</header>
+<main>
+<section id="capabilities" class="section section--tight">
+    <div class="container">
+      <div class="section-heading"><div><span class="eyebrow">Categories</span><h2>Browse by domain.</h2></div><a href="/compare" class="text-link">Compare all 133 features ↗</a></div>
+      <p class="page-hero-note" style="margin: 0 0 1.75rem;">A <span class="cap-new-inline">NEW</span> tag marks what’s new in v2.1.</p>
+
+      <div class="cap-explorer">
+        <div class="cap-tabs" role="tablist" aria-label="Capability domains">
+          <button class="cap-tab active" role="tab" aria-selected="true" aria-controls="cap-panel-wifi" id="cap-tab-wifi" data-target="wifi"><i data-lucide="wifi"></i><span>WiFi</span></button>
+          <button class="cap-tab" role="tab" aria-selected="false" aria-controls="cap-panel-ble" id="cap-tab-ble" data-target="ble"><i data-lucide="bluetooth"></i><span>Bluetooth LE</span></button>
+          <button class="cap-tab" role="tab" aria-selected="false" aria-controls="cap-panel-nfc" id="cap-tab-nfc" data-target="nfc"><i data-lucide="scan-line"></i><span>NFC &amp; IR</span></button>
+          <button class="cap-tab" role="tab" aria-selected="false" aria-controls="cap-panel-subghz" id="cap-tab-subghz" data-target="subghz"><i data-lucide="radio"></i><span>SubGHz &amp; RF</span></button>
+          <button class="cap-tab" role="tab" aria-selected="false" aria-controls="cap-panel-network" id="cap-tab-network" data-target="network"><i data-lucide="network"></i><span>Network</span></button>
+          <button class="cap-tab" role="tab" aria-selected="false" aria-controls="cap-panel-badusb" id="cap-tab-badusb" data-target="badusb"><i data-lucide="usb"></i><span>BadUSB &amp; HID</span></button>
+          <button class="cap-tab" role="tab" aria-selected="false" aria-controls="cap-panel-platform" id="cap-tab-platform" data-target="platform"><i data-lucide="layers"></i><span>Platform &amp; UI</span></button>
+        </div>
+
+        <div class="cap-panels">
+          <div class="cap-panel active" role="tabpanel" id="cap-panel-wifi" aria-labelledby="cap-tab-wifi" tabindex="0">
+            <div class="cap-panel-head">
+              <div class="cap-panel-icon"><i data-lucide="wifi"></i></div>
+              <div><h3>WiFi Suite</h3><p class="cap-panel-tagline">2.4 &amp; 5 GHz testing, capture, and monitoring.</p></div>
+            </div>
+            <ul class="cap-list">
+              <li>Deauth, beacon spam &amp; karma</li>
+              <li>Evil portal with custom HTML</li>
+              <li>WPA3 / SAE testing + compliance checker</li>
+              <li>PCAP, PMKID &amp; hc22000 export &middot; live Wireshark over USB</li>
+              <li>WiFi airspace monitor: deauth fingerprinting, evil twins &amp; Karma <span class="cap-new">v2.1</span></li>
+              <li>Packet Visualizer &amp; channel congestion charts <span class="cap-new">v2.1</span></li>
+              <li>Recon: ARP &middot; mDNS &middot; NetBIOS &middot; SSH &middot; SNMP &middot; HTTP banner</li>
+              <li>SMB/NetBIOS enumeration &amp; SNMP MIB walk <span class="cap-new">v2.1</span></li>
+              <li>GPS wardriving &amp; WiGLE export</li>
+            </ul>
+          </div>
+
+          <div class="cap-panel" role="tabpanel" id="cap-panel-ble" aria-labelledby="cap-tab-ble" tabindex="0" hidden>
+            <div class="cap-panel-head">
+              <div class="cap-panel-icon"><i data-lucide="bluetooth"></i></div>
+              <div><h3>Bluetooth LE</h3><p class="cap-panel-tagline">Scan, capture, and spoof BLE devices.</p></div>
+            </div>
+            <ul class="cap-list">
+              <li>BLE scan &amp; raw scanner</li>
+              <li>Device spam modes</li>
+              <li>AirTag scan / spoof &middot; Flipper Zero finder</li>
+              <li>GATT enumeration &middot; device tracking (live RSSI)</li>
+              <li>BLE &rarr; Wireshark &middot; skimmer &amp; Flock detection</li>
+              <li>BLE wardriving &amp; WiGLE export</li>
+              <li>Drone / OpenDroneID scan, track &amp; spoof</li>
+              <li>GhostLink BLE bridge to Android app</li>
+            </ul>
+          </div>
+
+          <div class="cap-panel" role="tabpanel" id="cap-panel-nfc" aria-labelledby="cap-tab-nfc" tabindex="0" hidden>
+            <div class="cap-panel-head">
+              <div class="cap-panel-icon"><i data-lucide="scan-line"></i></div>
+              <div><h3>NFC &amp; Infrared</h3><p class="cap-panel-tagline">Read, write, and replay NFC and IR signals.</p></div>
+            </div>
+            <ul class="cap-list">
+              <li>PN532 &amp; ST25R3916 &middot; Chameleon Ultra (BLE control)</li>
+              <li>NTAG read/write &middot; MIFARE dictionary + nested recovery</li>
+              <li>EMV payment-card reading <span class="cap-new">v2.1</span></li>
+              <li>DESFire tree reads &middot; PicoPass / iCLASS &middot; NDEF creation <span class="cap-new">v2.1</span></li>
+              <li>Opal, myki, ITSO &amp; Gallagher card parsers <span class="cap-new">v2.1</span></li>
+              <li>Flipper <code>.nfc</code> import/export &amp; parser collection</li>
+              <li>IR learn / capture / replay &middot; all Flipper IR protocols TX</li>
+              <li>Universal IR library &middot; Flipper <code>.ir</code> support &middot; IR dazzler</li>
+            </ul>
+          </div>
+
+          <div class="cap-panel" role="tabpanel" id="cap-panel-subghz" aria-labelledby="cap-tab-subghz" tabindex="0" hidden>
+            <div class="cap-panel-head">
+              <div class="cap-panel-icon"><i data-lucide="radio"></i></div>
+              <div><h3>SubGHz &amp; RF</h3><p class="cap-panel-tagline">Analyze, capture, and replay across the bands.</p></div>
+            </div>
+            <ul class="cap-list">
+              <li>CC1101 scan / replay &middot; 315&ndash;915 MHz</li>
+              <li>Waterfall spectrum analyzer</li>
+              <li>20+ protocol decoders &middot; Flipper <code>.sub</code></li>
+              <li>NRF24 spectrum analyzer &amp; sniff</li>
+              <li>Zigbee / 802.15.4 capture</li>
+              <li>Passive jamming detection &middot; GhostLink remote radio</li>
+            </ul>
+          </div>
+
+          <div class="cap-panel" role="tabpanel" id="cap-panel-network" aria-labelledby="cap-tab-network" tabindex="0" hidden>
+            <div class="cap-panel-head">
+              <div class="cap-panel-icon"><i data-lucide="network"></i></div>
+              <div><h3>Network &amp; Ethernet</h3><p class="cap-panel-tagline">Wired attacks and live traffic interception.</p></div>
+            </div>
+            <ul class="cap-list">
+              <li>Ethernet / W5500</li>
+              <li>ARP poisoning &amp; MITM tools</li>
+              <li>Fingerprint, port, ping, DNS, NTP &amp; trace tools</li>
+              <li>DNS intercept / sinkhole (NXDOMAIN)</li>
+              <li>Credential capture: TLS SNI &middot; HTTP &middot; FTP</li>
+              <li>DIAL / Chromecast &middot; network printer (PJL)</li>
+              <li>Camera streaming &amp; Discord motion alerts</li>
+            </ul>
+          </div>
+
+          <div class="cap-panel" role="tabpanel" id="cap-panel-badusb" aria-labelledby="cap-tab-badusb" tabindex="0" hidden>
+            <div class="cap-panel-head">
+              <div class="cap-panel-icon"><i data-lucide="usb"></i></div>
+              <div><h3>BadUSB &amp; HID</h3><p class="cap-panel-tagline">HID payloads and host-side control.</p></div>
+            </div>
+            <ul class="cap-list">
+              <li>BadUSB / DuckyScript</li>
+              <li>VID/PID identity options</li>
+              <li>USB keyboard host mode</li>
+              <li>USB HID keyboard output</li>
+              <li>Trackpad cursor &amp; mouse jiggler</li>
+              <li>type_char CLI &amp; dedicated WebUI page</li>
+            </ul>
+          </div>
+
+          <div class="cap-panel" role="tabpanel" id="cap-panel-platform" aria-labelledby="cap-tab-platform" tabindex="0" hidden>
+            <div class="cap-panel-head">
+              <div class="cap-panel-icon"><i data-lucide="layers"></i></div>
+              <div><h3>Platform &amp; UI</h3><p class="cap-panel-tagline">Control, extend, and theme the whole device.</p></div>
+            </div>
+            <ul class="cap-list">
+              <li>LVGL UI &middot; 60 FPS &middot; 17+ themes &middot; <code>.gtheme</code> asset packs</li>
+              <li>Carousel, grid &amp; list layouts with paginated nav</li>
+              <li>Cloud Store: install apps, scripts &amp; packs on-device <span class="cap-new">v2.1</span></li>
+              <li>GhostScript: sandboxed Lua runtime on SD <span class="cap-new">v2.1</span></li>
+              <li>Native SD apps: <code>.gapp</code>, App Gallery, gbt SDK, XIP on C5</li>
+              <li>OTA Wi-Fi firmware updates with rollback protection <span class="cap-new">v2.1</span></li>
+              <li>Ghostchi: 50 levels, 27 XP sources &amp; moods</li>
+              <li>PIN lockscreen &amp; setup wizard</li>
+              <li>GhostLink dual-ESP &middot; Android app &middot; Flipper companion</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="cap-actions">
+        <a href="/flasher" class="btn btn-primary"><span>Open the flasher</span></a>
+        <a href="https://github.com/GhostESP-Revival/GhostESP/releases/latest" class="btn btn-secondary" target="_blank" rel="noopener"><span>Full Changelog</span></a>
+      </div>
+    </div>
+  </section>
+  <section id="demos" class="section section--tight" style="padding-top: 0;">
+    <div class="container">
+      <div class="section-heading"><div><span class="eyebrow">Demos</span><h2>Watch it work.</h2></div><a href="https://discord.gg/5cyNmUMgwh" target="_blank" rel="noopener" class="text-link">Submit a video ↗</a></div>
+      <p class="editorial-lede" style="margin: 0 0 2rem;">Third-party video demos of GhostESP hardware and firmware. Demos cover the authors' own hardware; the authorized-use rules apply.</p>
+      <div class="grid">
+        <div class="card">
+          <div class="video-facade" data-video-id="70BlzyEHJlY" data-video-start="12" role="button" tabindex="0" aria-label="Play video: The Wired Hatter's Banshee">
+            <img src="https://i.ytimg.com/vi/70BlzyEHJlY/hqdefault.jpg" alt="The Wired Hatter's Banshee video thumbnail" loading="lazy">
+            <span class="video-facade-play" aria-hidden="true"><svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+          </div>
+          <h3>The Wired Hatter's Banshee</h3>
+          <p>Walkthrough of the dual-ESP32 Banshee device: second-radio operation and GhostLink communication.</p>
+          <p class="card-spec">Dual ESP32 <span class="card-sep">///</span> 5 GHz</p>
+        </div>
+        <div class="card">
+          <div class="video-facade" data-video-id="K_0H2Vrosr8" role="button" tabindex="0" aria-label="Play video: 5GHz Deauthing with ESP32-C5">
+            <img src="https://i.ytimg.com/vi/K_0H2Vrosr8/hqdefault.jpg" alt="5GHz Deauthing with ESP32-C5 video thumbnail" loading="lazy">
+            <span class="video-facade-play" aria-hidden="true"><svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+          </div>
+          <h3>5GHz deauth on ESP32-C5</h3>
+          <p>5 GHz deauthentication test with the ESP32-C5 on a lab network, with full capture.</p>
+          <p class="card-spec">5 GHz <span class="card-sep">///</span> ESP32-C5</p>
+        </div>
+        <div class="card">
+          <div class="video-facade" data-video-id="VuGcUHBfYEU" role="button" tabindex="0" aria-label="Play video: Deauth Demo">
+            <img src="https://i.ytimg.com/vi/VuGcUHBfYEU/hqdefault.jpg" alt="Deauth Demo video thumbnail" loading="lazy">
+            <span class="video-facade-play" aria-hidden="true"><svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+          </div>
+          <h3>Deauthenticating a test camera</h3>
+          <p>GhostESP and Flipper Zero deauthenticating a camera from a lab 2.4 GHz network.</p>
+          <p class="card-spec">Flipper <span class="card-sep">///</span> 2.4 GHz</p>
+        </div>
+        <div class="card">
+          <div class="video-facade" data-video-id="OK0DhM7aPro" role="button" tabindex="0" aria-label="Play video: T-Watch S3 Tutorial">
+            <img src="https://i.ytimg.com/vi/OK0DhM7aPro/hqdefault.jpg" alt="T-Watch S3 Tutorial video thumbnail" loading="lazy">
+            <span class="video-facade-play" aria-hidden="true"><svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+          </div>
+          <h3>T-Watch S3: bootloader to flash</h3>
+          <p>Entering bootloader mode and flashing GhostESP on the LilyGo T-Watch S3.</p>
+          <p class="card-spec">Tutorial <span class="card-sep">///</span> T-Watch S3</p>
+        </div>
+        <div class="card">
+          <div class="video-facade" data-video-id="Q7qdrKj_Ino" role="button" tabindex="0" aria-label="Play video: Dual Communication">
+            <img src="https://i.ytimg.com/vi/Q7qdrKj_Ino/hqdefault.jpg" alt="Dual Communication video thumbnail" loading="lazy">
+            <span class="video-facade-play" aria-hidden="true"><svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+          </div>
+          <h3>Dual communication</h3>
+          <p>How two ESP32s coordinate over GhostLink, and which setups use the second radio.</p>
+          <p class="card-spec">GhostLink <span class="card-sep">///</span> Dual-ESP</p>
+        </div>
+        <div class="card">
+          <h3>Submit a demo.</h3>
+          <p>To have a demo listed here, post the link in Discord.</p>
+          <a href="https://discord.gg/5cyNmUMgwh" target="_blank" rel="noopener" class="btn btn-secondary btn-small"><span>Share in Discord</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="section section--tight" style="padding-top: 0;">
+    <div class="container">
+      <div class="feature-footer"><a href="/compare">Compare firmware →</a><a href="https://docs.ghostesp.net">Read the documentation →</a><a href="/boards">Browse supported boards →</a></div>
+    </div>
+  </section>
+</main>  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="legal-banner">
+        <p><strong>Authorized use only.</strong> GhostESP is built for security testing on networks you own, lab research, education, and defensive analysis. Do not use it on networks or devices you do not own or have explicit permission to test.</p>
+      </div>
+      <div class="footer-links">
+        <a href="https://discord.gg/5cyNmUMgwh" target="_blank" rel="noopener" class="icon-link" title="Discord">
+          <i class="bi bi-discord"></i>
+        </a>
+        <a href="https://github.com/GhostESP-Revival/GhostESP" target="_blank" rel="noopener" class="icon-link" title="GitHub">
+          <i class="bi bi-github"></i>
+        </a>
+        <a href="https://instagram.com/ghostesprevival" target="_blank" rel="noopener" class="icon-link" title="Instagram">
+          <i class="bi bi-instagram"></i>
+        </a>
+      </div>
+      <button class="cookie-settings-link" onclick="CookieConsent.showSettings()">Cookie Settings</button>
+      <a href="privacy.html" class="cookie-settings-link">Privacy Policy</a>
+    </div>
+  </footer>
+
+<script src="https://unpkg.com/lucide@0.344.0/dist/umd/lucide.min.js" defer></script>
+<script src="js/components.js?v=2" defer></script><script src="js/github.js?v=2" defer></script>
+<script src="js/main.js?v=2" defer></script><script src="js/cookie-consent.js?v=2" defer></script><script>document.addEventListener("DOMContentLoaded", () => {      // Capabilities explorer - tab switching
+      (function () {
+        var tabs = Array.prototype.slice.call(document.querySelectorAll('.cap-tab'));
+        var panels = Array.prototype.slice.call(document.querySelectorAll('.cap-panel'));
+        if (!tabs.length) return;
+
+        function activate(tab) {
+          var target = tab.getAttribute('data-target');
+          tabs.forEach(function (t) {
+            var on = t === tab;
+            t.classList.toggle('active', on);
+            t.setAttribute('aria-selected', on ? 'true' : 'false');
+          });
+          panels.forEach(function (p) {
+            var on = p.id === 'cap-panel-' + target;
+            p.classList.toggle('active', on);
+            if (on) { p.removeAttribute('hidden'); } else { p.setAttribute('hidden', ''); }
+          });
+        }
+
+        tabs.forEach(function (tab, i) {
+          tab.addEventListener('click', function () { activate(tab); });
+          tab.addEventListener('keydown', function (e) {
+            if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+            e.preventDefault();
+            var next = e.key === 'ArrowRight' ? (i + 1) % tabs.length : (i - 1 + tabs.length) % tabs.length;
+            tabs[next].focus();
+            activate(tabs[next]);
+          });
+        });
+      })();
+
+});</script></body></html>

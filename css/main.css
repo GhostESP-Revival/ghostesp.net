@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&display=swap');
+
 /* reset & base */
 * {
   margin: 0;
@@ -9,14 +11,14 @@
   --bg: #000;
   --surface: #0a0a0a;
   --text: #fff;
-  --text-dim: #888;
-  --accent: #fff;
+  --text-dim: #9a9a9a;
+  --accent: #00ff80;
   --border: rgba(255, 255, 255, 0.1);
   --spacing: 1rem;
   --radius: 12px;
   --max-width: 1200px;
   --font-mono: 'Share Tech Mono', 'Courier New', monospace;
-  --font-sans: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-sans: 'Sora', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 
   /* semantic aliases consumed by serial-crash/files/mirror components */
   --console-bg: var(--surface);
@@ -138,6 +140,12 @@ footer { position: relative; z-index: 1; }
 
 .section {
   padding: 4.5rem var(--spacing);
+}
+
+/* Fixed-header clearance: old pages hard-coded 8rem which doesn't account for
+   the announcement bar + nav stack. Route through --nav-height (set by JS). */
+.section--page-top {
+  padding-top: calc(var(--nav-height, 112px) + 3rem);
 }
 
 .section-alt {
@@ -666,14 +674,14 @@ nav .container {
 }
 
 .cap-explorer {
-  max-width: 1000px;
-  margin: 0 auto;
+  max-width: none;
+  margin: 0;
   border: 1px solid var(--border);
   border-radius: var(--radius);
   background: #0e0e0e;
   overflow: hidden;
   display: grid;
-  grid-template-columns: 210px 1fr;
+  grid-template-columns: 230px 1fr;
 }
 
 .cap-tabs {
@@ -814,7 +822,7 @@ nav .container {
 .cap-actions {
   display: flex;
   gap: 1rem;
-  justify-content: center;
+  justify-content: flex-start;
   flex-wrap: wrap;
   margin-top: 2.5rem;
 }
@@ -1070,11 +1078,11 @@ nav .container {
 }
 
 .presskit-placeholder:hover {
-  background: linear-gradient(45deg, #ff149344, #00ff8044) !important;
+  background: linear-gradient(45deg, #00ff8044, #00ff8044) !important;
   border-color: var(--accent) !important;
   transform: scale(1.03);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 8px 24px rgba(255, 20, 147, 0.2);
+  box-shadow: 0 8px 24px rgba(0, 255, 128, 0.2);
 }
 
 .card p {
@@ -1630,7 +1638,7 @@ nav .container {
 /* board filter panel */
 .board-filter-panel {
   max-width: 1000px;
-  margin: 0 auto 1rem;
+  margin: 0 0 1rem;
   padding: 1.25rem 1.5rem 1.5rem;
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -1798,7 +1806,18 @@ nav .container {
   width: 20px;
   height: 20px;
   font-size: 1.15rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
   transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.footer-links .cookie-settings-link {
+  margin-top: 0;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
 }
 
 /* comparison table */
@@ -1810,12 +1829,12 @@ nav .container {
 .comparison-disclaimer {
   font-size: 0.75rem;
   color: var(--text-dim);
-  text-align: center;
+  text-align: left;
   margin-bottom: 1.5rem;
   line-height: 1.5;
   max-width: 800px;
-  margin-left: auto;
-  margin-right: auto;
+  margin-left: 0;
+  margin-right: 0;
 }
 
 .comparison-toggle {
@@ -2036,8 +2055,8 @@ h1 {
   margin-bottom: 2rem;
   text-align: center;
   font-family: var(--font-sans);
-  font-weight: 600;
-  letter-spacing: -0.5px;
+  font-weight: 500;
+  letter-spacing: -0.03em;
 }
 
 h2 {
@@ -2045,11 +2064,9 @@ h2 {
   margin-bottom: 2rem;
   text-align: center;
   font-family: var(--font-sans);
-  font-weight: 800;
-  letter-spacing: -1px;
-  text-transform: uppercase;
-  transform: scaleY(1.15) !important;
-  transform-origin: center top;
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  text-transform: none;
 }
 
 h3 {
@@ -2138,7 +2155,7 @@ h3 {
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 0.75rem;
   max-width: 900px;
-  margin: 0 auto 2rem;
+  margin: 0 0 2rem;
 }
 
 .comparison-summary-item {

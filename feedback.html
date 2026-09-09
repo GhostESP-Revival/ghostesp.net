@@ -22,37 +22,41 @@
   <!-- Fonts and Styles -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
-  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/main.css?v=2">
+  <link rel="stylesheet" href="css/polish.css?v=2">
   <script src="https://unpkg.com/lucide@0.344.0/dist/umd/lucide.min.js" defer></script>
   <style>
     .feedback-section {
-      padding: 120px var(--spacing) 60px;
-      min-height: calc(100vh - 60px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      padding: 0 0 60px;
       position: relative;
       z-index: 1;
     }
 
-    .feedback-container {
-      max-width: 700px;
+    /* Unboxed so labels and inputs share the hero title's left line */
+    .feedback-section .feedback-container {
+      max-width: 1200px;
       width: 100%;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 2.5rem;
+      margin: 0 auto;
+      background: transparent;
+      border: none;
+      border-radius: 0;
+      padding: 0 var(--spacing);
+    }
+    .feedback-container form,
+    .feedback-container #form-status {
+      max-width: 700px;
     }
 
     .feedback-container h2 {
-      font-family: var(--font-mono);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
+      font-family: var(--font-sans);
+      font-weight: 500;
+      text-transform: none;
+      letter-spacing: -0.04em;
       font-size: 1.8rem;
       margin-bottom: 1.5rem;
-      text-align: center;
+      text-align: left;
     }
 
     .form-group {
@@ -94,8 +98,8 @@
     .form-group select:focus,
     .form-group textarea:focus {
       outline: none;
-      border-color: var(--accent);
-      box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1);
+      border-color: #00ff80;
+      box-shadow: 0 0 0 2px rgba(0, 255, 128, 0.12);
     }
 
     .form-group textarea {
@@ -113,7 +117,7 @@
     .submit-btn {
       width: 100%;
       padding: 1rem 2rem;
-      background: var(--accent);
+      background: #00ff80;
       color: var(--bg);
       border: none;
       border-radius: var(--radius);
@@ -134,7 +138,7 @@
 
     #form-status {
       margin-top: 1.5rem;
-      text-align: center;
+      text-align: left;
       font-weight: 500;
       font-family: var(--font-mono);
     }
@@ -149,11 +153,11 @@
 
     @media (max-width: 768px) {
       .feedback-section {
-        padding: 100px var(--spacing) 40px;
+        padding: 0 0 40px;
       }
 
-      .feedback-container {
-        padding: 2rem;
+      .feedback-section .feedback-container {
+        padding: 0 var(--spacing);
       }
 
       .feedback-container h2 {
@@ -165,17 +169,24 @@
   <script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "8a43f9bb615d42a8ad405808147cc502"}'></script>
   <!-- End Cloudflare Web Analytics -->
 </head>
-<body>
+<body class="polished">
   <a href="#main-content" class="skip-link">Skip to content</a>
   <canvas id="dotTerrain"></canvas>
-  <script src="js/dot-terrain.js"></script>
+  <script src="js/dot-terrain.js?v=2"></script>
+  <div class="page-scrim tint-none" aria-hidden="true"></div>
   <nav id="nav"><noscript><a href="/">Home</a> <a href="boards.html">Boards</a> <a href="flasher.html">Flasher</a> <a href="dashboard.html">Dashboard</a> <a href="blog.html">Blog</a> <a href="https://docs.ghostesp.net">Docs</a></noscript></nav>
 
   <!-- Feedback Section -->
   <main id="main-content">
-    <section class="feedback-section">
+    <header class="page-hero" style="padding-bottom: 24px;">
+      <div class="container">
+        <span class="editorial-eyebrow">Tell us what broke</span>
+        <h1>Submit feedback.</h1>
+        <p class="editorial-lede">Bug reports, feature requests, and board support requests.</p>
+      </div>
+    </header>
+    <section class="feedback-section" style="padding-top: 0;">
       <div class="feedback-container">
-        <h1>Submit Feedback</h1>
         <form id="feedback-form" class="feedback-form" name="feedback" method="POST" data-netlify="true" netlify-honeypot="bot-field">
           <!-- bot protection -->
           <p style="display:none;">
@@ -199,7 +210,7 @@
           </div>
 
           <div class="form-group">
-            <label for="feedback-message">What Needs Changing, Tweaking, or Improving?</label>
+            <label for="feedback-message">Message</label>
             <textarea id="feedback-message" name="message" rows="6" required placeholder="Select a topic first..."></textarea>
           </div>
 
@@ -232,11 +243,12 @@
             <button class="cookie-settings-link" onclick="CookieConsent.showSettings()">Cookie Settings</button>
       <a href="privacy.html" class="cookie-settings-link">Privacy Policy</a>
     </div>
+    </div>
   </footer>
 
-  <script src="js/components.js" defer></script>
-  <script src="js/social-proof.js" defer></script>
-  <script src="js/main.js" defer></script>
+  <script src="js/components.js?v=2" defer></script>
+  <script src="js/social-proof.js?v=2" defer></script>
+  <script src="js/main.js?v=2" defer></script>
   <script>
     // dynamic placeholder based on selected topic
     const topicSelect = document.getElementById('feedback-topic');
@@ -247,7 +259,7 @@
       "GhostESP: Display Support": "Describe the display issue or suggestion (e.g., specific board, layout, feature)...",
       "GhostESP: New Feature Request": "Describe the new feature you'd like to see...",
       "GhostESP: Essential Bug Fix": "Describe the bug, how to reproduce it, and why it's essential...",
-      "GhostESP: What You Like": "Tell us what you appreciate about Ghost ESP!",
+      "GhostESP: What You Like": "Describe what works well...",
       "GhostESP: What You Dislike": "Tell us what you don't like or find frustrating...",
       "GhostESP: Other": "Please provide details about your feedback..."
     };
@@ -260,6 +272,6 @@
     topicSelect.addEventListener('change', updatePlaceholder);
     updatePlaceholder();
   </script>
-  <script src="js/cookie-consent.js" defer></script>
+  <script src="js/cookie-consent.js?v=2" defer></script>
 </body>
 </html>

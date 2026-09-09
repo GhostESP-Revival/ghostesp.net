@@ -2,27 +2,18 @@
   max-width: 1400px;
   margin: 0 auto;
   padding: 1rem 2.5rem;
-  padding-top: 6rem;
+  padding-top: calc(var(--nav-height, 112px) + 2.5rem);
   position: relative;
   z-index: 1;
 }
 
 .openwd-header {
-  text-align: center;
-  padding: 0 0 1rem;
+  text-align: left;
+  padding: 0 0 1.5rem;
 }
-
-.openwd-header h1 {
-  font-size: 2rem;
-  margin-bottom: 0.5rem;
-  color: var(--accent);
-  font-family: var(--font-mono);
-}
-
-.header-description {
-  font-size: 1rem;
-  color: var(--text-dim);
-}
+/* h1 + lede inherit the canonical .page-hero system (polish.css) */
+.page-hero.openwd-header { padding-top: 0; padding-bottom: 1.5rem; }
+.openwd-header .editorial-lede { max-width: 640px; }
 
 .openwd-main {
   display: flex;
@@ -212,8 +203,7 @@
   gap: 1rem;
   height: calc(100vh - 180px);
   min-height: 400px;
-  max-width: 1160px;
-  margin: 0 auto;
+  margin: 0;
 }
 
 .panel {

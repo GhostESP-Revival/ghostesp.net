@@ -26,29 +26,32 @@
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
-  <link rel="stylesheet" href="css/main.css">
-  <link rel="stylesheet" href="css/openwd.css">
+  <link rel="stylesheet" href="css/main.css?v=2">
+  <link rel="stylesheet" href="css/polish.css?v=2">
+  <link rel="stylesheet" href="css/openwd.css?v=2">
   
   <link rel="icon" type="image/x-icon" href="images/favicon.ico">
   <!-- Cloudflare Web Analytics -->
   <script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "8a43f9bb615d42a8ad405808147cc502"}'></script>
   <!-- End Cloudflare Web Analytics -->
 </head>
-<body>
+<body class="polished">
   <a href="#main-content" class="skip-link">Skip to content</a>
   <canvas id="dotTerrain"></canvas>
-  <script src="js/dot-terrain.js"></script>
+  <script src="js/dot-terrain.js?v=2"></script>
+  <div class="page-scrim tint-deepblue" aria-hidden="true"></div>
   <nav id="nav"><noscript><a href="/">Home</a> <a href="boards.html">Boards</a> <a href="flasher.html">Flasher</a> <a href="dashboard.html">Dashboard</a> <a href="blog.html">Blog</a> <a href="https://docs.ghostesp.net">Docs</a></noscript></nav>
 
   <div class="openwd-container">
-    <header class="openwd-header">
-      <h1>WDMap</h1>
-      <p class="header-description">Client-side wardriving map for WiGLE v1.6 CSV files</p>
+    <header id="main-content" class="page-hero openwd-header">
+      <span class="editorial-eyebrow">Wardriving tool</span>
+      <h1>WDMap.</h1>
+      <p class="editorial-lede">Client-side wardriving map for WiGLE v1.6 CSV files — WiFi and BLE networks with GPS, entirely in your browser.</p>
     </header>
 
-    <main id="main-content" class="openwd-main">
+    <main class="openwd-main">
         <div class="openwd-toolbar">
           <div class="toolbar-row">
             <div class="import-controls">
@@ -131,10 +134,10 @@
   <script src="https://cdn.jsdelivr.net/npm/supercluster@8.0.1/dist/supercluster.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
   <script src="https://unpkg.com/lucide@0.344.0/dist/umd/lucide.min.js" defer></script>
-  <script src="js/components.js" defer></script>
-  <script src="js/social-proof.js" defer></script>
-  <script src="js/main.js" defer></script>
-  <script src="js/openwd.js" defer></script>
-  <script src="js/cookie-consent.js" defer></script>
+  <script src="js/components.js?v=2" defer></script>
+  <script src="js/social-proof.js?v=2" defer></script>
+  <script src="js/main.js?v=2" defer></script>
+  <script src="js/openwd.js?v=2" defer></script>
+  <script src="js/cookie-consent.js?v=2" defer></script>
 </body>
 </html>

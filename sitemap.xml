@@ -13,8 +13,8 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://ghostesp.net/hardware</loc>
-    <lastmod>2026-08-16</lastmod>
+    <loc>https://ghostesp.net/printables</loc>
+    <lastmod>2026-09-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -57,12 +57,6 @@
   <url>
     <loc>https://ghostesp.net/openwd</loc>
     <lastmod>2026-06-16</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://ghostesp.net/showcase</loc>
-    <lastmod>2026-08-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -125,5 +119,11 @@
     <lastmod>2026-05-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://ghostesp.net/features</loc>
+    <lastmod>2026-09-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
 </urlset>
