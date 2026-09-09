@@ -89,6 +89,7 @@
 
 .crash-upload-row {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 0.6rem;
 }
@@ -115,6 +116,8 @@
 }
 
 .crash-input {
+  flex: 1 1 160px;
+  min-width: 0;
   width: 100%;
   font-size: 0.8rem;
 }

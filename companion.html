@@ -215,6 +215,7 @@
       padding: 1rem 0;
       border-bottom: 1px solid var(--border);
       width: 100%;
+      min-width: 0;
     }
 
     .feature-item:last-child {
@@ -281,7 +282,7 @@
 
     @media (max-width: 900px) {
       .features-grid {
-        grid-template-columns: repeat(2, minmax(280px, 1fr));
+        grid-template-columns: repeat(2, minmax(min(280px, 100%), 1fr));
       }
     }
 

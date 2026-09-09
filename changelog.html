@@ -165,6 +165,8 @@
       padding: 0.1em 0.4em;
       border-radius: 3px;
       font-size: 0.88em;
+      overflow-wrap: anywhere;
+      word-break: break-word;
     }
     .changelog-version li strong {
       color: var(--text);
@@ -213,7 +215,8 @@
     }
     @media (max-width: 768px) {
       .changelog-version { padding: 1.5rem; }
-      .changelog-controls { flex-direction: column; align-items: flex-start; }
+      .changelog-controls { flex-direction: column; align-items: stretch; }
+      .changelog-branch-select { width: 100%; max-width: 320px; }
     }
   </style>
   <!-- Cloudflare Web Analytics -->

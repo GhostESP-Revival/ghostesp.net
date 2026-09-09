@@ -284,6 +284,7 @@ select.btn option {
   flex: 1;
   min-height: 0;
   max-height: calc(100vh - 22rem);
+  max-height: calc(100dvh - 22rem);
   overflow-y: auto;
   border-left: 1px solid var(--serial-border);
   border-right: 1px solid var(--serial-border);
@@ -446,7 +447,7 @@ select.btn option {
 
   .welcome-card { padding: 2rem 1.25rem; margin: 1rem auto; }
 
-  .console { max-height: calc(100vh - 24rem); }
+  .console { max-height: calc(100vh - 24rem); max-height: calc(100dvh - 24rem); }
 
   .control-panel { flex-wrap: wrap; }
   .control-panel .btn { flex: 1; min-width: 0; }

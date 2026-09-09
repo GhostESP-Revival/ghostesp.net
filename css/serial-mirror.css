@@ -413,6 +413,7 @@
 
   .mirror-display-wrapper {
     min-height: 50vh;
+    min-height: 50dvh;
     flex: none;
   }
 
@@ -449,6 +450,7 @@
 
   .mirror-display-wrapper {
     min-height: 45vh;
+    min-height: 32dvh;
   }
 
   .mirror-dpad {

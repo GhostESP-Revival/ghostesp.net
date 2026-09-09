@@ -398,9 +398,11 @@ nav ul.flasher-nav-links li::marker {
 
 .flasher-device-meta {
   display: flex;
-  gap: 1rem;
+  flex-wrap: wrap;
+  gap: 0.25rem 1rem;
   position: relative;
   z-index: 1;
+  min-width: 0;
 }
 
 .flasher-device-meta span {
@@ -1193,8 +1195,8 @@ nav ul.flasher-nav-links li::marker {
   bottom: calc(100% + 10px);
   right: 0;
   z-index: 60;
-  max-width: 280px;
-  min-width: 200px;
+  max-width: min(280px, calc(100vw - 2rem));
+  min-width: min(200px, calc(100vw - 2rem));
   display: flex;
   gap: 0.5rem;
   align-items: flex-start;
@@ -1833,8 +1835,8 @@ nav ul.flasher-nav-links li::marker {
   }
 
   .flasher-toggle {
-    flex-direction: column;
-    border-radius: var(--flasher-radius);
+    flex-direction: row;
+    flex-wrap: wrap;
   }
 
   .flasher-binary-toggle {
@@ -1868,6 +1870,43 @@ nav ul.flasher-nav-links li::marker {
 
   .flasher-device-grid {
     grid-template-columns: 1fr;
+  }
+
+  .flasher-help-arrow {
+    display: none;
+  }
+
+  .flasher-help-step {
+    flex: 1 1 40%;
+  }
+}
+
+@media (max-width: 600px) {
+  .flasher-nav {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .flasher-nav-right {
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  .flasher-nav-right .flasher-btn {
+    flex: 1 1 140px;
+    justify-content: center;
+  }
+
+  .flasher-terminal-toolbar {
+    flex-wrap: wrap;
+  }
+
+  .flasher-terminal-group {
+    flex: 1 1 100%;
+  }
+
+  .flasher-copy-log-btn {
+    width: 100%;
   }
 }
 
@@ -2052,6 +2091,7 @@ nav ul.flasher-nav-links li::marker {
 
 .flasher-secondary-actions {
   display: flex;
+  flex-wrap: wrap;
   gap: 0.5rem;
 }
 
@@ -2071,6 +2111,12 @@ nav ul.flasher-nav-links li::marker {
 
   .flasher-connect-actions {
     justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .flasher-connect-actions .flasher-btn {
+    flex: 1 1 140px;
+    justify-content: center;
   }
 
   .flasher-form-row {

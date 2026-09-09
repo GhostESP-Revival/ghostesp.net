@@ -396,6 +396,7 @@ nav.dash-nav-list {
   flex: 1;
   min-height: 240px;
   max-height: calc(100vh - 270px);
+  max-height: calc(100dvh - 270px);
   border: none;
   border-radius: 0;
   background: rgba(0, 0, 0, 0.55);
@@ -466,7 +467,7 @@ nav.dash-nav-list {
 }
 
 .control-panel .btn {
-  flex: 0 0 auto;
+  flex: 1 1 120px;
   width: auto;
   padding: 0.45rem 0.95rem;
   font-size: 0.8rem;
@@ -603,6 +604,12 @@ nav.dash-nav-list {
 
 #tab-store .store-empty {
   grid-column: 1 / -1;
+}
+
+@media (max-width: 420px) {
+  #tab-store .store-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 #tab-store .store-chip-filter {
@@ -895,6 +902,15 @@ nav.dash-nav-list {
     display: inline;
   }
 
+  @media (max-width: 560px) {
+    .dash-nav-item span {
+      display: none;
+    }
+    .dash-nav-item {
+      padding: 0.55rem 0.7rem;
+    }
+  }
+
   .dash-nav-foot,
   .dash-device-card {
     display: none;
@@ -941,9 +957,27 @@ nav.dash-nav-list {
   .dash-header-actions {
     order: 2;
     width: 100%;
+    flex-wrap: wrap;
   }
 
   .dash-header-actions .btn {
-    flex: 1;
+    flex: 1 1 140px;
+  }
+
+  .dash-header-actions .dash-baud {
+    flex: 1 1 100%;
+    max-width: none;
+  }
+
+  .welcome-card {
+    padding: 2rem 1.25rem;
+  }
+
+  .welcome-card h1 {
+    font-size: 1.6rem;
+  }
+
+  .welcome-actions .btn {
+    width: 100%;
   }
 }

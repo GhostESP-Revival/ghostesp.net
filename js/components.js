@@ -135,8 +135,8 @@ const components = {
     if (container) {
       container.innerHTML = allAssets.map(asset => `
         <a href="${this.escapeHtml(asset.browser_download_url)}" class="asset-link" download>
-          <span>${this.escapeHtml(asset.name)}</span>
-          <span style="margin-left: auto; opacity: 0.5; font-size: 0.85em">${this.formatSize(asset.size)}</span>
+          <span style="min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${this.escapeHtml(asset.name)}</span>
+          <span style="margin-left: auto; flex-shrink: 0; opacity: 0.5; font-size: 0.85em">${this.formatSize(asset.size)}</span>
         </a>
       `).join('');
       
@@ -150,8 +150,8 @@ const components = {
       <div class="release-assets" id="${id}">
         ${assets.map(asset => `
           <a href="${this.escapeHtml(asset.browser_download_url)}" class="asset-link" download>
-            <span>${this.escapeHtml(asset.name)}</span>
-            <span style="margin-left: auto; opacity: 0.5; font-size: 0.85em">${this.formatSize(asset.size)}</span>
+            <span style="min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${this.escapeHtml(asset.name)}</span>
+            <span style="margin-left: auto; flex-shrink: 0; opacity: 0.5; font-size: 0.85em">${this.formatSize(asset.size)}</span>
           </a>
         `).join('')}
       </div>
@@ -267,6 +267,7 @@ document.addEventListener('DOMContentLoaded', () => {
         menuToggle.classList.toggle('active', open);
         navLinks.classList.toggle('active', open);
         menuToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        document.body.style.overflow = open ? 'hidden' : '';
         if (open) {
           const firstLink = navLinks.querySelector('a');
           if (firstLink) firstLink.focus();

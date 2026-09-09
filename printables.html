@@ -87,7 +87,7 @@
 
     /* two-path cards */
     .hw-paths {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
       gap: 1.5rem;
     }
     .hw-path {
@@ -139,7 +139,7 @@
       position: relative; width: 100%; aspect-ratio: 4 / 3;
       border: 1px solid var(--border); border-radius: var(--radius);
       background: radial-gradient(circle at 50% 40%, rgba(0,255,128,0.06), transparent 70%);
-      overflow: hidden; touch-action: none; cursor: grab;
+      overflow: hidden; touch-action: pan-y; cursor: grab;
     }
     .hw-viewer:active { cursor: grabbing; }
     .hw-viewer canvas { display: block; width: 100%; height: 100%; }

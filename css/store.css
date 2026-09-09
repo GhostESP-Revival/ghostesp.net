@@ -446,6 +446,13 @@
   background: rgba(255, 255, 255, 0.03);
 }
 
+.store-download span:first-child {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .store-download:hover {
   border-color: rgba(255, 255, 255, 0.28);
   background: rgba(255, 255, 255, 0.06);
@@ -566,6 +573,14 @@
 
   .store-device-actions .btn {
     flex: 1;
+  }
+
+  .store-device-status {
+    min-width: 0;
+  }
+
+  .store-device-meta {
+    white-space: normal;
   }
 }
 

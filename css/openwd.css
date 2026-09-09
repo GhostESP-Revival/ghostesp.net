@@ -7,6 +7,17 @@
   z-index: 1;
 }
 
+@media (max-width: 600px) {
+  .openwd-container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  .share-card {
+    padding: 1.5rem;
+    min-height: 0;
+  }
+}
+
 .openwd-header {
   text-align: left;
   padding: 0 0 1.5rem;
@@ -178,9 +189,27 @@
 .time-display {
   font-size: 0.7rem;
   color: rgba(255, 255, 255, 0.7);
-  min-width: 90px;
+  min-width: 0;
   text-align: right;
   font-family: var(--font-mono);
+}
+
+@media (max-width: 600px) {
+  .time-slider-float {
+    flex-wrap: wrap;
+    row-gap: 0.4rem;
+  }
+  .time-slider {
+    flex: 1 1 100%;
+    order: 5;
+    min-height: 24px;
+  }
+  .time-label {
+    letter-spacing: 1px;
+  }
+  .time-display {
+    margin-left: auto;
+  }
 }
 
 .time-toggle {
@@ -618,6 +647,7 @@ select:focus {
 
   .toolbar-actions {
     justify-content: flex-start;
+    flex-wrap: wrap;
   }
 
   .filter-panel-row {
@@ -637,12 +667,13 @@ select:focus {
 
 @media (max-width: 600px) {
   .panel {
-    flex-direction: row;
-    overflow-x: auto;
+    flex-direction: column;
+    overflow-x: visible;
   }
 
   .card {
-    min-width: 200px;
+    min-width: 0;
+    width: 100%;
   }
 
   .toolbar-row {
@@ -662,6 +693,11 @@ select:focus {
   .import-controls #file-input {
     max-width: none;
     flex: 1;
+    min-width: 0;
+  }
+
+  .import-controls input[type="file"] {
+    min-width: 0;
   }
 }
 
@@ -703,7 +739,7 @@ select:focus {
 
 /* The card */
 .share-card {
-  width: 380px;
+  width: min(380px, 100%);
   min-height: 520px;
   background: linear-gradient(148deg, #09090f 0%, #0e0d1c 45%, #110820 100%);
   border-radius: 28px;

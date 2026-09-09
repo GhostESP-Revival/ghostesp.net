@@ -74,6 +74,8 @@
   border: 1px solid var(--border);
   border-radius: 999px;
   width: fit-content;
+  max-width: 100%;
+  flex-wrap: wrap;
 }
 .author-avatar {
   width: 32px;
@@ -153,6 +155,8 @@
   font-family: var(--font-mono);
   font-size: 0.9em;
   color: var(--text);
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 .post-prose pre {
   background: var(--surface);
@@ -197,6 +201,14 @@
   border: 1px solid var(--border);
   border-radius: var(--radius);
   overflow: hidden;
+}
+
+@media (max-width: 640px) {
+  .compare-table {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+  }
 }
 .compare-table th,
 .compare-table td {
@@ -257,8 +269,9 @@
 @media (max-width: 768px) {
   .post-title { font-size: 1.6rem; }
   .post-prose { font-size: 1rem; }
+  .post-prose-wrapper { padding: 1.25rem; }
   .compare-table { font-size: 0.85rem; }
   .compare-table th,
   .compare-table td { padding: 0.6rem 0.75rem; }
-  .diagram { font-size: 0.75rem; }
+  .diagram { font-size: 0.75rem; white-space: pre-wrap; overflow-x: visible; }
 }

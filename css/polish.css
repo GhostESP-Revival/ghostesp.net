@@ -163,9 +163,9 @@
 /* .container (0,1,1) outranks .feature-footer (0,1,0), so dual-class
    instances need this to keep the cap */
 .polished .container.feature-footer { max-width: 900px; }
-.feature-footer a { display: inline-flex; align-items: center; justify-content: center; min-height: 42px; padding: 9px 16px; color: #c9c9c9; font: 500 13px/1.2 var(--font-sans); text-decoration: none; white-space: nowrap; border-radius: 7px; }
+.feature-footer a { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 9px 16px; color: #c9c9c9; font: 500 13px/1.2 var(--font-sans); text-decoration: none; white-space: nowrap; border-radius: 7px; }
 .feature-footer a:not(.btn):hover { color: #00ff80; background: #191919; }
-.feature-footer .btn { min-height: 42px; padding: 9px 16px; margin: 0; }
+.feature-footer .btn { min-height: 44px; padding: 9px 16px; margin: 0; }
 .feature-footer .btn-primary, .feature-footer .btn-primary:hover { color: var(--bg); }
 /* .editorial-heading kept as an alias of .page-hero for older markup */
 .editorial-heading { padding-top: calc(var(--nav-height, 112px) + 4.5rem); padding-bottom: 44px; max-width: none; }
@@ -175,11 +175,11 @@
 .board-search-label { display: block; font-size: 13px; margin: 18px 0 8px; }
 .board-search { display: block; width: 100%; padding: 14px 16px; background: #080c09; color: #fff; border: 1px solid #455149; border-radius: 8px; font: 15px var(--font-sans); }
 .board-search::placeholder { color: #9aa69e; }
-.board-clear { border: 0; background: transparent; color: #c8d1cb; font: 13px var(--font-sans); cursor: pointer; text-decoration: underline; padding: 10px 0; }
+.board-clear { border: 0; background: transparent; color: #c8d1cb; font: 13px var(--font-sans); cursor: pointer; text-decoration: underline; padding: 12px 0; }
 .board-clear:focus-visible { outline: 2px solid #69e6a0; outline-offset: 4px; }
 .polished .board-filter-header { flex-wrap: wrap; }
 .board-filters { margin-top: 18px; }
-.board-filters summary { cursor: pointer; color: #c8d1cb; font-size: 14px; padding: 8px 0; }
+.board-filters summary { cursor: pointer; color: #c8d1cb; font-size: 14px; padding: 12px 0; }
 .board-filters[open] summary { margin-bottom: 15px; }
 .board-card-full { scroll-margin-top: 130px; }
 .board-card-full:target { outline: 2px solid #00ff80; outline-offset: 4px; }
@@ -188,7 +188,7 @@
 .polished .welcome-card { background: #0d0d0d; border: 1px solid #2b2b2b; }
 .polished .welcome-card h1 { letter-spacing: -.04em; }
 .polished .welcome-actions { flex-wrap: wrap; }
-@media (min-width: 801px) and (max-width: 1100px) {
+@media (min-width: 601px) and (max-width: 1100px) {
   .benefit-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 800px) {
@@ -215,11 +215,15 @@
   .board-paths > a > span { margin-bottom: 12px; }
   .board-paths p { margin-bottom: 16px; }
   .support-band { padding: 28px; }
+  .surface-card { padding: 20px; }
   .partner-strip { padding: 16px 0; }
+  .preview-grid { grid-template-columns: 1fr; }
   .feature-footer { display: grid; grid-template-columns: 1fr; gap: 6px; padding: 12px; }
   .feature-footer a, .feature-footer .btn { width: 100%; }
   .polished .hero-actions { flex-wrap: wrap; }
   .polished .hero-actions .btn { width: 100%; }
+  .polished .page-hero-actions { flex-wrap: wrap; }
+  .polished .page-hero-actions .btn { width: 100%; }
   .polished .welcome-actions > * { width: 100%; }
 }
 

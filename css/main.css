@@ -222,8 +222,8 @@ nav {
 .announce-bar-close {
   grid-column: 3;
   justify-self: end;
-  width: 26px;
-  height: 26px;
+  width: 32px;
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -395,7 +395,7 @@ nav .container {
   border: none;
   color: var(--text);
   cursor: pointer;
-  padding: 0.5rem;
+  padding: 0.65rem;
   z-index: 101;
 }
 
@@ -423,6 +423,7 @@ nav .container {
 /* hero */
 .hero {
   min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   align-items: center;
   text-align: center;
@@ -757,6 +758,10 @@ nav .container {
   margin-bottom: 1.35rem;
 }
 
+.cap-panel-head > * {
+  min-width: 0;
+}
+
 .cap-panel-icon {
   width: 44px;
   height: 44px;
@@ -846,6 +851,7 @@ nav .container {
     width: auto;
     white-space: nowrap;
     flex-shrink: 0;
+    padding: 0.75rem 1rem;
   }
   .cap-list {
     grid-template-columns: 1fr;
@@ -1795,6 +1801,7 @@ nav .container {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  padding: 0.5rem;
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -1876,6 +1883,7 @@ nav .container {
   overflow-x: auto;
   overflow-y: auto;
   max-height: 75vh;
+  max-height: 75dvh;
   border: 1px solid var(--border);
   border-radius: var(--radius);
   background: #0e0e0e;
@@ -2045,6 +2053,7 @@ nav .container {
 
   .comparison-container {
     max-height: 60vh;
+    max-height: 60dvh;
     border-radius: 8px;
   }
 }
@@ -2198,24 +2207,29 @@ h3 {
   .nav-links {
     position: fixed;
     top: 0;
-    right: -100%;
+    right: 0;
     height: 100vh;
-    width: 75%;
-    max-width: 300px;
+    height: 100dvh;
+    width: min(75%, 300px);
     background: rgba(0, 0, 0, 0.98);
     backdrop-filter: blur(10px);
     flex-direction: column;
     align-items: stretch;
     gap: 0.75rem;
-    padding: 72px 1.5rem 1.5rem;
+    padding: 72px 1.5rem calc(1.5rem + env(safe-area-inset-bottom, 0px));
     border-left: 1px solid var(--border);
-    transition: right 0.3s ease;
+    transform: translateX(102%);
+    visibility: hidden;
+    transition: transform 0.3s ease, visibility 0s linear 0.3s;
     overflow-y: auto;
-    z-index: 2100;
+    overscroll-behavior: contain;
+    z-index: 1500;
   }
 
   .nav-links.active {
-    right: 0;
+    transform: none;
+    visibility: visible;
+    transition: transform 0.3s ease;
   }
 
   .nav-links li {
@@ -2263,7 +2277,7 @@ h3 {
 
   .nav-links a {
     display: block;
-    padding: 0.25rem 0;
+    padding: 0.5rem 0;
     font-size: 0.95rem;
     transform: none !important;
     transition: none !important;
@@ -2284,6 +2298,7 @@ h3 {
 
   .hero {
     min-height: 90vh;
+    min-height: 90dvh;
     padding: calc(var(--nav-height, 60px) + 2rem) var(--spacing) 2rem;
   }
 
@@ -2384,6 +2399,15 @@ h3 {
     text-align: center;
   }
 
+  .contextual-discord-cta {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .contextual-discord-cta .btn {
+    width: 100%;
+  }
+
   .card-secondary {
     flex-direction: column;
     text-align: center;
@@ -2412,8 +2436,14 @@ h3 {
   }
 
   .tag-filter-btn {
-    font-size: 0.66rem;
-    padding: 0.32rem 0.6rem;
+    font-size: 0.72rem;
+    padding: 0.5rem 0.8rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .board-grid {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -2950,6 +2980,18 @@ h3 {
   margin-left: 1rem;
   padding-left: 1rem;
   border-left: 1px solid var(--border);
+}
+
+@media (max-width: 480px) {
+  .footer-links .cookie-settings-link + .cookie-settings-link {
+    margin-left: 0;
+    padding-left: 0;
+    border-left: none;
+  }
+  .footer-links .cookie-settings-link {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
 }
 
 .cookie-settings-link:hover {
