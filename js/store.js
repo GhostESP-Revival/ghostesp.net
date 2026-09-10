@@ -26,6 +26,14 @@
 
   const TAB_ICONS = { apps: 'bi-grid', assets: 'bi-palette', scripts: 'bi-file-code' };
 
+  // Per-app catalog manifests (apps/<id>/manifest.json) are the source of
+  // truth for source_repo / source_branch / source_subdir. The aggregated
+  // catalog.json strips those fields, so enrich from here at runtime.
+  const APPS_MANIFEST_BASE = 'https://raw.githubusercontent.com/GhostESP-Revival/GhostESP-Apps/main/apps';
+  const APPS_CATALOG_DIR_BASE = 'https://github.com/GhostESP-Revival/GhostESP-Apps/tree/main/apps';
+  const ORG_URL = 'https://github.com/GhostESP-Revival';
+  const APP_SOURCE_CACHE_KEY = 'ghostesp-store-app-sources-v1';
+
   const TARGET_LABELS = {
     esp32: 'ESP32',
     esp32s2: 'ESP32-S2',
@@ -552,18 +560,140 @@
       <p class="store-card-description">${esc(item.description)}</p>
       <div class="store-chip-row">${statusChips}${chips}${metaChips}</div>
       ${renderDownloads(item, key)}
-      <a class="store-source-link" href="${esc(sourceUrlFor(item))}" target="_blank" rel="noopener">View source code</a>
+      <a class="store-source-link" href="${esc(sourceUrlFor(item, key))}" target="_blank" rel="noopener">View source code</a>
     </article>`;
   }
 
-  function sourceUrlFor(item) {
-    if (item.source_repo) {
-      const repo = item.source_repo.replace(/\.git\/?$/, '').replace(/\/$/, '');
-      const branch = item.source_branch || 'main';
-      const subdir = item.source_subdir ? `/${item.source_subdir.replace(/^\/+/, '')}` : '';
-      return `${repo}/tree/${branch}${subdir}`;
+  function isValidAppId(id) {
+    return /^[A-Za-z0-9][A-Za-z0-9_-]*$/.test(String(id || ''));
+  }
+
+  function normalizeRepoUrl(url) {
+    const raw = String(url || '').trim();
+    if (!/^https?:\/\//i.test(raw)) return '';
+    return raw.replace(/\.git\/?$/, '').replace(/\/+$/, '');
+  }
+
+  function normalizeSourceSubdir(subdir) {
+    const raw = String(subdir || '').trim().replace(/^\/+/, '').replace(/\/+$/, '');
+    if (!raw || raw === '.' || raw === './') return '';
+    return raw.replace(/^\.\//, '');
+  }
+
+  function sourceUrlFor(item, key) {
+    const branch = String(item.source_branch || item.sourceBranch || item.branch || 'main').trim() || 'main';
+    const subdir = normalizeSourceSubdir(item.source_subdir || item.sourceSubdir || item.subdir || '');
+    const withBranch = (repo) => (subdir ? `${repo}/tree/${branch}/${subdir}` : `${repo}/tree/${branch}`);
+    const candidates = [
+      item.source_repo,
+      item.sourceRepo,
+      item.source_url,
+      item.sourceUrl,
+      item.repository,
+      item.repo,
+      item.source
+    ];
+    for (const candidate of candidates) {
+      if (typeof candidate !== 'string' || !candidate.trim()) continue;
+      const trimmed = candidate.trim();
+      // Already a deep link into a repo — use as-is.
+      if (/^https?:\/\/[^/]+\/[^/]+\/[^/]+\/(tree|blob)\//i.test(trimmed)) {
+        return normalizeRepoUrl(trimmed) || trimmed;
+      }
+      // Bare `owner/repo` shorthand.
+      if (/^[^/\s]+\/[^/\s]+$/.test(trimmed) && !/[:\s]/.test(trimmed)) {
+        return withBranch(`https://github.com/${trimmed.replace(/\.git\/?$/, '')}`);
+      }
+      const repo = normalizeRepoUrl(trimmed);
+      if (!repo) continue;
+      return withBranch(repo);
     }
-    return 'https://github.com/GhostESP-Revival';
+    // catalog.json drops source_* fields, so fall back to the per-app catalog
+    // manifest directory (which points at the true source repo) instead of the
+    // generic org page. Enrichment in enrichAppsWithSource() replaces this
+    // with the direct source_repo link once manifests load.
+    if ((key || 'apps') === 'apps' && isValidAppId(item && item.id)) {
+      return `${APPS_CATALOG_DIR_BASE}/${encodeURIComponent(item.id)}`;
+    }
+    return ORG_URL;
+  }
+
+  function readCachedAppSources() {
+    try {
+      const raw = sessionStorage.getItem(APP_SOURCE_CACHE_KEY);
+      if (!raw) return {};
+      const parsed = JSON.parse(raw);
+      return parsed && typeof parsed === 'object' ? parsed : {};
+    } catch (e) {
+      return {};
+    }
+  }
+
+  function writeCachedAppSource(id, source) {
+    try {
+      const cache = readCachedAppSources();
+      cache[id] = { ...source, cachedAt: Date.now() };
+      sessionStorage.setItem(APP_SOURCE_CACHE_KEY, JSON.stringify(cache));
+    } catch (e) {}
+  }
+
+  async function fetchAppManifest(id) {
+    const url = `${APPS_MANIFEST_BASE}/${encodeURIComponent(id)}/manifest.json`;
+    try {
+      const response = await fetch(url, { cache: 'no-store' });
+      if (response.ok) return await response.json();
+    } catch (e) {}
+    try {
+      const proxied = await fetch(`${proxyBase()}?url=${encodeURIComponent(url)}`);
+      if (proxied.ok) {
+        const info = await proxied.json();
+        const chunk = await fetch(`${proxyBase()}?url=${encodeURIComponent(url)}&start=0&length=${info.total || 65536}`);
+        if (chunk.ok) {
+          const part = await chunk.json();
+          if (part.ok && part.data) {
+            const binary = atob(part.data);
+            const bytes = new Uint8Array(binary.length);
+            for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+            return JSON.parse(new TextDecoder().decode(bytes));
+          }
+        }
+      }
+    } catch (e) {}
+    return null;
+  }
+
+  // catalog.json carries no source_repo fields (see the Apps build workflow),
+  // so hydrate apps from their catalog manifests (apps/<id>/manifest.json).
+  // Failures are silent — cards fall back to the manifest directory link.
+  async function enrichAppsWithSource() {
+    const apps = state.catalogs.apps || [];
+    const pending = apps.filter((item) => item && !item.source_repo && isValidAppId(item.id));
+    if (!pending.length) return false;
+    const cache = readCachedAppSources();
+    let changed = false;
+    await Promise.all(pending.map(async (item) => {
+      const cached = cache[item.id];
+      if (cached && cached.source_repo) {
+        item.source_repo = cached.source_repo;
+        if (cached.source_branch) item.source_branch = cached.source_branch;
+        if (cached.source_subdir) item.source_subdir = cached.source_subdir;
+        changed = true;
+        return;
+      }
+      const manifest = await fetchAppManifest(item.id);
+      if (manifest && typeof manifest.source_repo === 'string' && manifest.source_repo.trim()) {
+        item.source_repo = manifest.source_repo.trim();
+        if (manifest.source_branch) item.source_branch = manifest.source_branch;
+        if (manifest.source_subdir) item.source_subdir = manifest.source_subdir;
+        writeCachedAppSource(item.id, {
+          source_repo: item.source_repo,
+          source_branch: item.source_branch,
+          source_subdir: item.source_subdir
+        });
+        changed = true;
+      }
+    }));
+    return changed;
   }
 
   function render() {
@@ -780,6 +910,9 @@
         const count = root.querySelector(`.store-tab-count[data-tab="${btn.dataset.tab}"]`);
         if (count) count.textContent = `(${state.catalogs[btn.dataset.tab].length})`;
       });
+      // Hydrate source_repo links from per-app manifests (catalog.json omits
+      // them) and re-render so "View source code" points at the true repo.
+      enrichAppsWithSource().then((changed) => { if (changed) render(); }).catch(() => {});
     } catch (err) {
       state.loading = false;
       state.error = 'Failed to load the store catalog. Please try again later.';
