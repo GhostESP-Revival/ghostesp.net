@@ -5,7 +5,7 @@
     <link>https://ghostesp.net/blog</link>
     <description>News, updates, and deep dives from the GhostESP project — the open-source wireless research platform for ESP32.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 04 May 2026 00:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Sun, 19 July 2026 00:00:00 GMT</lastBuildDate>
     <atom:link href="https://ghostesp.net/feed.xml" rel="self" type="application/rss+xml"/>
     <image>
       <url>https://ghostesp.net/images/ghostespdotnet.webp</url>
@@ -41,6 +41,16 @@
       <category>Education</category>
       <category>Technical</category>
       <description>A breakdown of how Wi-Fi deauth and RF jamming actually differ — how each works, where they sit in the stack, and why the distinction matters.</description>
+    </item>
+
+    <item>
+      <title>GhostESP v2.1: Building a Platform</title>
+      <link>https://ghostesp.net/blog-ghostesp-v2-1</link>
+      <guid isPermaLink="true">https://ghostesp.net/blog-ghostesp-v2-1</guid>
+      <pubDate>Sun, 19 Jul 2026 00:00:00 GMT</pubDate>
+      <category>Release</category>
+      <category>Update</category>
+      <description>Cloud Store, safe OTA updates, GhostScript, expanded NFC support, and more polish for an extensible GhostESP platform.</description>
     </item>
 
   </channel>

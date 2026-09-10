@@ -39,11 +39,11 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // load releases if elements exist
-  if (document.getElementById('latest-release')) {
-    github.renderRelease('latest-release', 'GhostESP-Revival', 'GhostESP');
+  if (window.GhostStar && typeof window.GhostStar.renderRelease === 'function' && document.getElementById('latest-release')) {
+    window.GhostStar.renderRelease('latest-release', 'GhostESP-Revival', 'GhostESP');
   }
-  if (document.getElementById('flipper-release')) {
-    github.renderRelease('flipper-release', 'GhostESP-Revival', 'GhostESP-FlipperCompanion');
+  if (window.GhostStar && typeof window.GhostStar.renderRelease === 'function' && document.getElementById('flipper-release')) {
+    window.GhostStar.renderRelease('flipper-release', 'GhostESP-Revival', 'GhostESP-FlipperCompanion');
   }
 
   // initialize lucide icons if available

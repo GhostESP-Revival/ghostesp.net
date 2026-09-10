@@ -156,15 +156,36 @@ var SocialProof = (function() {
       } catch (e) {}
     }
 
-    modal.querySelector('.post-flash-close').addEventListener('click', function() { modal.remove(); });
-    modal.querySelector('.post-flash-dismiss').addEventListener('click', function() { modal.remove(); });
-    modal.addEventListener('click', function(e) { if (e.target === modal) modal.remove(); });
-    document.addEventListener('keydown', function onKey(e) {
-      if (e.key === 'Escape' && document.getElementById('post-flash-modal')) {
-        modal.remove();
-        document.removeEventListener('keydown', onKey);
+    var previousFocus = document.activeElement;
+    var focusable = Array.prototype.slice.call(modal.querySelectorAll('a[href], button:not([disabled])'));
+    var closeModal = function() {
+      if (!document.getElementById('post-flash-modal')) return;
+      modal.remove();
+      document.removeEventListener('keydown', onKey);
+      if (previousFocus && typeof previousFocus.focus === 'function') previousFocus.focus();
+    };
+    var onKey = function(e) {
+      if (!document.getElementById('post-flash-modal')) return;
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        closeModal();
+        return;
       }
-    });
+      if (e.key !== 'Tab' || focusable.length === 0) return;
+      var first = focusable[0];
+      var last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+    modal.querySelector('.post-flash-close').addEventListener('click', closeModal);
+    modal.querySelector('.post-flash-dismiss').addEventListener('click', closeModal);
+    modal.addEventListener('click', function(e) { if (e.target === modal) closeModal(); });
+    document.addEventListener('keydown', onKey);
 
     try { sessionStorage.setItem('ghostesp_flash_discord_shown', '1'); } catch(e) {}
     var firstBtn = modal.querySelector('[data-github-cta]');

@@ -20,6 +20,11 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateStatusIndicator(status, message, details) {
         const el = document.getElementById('globalStatus');
         if (!el) return;
+        const troubleshooting = document.getElementById('flasher-troubleshooting');
+        if (troubleshooting) {
+            troubleshooting.hidden = status !== 'error';
+            troubleshooting.open = status === 'error';
+        }
         let iconClass = 'bi-cpu';
         switch (status) {
             case 'flashing': iconClass = 'bi-lightning-charge'; break;
@@ -1699,6 +1704,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 terminalElem.classList.toggle('open');
                 const group = terminalToggleBtn.closest('.flasher-terminal-group');
                 if (group) group.classList.toggle('open', terminalElem.classList.contains('open'));
+                terminalToggleBtn.setAttribute('aria-expanded', terminalElem.classList.contains('open') ? 'true' : 'false');
                 const isHidden = terminalElem.classList.contains('d-none');
                 const icon = terminalToggleBtn.querySelector('i');
                 if (icon) {

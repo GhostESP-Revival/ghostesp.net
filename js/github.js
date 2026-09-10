@@ -94,6 +94,8 @@ const github = {
       spots.forEach((spot) => {
         spot.textContent = '★ ' + formatted;
         spot.setAttribute('aria-label', count.toLocaleString() + ' GitHub stars');
+        const cta = spot.closest('[data-github-cta]');
+        if (cta) cta.setAttribute('aria-label', 'Star GhostESP on GitHub, ' + count.toLocaleString() + ' stars');
       });
       // Keep the nav star button in sync if social-proof rendered it first.
       if (window.SocialProof && typeof window.SocialProof.renderNavStars === 'function') {

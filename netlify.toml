@@ -185,6 +185,32 @@
   status = 301
   force = true
 
+# The starter article is kept in the repository as a template, but should not
+# be reachable as a public page until it contains real editorial content.
+[[redirects]]
+  from = "/blog-post.html"
+  to = "/blog"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog-post"
+  to = "/blog"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog-community.html"
+  to = "/blog"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog-community"
+  to = "/blog"
+  status = 301
+  force = true
+
 # Pretty URLs - serve extensionless URLs from matching .html files.
 [[redirects]]
   from = "/:url"

@@ -147,6 +147,20 @@
 @media (prefers-reduced-motion: reduce) { .partner-marquee { animation: none; } }
 .dashboard-feature { display: grid; grid-template-columns: 1fr 1.1fr; gap: 72px; align-items: center; }
 .dashboard-feature h2 { margin-bottom: 24px !important; }
+.app-store-feature { display: grid; grid-template-columns: 1fr 1.05fr; gap: 72px; align-items: center; }
+.app-store-copy > p:not(.app-store-note) { max-width: 600px; color: var(--text-dim); line-height: 1.7; margin: 20px 0 24px; }
+.app-store-note { display: flex; align-items: center; gap: 8px; color: #b6c4bb; font-size: 13px; margin: 22px 0 0; }
+.app-store-note svg { width: 16px; height: 16px; color: #00ff80; }
+.app-store-preview { border: 1px solid #353535; border-radius: 14px; background: #0d0d0d; overflow: hidden; }
+.app-store-preview-top { display: flex; align-items: center; gap: 8px; padding: 20px; border-bottom: 1px solid #28312a; color: #d7ded9; font: 11px var(--font-mono); letter-spacing: .08em; }
+.app-store-preview-top span:first-child { display: inline-flex; align-items: center; gap: 8px; color: #00ff80; }
+.app-store-preview-top span:last-child { margin-left: auto; color: #a6aba8; letter-spacing: 0; }
+.app-store-preview-top svg { width: 15px; height: 15px; }
+.app-store-preview-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 12px; }
+.app-store-preview-grid span { display: flex; align-items: center; gap: 10px; min-height: 64px; padding: 14px; border: 1px solid #262b27; border-radius: 8px; color: #e5e9e6; font-size: 13px; }
+.app-store-preview-grid svg { flex: 0 0 auto; width: 18px; height: 18px; color: #00ff80; }
+.app-store-preview-link { display: flex; justify-content: space-between; padding: 16px 20px; border-top: 1px solid #28312a; color: #cddbd2; font-size: 13px; text-decoration: none; }
+.app-store-preview-link:hover { color: #00ff80; background: #151b17; }
 .workspace-preview { border: 1px solid #353535; border-radius: 14px; background: #0d0d0d; overflow: hidden; }
 .preview-top { display: flex; align-items: center; gap: 8px; padding: 20px; font-size: 13px; border-bottom: 1px solid #28312a; }
 .preview-top > span:last-child { margin-left: auto; font-size: 10px; color: #a6aba8; }
@@ -193,6 +207,7 @@
 }
 @media (max-width: 800px) {
   .product-hero { gap: 30px; padding-top: 40px; padding-bottom: 48px; }
+  .app-store-feature { grid-template-columns: 1fr; gap: 34px; }
   .product-copy h1 { font-size: 48px; }
   .hero-system-panel { min-height: 420px; }
   .benefit-grid, .board-paths { gap: 12px; }

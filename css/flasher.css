@@ -1636,6 +1636,34 @@ nav ul.flasher-nav-links li::marker {
 .flasher-global-status.error { background: rgba(231, 76, 60, 0.1); border: 1px solid rgba(231, 76, 60, 0.3); color: var(--flasher-danger); }
 .flasher-global-status.success { background: rgba(0, 255, 128, 0.1); border: 1px solid rgba(0, 255, 128, 0.3); color: var(--flasher-success); }
 
+.flasher-troubleshooting {
+  margin: 0.75rem 0 1rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid rgba(231, 76, 60, 0.35);
+  border-radius: 8px;
+  background: rgba(231, 76, 60, 0.08);
+  color: var(--flasher-text, var(--text));
+}
+
+.flasher-troubleshooting summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.flasher-troubleshooting ul {
+  margin: 0.75rem 0 0 1.1rem;
+  padding: 0;
+}
+
+.flasher-troubleshooting li {
+  margin: 0.35rem 0;
+}
+
+.flasher-troubleshooting a {
+  color: inherit;
+  text-decoration: underline;
+}
+
 /* Terminal */
 .flasher-terminal-toggle {
   width: 100%;
