@@ -5,6 +5,7 @@ const ALLOWED_PREFIXES = [
 ];
 
 const MAX_CHUNK_BYTES = 512 * 1024;
+const MAX_HEAD_URLS = 120;
 
 function json(statusCode, body, extraHeaders) {
   return {
@@ -17,9 +18,50 @@ function json(statusCode, body, extraHeaders) {
   };
 }
 
+// Resolves Last-Modified for a list of allowlisted URLs, concurrently.
+async function handleHeads(raw) {
+  let urls;
+  try {
+    urls = JSON.parse(raw);
+  } catch (error) {
+    return json(400, { message: 'Invalid heads payload' });
+  }
+
+  if (!Array.isArray(urls) || !urls.length || urls.length > MAX_HEAD_URLS) {
+    return json(400, { message: 'Invalid heads list' });
+  }
+
+  const items = await Promise.all(urls.map(async (target) => {
+    if (typeof target !== 'string' || !ALLOWED_PREFIXES.some((prefix) => target.startsWith(prefix))) {
+      return null;
+    }
+    try {
+      const response = await fetch(target, {
+        method: 'HEAD',
+        headers: { 'User-Agent': 'GhostESP-website' }
+      });
+      if (!response.ok) return null;
+      return { url: target, lastModified: response.headers.get('last-modified') || '' };
+    } catch (error) {
+      return null;
+    }
+  }));
+
+  // Cached on the CDN edge since publish dates only move when a release ships.
+  return json(200, { ok: true, items: items.filter(Boolean) }, { 'Cache-Control': 'public, max-age=600' });
+}
+
 exports.handler = async (event) => {
   const params = event.queryStringParameters || {};
   const url = params.url;
+
+  // Batched HEAD lookup used by the store's "Recently updated" sort. The CDN
+  // sends an uncacheable Last-Modified per package, and it cannot be read from
+  // the browser directly (no Access-Control-Allow-Origin on the CDN), so the
+  // publish dates are resolved here and returned in one round trip.
+  if (!url && params.heads) {
+    return handleHeads(params.heads);
+  }
 
   if (!url || typeof url !== 'string' || !ALLOWED_PREFIXES.some((prefix) => url.startsWith(prefix))) {
     return json(400, { message: 'Invalid URL' });

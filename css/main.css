@@ -2189,50 +2189,72 @@ h3 {
 }
 
 /* responsive */
-@media (max-width: 768px) {
+/* The full nav needs roughly 1120px of width. Below that the link list used to
+   overflow and was silently clipped by html { overflow-x: hidden }, cutting off
+   the rightmost items (Resources, Community, the star button) - visible on a
+   1080px-wide display once the scrollbar takes its gutter. Switch to the drawer
+   as soon as the full layout stops fitting instead of letting it be clipped. */
+@media (max-width: 1100px) {
   .mobile-menu-toggle {
     display: block;
-  }
-
-  .nav-logo {
-    height: 30px;
-  }
-
-  .nav-logo img {
-    height: 30px;
   }
 
   nav {
     padding: 0.5rem 0;
   }
 
-  .nav-links {
-    position: fixed;
-    top: 0;
-    right: 0;
-    height: 100vh;
-    height: 100dvh;
-    width: min(75%, 300px);
-    background: rgba(0, 0, 0, 0.98);
-    backdrop-filter: blur(10px);
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0.75rem;
-    padding: 72px 1.5rem calc(1.5rem + env(safe-area-inset-bottom, 0px));
-    border-left: 1px solid var(--border);
-    transform: translateX(102%);
-    visibility: hidden;
-    transition: transform 0.3s ease, visibility 0s linear 0.3s;
-    overflow-y: auto;
-    overscroll-behavior: contain;
-    z-index: 1500;
-  }
+/* Drawer panel. Genuinely opaque (no backdrop-filter): animating a backdrop
+   filter makes the browser re-sample the blur behind the panel on every frame,
+   which measured ~50ms per frame (~20fps) while sliding. The panel is 98% black
+   already, so the blur bought nothing. will-change keeps it on its own layer. */
+.nav-links {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  height: 100dvh;
+  width: min(78%, 320px);
+  background: #000;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.25rem;
+  margin: 0;
+  padding: calc(var(--nav-height, 72px) + 0.5rem) 1.25rem calc(1.5rem + env(safe-area-inset-bottom, 0px));
+  border-left: 1px solid var(--border);
+  transform: translateX(100%);
+  visibility: hidden;
+  will-change: transform;
+  transition: transform 0.22s cubic-bezier(0.32, 0.72, 0, 1), visibility 0s linear 0.22s;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  z-index: 1500;
+}
 
-  .nav-links.active {
-    transform: none;
-    visibility: visible;
-    transition: transform 0.3s ease;
-  }
+.nav-links.active {
+  transform: translateX(0);
+  visibility: visible;
+  transition: transform 0.22s cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+/* Scrim behind the panel: gives the open drawer an edge, catches outside clicks,
+   and stops the page behind it from competing for attention. */
+.nav-scrim {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.62);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.22s ease, visibility 0s linear 0.22s;
+  z-index: 1400;
+}
+
+.nav-scrim.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0.22s ease;
+}
 
   .nav-links li {
     width: 100%;
@@ -2301,6 +2323,17 @@ h3 {
   .nav-links > li > a::after {
     display: none !important;
     width: 0 !important;
+  }
+}
+
+/* Genuinely small screens: logo scale plus page layout. */
+@media (max-width: 768px) {
+  .nav-logo {
+    height: 30px;
+  }
+
+  .nav-logo img {
+    height: 30px;
   }
 
   .hero {

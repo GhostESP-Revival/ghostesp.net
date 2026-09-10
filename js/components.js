@@ -248,6 +248,16 @@ document.addEventListener('DOMContentLoaded', () => {
   if (nav) {
     nav.innerHTML = components.nav();
 
+    // Scrim for the mobile drawer. It lives outside <nav> so the nav (z 2000),
+    // and therefore the hamburger itself, stays above and clickable.
+    let navScrim = document.querySelector('.nav-scrim');
+    if (!navScrim) {
+      navScrim = document.createElement('div');
+      navScrim.className = 'nav-scrim';
+      navScrim.setAttribute('aria-hidden', 'true');
+      nav.parentNode.insertBefore(navScrim, nav.nextSibling);
+    }
+
     // Keep the GitHub action live on pages that do not include github.js
     // directly (the shared nav is used by every route).
     const hydrateNavStars = () => {
@@ -290,11 +300,30 @@ document.addEventListener('DOMContentLoaded', () => {
     const navLinks = document.querySelector('.nav-links');
     
     if (menuToggle && navLinks) {
+      // Locks the page while the drawer is open. <html> is the actual scroller on
+      // this site (html { overflow-x: hidden }), so locking document.body alone
+      // did nothing and the page scrolled away behind the open drawer. The
+      // padding compensates for the disappearing scrollbar so content does not
+      // jump sideways as the lock engages.
+      const setScrollLock = (locked) => {
+        const root = document.documentElement;
+        if (locked) {
+          const gutter = window.innerWidth - root.clientWidth;
+          root.style.overflow = 'hidden';
+          if (gutter > 0) root.style.paddingRight = gutter + 'px';
+        } else {
+          root.style.overflow = '';
+          root.style.paddingRight = '';
+        }
+        document.body.style.overflow = locked ? 'hidden' : '';
+      };
+
       const setMenuState = (open) => {
         menuToggle.classList.toggle('active', open);
         navLinks.classList.toggle('active', open);
+        if (navScrim) navScrim.classList.toggle('active', open);
         menuToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-        document.body.style.overflow = open ? 'hidden' : '';
+        setScrollLock(open);
         if (open) {
           const firstLink = navLinks.querySelector('a');
           if (firstLink) firstLink.focus();
@@ -306,6 +335,11 @@ document.addEventListener('DOMContentLoaded', () => {
       menuToggle.addEventListener('click', () => {
         setMenuState(!navLinks.classList.contains('active'));
       });
+
+      // Tapping the dimmed area closes the menu.
+      if (navScrim) {
+        navScrim.addEventListener('click', () => setMenuState(false));
+      }
 
       // close menu when clicking links
       navLinks.querySelectorAll('a').forEach(link => {

@@ -6,10 +6,16 @@
    (see .page-scrim in polish.css). The console and workspace panels
    carry their own backgrounds, so this stays subtle by design. */
 
+/* App-shell layout. The shell is pinned to the viewport under the site nav and
+   only the workspace pane scrolls, so the header and sidebar stay put instead of
+   scrolling away, and nothing ever slides underneath the header. That is what
+   lets the header stay transparent on every tab — see .dash-header below. */
 .dash-shell {
   position: relative;
   z-index: 1;
-  min-height: 100vh;
+  height: calc(100vh - var(--nav-height, 60px));
+  height: calc(100dvh - var(--nav-height, 60px));
+  min-height: 0;
   display: flex;
   flex-direction: column;
 }
@@ -32,10 +38,15 @@ body:has(.dash-shell) .announce-bar {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(0, 0, 0, 0.92);
-  backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--border, var(--serial-border));
-  padding: 0.65rem 1rem 0.65rem 1.25rem;
+  padding: 0.45rem 1rem 0.45rem 1.25rem;
+}
+
+/* Header controls stay on one compact line. The base .btn/.btn-small sizes are
+   for page CTAs and make the bar noticeably taller than it needs to be. */
+.dash-header .btn-small {
+  padding: 0.4rem 0.75rem;
+  font-size: 0.8rem;
 }
 
 .dash-header-inner {
@@ -137,8 +148,8 @@ body:has(.dash-shell) .announce-bar {
   border-radius: 9px;
   color: var(--text-dim, var(--serial-secondary));
   font-family: var(--font-mono, var(--serial-font-mono));
-  font-size: 0.8rem;
-  padding: 0.5rem 0.6rem;
+  font-size: 0.78rem;
+  padding: 0.4rem 0.5rem;
   cursor: pointer;
 }
 
@@ -147,13 +158,74 @@ body:has(.dash-shell) .announce-bar {
   outline-offset: 2px;
 }
 
+/* ---- Tooltip ---- */
+/* Used for controls that are unavailable, such as Connect in a browser with no
+   Web Serial support. The tooltip hangs off the wrapper because a disabled
+   button never emits the pointer events that would reveal it. */
+.has-tooltip {
+  position: relative;
+  display: inline-flex;
+}
+
+.has-tooltip > :disabled {
+  pointer-events: none;
+}
+
+.has-tooltip[data-tooltip]::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  z-index: 200;
+  width: max-content;
+  max-width: min(260px, 78vw);
+  padding: 0.5rem 0.7rem;
+  border: 1px solid var(--border, var(--serial-border));
+  border-radius: 8px;
+  background: rgba(12, 12, 12, 0.98);
+  color: var(--text, #fff);
+  font-family: var(--font-sans);
+  font-size: 0.76rem;
+  font-weight: 400;
+  line-height: 1.45;
+  letter-spacing: normal;
+  text-transform: none;
+  text-align: left;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.55);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-4px);
+  transition: opacity 0.15s ease, transform 0.15s ease, visibility 0.15s;
+  pointer-events: none;
+}
+
+.has-tooltip.has-tooltip-start[data-tooltip]::after {
+  right: auto;
+  left: 0;
+}
+
+.has-tooltip[data-tooltip]:hover::after,
+.has-tooltip[data-tooltip]:focus::after,
+.has-tooltip[data-tooltip]:focus-within::after {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .has-tooltip[data-tooltip]::after { transition: none; }
+}
+
 /* ---- Body grid ---- */
 .dash-body {
   display: grid;
   grid-template-columns: 220px 1fr;
   flex: 1;
+  min-height: 0;
   align-items: stretch;
-}/* ---- Sidebar ---- */
+}
+
+/* ---- Sidebar ---- */
 .dash-nav {
   border-right: 1px solid var(--border, var(--serial-border));
   background: transparent;
@@ -161,6 +233,9 @@ body:has(.dash-shell) .announce-bar {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  /* The shell no longer grows with its content, so a tall sidebar scrolls
+     rather than being clipped on short viewports. */
+  overflow-y: auto;
 }
 
 .dash-nav-list {
@@ -374,9 +449,15 @@ nav.dash-nav-list {
 }
 
 /* ---- Workspace ---- */
+/* The one scrolling pane in the shell. The store tab does not use it — its own
+   .store-scroll region sits inside and consumes the height exactly, so this
+   never overflows on that tab. */
 .dash-content {
   padding: 0;
   min-width: 0;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
   display: flex;
   flex-direction: column;
 }
@@ -521,46 +602,111 @@ nav.dash-nav-list {
   color: #00ff80;
 }
 
-/* The store view fills the workspace even while disconnected */
-#tab-store {
-  min-height: 70vh;
+/* The shell pinning that used to live here is now the base layout for every
+   tab (see .dash-shell / .dash-content), so the store no longer needs its own. */
+
+/* The shell pins the header and only the workspace pane scrolls (see .dash-shell
+   and .dash-content), so no content ever travels underneath it. The header can
+   therefore stay transparent on every tab rather than being an opaque slab. */
+.dash-header {
+  background: none;
+  backdrop-filter: none;
+  border-bottom-color: transparent;
 }
 
 #tab-store.active {
   display: flex;
   flex-direction: column;
-  padding: 1.25rem 1.5rem 3rem;
+  flex: 1;
+  min-height: 0;
+  padding: 1.25rem 1.5rem 0.75rem;
+}
+
+#tab-store #storeRoot {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+#tab-store .store-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-bottom: 0.5rem;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+}
+
+#tab-store .store-scroll::-webkit-scrollbar {
+  width: 10px;
+}
+
+#tab-store .store-scroll::-webkit-scrollbar-thumb {
+  border: 3px solid transparent;
+  border-radius: 999px;
+  background-clip: padding-box;
+  background-color: rgba(255, 255, 255, 0.18);
+}
+
+#tab-store .store-scroll::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.3);
 }
 
 #tab-store .store-grid {
   align-content: start;
   justify-items: stretch;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
   gap: 1rem;
 }
 
-/* Store controls span the full workspace (no centered gutters) */
-#tab-store .store-tabs {
-  margin-bottom: 0.75rem;
-  max-width: none;
-  justify-content: flex-start;
+/* Store category tabs sit inline in the header row, between the title and the
+   device/connect controls. The slot stays empty (and collapsed) on every other
+   tab, so the row is unchanged there. */
+.dash-header-store-tabs {
+  display: none;
+  align-items: center;
+  min-width: 0;
 }
 
-#tab-store .store-tab {
+.dash-shell:has(#tab-store.active) .dash-header-store-tabs {
+  display: flex;
+}
+
+.dash-header-store-tabs .store-tabs {
+  margin: 0;
+  max-width: none;
+  gap: 0.15rem;
+  padding: 0.2rem;
+  border-radius: 10px;
+}
+
+.dash-header-store-tabs .store-tab {
   font-family: var(--font-sans, var(--serial-font-sans));
+  gap: 0.4rem;
+  padding: 0.35rem 0.7rem;
+  border-radius: 7px;
+  font-size: 0.8rem;
   transition: color 0.15s ease, border-color 0.15s ease, background-color 0.15s ease;
 }
 
-#tab-store .store-tab:focus-visible {
+.dash-header-store-tabs .store-tab-count { font-size: 0.68rem; }
+
+.dash-header-store-tabs .store-tab:focus-visible {
   outline: 2px solid #69e6a0;
   outline-offset: 2px;
 }
 
 #tab-store .store-toolbar {
-  margin-bottom: 0.9rem;
+  /* Was centered at its content width, leaving even gutters on both sides and
+     no relationship to the grid below. Removing the auto side margins makes it
+     span the workspace and start at the same left edge as the cards. */
+  margin: 0 0 0.9rem;
   max-width: none;
-  grid-template-columns: 1fr 220px;
 }
+
+#tab-store .store-toolbar-end { gap: 0.6rem; }
 
 #tab-store .store-input:focus,
 #tab-store .store-select:focus {
@@ -574,8 +720,7 @@ nav.dash-nav-list {
 }
 
 #tab-store .store-card {
-  max-width: none;
-  border-radius: 12px;
+  border-radius: 14px;
   background: rgba(13, 13, 13, 0.92);
 }
 
@@ -587,7 +732,7 @@ nav.dash-nav-list {
 
 #tab-store .store-card-title {
   font-family: var(--font-sans, var(--serial-font-sans));
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: -0.02em;
 }
 
@@ -617,29 +762,16 @@ nav.dash-nav-list {
   margin-top: -0.25rem;
 }
 
-/* Reworked security notice — slim, quiet, icon-led */
-#tab-store .store-security-notice {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  max-width: 640px;
+/* Security notice spans the workspace but stays quiet and left-aligned */
+#tab-store .store-notice {
+  max-width: none;
   margin: 0 0 1rem;
-  padding: 0.55rem 1rem;
-  border: 1px solid rgba(255, 200, 87, 0.22);
-  border-radius: 999px;
-  color: rgba(255, 236, 188, 0.75);
-  background: rgba(255, 200, 87, 0.05);
-  font-size: 0.78rem;
-  text-align: center;
 }
 
-#tab-store .store-security-notice::before {
-  content: '\F33D';
-  font-family: 'bootstrap-icons';
-  color: rgba(255, 200, 87, 0.8);
-  font-size: 0.85rem;
-  line-height: 1;
+/* Detail view must beat the id-scoped column rule above */
+#tab-store .store-grid.store-grid-list {
+  grid-template-columns: 1fr;
+  gap: 0.6rem;
 }
 
 /* Welcome card — centered, compact, no double margins */
@@ -868,7 +1000,9 @@ nav.dash-nav-list {
 @media (max-width: 900px) {
   .dash-body {
     grid-template-columns: 1fr;
-    min-height: auto;
+    /* Rail keeps its natural height; the workspace takes the rest and scrolls. */
+    grid-template-rows: auto minmax(0, 1fr);
+    min-height: 0;
   }
 
   .dash-nav {
@@ -876,6 +1010,7 @@ nav.dash-nav-list {
     flex-direction: row;
     justify-content: flex-start;
     overflow-x: auto;
+    overflow-y: hidden;
     border-right: none;
     border-bottom: 1px solid var(--border, var(--serial-border));
     padding: 0.5rem 0.75rem;
@@ -930,16 +1065,23 @@ nav.dash-nav-list {
   }
 
   #tab-store.active {
-    padding: 1rem 0.75rem 2.5rem;
+    padding: 1rem 0.75rem 0.6rem;
   }
 
   #tab-store .store-toolbar {
-    grid-template-columns: 1fr;
+    flex-direction: column;
+    align-items: stretch;
   }
 
-  #tab-store .store-tab {
-    padding: 0.55rem 0.9rem;
-    font-size: 0.85rem;
+  /* Takes its own line right after the title rather than being pushed beside it,
+     keeping the tabs ahead of the connect controls in the stacked header. */
+  .dash-header-store-tabs {
+    width: 100%;
+  }
+
+  .dash-header-store-tabs .store-tab {
+    padding: 0.45rem 0.7rem;
+    font-size: 0.8rem;
   }
 
   #tab-mirror.active,
@@ -954,6 +1096,23 @@ nav.dash-nav-list {
 }
 
 @media (max-width: 560px) {
+  /* Tighten the tabs so all three stay on one line and the stacked header does
+     not get any taller than it needs to. */
+  .dash-header-store-tabs .store-tabs {
+    padding: 0.2rem;
+    gap: 0.15rem;
+  }
+
+  .dash-header-store-tabs .store-tab {
+    gap: 0.3rem;
+    padding: 0.4rem 0.5rem;
+    font-size: 0.75rem;
+  }
+
+  .dash-header-store-tabs .store-tab i { font-size: 0.85rem; }
+
+  .dash-header-store-tabs .store-tab .store-tab-count { font-size: 0.66rem; }
+
   .dash-header-actions {
     order: 2;
     width: 100%;

@@ -49,7 +49,6 @@ class SerialConsole {
     this.baudRateDisplay = document.getElementById("baudRate");
     this.connectionStatus = document.getElementById("connectionStatus");
     this.connectionDot = document.getElementById("connectionDot");
-    this.browserDialog = document.getElementById("browserDialog");
     this.permissionDialog = document.getElementById("permissionDialog");
     this.exportButton = document.getElementById("exportButton");
     this.welcomeCard = document.getElementById("welcomeCard");
@@ -58,18 +57,26 @@ class SerialConsole {
   }
 
   checkBrowserSupport() {
+    // Every connect affordance explains itself through a tooltip rather than a
+    // modal, so an unsupported browser is not greeted with a dialog it cannot
+    // act on. The tooltip lives on the wrapper: disabled buttons do not emit
+    // pointer events, so they could never show it themselves.
+    const buttons = [this.connectButton, this.welcomeConnect, this.welcomeConnectInline];
     if (!("serial" in navigator)) {
-      if (this.browserDialog) this.browserDialog.style.display = "flex";
-      if (this.connectButton) {
-        this.connectButton.disabled = true;
-        this.connectButton.setAttribute("data-tooltip", "web serial not supported in this browser");
-      }
-      if (this.welcomeConnect) this.welcomeConnect.disabled = true;
-      if (this.welcomeConnectInline) this.welcomeConnectInline.disabled = true;
+      const message = "Web Serial isn't supported in this browser. Use Chrome, Edge, or Opera.";
+      buttons.forEach((button) => {
+        if (!button) return;
+        button.disabled = true;
+        const host = button.closest(".has-tooltip") || button;
+        host.setAttribute("data-tooltip", message);
+      });
       return false;
-    } else {
-      if (this.connectButton) this.connectButton.removeAttribute("data-tooltip");
     }
+    buttons.forEach((button) => {
+      if (!button) return;
+      const host = button.closest(".has-tooltip") || button;
+      host.removeAttribute("data-tooltip");
+    });
     return true;
   }
 
