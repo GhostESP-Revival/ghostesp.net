@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#000000">
+
+  <title>About GhostESP - Open-Source Wireless Research Platform</title>
+  <meta name="description" content="Learn what GhostESP is: an open-source, ESP-IDF-native wireless research platform for ESP32 with firmware, web tools, companion apps, and an extensible app ecosystem.">
+  <meta name="keywords" content="GhostESP, Ghost ESP, ESP32, open source, wireless research, ESP-IDF, WiFi, BLE, NFC, IR, SubGHz">
+  <meta name="author" content="GhostESP">
+  <meta name="robots" content="index, follow">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="About GhostESP">
+  <meta property="og:description" content="An open-source, ESP-IDF-native wireless research platform for ESP32.">
+  <meta property="og:url" content="https://ghostesp.net/about">
+  <meta property="og:site_name" content="GhostESP">
+  <meta property="og:image" content="https://ghostesp.net/images/IMG_1178.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="GhostESP wireless research platform">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="About GhostESP">
+  <meta name="twitter:description" content="An open-source, ESP-IDF-native wireless platform for ESP32.">
+  <meta name="twitter:image" content="https://ghostesp.net/images/IMG_1178.webp">
+
+  <link rel="canonical" href="https://ghostesp.net/about">
+  <link rel="alternate" type="application/rss+xml" title="GhostESP Blog" href="https://ghostesp.net/feed.xml">
+
+  <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+  <link rel="manifest" href="images/site.webmanifest">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="css/main.css?v=4">
+  <script src="https://unpkg.com/lucide@0.344.0/dist/umd/lucide.min.js" defer></script>
+  <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "8a43f9bb615d42a8ad405808147cc502"}'></script>
+  <link rel="stylesheet" href="css/polish.css?v=4">
+</head>
+<body class="polished">
+  <canvas id="dotTerrain" aria-hidden="true"></canvas>
+  <script src="js/dot-terrain.js?v=2"></script>
+  <div class="page-scrim tint-teal" aria-hidden="true"></div>
+  <a href="#main-content" class="skip-link">Skip to content</a>
+
+  <nav id="nav"><noscript><a href="/">Home</a> <a href="boards.html">Boards</a> <a href="flasher.html">Flasher</a> <a href="dashboard.html">Dashboard</a> <a href="features.html">Features</a> <a href="https://docs.ghostesp.net">Docs</a></noscript></nav>
+
+  <main id="main-content">
+    <header class="page-hero">
+      <div class="container">
+        <span class="editorial-eyebrow">About the project</span>
+        <h1>GhostESP.</h1>
+        <p class="editorial-lede">GhostESP is an open-source ESP32 firmware project. It started as a small Flipper-focused project and grew into the firmware, tools, apps, and community that exist today.</p>
+        <div class="page-hero-actions">
+          <a href="https://github.com/GhostESP-Revival/GhostESP" class="btn btn-primary" target="_blank" rel="noopener"><span>View the source ↗</span></a>
+          <a href="https://docs.ghostesp.net" class="btn btn-secondary" target="_blank" rel="noopener"><span>Read the documentation ↗</span></a>
+        </div>
+      </div>
+    </header>
+
+    <section class="section section--tight">
+      <div class="container">
+        <div class="section-heading">
+          <div><span class="eyebrow">The story</span><h2>How Revival started.</h2></div>
+        </div>
+        <div class="about-prose">
+          <p>GhostESP started with Spooky. The first repository, <a href="https://github.com/Spooks4576/GhostESP_Legacy" target="_blank" rel="noopener">GhostESP_Legacy</a>, was an ESP32 firmware project built to work with Flipper devices. It was archived on March 29, 2024.</p>
+          <p>The next repository, <a href="https://github.com/Spooks4576/Ghost_ESP" target="_blank" rel="noopener">Ghost_ESP</a>, became the main public version. It was archived on April 22, 2025, after Spooky stepped away. The old README says the project was finished and would not be coming back. It also credits early help from <a href="https://github.com/JustCallMeKoKo" target="_blank" rel="noopener">JustCallMeKoKo</a>, <a href="https://github.com/thibauts" target="_blank" rel="noopener">thibauts</a>, and <a href="https://github.com/MarcoLucidi01" target="_blank" rel="noopener">MarcoLucidi01</a>.</p>
+          <p>I had already been contributing to Spooky&rsquo;s GhostESP and had become one of its major contributors near the end. When Spooky disappeared, the flasher site went down and the Discord server was deleted. That left Rabbit-Labs&rsquo; GhostESP users without a way to flash their devices. I made a new Discord server that day and forked the code to start GhostESP Revival.</p>
+          <p>That fork is the project today. It lives under the <a href="https://github.com/GhostESP-Revival" target="_blank" rel="noopener">GhostESP-Revival organization</a>, with its own releases, documentation, board support, companion projects, and community.</p>
+        </div>
+        <div class="feature-footer about-history-links">
+          <a href="https://github.com/Spooks4576/GhostESP_Legacy" target="_blank" rel="noopener">Legacy repository →</a>
+          <a href="https://github.com/Spooks4576/Ghost_ESP" target="_blank" rel="noopener">Ghost_ESP repository →</a>
+          <a href="https://github.com/GhostESP-Revival/GhostESP" target="_blank" rel="noopener">Revival repository →</a>
+          <a href="/changelog">Revival changelog →</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--tight">
+      <div class="container">
+        <div class="section-heading">
+          <div><span class="eyebrow">Today</span><h2>What GhostESP is now.</h2></div>
+        </div>
+        <div class="about-prose">
+          <p>GhostESP is used for wireless security testing, protocol research, hardware experimentation, and education. It covers Wi-Fi, Bluetooth LE, NFC, infrared, Sub-GHz, and 802.15.4, depending on the board and connected hardware.</p>
+          <p>The firmware is built on Espressif&rsquo;s ESP-IDF. That keeps it close to the hardware, but it also means that board compatibility, memory, partitions, and connected modules matter. The <a href="/boards">supported boards catalogue</a> and the documentation have the details.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--tight">
+      <div class="container">
+        <div class="section-heading">
+          <div><span class="eyebrow">What&rsquo;s in the project</span><h2>It&rsquo;s more than firmware.</h2></div>
+        </div>
+        <div class="grid">
+          <div class="card">
+            <div class="card-icon"><i data-lucide="cpu"></i></div>
+            <h3>Firmware and boards</h3>
+            <p>The repo contains the firmware, chip-specific code, board configurations, partition layouts, and build tools for different device targets.</p>
+          </div>
+          <div class="card">
+            <div class="card-icon"><i data-lucide="panels-top-left"></i></div>
+            <h3>Different ways to use it</h3>
+            <p>You can use it through the device UI, serial CLI, WebUI, Flipper Zero app, Android companion, or a second device connected through GhostLink.</p>
+          </div>
+          <div class="card">
+            <div class="card-icon"><i data-lucide="blocks"></i></div>
+            <h3>Apps and extensions</h3>
+            <p>Native SD apps, GhostScript scripts, themes, asset packs, the Cloud Store, and the Ghost Build Tool let people build on top of the firmware.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--tight">
+      <div class="container">
+        <div class="about-split">
+          <div>
+            <span class="eyebrow">Get involved</span>
+            <h2>The work is public.</h2>
+            <p>GhostESP is developed in public on GitHub and released under the GPL-3.0 license. The source, releases, issues, and contribution instructions are all there.</p>
+            <div class="product-actions">
+              <a href="https://github.com/GhostESP-Revival/GhostESP" class="btn btn-primary" target="_blank" rel="noopener"><span>Open GitHub ↗</span></a>
+              <a href="https://github.com/GhostESP-Revival/GhostESP/blob/Development-deki/CONTRIBUTING.md" class="btn btn-secondary" target="_blank" rel="noopener"><span>Read contributing guide ↗</span></a>
+            </div>
+          </div>
+          <div class="about-callout">
+            <span class="eyebrow">Ways to participate</span>
+            <h3>There are plenty of ways to help.</h3>
+            <ul class="about-check-list">
+              <li><i data-lucide="code-2"></i><span><strong>Code</strong> — firmware, tools, apps, and board support.</span></li>
+              <li><i data-lucide="book-open"></i><span><strong>Document</strong> — guides, examples, and corrections.</span></li>
+              <li><i data-lucide="flask-conical"></i><span><strong>Test</strong> — hardware coverage, regressions, and reproducible reports.</span></li>
+              <li><i data-lucide="message-circle"></i><span><strong>Discuss</strong> — questions and project work in the community.</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--tight">
+      <div class="container">
+        <div class="section-heading">
+          <div><span class="eyebrow">The people</span><h2>Who worked on it.</h2></div>
+        </div>
+        <div class="grid">
+          <div class="card">
+            <div class="card-icon"><i data-lucide="archive"></i></div>
+            <h3>Spooky</h3>
+            <p><a href="https://github.com/Spooks4576" target="_blank" rel="noopener">Spooky</a> started the original GhostESP project. Both <a href="https://github.com/Spooks4576/GhostESP_Legacy" target="_blank" rel="noopener">GhostESP_Legacy</a> and <a href="https://github.com/Spooks4576/Ghost_ESP" target="_blank" rel="noopener">Ghost_ESP</a> are still available as part of its history.</p>
+          </div>
+          <div class="card">
+            <div class="card-icon"><i data-lucide="user-round"></i></div>
+            <h3>deki / @jaylikesbunda</h3>
+            <p>I was already a major contributor to Spooky&rsquo;s GhostESP near the end of its life. When the site and Discord disappeared, I created the new server and started the Revival fork. The Revival contributing guide identifies me as its core maintainer.</p>
+          </div>
+          <div class="card">
+            <div class="card-icon"><i data-lucide="users-round"></i></div>
+            <h3>Everyone who helped</h3>
+            <p>People have contributed code, ideas, board support, testing, and feedback across both projects. The <a href="https://github.com/GhostESP-Revival/GhostESP/graphs/contributors" target="_blank" rel="noopener">GitHub contributor view</a> shows the current history.</p>
+          </div>
+        </div>
+        <p class="page-hero-note" style="margin-top: 1.5rem;">This page is a short version of the story. The repositories and changelog contain the longer one.</p>
+      </div>
+    </section>
+
+    <section class="section section--tight" style="padding-top: 0;">
+      <div class="container">
+        <div class="legal-banner">
+          <p><strong>Scope of use.</strong> GhostESP is intended for security testing on networks and devices you own or have explicit permission to test, lab research, education, and defensive analysis. The project provides tools; responsibility for their use remains with the person using them.</p>
+        </div>
+        <div class="feature-footer">
+          <a href="/features">Features →</a>
+          <a href="/changelog">Changelog →</a>
+          <a href="https://docs.ghostesp.net" target="_blank" rel="noopener">Documentation →</a>
+          <a href="https://discord.gg/5cyNmUMgwh" target="_blank" rel="noopener">Community →</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-links">
+        <a href="https://discord.gg/5cyNmUMgwh" target="_blank" rel="noopener" class="icon-link" title="Discord"><i class="bi bi-discord"></i></a>
+        <a href="https://github.com/GhostESP-Revival/GhostESP" target="_blank" rel="noopener" class="icon-link" title="GitHub"><i class="bi bi-github"></i></a>
+        <a href="https://instagram.com/ghostesprevival" target="_blank" rel="noopener" class="icon-link" title="Instagram"><i class="bi bi-instagram"></i></a>
+      </div>
+      <button class="cookie-settings-link" onclick="CookieConsent.showSettings()">Cookie Settings</button>
+      <a href="privacy.html" class="cookie-settings-link">Privacy Policy</a>
+    </div>
+  </footer>
+
+  <script src="js/components.js?v=4" defer></script>
+  <script src="js/main.js?v=3" defer></script>
+  <script src="js/cookie-consent.js?v=2" defer></script>
+</body>
+</html>

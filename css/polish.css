@@ -181,6 +181,22 @@
 .feature-footer a:not(.btn):hover { color: #00ff80; background: #191919; }
 .feature-footer .btn { min-height: 44px; padding: 9px 16px; margin: 0; }
 .feature-footer .btn-primary, .feature-footer .btn-primary:hover { color: var(--bg); }
+.about-history-links { justify-content: flex-start; margin-left: 0; margin-right: 0; }
+.about-split { display: grid; grid-template-columns: 1.1fr .9fr; gap: 72px; align-items: stretch; }
+.about-split > div:first-child { align-self: center; }
+.about-split h2 { margin-bottom: 24px !important; }
+.about-split p { max-width: 600px; color: var(--text-dim); line-height: 1.7; }
+.about-prose { max-width: 760px; color: var(--text-dim); font: 16px/1.8 var(--font-sans); }
+.about-prose p { margin: 0 0 1.25rem; }
+.about-prose p:last-child { margin-bottom: 0; }
+.about-prose a { color: #d7ded9; text-decoration: underline; text-underline-offset: 3px; }
+.about-prose a:hover { color: #00ff80; }
+.about-callout { padding: 34px; border: 1px solid #353535; border-radius: 14px; background: #111; }
+.about-callout h3 { margin: 0 0 24px; font: 500 22px/1.25 var(--font-sans); letter-spacing: -.03em; }
+.about-check-list { display: grid; gap: 18px; margin: 0; padding: 0; list-style: none; }
+.about-check-list li { display: flex; align-items: flex-start; gap: 11px; color: #cdd5d0; font-size: 14px; line-height: 1.6; }
+.about-check-list svg { width: 17px; height: 17px; flex: 0 0 auto; margin-top: 3px; color: #00ff80; }
+.about-check-list strong { color: #f3f5f3; font-weight: 500; }
 /* .editorial-heading kept as an alias of .page-hero for older markup */
 .editorial-heading { padding-top: calc(var(--nav-height, 112px) + 4.5rem); padding-bottom: 44px; max-width: none; }
 .editorial-heading h1 { font: 500 clamp(34px, 4.5vw, 54px)/1.08 var(--font-sans); letter-spacing: -.045em; text-align: left; margin: 0 0 18px; }
@@ -217,6 +233,7 @@
 }
 @media (max-width: 600px) {
   .product-hero, .dashboard-feature { grid-template-columns: 1fr; }
+  .about-split { grid-template-columns: 1fr; gap: 34px; }
   .hero-title-meta { gap: 10px; font-size: 9px; }
   .product-copy h1 { font-size: 54px; }
   .hero-system-panel { min-height: 400px; }
