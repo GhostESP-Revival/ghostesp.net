@@ -6,24 +6,24 @@
   <meta name="theme-color" content="#000000">
 
   <!-- SEO Meta Tags -->
-  <title>GhostLink P1 - Open-Source Case & Pre-Assembled Kit</title>
-  <meta name="description" content="The GhostLink P1: an open-source 3D-printable handheld built on the ESP32-1732S019 (CYD) board. Download the STLs and parts list for free, or buy a pre-assembled unit.">
-  <meta name="keywords" content="GhostLink P1, GhostESP case, ESP32-1732S019 enclosure, CYD handheld, 3D printed ESP32 case, GhostESP handheld, open source enclosure, 18650 ESP32 case, GhostESP kit">
+  <title>Printables - Free Open-Source 3D-Printable GhostESP Hardware</title>
+  <meta name="description" content="Free open-source 3D-printable GhostESP hardware. Download the GhostLink P1 CYD handheld case, community accessories like the Banshee joystick cap, and more.">
+  <meta name="keywords" content="GhostESP printables, GhostLink P1, CYD case STL, Banshee joystick cap, 3D printed ESP32 case, open source enclosure, ESP32-1732S019">
   <meta name="author" content="Jay Candel">
   <meta name="robots" content="index, follow">
 
   <!-- Open Graph Tags -->
   <meta property="og:type" content="website">
-  <meta property="og:title" content="GhostLink P1 - Open-Source + Pre-Assembled">
-  <meta property="og:description" content="Free 3D-printable handheld case for the CYD board running GhostESP. Download the STLs and full parts list, or grab a pre-assembled unit.">
+  <meta property="og:title" content="Printables - Open-Source GhostESP Hardware">
+  <meta property="og:description" content="Free 3D-printable GhostESP hardware: the GhostLink P1 handheld case and community accessories. Download the files or buy assembled.">
   <meta property="og:url" content="https://ghostesp.net/printables">
   <meta property="og:site_name" content="GhostESP">
   <meta property="og:image" content="https://ghostesp.net/images/ghostespdotnet.webp">
 
   <!-- Twitter Card Tags -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="GhostLink P1">
-  <meta name="twitter:description" content="Open-source handheld enclosure for the CYD board running GhostESP. Free STLs + parts list, or buy assembled.">
+  <meta name="twitter:title" content="Printables - GhostESP">
+  <meta name="twitter:description" content="Free open-source 3D-printable GhostESP hardware. Print the GhostLink P1 and community accessories yourself.">
   <meta name="twitter:image" content="https://ghostesp.net/images/ghostespdotnet.webp">
 
   <!-- Canonical URL -->
@@ -56,19 +56,22 @@
         ]
       },
       {
-        "@type": "Product",
-        "name": "GhostLink P1 - Pre-Assembled",
-        "description": "Pre-assembled 3D-printed handheld running GhostESP on an ESP32-1732S019 (CYD) board, with 5-way navigation, microSD, IP5306 charging and an 18650 cell.",
-        "brand": { "@type": "Brand", "name": "GhostESP" },
+        "@type": "CollectionPage",
+        "name": "Printables",
+        "description": "Free open-source 3D-printable GhostESP hardware, including the GhostLink P1 handheld case and community accessories.",
         "url": "https://ghostesp.net/printables",
-        "image": "https://ghostesp.net/images/ghostespdotnet.webp",
-        "offers": {
-          "@type": "Offer",
-          "price": "80.00",
-          "priceCurrency": "USD",
-          "availability": "https://schema.org/LimitedAvailability",
-          "url": "https://shop.ghostesp.net/product/ghostlink-p1-pre-assembled-ghostesp-handheld"
-        }
+        "hasPart": [
+          {
+            "@type": "CreativeWork",
+            "name": "GhostLink P1",
+            "url": "https://ghostesp.net/printables-ghostlink-p1"
+          },
+          {
+            "@type": "CreativeWork",
+            "name": "Banshee joystick cap",
+            "url": "https://ghostesp.net/printables-banshee-joystick-cap"
+          }
+        ]
       }
     ]
   }
@@ -78,119 +81,13 @@
   <!-- End Cloudflare Web Analytics -->
 
   <style>
-    /* --- printables page local styles --- */
-    .hw-price-badge {
-      display: inline-flex; align-items: baseline; gap: 0.4rem;
-      font-family: var(--font-mono); font-weight: 700;
+    /* --- printables hub local styles --- */
+    .hw-license-note {
+      max-width: 720px; margin: 2.5rem 0 0; padding: 1rem 1.25rem;
+      border: 1px solid var(--border); border-radius: 10px;
+      background: var(--surface); color: var(--text-dim); font-size: 0.82rem;
     }
-    .hw-price-badge .amt { font-size: 1.05rem; }
-
-    /* two-path cards */
-    .hw-paths {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
-      gap: 1.5rem;
-    }
-    .hw-path {
-      border: 1px solid var(--border); border-radius: var(--radius);
-      padding: 1.75rem; background: var(--surface); position: relative;
-      display: flex; flex-direction: column;
-    }
-    .hw-path.is-featured { border-color: rgba(0,255,128,0.45); box-shadow: 0 0 0 1px rgba(0,255,128,0.15); }
-    .hw-path h3 { margin: 0 0 0.35rem; font-size: 1.35rem; }
-    .hw-path .hw-path-price { font-family: var(--font-mono); color: var(--primary-color); font-weight: 700; margin-bottom: 1rem; }
-    .hw-path ul { list-style: none; padding: 0; margin: 0 0 1.5rem; }
-    .hw-path li { padding: 0.4rem 0 0.4rem 1.6rem; position: relative; color: var(--text-dim); font-size: 0.9rem; }
-    .hw-path li::before {
-      content: ""; position: absolute; left: 0; top: 0.75rem;
-      width: 7px; height: 7px; border-radius: 50%; background: var(--primary-color);
-    }
-    .hw-path .btn { margin-top: auto; width: 100%; }
-    .hw-path-tag {
-      position: absolute; top: 1.25rem; right: 1.25rem;
-      font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 1px;
-      text-transform: uppercase; color: var(--primary-color);
-    }
-
-    /* spec / print info chips */
-    .hw-specs { display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: flex-start; }
-    .hw-spec {
-      border: 1px solid var(--border); border-radius: 10px; padding: 0.85rem 1.1rem;
-      background: var(--surface); min-width: 150px;
-    }
-    .hw-spec .k { display: block; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-dim); margin-bottom: 0.3rem; }
-    .hw-spec .v { font-family: var(--font-mono); color: var(--text); font-size: 0.95rem; }
-
-    .hw-table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: var(--radius); }
-    .bom-table td:nth-child(2), .bom-table td:nth-child(3) { text-align: center; white-space: nowrap; }
-    .bom-table th:nth-child(2), .bom-table th:nth-child(3) { text-align: center; }
-    .bom-total-row td { font-weight: 700; color: var(--text) !important; border-top: 2px solid var(--border); }
-    .bom-total-row td:first-child { background: #111 !important; }
-
-    .hw-disclaimer {
-      max-width: 720px; margin: 2rem 0 0; padding: 1rem 1.25rem;
-      border: 1px solid rgba(255,165,0,0.3); border-radius: 10px;
-      background: rgba(255,165,0,0.05); color: var(--text-dim); font-size: 0.82rem;
-    }
-    .hw-disclaimer strong { color: var(--warning-color); }
-
-    /* 3D viewer */
-    .hw-viewer-wrap { max-width: 720px; margin: 0; }
-    .hw-viewer {
-      position: relative; width: 100%; aspect-ratio: 4 / 3;
-      border: 1px solid var(--border); border-radius: var(--radius);
-      background: radial-gradient(circle at 50% 40%, rgba(0,255,128,0.06), transparent 70%);
-      overflow: hidden; touch-action: pan-y; cursor: grab;
-    }
-    .hw-viewer:active { cursor: grabbing; }
-    .hw-viewer canvas { display: block; width: 100%; height: 100%; }
-    .hw-viewer-hint {
-      position: absolute; bottom: 0.6rem; left: 50%; transform: translateX(-50%);
-      font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 1px;
-      text-transform: uppercase; color: var(--text-dim); pointer-events: none;
-      background: rgba(0,0,0,0.35); padding: 0.25rem 0.6rem; border-radius: 999px;
-    }
-    .hw-viewer-status {
-      position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
-      color: var(--text-dim); font-size: 0.85rem; text-align: left; padding: 1rem;
-    }
-    /* the flex display above beats the [hidden] attribute's display:none, so hide explicitly */
-    .hw-viewer-status[hidden] { display: none; }
-    .hw-viewer-cap { text-align: left; color: var(--text-dim); font-size: 0.8rem; margin-top: 0.85rem; }
-
-    /* download card: info left, action right */
-    .hw-dl {
-      display: grid; grid-template-columns: 1.15fr 0.85fr;
-      gap: 2rem; align-items: start; padding: 2rem;
-    }
-    .hw-dl h3 { margin-top: 0; }
-    .hw-dl .board-tags { margin-bottom: 0; }
-    .hw-dl-actions {
-      display: flex; flex-direction: column; gap: 1rem;
-      border-left: 1px solid var(--border); padding-left: 2rem;
-    }
-    .hw-dl-actions .btn { width: 100%; }
-    .hw-dl-actions .page-hero-note { margin-top: 0; }
-    @media (max-width: 800px) {
-      .hw-dl { grid-template-columns: 1fr; }
-      .hw-dl-actions { border-left: none; padding-left: 0; border-top: 1px solid var(--border); padding-top: 1.5rem; }
-    }
-
-    /* feature grid */
-    .hw-feature-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 1.25rem;
-    }
-    .hw-feature {
-      border: 1px solid var(--border); border-radius: var(--radius);
-      padding: 1.5rem; background: var(--surface);
-    }
-    .hw-feature-icon {
-      width: 42px; height: 42px; border-radius: 10px; display: flex;
-      align-items: center; justify-content: center; margin-bottom: 1rem;
-      background: rgba(0,255,128,0.1); color: var(--primary-color);
-    }
-    .hw-feature h3 { font-size: 1.05rem; margin: 0 0 0.4rem; }
-    .hw-feature p { color: var(--text-dim); font-size: 0.88rem; margin: 0; line-height: 1.5; }
+    .hw-license-note strong { color: var(--text); }
   </style>
 </head>
 <body class="polished">
@@ -208,230 +105,59 @@
       <h1>Printables.</h1>
       <p class="editorial-lede">
         Free open-source 3D-printable enclosures and accessories for GhostESP hardware.
-        First release: the GhostLink P1 handheld for the
-        <strong style="color:var(--text);">ESP32-1732S019 "CYD"</strong> board.
+        Print them yourself from the files on each page, or buy the flagship build pre-assembled.
       </p>
       <div class="page-hero-actions">
-        <a href="https://shop.ghostesp.net/product/ghostlink-p1-pre-assembled-ghostesp-handheld" target="_blank" rel="noopener" class="btn btn-primary" data-track="buy_assembled_cyd">
-          <span class="hw-price-badge">Buy Pre-Assembled <span class="amt">$80 USD</span></span>
+        <a href="printables-ghostlink-p1.html" class="btn btn-primary" data-track="view_ghostlink_p1">
+          View the GhostLink P1
         </a>
-        <a href="downloads/ghostesp-cyd-case.zip" download class="btn btn-secondary" data-track="download_cyd_stls">
-          Download STLs &amp; Parts — Free
+        <a href="https://shop.ghostesp.net/product/ghostlink-p1-pre-assembled-ghostesp-handheld" target="_blank" rel="noopener" class="btn btn-secondary" data-track="buy_assembled_cyd">
+          Buy Pre-Assembled ($80 USD)
         </a>
       </div>
-      <p class="page-hero-note">GhostESP is free and open source. <a href="https://github.com/GhostESP-Revival/GhostESP" target="_blank" rel="noopener" class="star-cta-quiet github-star-btn" data-github-cta data-cta-location="hardware_hero" data-cta-variant="default">Star it on GitHub <span data-star-count></span></a>. Only a couple of assembled units are ready right now — if they're sold out, the files and parts list below cover a self-build.</p>
+      <p class="page-hero-note">GhostESP is free and open source. <a href="https://github.com/GhostESP-Revival/GhostESP" target="_blank" rel="noopener" class="star-cta-quiet github-star-btn" data-github-cta data-cta-location="hardware_hero" data-cta-variant="default">Star it on GitHub <span data-star-count></span></a>. Every printable below is free to download, and each page carries its own license.</p>
     </div>
   </header>
 
-  <!-- Model 01 -->
+  <!-- Listing -->
   <section class="section section--tight">
     <div class="container">
-      <div class="section-heading"><div><span class="eyebrow">Model 01 · CYD handheld</span><h2>GhostLink P1.</h2></div><span class="text-link">$80 assembled · ~$30 to print</span></div>
-      <div class="hw-viewer-wrap" style="margin:0; max-width:720px;">
-        <div id="p1-viewer" class="hw-viewer">
-          <div id="p1-viewer-status" class="hw-viewer-status">Loading 3D model&hellip;</div>
-          <div class="hw-viewer-hint" hidden>Drag to rotate &middot; scroll to zoom</div>
-        </div>
-        <p class="hw-viewer-cap">Low-poly render of the assembled front and back shells. Drag to rotate.</p>
-      </div>
-    </div>
-  </section>
+      <div class="section-heading"><div><span class="eyebrow">All printables</span><h2>Printable hardware.</h2></div><span class="text-link">2 items</span></div>
+      <div class="board-grid">
 
-  <!-- Features / why -->
-  <section class="section section--tight">
-    <div class="container">
-      <div class="section-heading"><div><span class="eyebrow">Overview</span><h2>Device overview.</h2></div></div>
-      <div class="hw-feature-grid">
-        <div class="hw-feature">
-          <div class="hw-feature-icon"><i data-lucide="radio" style="width:22px;height:22px;"></i></div>
-          <h3>Remote control</h3>
-          <p>Operated over the network from the GhostESP WebUI or the Android companion app.</p>
-        </div>
-        <div class="hw-feature">
-          <div class="hw-feature-icon"><i data-lucide="blocks" style="width:22px;height:22px;"></i></div>
-          <h3>Applications</h3>
-          <p>PSRAM on the ESP32-S3 board supports marketplace apps and sideloaded builds.</p>
-        </div>
-        <div class="hw-feature">
-          <div class="hw-feature-icon"><i data-lucide="file-code" style="width:22px;height:22px;"></i></div>
-          <h3>Scripts and asset packs</h3>
-          <p>Lua scripts and theme packs load from microSD.</p>
-        </div>
-        <div class="hw-feature">
-          <div class="hw-feature-icon"><i data-lucide="shield" style="width:22px;height:22px;"></i></div>
-          <h3>Form factor</h3>
-          <p>No external antennas. Fits a jacket pocket or bag.</p>
-        </div>
-        <div class="hw-feature">
-          <div class="hw-feature-icon"><i data-lucide="wrench" style="width:22px;height:22px;"></i></div>
-          <h3>Repairable</h3>
-          <p>Modular boards and a reprintable shell. No proprietary parts.</p>
-        </div>
-        <div class="hw-feature">
-          <div class="hw-feature-icon"><i data-lucide="unlock" style="width:22px;height:22px;"></i></div>
-          <h3>Open design</h3>
-          <p>Open-source shell files, documented parts list, off-the-shelf modules.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Two paths -->
-  <section class="section section--tight">
-    <div class="container">
-      <div class="section-heading"><div><span class="eyebrow">Options</span><h2>Build or buy.</h2></div></div>
-      <div class="hw-paths">
-        <div class="hw-path">
-          <span class="hw-path-tag">DIY</span>
-          <h3>Print it yourself</h3>
-          <div class="hw-path-price">Free &middot; ~$30 in parts</div>
-          <ul>
-            <li>All STLs: front + back shells, retainers, button</li>
-            <li>No support material required</li>
-            <li>Full parts list with prices &amp; links below</li>
-            <li>Source all parts independently</li>
-          </ul>
-          <a href="downloads/ghostesp-cyd-case.zip" download class="btn btn-secondary" data-track="download_cyd_stls_card">Download the files</a>
-        </div>
-        <div class="hw-path is-featured">
-          <span class="hw-path-tag">Assembled</span>
-          <h3>Buy pre-assembled</h3>
-          <div class="hw-path-price">$80 USD</div>
-          <ul>
-            <li>Printed, wired, flashed with GhostESP and tested</li>
-            <li>Assembly, wiring, and flashing done before shipping</li>
-            <li>Proceeds fund GhostESP development</li>
-            <li><strong style="color:var(--warning-color)">18650 cell not included</strong> - add your own</li>
-          </ul>
-          <a href="https://shop.ghostesp.net/product/ghostlink-p1-pre-assembled-ghostesp-handheld" target="_blank" rel="noopener" class="btn btn-primary" data-track="buy_assembled_cyd_card">Buy on shop.ghostesp.net</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Print at a glance -->
-  <section class="section section--tight">
-    <div class="container">
-      <div class="section-heading"><div><span class="eyebrow">Printing</span><h2>Print parameters.</h2></div></div>
-      <div class="hw-specs">
-        <div class="hw-spec"><span class="k">Body size</span><span class="v">~74 &times; 128 &times; 39 mm</span></div>
-        <div class="hw-spec"><span class="k">Material</span><span class="v">PLA or PETG</span></div>
-        <div class="hw-spec"><span class="k">Filament</span><span class="v">~60&ndash;80 g</span></div>
-        <div class="hw-spec"><span class="k">Layer height</span><span class="v">0.2 mm</span></div>
-        <div class="hw-spec"><span class="k">Walls / infill</span><span class="v">3 walls &middot; 20%</span></div>
-        <div class="hw-spec"><span class="k">Supports</span><span class="v">None needed</span></div>
-        <div class="hw-spec"><span class="k">Inserts</span><span class="v">M2 heat-set</span></div>
-        <div class="hw-spec"><span class="k">Print time</span><span class="v">PLA ~2h &middot; PETG ~3h</span></div>
-      </div>
-      <p class="editorial-lede" style="margin-top: 1.5rem;">
-        Boards seat in locating pockets. Retainer bars screw down over them, and the front and back
-        halves close with 4 &times; M2 screws.
-      </p>
-    </div>
-  </section>
-
-  <!-- BOM -->
-  <section class="section section--tight">
-    <div class="container">
-      <div class="section-heading"><div><span class="eyebrow">Bill of materials</span><h2>Parts list.</h2></div><span class="text-link">~$30 core build</span></div>
-      <p class="editorial-lede" style="margin-bottom: 2rem;">
-        Ballpark USD prices (AliExpress / Amazon / assortment kits). Cheaper if you already have M2 hardware and filament on hand.
-        <span style="color:var(--primary-color);">Green</span> part names link to the exact AliExpress items used.
-      </p>
-      <div class="hw-table-wrap">
-        <table class="comparison-table bom-table" style="min-width: 560px;">
-          <thead>
-            <tr>
-              <th>Component</th>
-              <th>Qty</th>
-              <th>Est. price (USD)</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="category-row"><td colspan="3">Electronics &amp; modules</td></tr>
-            <tr><td><a href="https://www.aliexpress.com/item/1005011714988548.html" target="_blank" rel="noopener nofollow" style="color:var(--primary-color);">ESP32-1732S019 (1.9&quot; CYD board)</a></td><td>1</td><td>$7&ndash;11</td></tr>
-            <tr><td><a href="https://www.aliexpress.com/item/1005010055481276.html" target="_blank" rel="noopener nofollow" style="color:var(--primary-color);">5-way navigation module</a></td><td>1</td><td>$1&ndash;2</td></tr>
-            <tr><td><a href="https://www.aliexpress.com/item/1005012470786449.html" target="_blank" rel="noopener nofollow" style="color:var(--primary-color);">IP5306 charge / boost breakout</a></td><td>1</td><td>$1.50&ndash;3</td></tr>
-            <tr><td><a href="https://www.aliexpress.com/item/1005009462644570.html" target="_blank" rel="noopener nofollow" style="color:var(--primary-color);">microSD card module</a></td><td>1</td><td>$0.80&ndash;1.50</td></tr>
-            <tr><td>Aux ESP radio (C3 SuperMini / S3-Zero) - optional</td><td>0&ndash;1</td><td>$3&ndash;5</td></tr>
-            <tr><td><a href="https://www.aliexpress.com/item/1005006116554207.html" target="_blank" rel="noopener nofollow" style="color:var(--primary-color);">Panel-mount USB-C female jack</a></td><td>1</td><td>$1.50&ndash;3</td></tr>
-            <tr><td><a href="https://www.aliexpress.com/item/1005004807492800.html" target="_blank" rel="noopener nofollow" style="color:var(--primary-color);">USB-C male&rarr;female extension breakout</a> - optional</td><td>0&ndash;1</td><td>$1&ndash;2</td></tr>
-
-            <tr class="category-row"><td colspan="3">Power</td></tr>
-            <tr><td>18650 Li-ion cell (quality, e.g. Samsung / LG)</td><td>1</td><td>$4&ndash;8</td></tr>
-            <tr><td><a href="https://www.aliexpress.com/item/1005007394271700.html" target="_blank" rel="noopener nofollow" style="color:var(--primary-color);">18650 end contact plates, 16 &times; 16 mm (spring + dome)</a></td><td>2</td><td>~$0.60</td></tr>
-
-            <tr class="category-row"><td colspan="3">Fasteners &amp; hardware</td></tr>
-            <tr><td>M2 brass heat-set inserts (from a 100+ kit)</td><td>16 &ndash; 19</td><td>~$3</td></tr>
-            <tr><td>M2&times;4 socket-head screws (from a kit)</td><td>16 &ndash; 19</td><td>~$2</td></tr>
-            <tr><td>Dupont / JST jumper harness</td><td>1</td><td>~$2</td></tr>
-
-            <tr class="category-row"><td colspan="3">Printed parts &amp; consumables</td></tr>
-            <tr><td>Filament (both shells + retainers, ~60&ndash;80 g)</td><td>-</td><td>$1.50&ndash;2.50</td></tr>
-
-            <tr class="bom-total-row"><td>Core build (no aux radio)</td><td>-</td><td>~$27&ndash;30</td></tr>
-            <tr class="bom-total-row"><td>Full build (with aux ESP + USB extension)</td><td>-</td><td>~$33&ndash;36</td></tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="hw-fasteners" style="max-width: 720px; margin: 2rem 0 0;">
-        <h3 style="font-size: 1rem; margin-bottom: 1rem;">Exact fastener count (per unit)</h3>
-        <p style="color: var(--text-dim); font-size: 0.82rem; text-align:left; margin-bottom: 1rem;">
-          Every screw seats in an M2 heat-set insert, so you need equal numbers of each.
-        </p>
-        <table class="comparison-table" style="min-width: 0; width: 100%; font-size: 0.8rem;">
-          <tbody>
-            <tr><td>Case closure (front to back)</td><td>4 &times; M2</td></tr>
-            <tr><td>CYD display board to standoffs</td><td>4 &times; M2</td></tr>
-            <tr><td>Nav retainer</td><td>2 &times; M2</td></tr>
-            <tr><td>microSD retainer</td><td>2 &times; M2</td></tr>
-            <tr><td>IP5306 retainer</td><td>2 &times; M2</td></tr>
-            <tr><td>USB-C jack</td><td>2 &times; M2</td></tr>
-            <tr><td>Aux radio retainer <em>(optional)</em></td><td>3 &times; M2</td></tr>
-            <tr class="bom-total-row"><td>Total</td><td>16 core &middot; 19 with aux</td></tr>
-          </tbody>
-        </table>
-        <p style="color: var(--text-dim); font-size: 0.78rem; text-align:left; margin-top: 0.75rem;">
-          So: <strong style="color:var(--text)">16 screws + 16 inserts</strong> for the core build, or 19 of each with the aux radio.
-          One length covers the whole build: M2&times;4 throughout.
-        </p>
-      </div>
-
-      <div class="hw-disclaimer">
-        <strong>Before you order:</strong> the <strong>aux ESP radio is optional</strong> (a second radio) - skip it and its USB-C
-        extension for the core build. And <strong>pre-assembled units don't include an 18650</strong> (lithium shipping rules); add your own.
-      </div>
-    </div>
-  </section>
-
-  <!-- Downloads -->
-  <section class="section section--tight">
-    <div class="container">
-      <div class="section-heading"><div><span class="eyebrow">Downloads</span><h2>STL files.</h2></div></div>
-      <div style="max-width: 880px; margin: 0;">
-        <div class="card hw-dl">
-          <div>
-            <h3>GhostLink P1 — STL bundle</h3>
-            <p>
-              All printable parts in one archive: shells, retainers, IP5306 button. No supports required.
-            </p>
-            <div class="board-tags">
-              <span class="board-tag">STL</span>
-              <span class="board-tag">7 parts</span>
-              <span class="board-tag">~3.2 MB zip</span>
-              <span class="board-tag">CC BY-NC-SA 4.0</span>
-            </div>
+        <div class="card board-card-full" id="print-ghostlink-p1">
+          <img src="https://assets.bigcartel.com/product_images/429502806/1.png?auto=format&fit=max&w=1500" alt="GhostLink P1 handheld" loading="lazy">
+          <h3>GhostLink P1</h3>
+          <div class="board-tags">
+            <span class="board-tag">CYD 1.9"</span>
+            <span class="board-tag">STL</span>
+            <span class="board-tag">7 parts</span>
+            <span class="board-tag">~$30 to print</span>
           </div>
-          <div class="hw-dl-actions">
-            <a href="downloads/ghostesp-cyd-case.zip" download class="btn btn-primary" data-track="download_cyd_bundle">Download bundle (.zip)</a>
-            <p class="page-hero-note">
-              <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener" style="color:var(--primary-color);">CC BY-NC-SA 4.0</a>:
-              print and sell the cases, don't resell the files. Selling prints? Credit GhostESP and link buyers back here.
-              Full <code>LICENSE.txt</code> is in the zip.
-            </p>
-          </div>
+          <p>Open-source handheld enclosure for the ESP32-1732S019 "CYD" board, with 5-way navigation, microSD, IP5306 charging and an 18650 cell.</p>
+          <a href="printables-ghostlink-p1.html" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">View GhostLink P1</a>
         </div>
+
+        <div class="card board-card-full" id="print-banshee-joystick-cap">
+          <img src="images/banshee-joystick-cap.png" alt="Banshee joystick cap 3D model" loading="lazy">
+          <h3>Banshee joystick cap</h3>
+          <a href="https://github.com/tototo31" target="_blank" rel="noopener" class="board-card-partner">tototo31</a>
+          <div class="board-tags">
+            <span class="board-tag">3MF</span>
+            <span class="board-tag">1 part</span>
+            <span class="board-tag">Community</span>
+          </div>
+          <p>Drop-on cap for the joystick on The Banshee. A community design. Print it in PLA or PETG to change the feel of the stick.</p>
+          <a href="printables-banshee-joystick-cap.html" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">View joystick cap</a>
+        </div>
+
+      </div>
+
+      <div class="hw-license-note">
+        <strong>Licensing:</strong> the GhostLink P1 files are
+        <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener" style="color:var(--primary-color);">CC BY-NC-SA 4.0</a>.
+        Print and sell the cases; don't resell the files. Community designs belong to their authors and carry their own terms;
+        credit the designer and link back when you reshare.
       </div>
     </div>
   </section>
@@ -443,7 +169,7 @@
         <div class="contextual-discord-cta-icon"><i data-lucide="message-square" style="width:22px;height:22px;"></i></div>
         <div class="contextual-discord-cta-content">
           <h4>Assembly support</h4>
-          <p>Wiring diagrams, build questions, and assembled-unit availability.</p>
+          <p>Wiring diagrams, build questions, and requests for new printable parts.</p>
         </div>
         <a href="https://discord.gg/5cyNmUMgwh" target="_blank" rel="noopener" class="btn btn-secondary btn-small">Join Discord</a>
       </div>
@@ -476,101 +202,5 @@
   <script src="js/social-proof.js?v=3" defer></script>
   <script src="js/main.js?v=3" defer></script>
   <script src="js/cookie-consent.js?v=2" defer></script>
-
-  <!-- GhostLink P1 3D viewer (three.js via jsdelivr +esm, no import map so it
-       is immune to analytics module scripts loading first) -->
-  <script type="module">
-    const host = document.getElementById('p1-viewer');
-    const statusEl = document.getElementById('p1-viewer-status');
-    const hintEl = host ? host.querySelector('.hw-viewer-hint') : null;
-    const fail = (msg) => { if (statusEl) { statusEl.hidden = false; statusEl.textContent = msg; } };
-
-    if (host) {
-      try {
-        // jsdelivr's /+esm build rewrites the addons' bare "three" imports to a
-        // full jsdelivr URL, so no import map is needed (and CSP already allows
-        // cdn.jsdelivr.net). All three share one three instance via that URL.
-        const THREE = await import('https://cdn.jsdelivr.net/npm/three@0.160.0/+esm');
-        const { OrbitControls } = await import('https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/controls/OrbitControls.js/+esm');
-        const { STLLoader } = await import('https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/loaders/STLLoader.js/+esm');
-
-        const scene = new THREE.Scene();
-        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-        renderer.setClearColor(0x000000, 0);
-        host.appendChild(renderer.domElement);
-
-        const camera = new THREE.PerspectiveCamera(42, 1, 0.1, 5000);
-
-        // lighting: soft fill + key + a green brand rim
-        scene.add(new THREE.HemisphereLight(0xffffff, 0x202428, 1.1));
-        const key = new THREE.DirectionalLight(0xffffff, 1.4);
-        key.position.set(1, 1.4, 1); scene.add(key);
-        const rim = new THREE.DirectionalLight(0x00ff80, 0.5);
-        rim.position.set(-1.2, 0.4, -1); scene.add(rim);
-
-        const controls = new OrbitControls(camera, renderer.domElement);
-        controls.enableDamping = true;
-        controls.enablePan = false;
-        controls.minDistance = 60;
-        controls.maxDistance = 520;
-        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-          controls.autoRotate = true;
-          controls.autoRotateSpeed = 1.4;
-        }
-
-        const material = new THREE.MeshStandardMaterial({
-          color: 0x30363c, metalness: 0.15, roughness: 0.72,
-          flatShading: true, side: THREE.DoubleSide
-        });
-
-        const loader = new STLLoader();
-        loader.load('models/ghostlink-p1.stl', (geometry) => {
-          geometry.rotateX(-Math.PI / 2);   // Z-up model -> Y-up scene (stand it upright)
-          geometry.computeVertexNormals();
-          geometry.center();
-          const mesh = new THREE.Mesh(geometry, material);
-          scene.add(mesh);
-
-          geometry.computeBoundingSphere();
-          const r = geometry.boundingSphere.radius;
-          // fit the whole bounding sphere in view with a 15% margin
-          const dist = (r / Math.sin((camera.fov * Math.PI / 180) / 2)) * 1.15;
-          controls.minDistance = r * 1.1;
-          controls.maxDistance = dist * 2.2;
-          camera.position.set(dist * 0.35, dist * 0.28, dist * 0.9);
-          controls.target.set(0, 0, 0);
-          controls.update();
-
-          if (statusEl) statusEl.hidden = true;
-          if (hintEl) hintEl.hidden = false;
-          renderer.render(scene, camera);   // draw one frame immediately
-        }, undefined, () => fail('3D preview unavailable - the download still works.'));
-
-        const resize = () => {
-          const w = host.clientWidth, h = host.clientHeight;
-          if (!w || !h) return;
-          renderer.setSize(w, h, false);
-          camera.aspect = w / h;
-          camera.updateProjectionMatrix();
-        };
-        resize();
-        new ResizeObserver(resize).observe(host);
-
-        // only render while on-screen
-        let visible = true;
-        new IntersectionObserver((es) => { visible = es[0].isIntersecting; },
-          { threshold: 0.01 }).observe(host);
-
-        renderer.setAnimationLoop(() => {
-          if (!visible) return;
-          controls.update();
-          renderer.render(scene, camera);
-        });
-      } catch (e) {
-        fail('3D preview unavailable - the download still works.');
-      }
-    }
-  </script>
 </body>
 </html>
