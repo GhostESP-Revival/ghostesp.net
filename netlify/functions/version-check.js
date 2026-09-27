@@ -151,13 +151,16 @@ function renderPage(data) {
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/main.css">
-  <link rel="stylesheet" href="/css/version-check.css">
+  <!-- /css/* and /js/* are served immutable for a year (see netlify.toml), so every
+       asset below must carry a ?v= that matches the pin used by the static pages.
+       Bump it whenever that asset changes, or browsers will pin the old copy. -->
+  <link rel="stylesheet" href="/css/main.css?v=5">
+  <link rel="stylesheet" href="/css/version-check.css?v=2">
 </head>
 <body>
   <a href="#main-content" class="skip-link">Skip to content</a>
   <canvas id="dotTerrain"></canvas>
-  <script src="/js/dot-terrain.js"></script>
+  <script src="/js/dot-terrain.js?v=2"></script>
   <nav id="nav"><noscript><a href="/">Home</a> <a href="/flasher">Flasher</a> <a href="/changelog">Changelog</a></noscript></nav>
   <main id="main-content" class="version-check-page" data-status="${escapeHtml(statusClass)}">
     <div class="container">
@@ -184,9 +187,9 @@ function renderPage(data) {
     </div>
   </main>
   <footer class="footer"><div class="container"><div class="footer-links"><a href="https://discord.gg/5cyNmUMgwh" target="_blank" rel="noopener" class="icon-link">Discord</a><a href="https://github.com/${REPO}" target="_blank" rel="noopener" class="icon-link">GitHub</a><a href="/privacy" class="cookie-settings-link">Privacy Policy</a></div></div></footer>
-  <script src="/js/components.js" defer></script>
-  <script src="/js/version-check.js" defer></script>
-  <script src="/js/main.js" defer></script>
+  <script src="/js/components.js?v=5" defer></script>
+  <script src="/js/version-check.js?v=2" defer></script>
+  <script src="/js/main.js?v=3" defer></script>
 </body>
 </html>`;
 }

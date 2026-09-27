@@ -2226,6 +2226,13 @@ h3 {
   will-change: transform;
   transition: transform 0.22s cubic-bezier(0.32, 0.72, 0, 1), visibility 0s linear 0.22s;
   overflow-y: auto;
+  /* overflow-y: auto alone makes the computed overflow-x 'auto' too (CSS
+     overflow spec: a 'visible' axis paired with a non-visible one computes to
+     'auto'), so the panel became a horizontally scrollable box and the menu
+     items could be dragged side to side. Pin the x axis closed and restrict
+     the gesture to vertical panning so the drawer only ever scrolls up/down. */
+  overflow-x: hidden;
+  touch-action: pan-y;
   overscroll-behavior: contain;
   z-index: 1500;
 }

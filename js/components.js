@@ -58,8 +58,10 @@ const components = {
     `;
   },
 
-  // sitewide dismissible v2.0 launch banner
-  ANNOUNCE_KEY: 'ghostesp_v2_1_announce_dismissed',
+  // Sitewide dismissible announcement bar. The storage key is version-stamped:
+  // bump it whenever the copy changes, or everyone who dismissed the previous
+  // announcement keeps the old key and never sees the new banner.
+  ANNOUNCE_KEY: 'ghostesp_v2_2_announce_dismissed',
 
   renderAnnounceBar() {
     try {
@@ -73,7 +75,7 @@ const components = {
     bar.setAttribute('aria-label', 'Announcement');
     bar.innerHTML = `
       <a href="/changelog" class="announce-bar-link">
-        <strong>GhostESP v2.1 is here.</strong>
+        <strong>GhostESP v2.2 is coming soon.</strong>
         <span class="announce-bar-cta">See what's new &rarr;</span>
       </a>
       <button class="announce-bar-close" type="button" aria-label="Dismiss announcement">&times;</button>
