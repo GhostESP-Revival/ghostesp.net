@@ -25,7 +25,7 @@ const components = {
           <li><a href="/dashboard?tab=store" data-track="nav_apps_store">Apps</a></li>
           <li><a href="https://docs.ghostesp.net" target="_blank" rel="noopener">Docs</a></li>
           <li><a href="/donate">Donate</a></li>
-          <li class="nav-dropdown">
+          <li class="nav-dropdown nav-drawer-section">
             <button class="nav-dropdown-toggle" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="nav-resources-menu">Resources</button>
             <ul class="nav-dropdown-menu" id="nav-resources-menu">
               <li><a href="/about">About</a></li>

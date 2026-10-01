@@ -2189,111 +2189,249 @@ h3 {
 }
 
 /* responsive */
-/* The full nav needs roughly 1120px of width. Below that the link list used to
-   overflow and was silently clipped by html { overflow-x: hidden }, cutting off
-   the rightmost items (Resources, Community, the star button) - visible on a
-   1080px-wide display once the scrollbar takes its gutter. Switch to the drawer
-   as soon as the full layout stops fitting instead of letting it be clipped. */
+/* The full nav needs roughly 1120px of width. Below that the link list is
+   replaced by a slide-in drawer so nothing gets clipped by
+   html { overflow-x: hidden }. */
 @media (max-width: 1100px) {
+  /* --- Hamburger button ------------------------------------------------ */
   .mobile-menu-toggle {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    margin-right: -0.4rem; /* optically align the icon to the container edge */
+    padding: 0;
+    border: 0;
+    border-radius: 10px;
+    background: transparent;
+    color: var(--text);
+    cursor: pointer;
+    /* The drawer (z 1500) is a sibling in the nav's stacking context and slides
+       under the toggle's corner, so lift the button above it or the open drawer
+       swallows the click that would close it. */
+    position: relative;
+    z-index: 1600;
+    -webkit-tap-highlight-color: transparent;
+    transition: background 0.15s ease;
+  }
+
+  .mobile-menu-toggle:hover,
+  .mobile-menu-toggle:focus-visible {
+    background: rgba(255, 255, 255, 0.07);
+  }
+
+  .mobile-menu-toggle:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  .mobile-menu-toggle span {
     display: block;
+    width: 22px;
+    height: 2px;
+    margin: 2.5px 0;
+    border-radius: 2px;
+    background: currentColor;
+    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease;
+  }
+
+  .mobile-menu-toggle.active span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+
+  .mobile-menu-toggle.active span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .mobile-menu-toggle.active span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
   }
 
   nav {
     padding: 0.5rem 0;
+    /* backdrop-filter makes nav the containing block for the fixed drawer,
+       which then inherits nav's `top` offset and mis-sizes against the
+       viewport. The nav is 95% opaque black anyway, so drop the blur here and
+       let the drawer anchor to the viewport. */
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
 
-/* Drawer panel. Genuinely opaque (no backdrop-filter): animating a backdrop
-   filter makes the browser re-sample the blur behind the panel on every frame,
-   which measured ~50ms per frame (~20fps) while sliding. The panel is 98% black
-   already, so the blur bought nothing. will-change keeps it on its own layer. */
-.nav-links {
-  position: fixed;
-  top: 0;
-  right: 0;
-  height: 100vh;
-  height: 100dvh;
-  width: min(78%, 320px);
-  background: #000;
-  flex-direction: column;
-  align-items: stretch;
-  gap: 0.25rem;
-  margin: 0;
-  padding: calc(var(--nav-height, 72px) + 0.5rem) 1.25rem calc(1.5rem + env(safe-area-inset-bottom, 0px));
-  border-left: 1px solid var(--border);
-  transform: translateX(100%);
-  visibility: hidden;
-  will-change: transform;
-  transition: transform 0.22s cubic-bezier(0.32, 0.72, 0, 1), visibility 0s linear 0.22s;
-  overflow-y: auto;
-  /* overflow-y: auto alone makes the computed overflow-x 'auto' too (CSS
-     overflow spec: a 'visible' axis paired with a non-visible one computes to
-     'auto'), so the panel became a horizontally scrollable box and the menu
-     items could be dragged side to side. Pin the x axis closed and restrict
-     the gesture to vertical panning so the drawer only ever scrolls up/down. */
-  overflow-x: hidden;
-  touch-action: pan-y;
-  overscroll-behavior: contain;
-  z-index: 1500;
-}
+  /* --- Drawer panel ---------------------------------------------------- */
+  /* Genuinely opaque (no backdrop-filter): animating a backdrop filter makes
+     the browser re-sample the blur behind the panel every frame, which
+     measured ~50ms/frame (~20fps) while sliding. The panel is nearly black
+     already, so the blur bought nothing. will-change keeps it on its own
+     compositor layer. */
+  .nav-links {
+    --drawer-x: 1rem;
+    --drawer-row-pad: 0.5rem;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: min(86vw, 340px);
+    max-width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    margin: 0;
+    padding:
+      calc(var(--nav-height, 64px) + 0.25rem)
+      var(--drawer-x)
+      calc(1.25rem + env(safe-area-inset-bottom, 0px));
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 0;
+    background: #000;
+    border-left: 1px solid var(--border);
+    transform: translateX(100%);
+    visibility: hidden;
+    will-change: transform;
+    transition: transform 0.22s cubic-bezier(0.32, 0.72, 0, 1), visibility 0s linear 0.22s;
+    overflow-y: auto;
+    /* overflow-y: auto alone makes computed overflow-x 'auto' too (CSS
+       overflow spec: a 'visible' axis paired with a non-visible one computes
+       to 'auto'), turning the panel into a horizontally scrollable box. Pin
+       the x axis closed and restrict the gesture to vertical panning. */
+    overflow-x: hidden;
+    touch-action: pan-y;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    z-index: 1500;
+  }
 
-.nav-links.active {
-  transform: translateX(0);
-  visibility: visible;
-  transition: transform 0.22s cubic-bezier(0.32, 0.72, 0, 1);
-}
+  .nav-links.active {
+    transform: translateX(0);
+    visibility: visible;
+    transition: transform 0.22s cubic-bezier(0.32, 0.72, 0, 1);
+  }
 
-/* Scrim behind the panel: gives the open drawer an edge, catches outside clicks,
-   and stops the page behind it from competing for attention. */
-.nav-scrim {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.62);
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-  transition: opacity 0.22s ease, visibility 0s linear 0.22s;
-  z-index: 1400;
-}
+  /* --- Scrim ----------------------------------------------------------- */
+  .nav-scrim {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.62);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.22s ease, visibility 0s linear 0.22s;
+    z-index: 1400;
+  }
 
-.nav-scrim.active {
-  opacity: 1;
-  visibility: visible;
-  pointer-events: auto;
-  transition: opacity 0.22s ease;
-}
+  .nav-scrim.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transition: opacity 0.22s ease;
+  }
 
-  .nav-links li {
+  /* --- Rows ------------------------------------------------------------ */
+  /* Every row shares one set of metrics (font, padding, min-height), so links,
+     dropdown toggles and the star CTA line up on a single left edge and share
+     one vertical rhythm instead of drifting by a few pixels each. */
+  .nav-links > li {
     width: 100%;
+    margin: 0;
   }
 
+  .nav-links > li > a,
+  .nav-links .nav-dropdown-toggle {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-height: 46px;
+    padding: 0.7rem var(--drawer-row-pad);
+    border: 0;
+    border-radius: 9px;
+    background: transparent;
+    color: var(--text-dim);
+    font-family: inherit;
+    font-size: 0.98rem;
+    font-weight: 500;
+    line-height: 1.3;
+    letter-spacing: 0.01em;
+    text-align: left;
+    text-decoration: none;
+    cursor: pointer;
+    transform: none !important;
+    transition: color 0.15s ease, background 0.15s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .nav-links > li > a:hover,
+  .nav-links > li > a:focus-visible,
+  .nav-links .nav-dropdown-toggle:hover,
+  .nav-links .nav-dropdown-toggle:focus-visible,
+  .nav-links .nav-dropdown.open .nav-dropdown-toggle {
+    color: var(--text);
+    background: rgba(255, 255, 255, 0.06);
+    transform: none !important;
+  }
+
+  .nav-links a:focus-visible,
+  .nav-links .nav-dropdown-toggle:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: -2px;
+  }
+
+  /* Underlines are a desktop affordance. */
+  .nav-links a::after,
+  .nav-links > li > a::after {
+    display: none !important;
+    width: 0 !important;
+  }
+
+  /* Divider before the grouped Resources / Community links and the star CTA. */
+  .nav-drawer-section,
+  .nav-links > #nav-star-count {
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--border);
+  }
+
+  /* --- Collapsible groups --------------------------------------------- */
   .nav-dropdown {
     display: block;
   }
 
   .nav-dropdown-toggle {
-    width: 100%;
-    padding: 0;
-    color: var(--text);
-    text-align: left;
-    pointer-events: auto;
+    justify-content: space-between;
   }
 
   .nav-dropdown-toggle::after {
-    display: none;
+    content: '';
+    display: block;
+    flex: 0 0 auto;
+    width: 0.4rem;
+    height: 0.4rem;
+    margin: 0 0.1rem 0.15rem 0.75rem;
+    border-right: 1.5px solid currentColor;
+    border-bottom: 1.5px solid currentColor;
+    transform: rotate(45deg);
+    transition: transform 0.2s ease;
+  }
+
+  .nav-dropdown.open .nav-dropdown-toggle::after {
+    transform: rotate(225deg);
+    margin-bottom: -0.15rem;
   }
 
   .nav-dropdown-menu {
     position: static;
     min-width: 0;
-    margin-top: 0.45rem;
-    padding: 0 0 0 0.85rem;
+    display: none;
+    /* The vertical rule starts exactly under the parent label (drawer-x +
+       row-pad), so the hierarchy reads as one indented column. */
+    margin: 0.1rem 0 0.35rem var(--drawer-row-pad);
+    padding: 0 0 0 0.75rem;
     border: 0;
     border-left: 1px solid var(--border);
     border-radius: 0;
     background: transparent;
     box-shadow: none;
-    display: none;
     opacity: 1;
     pointer-events: auto;
     transform: none !important;
@@ -2307,29 +2445,62 @@ h3 {
     display: block;
   }
 
-  .nav-dropdown-menu a:hover {
-    background: transparent;
+  .nav-dropdown-menu a {
+    display: flex;
+    align-items: center;
+    min-height: 40px;
+    padding: 0.5rem var(--drawer-row-pad);
+    border-radius: 9px;
+    color: var(--text-dim);
+    font-size: 0.9rem;
+    font-weight: 400;
   }
 
-  .nav-links a {
+  .nav-dropdown-menu a:hover,
+  .nav-dropdown-menu a:focus-visible {
+    color: var(--text);
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  /* --- Star CTA -------------------------------------------------------- */
+  .nav-links > #nav-star-count {
     display: block;
-    padding: 0.5rem 0;
+    margin-left: 0;
+  }
+
+  .nav-links > #nav-star-count > .nav-star-btn {
+    width: 100%;
+    min-height: 46px;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.7rem 0.75rem;
+    border: 1px solid rgba(0, 255, 128, 0.28);
+    border-radius: 9px;
+    background: rgba(0, 255, 128, 0.05);
+    color: #d8e5dc;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+  }
+
+  .nav-links > #nav-star-count > .nav-star-btn:hover,
+  .nav-links > #nav-star-count > .nav-star-btn:focus-visible {
+    border-color: rgba(0, 255, 128, 0.7);
+    background: rgba(0, 255, 128, 0.12);
+    color: #fff;
+  }
+}
+
+/* Very narrow phones: trim the drawer gutters rather than the content. */
+@media (max-width: 400px) {
+  .nav-links {
+    --drawer-x: 0.8rem;
+    --drawer-row-pad: 0.45rem;
+    width: min(90vw, 320px);
+  }
+
+  .nav-links > li > a,
+  .nav-links .nav-dropdown-toggle {
     font-size: 0.95rem;
-    transform: none !important;
-    transition: none !important;
-    overflow: hidden;
-  }
-
-  .nav-links a:hover,
-  .nav-dropdown-toggle:hover {
-    transform: none !important;
-    transition: none !important;
-  }
-
-  .nav-links a::after,
-  .nav-links > li > a::after {
-    display: none !important;
-    width: 0 !important;
   }
 }
 

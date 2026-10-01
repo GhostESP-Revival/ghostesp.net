@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#000000">
+
+  <title>What Even Is "The Community"? - GhostESP Blog</title>
+  <meta name="description" content="People keep saying &quot;the community&quot; like it's one group. It's developers, users, researchers, hardware people, and a bunch of Discord servers. That's not one group, and pretending it is causes more problems than it solves.">
+  <meta name="author" content="Jay Candel">
+  <meta name="robots" content="index, follow">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content='What Even Is "The Community"?'>
+  <meta property="og:description" content="People keep saying &quot;the community&quot; like it's one group. It's developers, users, researchers, hardware people, and a bunch of Discord servers. That's not one group, and pretending it is causes more problems than it solves.">
+  <meta property="og:url" content="https://ghostesp.net/blog-community">
+  <meta property="og:site_name" content="GhostESP">
+  <meta property="og:image" content="https://ghostesp.net/images/IMG_1178.webp">
+  <meta property="article:published_time" content="2026-09-01">
+  <meta property="article:modified_time" content="2026-09-01">
+  <meta property="article:author" content="Jay Candel">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content='What Even Is "The Community"?'>
+  <meta name="twitter:description" content="People keep saying &quot;the community&quot; like it's one group. It's developers, users, researchers, hardware people, and a bunch of Discord servers. That's not one group, and pretending it is causes more problems than it solves.">
+  <meta name="twitter:image" content="https://ghostesp.net/images/IMG_1178.webp">
+
+  <link rel="canonical" href="https://ghostesp.net/blog-community">
+  <link rel="alternate" type="application/rss+xml" title="GhostESP Blog" href="https://ghostesp.net/feed.xml">
+
+  <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="css/main.css?v=6">
+  <link rel="stylesheet" href="css/polish.css?v=3">
+  <script src="https://unpkg.com/lucide@0.344.0/dist/umd/lucide.min.js" defer></script>
+  <link rel="stylesheet" href="css/blog.css?v=3">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "What Even Is \"The Community\"?",
+    "description": "People keep saying \"the community\" like it's one group. It's developers, users, researchers, hardware people, and a bunch of Discord servers. That's not one group, and pretending it is causes more problems than it solves.",
+    "image": "https://ghostesp.net/images/IMG_1178.webp",
+    "datePublished": "2026-09-01",
+    "dateModified": "2026-09-01",
+    "author": {
+      "@type": "Person",
+      "name": "Jay Candel"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "GhostESP",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://ghostesp.net/images/ghostespdotnet.webp"
+      }
+    },
+    "mainEntityOfPage": "https://ghostesp.net/blog-community"
+  }
+  </script>
+  <!-- Cloudflare Web Analytics -->
+  <script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "8a43f9bb615d42a8ad405808147cc502"}'></script>
+  <!-- End Cloudflare Web Analytics -->
+</head>
+<body class="polished">
+  <a href="#main-content" class="skip-link">Skip to content</a>
+  <canvas id="dotTerrain"></canvas>
+  <script src="js/dot-terrain.js?v=2"></script>
+  <div class="page-scrim tint-faint" aria-hidden="true"></div>
+
+  <nav id="nav"><noscript><a href="/">Home</a> <a href="boards.html">Boards</a> <a href="flasher.html">Flasher</a> <a href="dashboard.html">Dashboard</a> <a href="blog.html">Blog</a> <a href="https://docs.ghostesp.net">Docs</a></noscript></nav>
+
+  <header id="main-content" class="post-hero">
+    <div class="container">
+      <a href="blog.html" class="post-back">
+        <i data-lucide="arrow-left"></i>
+        Back to Blog
+      </a>
+      <h1 class="post-title">What Even Is "The Community"?</h1>
+      <div class="post-meta">
+        <time datetime="2026-09-01">September 1, 2026</time>
+        <span class="blog-tag">Community</span>
+        <span class="blog-tag">Culture</span>
+      </div>
+      <div class="author-badge">
+        <img src="https://avatars.githubusercontent.com/jaylikesbunda" alt="Jay Candel" class="author-avatar">
+        <div class="author-info">
+          <span class="author-name">Jay Candel</span>
+          <span class="author-role">GhostESP Maintainer</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <article class="post-content">
+    <div class="container">
+      <div class="post-prose-wrapper">
+        <div class="post-prose">
+
+        <p>I keep hearing people talk about "the community."</p>
+        <p>"We need to come together." "This is bad for the community." "You should engage with the community more."</p>
+        <p>What does that even mean, though? There are developers, users, hardware people, researchers, content creators, Discord servers, companies, and randoms messing around with ESP32s. That's not one group. They don't share values just because they share a hobby.</p>
+
+        <h2>In-group bias is easy</h2>
+        <p>Split people into totally made-up groups in a lab and they'll still favor their own side. You don't need some huge ideological rift to get an us-vs-them. A coin flip does the job.</p>
+        <p>Once that happens, people get treated differently depending on which side they're on. Our guy gets context. Their guy gets suspicion. Our guy gets the benefit of the doubt. Their guy has to earn it.</p>
+        <p>Then motivated reasoning kicks in. People are scarily good at finding reasons the conclusion they already wanted was the right one all along, usually without even noticing they're doing it:</p>
+        <ul>
+          <li>Someone we like goes closed source? You have to understand why they did it.</li>
+          <li>Someone else does it? Fuck closed source.</li>
+          <li>We fork something? That's how open source works.</li>
+          <li>Someone forks us? They're stealing our work.</li>
+          <li>Our side calls someone out? Exposing bad behavior.</li>
+          <li>Someone calls out our side? Why are they starting drama?</li>
+        </ul>
+        <p>Each one sounds fine on its own. Line them up and it's obviously not about principle.</p>
+        <p>The real test isn't "can I explain why my friend did this." It's "would I accept that same explanation from someone I don't like."</p>
+
+        <img src="https://miro.medium.com/v2/resize:fit:1400/format:webp/0*ehBCXuTtvu-VJMB_.jpeg" alt="Illustration of a fragmented community with different groups pulled in separate directions">
+
+        <h2>Nobody wrote these rules down</h2>
+        <p>"Community norms" sound official until you ask where they're written. Who decided them? Who decides who's "causing drama," who's a "thief," who gets defended, who gets told to move on?</p>
+        <p>Usually there's no standard at all. You just learn the rules by watching who gets treated differently. And eventually "community norms" turns out to mean: whatever the people in our group currently agree with.</p>
+        <p>Fine. Just call it that instead of dressing it up. A friend group having an opinion isn't the community having an opinion.</p>
+
+        <h2>The internet makes it worse</h2>
+        <p>Group polarization: put people who already agree in a room together, and they leave with a stronger, more extreme version of the opinion they walked in with. This is basically how every bit of online drama plays out:</p>
+        <p>Someone posts a screenshot. Someone explains what they think happened. Someone else remembers something from six months ago. Someone cracks a joke. Someone digs up another screenshot. By now everyone's already decided who the asshole is.</p>
+        <p>Eventually there's a whole narrative built around one person. A new person shows up, reads the thread, and takes the story as fact, no idea which parts were ever actually confirmed and which parts were just vibes.</p>
+        <p>And because it's all typed instead of said out loud, people say things online they'd never say to your face. "I disagree with this firmware decision" somehow turns into personal attacks, screenshots getting passed around private servers, memes, people digging through your old messages, arguments that have nothing to do with the original thing. I've watched an argument about "stolen" software turn into comments about somebody's ethnicity. At that point nobody's talking about software licenses anymore.</p>
+
+        <h2>Open source already has rules</h2>
+        <p>They're called licenses. MIT gives people certain rights. GPL gives different rights and comes with obligations. How you feel about the developer doesn't change any of that.</p>
+        <p>And yet, socially, it still turns into:</p>
+        <ul>
+          <li>We reuse something: open source.</li>
+          <li>They reuse something: cloning.</li>
+          <li>We build on upstream work: development.</li>
+          <li>Someone builds on our work: stealing.</li>
+        </ul>
+        <p>Licenses don't settle every ethical question. You can be 100% legal and still be an asshole about giving credit. But who you're friends with shouldn't change what the standard is.</p>
+
+        <h2>So who is "the community," then?</h2>
+        <p>When someone says "engage with the community," who do they even mean? Users? Contributors? Researchers? Other firmware devs? A Discord server? A friend group that all know each other?</p>
+        <p>Not the same thing. And honestly, they don't need to be.</p>
+        <p>Maybe this was never one big community to begin with. Maybe it's just an ecosystem: projects that cooperate, projects that compete, people who contribute code, fork stuff, disagree, decide they don't like each other, and everything still works fine. That's a healthier way to think about it than pretending we're all one big family.</p>
+        <p>I don't want people defending me because they like me. If I do something stupid, tell me I did something stupid. If someone I don't like does something right, I should be able to say so. Being "united" doesn't mean anything on its own. A group can be completely unified and still be completely full of shit.</p>
+
+        <h2>Just apply the same standards</h2>
+        <p>If "community" means sharing knowledge, writing code, reporting bugs, building hardware, doing research, giving credit where it's due, sure, count me in.</p>
+        <p>But if it means pick a side, defend your friends no matter what, ignore the contradictions, stay quiet when criticism might upset the wrong person, and use a different standard depending on who's involved, then no, I don't want any part of that.</p>
+        <p>We don't have to agree on everything. We don't even have to like each other. Just apply the same standards to everyone. And if that makes someone call me "anti-community," maybe the problem is what they meant by community in the first place.</p>
+
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-links">
+        <a href="https://discord.gg/5cyNmUMgwh" target="_blank" rel="noopener" class="icon-link" title="Discord">
+          <i class="bi bi-discord"></i>
+        </a>
+        <a href="https://github.com/GhostESP-Revival/GhostESP" target="_blank" rel="noopener" class="icon-link" title="GitHub">
+          <i class="bi bi-github"></i>
+        </a>
+        <a href="https://instagram.com/ghostesprevival" target="_blank" rel="noopener" class="icon-link" title="Instagram">
+          <i class="bi bi-instagram"></i>
+        </a>
+            <button class="cookie-settings-link" onclick="CookieConsent.showSettings()">Cookie Settings</button>
+      <a href="privacy.html" class="cookie-settings-link">Privacy Policy</a>
+    </div>
+    </div>
+  </footer>
+
+  <script src="js/components.js?v=6" defer></script>
+  <script src="js/social-proof.js?v=3" defer></script>
+  <script src="js/main.js?v=3" defer></script>
+  <script src="js/cookie-consent.js?v=2" defer></script>
+</body>
+</html>

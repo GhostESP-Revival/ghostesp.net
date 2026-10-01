@@ -185,8 +185,10 @@ body:has(.flasher-page) {
   letter-spacing: 0.02em;
 }
 
-/* Flasher nav overrides - desktop only */
-@media (min-width: 769px) {
+/* Flasher nav overrides - desktop only. Must match the drawer breakpoint in
+   main.css (max-width: 1100px), otherwise both apply between 769-1100px and
+   the desktop rules win on specificity, breaking the mobile drawer. */
+@media (min-width: 1101px) {
   nav ul.flasher-nav-links {
     margin: 0 !important;
     margin-top: 0 !important;
