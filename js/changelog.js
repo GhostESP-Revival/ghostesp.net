@@ -25,12 +25,31 @@
   }
 
   function inlineFormat(text) {
-    return text
+    // Pull markdown links out first so the inline rules below can't reach
+    // inside their labels/URLs (which would nest anchors or mangle URLs).
+    const links = [];
+    let out = text.replace(/\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/g, (match, label, url) => {
+      const index = links.push({ label, url }) - 1;
+      return `\u0000LINK${index}\u0000`;
+    });
+
+    out = out
       .replace(/`([^`]+)`/g, '<code>$1</code>')
       .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
       .replace(/\*(.*?)\*/g, '<em>$1</em>')
       .replace(/@(\w[\w-]*)/g, '<a href="https://github.com/$1" target="_blank" rel="noopener">@$1</a>')
       .replace(/\(#(\d+)\)/g, '(<a href="https://github.com/' + REPO + '/issues/$1" target="_blank" rel="noopener">#$1</a>)');
+
+    out = out.replace(/\u0000LINK(\d+)\u0000/g, (match, index) => {
+      const link = links[Number(index)];
+      const label = link.label
+        .replace(/`([^`]+)`/g, '<code>$1</code>')
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\*(.*?)\*/g, '<em>$1</em>');
+      return `<a href="${link.url}" target="_blank" rel="noopener">${label}</a>`;
+    });
+
+    return out;
   }
 
   function parseChangelog(md) {
@@ -39,18 +58,24 @@
     let current = null;
     let currentCategory = null;
 
+    function ensureCategory() {
+      if (!currentCategory) {
+        // Some releases list items without a ### heading. Give those items an
+        // implicit, heading-less category so they aren't dropped.
+        currentCategory = { name: '', level: 3, items: [], isTldr: false, implicit: true };
+        current.categories.push(currentCategory);
+      }
+      return currentCategory;
+    }
+
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i];
 
-      // version header: ## Revival v1.9.10
+      // version header: ## v2.2 / ## Revival v1.9.10
       const versionMatch = line.match(/^##\s+(.+)/);
       if (versionMatch) {
         if (current) versions.push(current);
-        current = {
-          title: versionMatch[1].trim(),
-          tldr: null,
-          categories: []
-        };
+        current = { title: versionMatch[1].trim(), tldr: [], categories: [] };
         currentCategory = null;
         continue;
       }
@@ -60,62 +85,102 @@
       // skip the top-level # title
       if (line.match(/^#\s/)) continue;
 
-      // category header: ### Added, ### Changed, ### Fixed, ### TL;DR, etc.
-      const catMatch = line.match(/^###\s+(.+)/);
+      // category header: ### Added / #### Clock & Time
+      const catMatch = line.match(/^(#{3,4})\s+(.+)/);
       if (catMatch) {
-        const catName = catMatch[1].trim();
-        // TL;DR / TLDR sections store as tldr text, not a category
-        if (/^tl;?dr$/i.test(catName)) {
-          currentCategory = { name: catName, items: [], isTldr: true };
-          current.categories.push(currentCategory);
-        } else {
-          currentCategory = { name: catName, items: [], isTldr: false };
-          current.categories.push(currentCategory);
+        const name = catMatch[2].trim();
+        currentCategory = {
+          name,
+          level: catMatch[1].length,
+          items: [],
+          isTldr: /^tl;?dr$/i.test(name)
+        };
+        current.categories.push(currentCategory);
+        continue;
+      }
+
+      const itemMatch = line.match(/^\s*[-*]\s+(.+)/);
+      const contMatch = line.match(/^\s{2,}(.+)/);
+
+      // TL;DR sections are structured as bold labels followed by bullets.
+      if (currentCategory && currentCategory.isTldr) {
+        const trimmed = line.trim();
+        if (!trimmed) continue;
+
+        const labelMatch = trimmed.match(/^\*\*(.+?)\*\*:?\s*$/);
+        if (labelMatch) {
+          current.tldr.push({ label: labelMatch[1].trim().replace(/:\s*$/, ''), items: [] });
+          continue;
         }
+
+        if (itemMatch) {
+          if (current.tldr.length === 0) current.tldr.push({ label: null, items: [] });
+          current.tldr[current.tldr.length - 1].items.push(itemMatch[1].trim());
+          continue;
+        }
+
+        const lastBlock = current.tldr[current.tldr.length - 1];
+        if (contMatch && lastBlock && lastBlock.items.length > 0) {
+          lastBlock.items[lastBlock.items.length - 1] += ' ' + contMatch[1].trim();
+          continue;
+        }
+
+        if (current.tldr.length === 0) current.tldr.push({ label: null, items: [] });
+        const block = current.tldr[current.tldr.length - 1];
+        block.text = block.text ? block.text + ' ' + trimmed : trimmed;
         continue;
       }
 
       // list item
-      const itemMatch = line.match(/^\s*[-*]\s+(.+)/);
-      if (itemMatch && currentCategory) {
-        currentCategory.items.push(itemMatch[1].trim());
+      if (itemMatch) {
+        ensureCategory().items.push(itemMatch[1].trim());
         continue;
       }
 
       // continuation of previous list item (indented)
-      const contMatch = line.match(/^\s{2,}(.+)/);
-      if (contMatch && currentCategory && currentCategory.items.length > 0) {
-        currentCategory.items[currentCategory.items.length - 1] += ' ' + contMatch[1].trim();
+      const category = currentCategory;
+      if (contMatch && category && category.items.length > 0) {
+        category.items[category.items.length - 1] += ' ' + contMatch[1].trim();
         continue;
-      }
-
-      // TL;DR paragraph text (non-empty, non-header, non-list under a tldr category)
-      if (currentCategory && currentCategory.isTldr && line.trim() && !line.match(/^#/)) {
-        if (current.tldr) {
-          current.tldr += ' ' + line.trim();
-        } else {
-          current.tldr = line.trim();
-        }
       }
     }
 
     if (current) versions.push(current);
-    return versions;
+    return versions.filter((version) => !/^attribution$/i.test(version.title));
   }
 
   function renderVersion(version, index) {
     let html = `<div class="changelog-version" data-version="${index}">`;
     html += `<h2>${inlineFormat(escapeHtml(version.title))}</h2>`;
 
-    if (version.tldr) {
-      html += `<div class="changelog-tldr">${inlineFormat(escapeHtml(version.tldr))}</div>`;
+    if (version.tldr && version.tldr.length) {
+      html += '<div class="changelog-tldr">';
+      for (const block of version.tldr) {
+        if (block.label) {
+          html += `<p class="changelog-tldr-label"><strong>${inlineFormat(escapeHtml(block.label))}</strong></p>`;
+        }
+        if (block.text) {
+          html += `<p>${inlineFormat(escapeHtml(block.text))}</p>`;
+        }
+        if (block.items.length) {
+          html += '<ul>';
+          for (const item of block.items) {
+            html += `<li>${inlineFormat(escapeHtml(item))}</li>`;
+          }
+          html += '</ul>';
+        }
+      }
+      html += '</div>';
     }
 
     for (const cat of version.categories) {
       if (cat.isTldr) continue;
       if (cat.items.length === 0) continue;
 
-      html += `<h3>${escapeHtml(cat.name)}</h3>`;
+      if (cat.name) {
+        const tag = cat.level === 4 ? 'h4' : 'h3';
+        html += `<${tag}>${escapeHtml(cat.name)}</${tag}>`;
+      }
       html += '<ul>';
       for (const item of cat.items) {
         html += `<li>${inlineFormat(escapeHtml(item))}</li>`;
