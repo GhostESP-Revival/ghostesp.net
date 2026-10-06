@@ -5,7 +5,7 @@
     <link>https://ghostesp.net/blog</link>
     <description>News, updates, and deep dives from the GhostESP project — the open-source wireless research platform for ESP32.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 19 July 2026 00:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Tue, 06 Oct 2026 00:00:00 GMT</lastBuildDate>
     <atom:link href="https://ghostesp.net/feed.xml" rel="self" type="application/rss+xml"/>
     <image>
       <url>https://ghostesp.net/images/ghostespdotnet.webp</url>
@@ -51,6 +51,16 @@
       <category>Release</category>
       <category>Update</category>
       <description>Cloud Store, safe OTA updates, GhostScript, expanded NFC support, and more polish for an extensible GhostESP platform.</description>
+    </item>
+
+    <item>
+      <title>GhostESP v2.2: Joining the Mesh</title>
+      <link>https://ghostesp.net/blog-ghostesp-v2-2</link>
+      <guid isPermaLink="true">https://ghostesp.net/blog-ghostesp-v2-2</guid>
+      <pubDate>Tue, 06 Oct 2026 00:00:00 GMT</pubDate>
+      <category>Release</category>
+      <category>Update</category>
+      <description>LoRa and Meshtastic/Meshcore support, a smarter BLE device detect, richer captures, a Game Boy emulator, and a round of UI polish.</description>
     </item>
 
   </channel>
