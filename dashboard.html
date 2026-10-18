@@ -216,9 +216,10 @@
                   <div class="quick-commands">
                     <span class="quick-label">Quick:</span>
                     <button class="quick-cmd" data-cmd="help" title="Show available commands">help</button>
-                    <button class="quick-cmd" data-cmd="scan" title="Scan WiFi networks">scan</button>
-                    <button class="quick-cmd" data-cmd="stop" title="Stop current operation">stop</button>
-                    <button class="quick-cmd" data-cmd="info" title="Show device info">info</button>
+                    <button class="quick-cmd" data-cmd="scanap" title="Scan Wi-Fi access points">scanap</button>
+                    <button class="quick-cmd" data-cmd="stopscan" title="Stop an ongoing Wi-Fi scan">stopscan</button>
+                    <button class="quick-cmd" data-cmd="stop" title="Stop attacks, spam, and other running operations">stop</button>
+                    <button class="quick-cmd" data-cmd="chipinfo" title="Show device info">chipinfo</button>
                   </div>
                   <div class="control-panel">
                     <button class="btn" id="clearButton">Clear</button>
@@ -274,8 +275,8 @@
     <script src="js/github.js?v=3"></script>
     <script src="js/social-proof.js?v=3"></script>
     <script src="js/main.js?v=3"></script>
-    <script src="js/serial.js?v=3"></script>
-    <script src="js/serial-mirror.js?v=2"></script>
+    <script src="js/serial.js?v=6"></script>
+    <script src="js/serial-mirror.js?v=3"></script>
     <script src="js/serial-files.js?v=2"></script>
     <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
     <script src="js/serial-crash.js?v=20260304j"></script>
@@ -294,13 +295,15 @@
       });
     </script>
     <script>
-      // Quick command buttons
+      // Quick command buttons — go through the console's command queue so
+      // they can't interleave with background polls (chipinfo, store, etc.).
       document.querySelectorAll('.quick-cmd').forEach(function(btn) {
         btn.addEventListener('click', function() {
           var cmd = btn.dataset.cmd;
           if (window.serialConsole && window.serialConsole.isConnected) {
-            window.serialConsole.sendCommand(cmd).catch(function() {});
-            window.serialConsole.log('> ' + cmd + '\n');
+            window.serialConsole.sendUserCommand(cmd).catch(function(err) {
+              window.serialConsole.log('Error sending command: ' + (err && err.message ? err.message : err) + '\n');
+            });
           }
         });
       });

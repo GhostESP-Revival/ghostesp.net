@@ -117,6 +117,7 @@ class SerialMirror {
       this.overlay.textContent = "Connect to device first";
       return;
     }
+    if (this.running) return;
 
     try {
       this.running = true;
@@ -140,7 +141,12 @@ class SerialMirror {
       console.error("Mirror start failed:", e);
       this.running = false;
       this.connected = false;
+      // Clean up the listener and, crucially, un-mute the console — a
+      // failed start used to leave output suppressed until a page reload.
+      if (this._unsubscribeRaw) { this._unsubscribeRaw(); this._unsubscribeRaw = null; }
+      if (sc) sc.setConsoleOutputSuppressed(false);
       this.updateConnectionUI();
+      this.updateStartStopUI();
     }
   }
 

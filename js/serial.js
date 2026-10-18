@@ -25,12 +25,23 @@ class SerialConsole {
     this.rawDataListeners = new Set();
     this.dataListeners = new Set();
     this.suppressConsoleOutput = false;
+    this._suppressOverride = false;
+    this._requestSuppressDepth = 0;
     this._cmdChain = null;
     this._commandLockHeld = false;
     this._busyFlag = 0;
+    this._connecting = false;
+    this._handlingDisconnect = false;
+    this._cleaningUp = false;
+    this._lastUserActivityAt = 0;
+    this._lastUserSendAt = 0;
+    this._lastChunkAt = 0;
+    this._pendingInitialChipInfo = null;
+    this._resolveInitialChipInfo = null;
     this.initializeElements();
     this.checkBrowserSupport();
     this.setupEventListeners();
+    this.setupSerialEventListeners();
     this.setupChipInfoUI();
   }
 
@@ -118,6 +129,30 @@ class SerialConsole {
     }
   }
 
+  // Chrome fires `disconnect` on navigator.serial when the USB device goes
+  // away. Without this listener the page keeps showing "Connected" forever
+  // and every command fails until the user reloads.
+  setupSerialEventListeners() {
+    if (!("serial" in navigator)) return;
+    navigator.serial.addEventListener("disconnect", (event) => {
+      const port = event.target;
+      if (!port || !this.port || port !== this.port) return;
+      this.log("Device disconnected unexpectedly\n");
+      this.handleUnexpectedDisconnect();
+    });
+  }
+
+  async handleUnexpectedDisconnect() {
+    if (this._handlingDisconnect || !this.isConnected) return;
+    this._handlingDisconnect = true;
+    try {
+      this.updateConnectionStatus(false);
+      await this.cleanup();
+    } finally {
+      this._handlingDisconnect = false;
+    }
+  }
+
   addRawDataListener(listener) {
     if (typeof listener !== "function") return () => {};
     this.rawDataListeners.add(listener);
@@ -145,7 +180,15 @@ class SerialConsole {
   }
 
   setConsoleOutputSuppressed(suppressed) {
-    this.suppressConsoleOutput = !!suppressed;
+    // Boolean "override" set by external tools (e.g. the screen mirror).
+    // Internal per-request suppression uses a separate depth counter so the
+    // two can't clobber each other and leave the console permanently muted.
+    this._suppressOverride = !!suppressed;
+    this._applySuppression();
+  }
+
+  _applySuppression() {
+    this.suppressConsoleOutput = this._suppressOverride || this._requestSuppressDepth > 0;
   }
 
   updateBaudRateDisplay() {
@@ -201,16 +244,21 @@ class SerialConsole {
   }
 
   async reconnectWithNewBaudRate() {
+    const port = this.port;
+    if (!port) return;
     try {
       const baud = parseInt(this.baudSelect.value, 10);
       if (isNaN(baud) || baud <= 0) {
         this.log("Auto baud can't be changed while connected — disconnect and reconnect to auto-detect.\n");
         return;
       }
-      const portInfo = this.port.getInfo();
       await this.disconnect();
-      await new Promise((resolve) => setTimeout(resolve, 100));
-      await this.port.open({
+      await new Promise((resolve) => setTimeout(resolve, 150));
+      // disconnect()/cleanup() drops the port reference and the reader's
+      // AbortController; restore both before reopening.
+      this.port = port;
+      this.abortController = new AbortController();
+      await port.open({
         baudRate: baud,
         dataBits: 8, stopBits: 1, parity: "none", flowControl: "none",
       });
@@ -220,6 +268,7 @@ class SerialConsole {
     } catch (error) {
       this.log(`Error changing baud rate: ${error.message}\n`);
       this.updateConnectionStatus(false);
+      await this.cleanup();
     }
   }
 
@@ -355,88 +404,138 @@ class SerialConsole {
   }
 
   async connect() {
+    if (this._connecting) return;
+    this._connecting = true;
     try {
       if (this.permissionDialog) this.permissionDialog.style.display = "flex";
       this.port = await navigator.serial.requestPort();
       if (this.permissionDialog) this.permissionDialog.style.display = "none";
-      const baud = await this.resolveBaudRate();
-      await this.port.open({ baudRate: baud, dataBits: 8, stopBits: 1, parity: "none", flowControl: "none" });
+      await this.openPort();
       this.abortController = new AbortController();
+      // Arm the "device ready" gate BEFORE announcing the connection: the
+      // Store's app scan listens for the connection event and would otherwise
+      // fire `sd list` at the still-booting console, lose it, and hold the
+      // command queue for its full timeout. Everything except the chipinfo
+      // handshake itself waits on this promise.
+      let resolveReady;
+      const ready = new Promise((resolve) => { resolveReady = resolve; });
+      this._pendingInitialChipInfo = ready;
+      this._resolveInitialChipInfo = resolveReady;
+
       this.updateConnectionStatus(true);
       this.startReading();
       this.log("Connected to device\n");
-      this.fetchChipInfo().catch(() => {});
+      this.fetchChipInfo({ initial: true })
+        .catch(() => {})
+        .finally(() => this._finishInitialChipInfo());
     } catch (error) {
       if (this.permissionDialog) this.permissionDialog.style.display = "none";
       if (error.name === "NotFoundError") this.log("No device selected\n");
       else this.log(`Error connecting: ${error.message}\n`);
       this.updateConnectionStatus(false);
       await this.cleanup();
+    } finally {
+      this._connecting = false;
+    }
+  }
+
+  // Releases anyone waiting on the post-connect chipinfo handshake. Safe to
+  // call multiple times (handshake completion and cleanup both call it).
+  _finishInitialChipInfo() {
+    const resolve = this._resolveInitialChipInfo;
+    this._resolveInitialChipInfo = null;
+    this._pendingInitialChipInfo = null;
+    if (resolve) resolve();
+  }
+
+  async openPort() {
+    const port = this.port;
+    // A previous session can leave the OS handle open (e.g. after a reload
+    // mid-connection). Close it first so open() doesn't fail with
+    // "The port is already open".
+    if (port.readable || port.writable) {
+      try { await port.close(); } catch (error) { /* already closed */ }
+    }
+    const baud = await this.resolveBaudRate();
+    const options = { baudRate: baud, dataBits: 8, stopBits: 1, parity: "none", flowControl: "none" };
+    try {
+      await port.open(options);
+    } catch (error) {
+      // USB-UART bridges (CH340/CP210x) sometimes reject the first open
+      // right after the previous handle was released; retry once.
+      await new Promise((resolve) => setTimeout(resolve, 400));
+      try { await port.close(); } catch (closeError) { /* not open */ }
+      await port.open(options);
     }
   }
 
   async autoConnect() {
-    if (!this.checkBrowserSupport()) return;
-    if (this.isConnected) {
-      this.log("Already connected - disconnect first to change baud automatically\n");
-      return;
-    }
-    try {
-      if (this.permissionDialog) this.permissionDialog.style.display = "flex";
-      this.port = await navigator.serial.requestPort();
-      if (this.permissionDialog) this.permissionDialog.style.display = "none";
-      let baud = await this.resolveBaudRate();
-      await this.port.open({ baudRate: baud, dataBits: 8, stopBits: 1, parity: "none", flowControl: "none" });
-      this.abortController = new AbortController();
-      this.updateConnectionStatus(true);
-      this.startReading();
-      this.log("Connected to device (auto baud)\n");
-      this.fetchChipInfo().catch(() => {});
-    } catch (error) {
-      if (this.permissionDialog) this.permissionDialog.style.display = "none";
-      if (error.name === "NotFoundError") this.log("No device selected\n");
-      else this.log(`Error connecting: ${error.message}\n`);
-      this.updateConnectionStatus(false);
-      await this.cleanup();
-    }
+    return this.connect();
   }
 
   async startReading() {
     const controller = this.abortController;
-    if (!this.port || !controller) return;
+    const port = this.port;
+    if (!port || !controller) return;
     try {
-      while (this.port.readable && !controller.signal.aborted) {
-        this.reader = this.port.readable.getReader();
+      while (port.readable && !controller.signal.aborted) {
+        // Keep a local reference: cleanup() may null this.reader while a
+        // read is pending, and the finally below must not dereference null.
+        const reader = port.readable.getReader();
+        this.reader = reader;
         try {
           while (true) {
-            const { value, done } = await this.reader.read();
+            const { value, done } = await reader.read();
             if (controller.signal.aborted) break;
             if (done) break;
             this.emitRawData(value);
             const text = this.decoder.decode(value);
             this.emitData(text);
-            if (!this.suppressConsoleOutput) {
+            this._lastChunkAt = Date.now();
+            // Hidden background exchanges (chipinfo polls, Store scans) mute
+            // the terminal so their bookkeeping output doesn't spam it. That
+            // mute must never hide the answer to something the user just
+            // typed, so recent user commands override it. The mirror's
+            // boolean override still always wins.
+            const userCommandRecent = Date.now() - this._lastUserSendAt < 10000;
+            if (!this._suppressOverride && (!this.suppressConsoleOutput || userCommandRecent)) {
               this.log(text);
             }
           }
         } catch (error) {
           if (controller && !controller.signal.aborted) console.error("Error reading data:", error);
         } finally {
-          try { await this.reader.releaseLock(); } catch (error) { console.warn("Error releasing reader lock:", error); }
+          try { await reader.releaseLock(); } catch (error) { console.warn("Error releasing reader lock:", error); }
+          if (this.reader === reader) this.reader = null;
         }
       }
     } catch (error) {
       if (controller && !controller.signal.aborted) console.error("Fatal read error:", error);
     }
+
+    // The loop only ends when the port closed or the controller aborted. If
+    // the user didn't ask to disconnect, the cable was unplugged or the
+    // handle died — surface it instead of leaving a dead "Connected" UI.
+    if (this.isConnected && !controller.signal.aborted && this.abortController === controller) {
+      this.log("Serial connection lost\n");
+      this.handleUnexpectedDisconnect();
+    }
   }
 
   async sendCommand(cmd) {
     if (!this.isConnected || !this.port) throw new Error("Not connected");
+    return this._withCommandLock(() => this._writeRaw(cmd));
+  }
+
+  // Low-level serial write. Internal callers must already hold the command
+  // lock so writes from different tools can't interleave on the wire.
+  async _writeRaw(cmd) {
+    if (!this.port || !this.port.writable) throw new Error("Not connected");
     const writer = this.port.writable.getWriter();
     try {
       await writer.write(this.encoder.encode(cmd + "\n"));
     } finally {
-      await writer.releaseLock();
+      try { await writer.releaseLock(); } catch (error) { console.warn("Error releasing writer lock:", error); }
     }
   }
 
@@ -471,37 +570,52 @@ class SerialConsole {
   // Send a command and wait for one of the given marker strings to appear
   // in the response, without printing the output to the console. Used by
   // the Store tab (and other tools) to drive the SAME open connection.
-  async requestCommandResponse(cmd, markers, timeoutMs = 5000) {
+  // Background callers wait for the post-connect chipinfo handshake first so
+  // their commands don't race a still-booting console and jam the queue.
+  async requestCommandResponse(cmd, markers, timeoutMs = 5000, options = {}) {
     if (!this.isConnected || !this.port) throw new Error("Not connected");
+    if (!options.internal && this._pendingInitialChipInfo) {
+      try { await this._pendingInitialChipInfo; } catch (error) { /* handled by caller guards */ }
+      if (!this.isConnected || !this.port) throw new Error("Not connected");
+    }
     return this._withCommandLock(() => this._requestRawCommandResponse(cmd, markers, timeoutMs));
   }
 
   async _requestRawCommandResponse(cmd, markers, timeoutMs = 5000) {
     const markerList = Array.isArray(markers) ? markers : [markers];
-    const prevSuppress = this.suppressConsoleOutput;
     const bufferRef = { text: "" };
     const handler = (chunk) => { bufferRef.text += String(chunk || "").replace(/\x1b\[[0-9;]*m/g, ""); };
-    this.setConsoleOutputSuppressed(true);
+    // Suppression runs on a depth counter so overlapping requests (or a
+    // mirror session) can't leave the console muted after they finish.
+    this._requestSuppressDepth++;
+    this._applySuppression();
     this.dataListeners.add(handler);
-    const writer = this.port.writable.getWriter();
+    let writeError = null;
     try {
-      await writer.write(this.encoder.encode(cmd + "\n"));
-    } finally {
-      await writer.releaseLock();
+      await this._writeRaw(cmd);
+    } catch (error) {
+      writeError = error;
     }
     const deadline = Date.now() + timeoutMs;
     try {
-      await new Promise((resolve) => {
-        const tick = () => {
-          if (markerList.some((m) => bufferRef.text.includes(m)) || Date.now() >= deadline) resolve();
-          else setTimeout(tick, 50);
-        };
-        tick();
-      });
+      if (!writeError) {
+        await new Promise((resolve) => {
+          const tick = () => {
+            // Stop waiting early if the connection dropped so commands
+            // queued behind this request aren't stuck for the full timeout.
+            if (!this.isConnected) resolve();
+            else if (markerList.some((m) => bufferRef.text.includes(m)) || Date.now() >= deadline) resolve();
+            else setTimeout(tick, 50);
+          };
+          tick();
+        });
+      }
     } finally {
       this.dataListeners.delete(handler);
-      this.setConsoleOutputSuppressed(prevSuppress);
+      this._requestSuppressDepth = Math.max(0, this._requestSuppressDepth - 1);
+      this._applySuppression();
     }
+    if (writeError) throw writeError;
     return bufferRef.text;
   }
 
@@ -524,9 +638,31 @@ class SerialConsole {
 
   // Queries the device with `chipinfo` and shows model + firmware in the
   // dashboard header (same command the flasher uses).
-  async fetchChipInfo() {
+  async fetchChipInfo(options = {}) {
     if (!this.isConnected || !this.port) return null;
-    const text = await this.requestCommandResponse("chipinfo", ["[CHIPINFO_END]"], 8000);
+    if (options.initial) await new Promise((resolve) => setTimeout(resolve, 1200));
+    let text = "";
+    // Retry when the device was still booting (opening the port resets most
+    // ESP32 boards) or the request landed in a burst of other output. Each
+    // attempt takes and releases the command lock, so user commands can slip
+    // in between attempts instead of waiting for the whole retry loop.
+    for (let attempt = 1; attempt <= 2; attempt++) {
+      try {
+        text = await this.requestCommandResponse("chipinfo", ["[CHIPINFO_END]"], 2000, { internal: true });
+      } catch (error) {
+        text = "";
+      }
+      if (text.includes("[CHIPINFO_END]")) break;
+      // Firmware that predates chipinfo rejects it immediately — no retry.
+      if (/unsupported\s+command|unknown\s+command|not\s+recognized/i.test(text)) break;
+      if (attempt < 2) await new Promise((resolve) => setTimeout(resolve, 400));
+    }
+    // Explain a silent handshake failure instead of leaving the first typed
+    // command hanging with no clue.
+    if (options.initial && !text.includes("[CHIPINFO_END]") &&
+        !/unsupported\s+command|unknown\s+command|not\s+recognized/i.test(text)) {
+      this.log("No response to chipinfo — if the log above looks garbled, disconnect and reconnect at 115200 baud.\n");
+    }
     const grab = (re) => {
       const m = text.match(re);
       return m && m[1] ? m[1].trim() : null;
@@ -641,22 +777,46 @@ class SerialConsole {
       });
     }
 
-    // Keep free-heap and status fresh while connected (quiet command, no console spam)
+    // Keep free-heap and status fresh while connected (quiet command, no
+    // console spam). Skip while the tab is hidden or the user just typed
+    // something so the poll never delays their command.
     this.chipInfoTimer = setInterval(() => {
       if (!this.isConnected || this.isBusy || this._commandLockHeld) return;
+      if (document.hidden) return;
+      if (Date.now() - this._lastUserActivityAt < 10000) return;
+      // Never poll while the device is mid-stream (e.g. a long scan) —
+      // its muted request would otherwise hide the tail of the output.
+      if (Date.now() - this._lastChunkAt < 3000) return;
       this.fetchChipInfo().catch(() => {});
     }, 45000);
   }
 
+  // Sends a command typed by the user (console input, quick commands)
+  // through the same queue background tools use, so writes can't interleave
+  // and the response is never swallowed by a concurrent quiet request. Waits
+  // for the post-connect chipinfo handshake so an early command isn't sent
+  // while the device is still booting.
+  async sendUserCommand(cmd, options = {}) {
+    const text = String(cmd || "").trim();
+    if (!text || !this.isConnected || !this.port) return false;
+    this._lastUserActivityAt = Date.now();
+    if (options.echo !== false) this.log(`> ${text}\n`);
+    if (this._pendingInitialChipInfo) {
+      try { await this._pendingInitialChipInfo; } catch (error) { /* already handled */ }
+    }
+    if (!this.isConnected || !this.port) return false;
+    this._lastUserSendAt = Date.now();
+    await this.sendCommand(text);
+    return true;
+  }
+
   async sendData() {
     if (!this.isConnected || !this.serialInput || !this.serialInput.value) return;
-    const data = this.serialInput.value + "\n";
+    const value = this.serialInput.value;
     try {
-      this.writer = this.port.writable.getWriter();
-      await this.writer.write(this.encoder.encode(data));
-      this.log(`> ${data}`);
-      if (this.serialInput.value.trim()) {
-        this.commandHistory.unshift(this.serialInput.value);
+      await this.sendUserCommand(value);
+      if (value.trim()) {
+        this.commandHistory.unshift(value);
         if (this.commandHistory.length > 50) this.commandHistory.pop();
       }
       this.historyIndex = -1;
@@ -665,30 +825,41 @@ class SerialConsole {
     } catch (error) {
       console.error("Error writing to port:", error);
       this.log(`Error sending data: ${error.message}\n`);
-    } finally {
-      if (this.writer) {
-        try { await this.writer.releaseLock(); } catch (error) { console.warn("Error releasing writer lock:", error); }
-        this.writer = null;
-      }
     }
   }
 
   async cleanup() {
-    if (this.abortController) { this.abortController.abort(); this.abortController = null; }
-    if (this.reader) {
-      try { await this.reader.cancel(); await this.reader.releaseLock(); } catch (error) { console.warn("Error cleaning up reader:", error); }
-      this.reader = null;
+    if (this._cleaningUp) return;
+    this._cleaningUp = true;
+    try {
+      if (this.abortController) { this.abortController.abort(); this.abortController = null; }
+      if (this.reader) {
+        // Snapshot + clear first: the read loop's own finally also releases
+        // this reader, and neither path must dereference a null reference.
+        const reader = this.reader;
+        this.reader = null;
+        try { await reader.cancel(); } catch (error) { console.warn("Error cleaning up reader:", error); }
+        try { reader.releaseLock(); } catch (error) { /* already released by the read loop */ }
+      }
+      if (this.writer) {
+        try { await this.writer.releaseLock(); } catch (error) { console.warn("Error cleaning up writer:", error); }
+        this.writer = null;
+      }
+      if (this.port) {
+        try { await this.port.close(); } catch (error) { console.warn("Error closing port:", error); }
+        this.port = null;
+      }
+      this.isConnected = false;
+      this.lineBuffer = "";
+      // Wake anything waiting on the boot handshake, and don't leave the
+      // console muted for the next session.
+      this._finishInitialChipInfo();
+      this._suppressOverride = false;
+      this._requestSuppressDepth = 0;
+      this._applySuppression();
+    } finally {
+      this._cleaningUp = false;
     }
-    if (this.writer) {
-      try { await this.writer.releaseLock(); } catch (error) { console.warn("Error cleaning up writer:", error); }
-      this.writer = null;
-    }
-    if (this.port) {
-      try { await this.port.close(); } catch (error) { console.warn("Error closing port:", error); }
-      this.port = null;
-    }
-    this.isConnected = false;
-    this.setConsoleOutputSuppressed(false);
   }
 
   async disconnect() {
