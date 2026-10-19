@@ -2978,10 +2978,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 // breaks ties between same-size candidates (OTA A/B pairs).
                 const maxSize = Math.max(...appEntries.map(e => e.size));
                 const candidates = appEntries.filter(e => e.size === maxSize);
-                const ota0 = candidates.find(e => e.subtype === 0x10);
-                if (ota0) return ota0.offset;
+                // The factory slot wins when present: CI (scripts/partition_table.py)
+                // bases the release image at the factory offset, and the P4 bundle's
+                // embedded C6 payload is positioned relative to it. Preferring ota_0
+                // here put the app address at ota_0 on tables where factory and the
+                // OTA slots are all the same size.
                 const factory = candidates.find(e => e.subtype === 0x00);
                 if (factory) return factory.offset;
+                const ota0 = candidates.find(e => e.subtype === 0x10);
+                if (ota0) return ota0.offset;
                 candidates.sort((a, b) => a.offset - b.offset);
                 return candidates[0].offset;
             } catch (e) {
