@@ -614,7 +614,8 @@ document.addEventListener('DOMContentLoaded', () => {
             "Seeed": [
                 { name: "XIAO S3 Sense", chip: "ESP32-S3", firmware: "XIAO_S3_Sense.zip" },
                 { name: "XIAO C5", chip: "ESP32-C5", firmware: "XIAO_C5.zip", flashSize: "8MB" },
-                { name: "XIAO S3", chip: "ESP32-S3", firmware: "XIAO_S3.zip" }
+                { name: "XIAO S3", chip: "ESP32-S3", firmware: "XIAO_S3.zip" },
+                { name: "XIAO ESP32S3 Wio-SX1262", chip: "ESP32-S3", firmware: "XIAO_S3_WIO_SX1262.zip", flashSize: "8MB" }
             ],
             "Displays": [
                 { name: "Crowtech 7\" LCD", chip: "ESP32-S3", firmware: "Crowtech_LCD.zip" },
@@ -666,7 +667,8 @@ document.addEventListener('DOMContentLoaded', () => {
             "Crowtech_LCD.zip": "images/flasher/crowtech-7-lcd.webp",
             "XIAO_S3_Sense.zip": "images/flasher/seeed-xiao-s3-sense.webp",
             "XIAO_C5.zip": "images/flasher/seeed-xiao-c5.webp",
-            "XIAO_S3.zip": "images/flasher/seeed-xiao-s3.webp"
+            "XIAO_S3.zip": "images/flasher/seeed-xiao-s3.webp",
+            "XIAO_S3_WIO_SX1262.zip": "images/flasher/seeed-xiao-s3.webp"
         };
 
         let espLoaderTerminal = {
@@ -854,6 +856,7 @@ document.addEventListener('DOMContentLoaded', () => {
             "XIAO_S3_Sense.zip": "Seeed XIAO S3 Sense",
             "XIAO_C5.zip": "Seeed XIAO C5",
             "XIAO_S3.zip": "Seeed XIAO S3",
+            "XIAO_S3_WIO_SX1262.zip": "Seeed XIAO ESP32S3 Wio-SX1262",
             "FeberisPro.zip": "Feberis Pro",
             "MarauderV8.zip": "Marauder V8",
             "MarauderPancake.zip": "Marauder Pancake"
@@ -893,7 +896,7 @@ document.addEventListener('DOMContentLoaded', () => {
             "Heltec": ["HeltecV3.zip"],
             "Waveshare": ["Waveshare_LCD.zip"],
             "JCMK": ["JCMK_DevBoardPro.zip", "Flipper_JCMK_GPS.zip", "MarauderV4_FlipperHub.zip", "MarauderV6_AwokDual.zip", "MarauderV8.zip", "MarauderPancake.zip"],
-            "Seeed": ["XIAO_S3_Sense.zip", "XIAO_C5.zip", "XIAO_S3.zip"],
+            "Seeed": ["XIAO_S3_Sense.zip", "XIAO_C5.zip", "XIAO_S3.zip", "XIAO_S3_WIO_SX1262.zip"],
             "Displays": ["Crowtech_LCD.zip", "Sunton_LCD.zip", "JC3248W535EN_LCD.zip"],
             "Additional": ["Lolin_S3_Pro.zip", "FeberisPro.zip", "ACE_C5.zip", "ACE_S3.zip"]
             ,"Elecrow": ["CrowPanel_1.28inch_Rotary.zip", "CrowPanel_5.79_Epaper.zip", "CrowPanel_4.2_Epaper.zip", "CrowPanel_Advanced_P4_5inch.zip", "CrowPanel_Advanced_P4_7_9_10.1inch.zip", "CrowPanel_Advanced_P4_7_9_10.1inch_v1.1.zip", "CrowPanel_Advance_7inch.zip", "CrowPanel_Advance_5.zip", "CrowPanel_Advance_43.zip", "CrowPanel_Advance_35.zip", "CrowPanel_Advance_28.zip", "CrowPanel_Advance_24.zip"]
@@ -962,6 +965,8 @@ document.addEventListener('DOMContentLoaded', () => {
             "xiao_esp32c5": "XIAO_C5.zip",
             "xiao_esp32s3": "XIAO_S3.zip",
             "xiao_esp32s3_sense": "XIAO_S3_Sense.zip",
+            "xiao_esp32s3_wio_sx1262": "XIAO_S3_WIO_SX1262.zip",
+            "configs/sdkconfig.xiao_esp32s3_wio_sx1262": "XIAO_S3_WIO_SX1262.zip",
             "marauderv8": "MarauderV8.zip",
             "marauder v8": "MarauderV8.zip",
             "pancake": "MarauderPancake.zip",
@@ -1353,6 +1358,7 @@ document.addEventListener('DOMContentLoaded', () => {
             "XIAO_S3_Sense.zip": "esp32s3",
             "XIAO_C5.zip": "esp32c5",
             "XIAO_S3.zip": "esp32s3",
+            "XIAO_S3_WIO_SX1262.zip": "esp32s3",
             "FeberisPro.zip": "esp32",
             "MarauderV8.zip": "esp32c5",
             "MarauderPancake.zip": "esp32c5"
